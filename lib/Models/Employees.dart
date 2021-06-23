@@ -35,7 +35,7 @@ class EmployeesBLL {
     this.Employee_Name = json['Employee_Name'];
     this.Employee_Barcode = json['Employee_Barcode'];
     this.Depart_id = json['Depart_id'];
-    this.Employee_Image = json['Employee_Image'];
+   // this.Employee_Image = json['Employee_Image'];
     this.Job_title_id = json['Job_title_id'];
     this.WorkerStatus = json['WorkerStatus'];
     this.Card_Code = json['Card_Code'];
@@ -120,6 +120,9 @@ class EmployeesBLL {
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(toPost()));
+
+      print(url.toString());
+      print(jsonEncode(toPost()));
 
       if (response.statusCode == 200) {
         this.LoadFromJson(json.decode(response.body));

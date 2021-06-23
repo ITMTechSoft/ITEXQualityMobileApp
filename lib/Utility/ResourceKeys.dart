@@ -1,4 +1,6 @@
 enum ResourceKey{
+  Accessory,
+  Checks_Quantity,
   RegisterTasnifAmount,
   CloseSample,
   Fabric_TopNo,

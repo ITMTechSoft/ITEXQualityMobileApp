@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:itex_soft_qualityapp/Models/Accessory_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Models/DepartmentModelOrder_QualityTest.dart';
 import 'package:itex_soft_qualityapp/Models/Employee_Department.dart';
 import 'package:itex_soft_qualityapp/Models/Employees.dart';
@@ -20,6 +21,8 @@ class PersonalProvider with ChangeNotifier {
   QualityDept_ModelOrder_TrackingBLL SelectedTracking;
   List<Language_ResourcesKeyBLL> GlobalKeys;
   bool IsLoading=false;
+
+  Accessory_ModelOrderBLL SelectedAccessoryModel;
 
   PersonalProvider() {
     _CurrentUser = new EmployeesBLL();

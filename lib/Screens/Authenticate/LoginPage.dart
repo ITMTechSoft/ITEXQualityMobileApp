@@ -92,6 +92,8 @@ class _LoginPageState extends State<LoginPage> {
                   Standard_Input(
                     prefixIcon: Icon(Icons.person),
                     controller: UserNameController,
+                    placeholder: PersonalCase.GetLable(ResourceKey.User_Name),
+                    
                   ),
                   SizedBox(height: 30.0),
                   Standard_Input(
