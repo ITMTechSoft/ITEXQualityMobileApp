@@ -28,10 +28,10 @@ class _SetupApplicationState extends State<SetupApplication> {
   TextEditingController _InputController;
 
   DisableInput() {
-    _EditServerIp = false;
+    _EditServerIp   = false;
     _EditServerPort = false;
-    _EditUserName = false;
-    _EditPassword = false;
+    _EditUserName   = false;
+    _EditPassword  = false;
   }
 
   LanguagesBLL CurrentLanguage;
@@ -85,6 +85,7 @@ class _SetupApplicationState extends State<SetupApplication> {
       ),
     );
 
+    ///
     Widget ServerIps = _EditServerIp
         ? TextField(
             controller: _InputController,

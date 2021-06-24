@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:itex_soft_qualityapp/Preferences/SetupApplications.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (BuildContext context) => SetupApplication()));
+                  builder: (BuildContext context) => SetupApplications()));
         },
         label: Text(
           'Setting ',
@@ -43,6 +44,7 @@ class _LoginPageState extends State<LoginPage> {
         PersonalCase.GetCurrentUser().Employee_User = UserNameController.text;
         PersonalCase.GetCurrentUser().Employee_Password =
             PasswordController.text;
+
         await PersonalCase.Login();
 
         setState(() {
@@ -62,7 +64,6 @@ class _LoginPageState extends State<LoginPage> {
     PasswordController.text = SharedPref.UserPassword;
 
     //#region  Form Components
-
 
     /// TODO: PUT THIS IN ANOTHER COMPONENTS
     Widget HeaderIcon = CircleAvatar(
