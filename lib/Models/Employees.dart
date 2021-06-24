@@ -1,7 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
-import 'package:flutter/foundation.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
@@ -113,6 +112,7 @@ class EmployeesBLL {
     try {
       final String url =
       SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection);
+      // print ("#########--- $url");
 
 
       var response = await http.post(url,
@@ -121,8 +121,11 @@ class EmployeesBLL {
           },
           body: jsonEncode(toPost()));
 
-      print(url.toString());
+      print ("#########--- $url");
+
+
       print(jsonEncode(toPost()));
+
 
       if (response.statusCode == 200) {
         this.LoadFromJson(json.decode(response.body));
@@ -134,7 +137,7 @@ class EmployeesBLL {
       print(Excpetion);
     }
   }
-
+  /// TODO: WHAT IS THE DIFFERENCE BETWEEN LOGIN AND SIGNIN
   Sign_In(String UserName, String Password) async {
     EmployeesBLL CheckUserLogin = new EmployeesBLL(Employee_User: UserName,Employee_Password: Password);
     Map data = {'User': CheckUserLogin};

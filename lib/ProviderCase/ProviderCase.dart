@@ -26,12 +26,14 @@ class PersonalProvider with ChangeNotifier {
 
   PersonalProvider() {
     _CurrentUser = new EmployeesBLL();
+
+
     _UserPref = new SharedPref();
     if(SharedPref.SelLanguage == null)
       SharedPref.SelLanguage =new LanguagesBLL(1, "Türkçe");
   }
-
   EmployeesBLL GetCurrentUser() {
+
     return _CurrentUser;
   }
 

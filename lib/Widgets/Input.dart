@@ -52,7 +52,7 @@ class Standard_Input extends StatelessWidget {
               filled: true,
               fillColor: ArgonColors.white,
               hintStyle: TextStyle(
-                color: ArgonColors.muted,
+                color: ArgonColors.black.withOpacity(0.5),
               ),
               suffixIcon: suffixIcon,
               prefixIcon: prefixIcon,

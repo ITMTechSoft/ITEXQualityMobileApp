@@ -20,10 +20,10 @@ class SetupApplication extends StatefulWidget {
 }
 
 class _SetupApplicationState extends State<SetupApplication> {
-  bool _EditServerIp = false;
+  bool _EditServerIp   = false;
   bool _EditServerPort = false;
-  bool _EditUserName = false;
-  bool _EditPassword = false;
+  bool _EditUserName   = false;
+  bool _EditPassword   = false;
 
   TextEditingController _InputController;
 
@@ -53,6 +53,7 @@ class _SetupApplicationState extends State<SetupApplication> {
             "Language",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
+          SizedBox(height: 20),
           DropdownButton<LanguagesBLL>(
             hint: Text("Select item"),
             isExpanded: true,
@@ -101,6 +102,7 @@ class _SetupApplicationState extends State<SetupApplication> {
             decoration: TextFieldDecoration.copyWith(
               hintText: StaticLable.ServerIp,
               labelText: StaticLable.ServerIp,
+
             ),
           )
         : settingTiles(
@@ -114,6 +116,8 @@ class _SetupApplicationState extends State<SetupApplication> {
             },
             subtitle: SharedPref.ServerIp,
             title: StaticLable.ServerIp);
+
+
     Widget ServerPorts = _EditServerPort
         ? TextField(
             controller: _InputController,

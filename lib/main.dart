@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Preferences/SetupApplication.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:provider/provider.dart';
-
 import 'Screens/Wrapper.dart';
 import 'assets/Themes/SystemTheme.dart';
 
@@ -22,7 +21,7 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
 
   Future<bool> LoadingSharedPreference(PersonalCase) async {
     await PersonalCase.loadSharedPrefs();
-  /*  setState(() {
+    /*  setState(() {
       IsLoading = false;
     });*/
   }
@@ -43,13 +42,15 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
         future: LoadingSharedPreference(PersonalCase),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           return ChangeNotifierProvider<PersonalProvider>(
-              create: (context) => PersonalCase,
-              child: IsLoading
-                  ? Center(child: CircularProgressIndicator())
-                  : MaterialApp(
-                      debugShowCheckedModeBanner: false,
-                      theme: themeNotifier.GetTheme(),
-                      home: RetVal(snapshot.data)));
+            create: (context) => PersonalCase,
+            child: IsLoading
+                ? Center(child: CircularProgressIndicator())
+                : MaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    theme: themeNotifier.GetTheme(),
+                    home: RetVal(snapshot.data),
+                  ),
+          );
         });
   }
 }

@@ -14,16 +14,17 @@ import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 Widget DepartmentCard(Employee_DepartmentBLL Item, Function OnTap) {
   return Card(
-      shadowColor: ArgonColors.black,
-      elevation: 10,
-      child: ListTile(
-        onTap: OnTap,
-        title: Text(
-          Item.Depart_Name,
-          style: TextStyle(fontSize: 20, color: ArgonColors.text),
-        ),
-        subtitle: Text(Item.Depart_Name),
-      ));
+    shadowColor: ArgonColors.black,
+    elevation: 10,
+    child: ListTile(
+      onTap: OnTap,
+      title: Text(
+        Item.Depart_Name,
+        style: TextStyle(fontSize: 20, color: ArgonColors.text),
+      ),
+      subtitle: Text(Item.Depart_Name),
+    ),
+  );
 }
 
 Widget OneItem({String ItemName, String ItemValue, Function OnTap}) {
@@ -524,34 +525,33 @@ Widget HeaderColumn({List<Widget> children = const <Widget>[]}) {
 }
 
 Widget TableColumn(
-    {List<Widget> children = const <Widget>[],
-    bool IsSelectedItem = false}) {
+    {List<Widget> children = const <Widget>[], bool IsSelectedItem = false}) {
   return Card(
-    shadowColor: ArgonColors.black,
-    elevation: 1,
-    color: IsSelectedItem ? SelectedColor : NormalColor,
-    child: Container(
-      padding: EdgeInsets.all(5),
-      margin: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: children,
-          ),
-        ],
-      ),
-    )
-
-  );
+      shadowColor: ArgonColors.black,
+      elevation: 1,
+      color: IsSelectedItem ? SelectedColor : NormalColor,
+      child: Container(
+        padding: EdgeInsets.all(5),
+        margin: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: children,
+            ),
+          ],
+        ),
+      ));
 }
 
 Widget Accessory_Model_List(
-{PersonalProvider PersonalCase, List<Accessory_ModelOrderBLL> Items,context,Function onClick(int Index)}) {
-
+    {PersonalProvider PersonalCase,
+    List<Accessory_ModelOrderBLL> Items,
+    context,
+    Function onClick(int Index)}) {
   Widget ListData = SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: ListView.builder(
@@ -560,9 +560,9 @@ Widget Accessory_Model_List(
           shrinkWrap: true,
           itemCount: Items.length,
           itemBuilder: (context, int i) {
-            return  InkWell(
+            return InkWell(
               onDoubleTap: onClick(i),
-              child:TableColumn(
+              child: TableColumn(
                   children: [
                     //      TableLable(Items[i].Id.toString()),
                     TableLable(Items[i].Group_Name),
@@ -570,10 +570,10 @@ Widget Accessory_Model_List(
                     TableLable((Items[i].Quantity ?? 0).toString()),
                     TableLable((Items[i].Checks_Quantity ?? 0).toString()),
                   ],
-                  IsSelectedItem: PersonalCase.SelectedAccessoryModel == Items[i]) ,
+                  IsSelectedItem:
+                      PersonalCase.SelectedAccessoryModel == Items[i]),
             );
           }));
-
 
   return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -581,7 +581,7 @@ Widget Accessory_Model_List(
       children: <Widget>[
         HeaderColumn(
           children: [
-          //  HeaderLable(PersonalCase.GetLable(ResourceKey.Id)),
+            //  HeaderLable(PersonalCase.GetLable(ResourceKey.Id)),
             HeaderLable(PersonalCase.GetLable(ResourceKey.Group)),
             HeaderLable(PersonalCase.GetLable(ResourceKey.Accessory)),
             HeaderLable(PersonalCase.GetLable(ResourceKey.Quantity)),

@@ -14,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController PasswordController = new TextEditingController();
 
   //#region  SetupConfig
+  /// TODO : CHANGE IT'S TO CUSTOME TOOLBAR
   SetupConfig(context) => TextButton.icon(
         onPressed: () {
           Navigator.push(
@@ -22,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
                   builder: (BuildContext context) => SetupApplication()));
         },
         label: Text(
-          'Setting',
+          'Setting ',
           style: TextStyle(color: Colors.white),
         ),
         icon: Icon(
@@ -40,7 +41,8 @@ class _LoginPageState extends State<LoginPage> {
         });
 
         PersonalCase.GetCurrentUser().Employee_User = UserNameController.text;
-        PersonalCase.GetCurrentUser().Employee_Password = PasswordController.text;
+        PersonalCase.GetCurrentUser().Employee_Password =
+            PasswordController.text;
         await PersonalCase.Login();
 
         setState(() {
@@ -61,6 +63,8 @@ class _LoginPageState extends State<LoginPage> {
 
     //#region  Form Components
 
+
+    /// TODO: PUT THIS IN ANOTHER COMPONENTS
     Widget HeaderIcon = CircleAvatar(
       radius: 100.0,
       foregroundColor: Colors.red,
@@ -93,7 +97,6 @@ class _LoginPageState extends State<LoginPage> {
                     prefixIcon: Icon(Icons.person),
                     controller: UserNameController,
                     placeholder: PersonalCase.GetLable(ResourceKey.User_Name),
-                    
                   ),
                   SizedBox(height: 30.0),
                   Standard_Input(
@@ -109,7 +112,6 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                     onPressed: LoginFunction(PersonalCase),
                   ),
-
                   errorMsg == null
                       ? Container()
                       : Text(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/monze/OneDrive/Documents/StudioProjects2019/StudioProjects/itm_techsoft_quality/lib/Widgets/RoundedButtons.dart';
+import 'package:itex_soft_qualityapp/Widgets/RoundedButtons.dart';
 
 
 
