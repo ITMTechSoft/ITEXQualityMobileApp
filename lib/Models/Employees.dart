@@ -24,7 +24,7 @@ class EmployeesBLL {
 
   //#endregion
 
-  EmployeesBLL({this.Employee_User,this.Employee_Password}) {
+  EmployeesBLL({this.Employee_User, this.Employee_Password}) {
     ValidUser = false;
   }
 
@@ -34,7 +34,7 @@ class EmployeesBLL {
     this.Employee_Name = json['Employee_Name'];
     this.Employee_Barcode = json['Employee_Barcode'];
     this.Depart_id = json['Depart_id'];
-   // this.Employee_Image = json['Employee_Image'];
+    // this.Employee_Image = json['Employee_Image'];
     this.Job_title_id = json['Job_title_id'];
     this.WorkerStatus = json['WorkerStatus'];
     this.Card_Code = json['Card_Code'];
@@ -44,11 +44,10 @@ class EmployeesBLL {
     this.Line_Id = json['Line_Id'];
     this.ValidUser = json['ValidUser'];
     this.LoginMessage = json['LoginMessage'];
-
   }
 
-  EmployeesBLL.fromJson(Map<String, dynamic> json):
-        Id = json['Id'],
+  EmployeesBLL.fromJson(Map<String, dynamic> json)
+      : Id = json['Id'],
         Employee_Name = json['Employee_Name'],
         Employee_Barcode = json['Employee_Barcode'],
         Depart_id = json['Depart_id'],
@@ -63,47 +62,39 @@ class EmployeesBLL {
         ValidUser = json['ValidUser'],
         LoginMessage = json['LoginMessage'];
 
-
   Map<String, dynamic> toJson() => {
-    'Id': Id,
-    'Employee_Name': Employee_Name,
-    'Employee_Barcode': Employee_Barcode,
-    'Depart_id': Depart_id,
-    'Employee_Image': Employee_Image,
-    'Job_title_id': Job_title_id,
-    'WorkerStatus': WorkerStatus,
-    'Card_Code': Card_Code,
-    'Emp_Type_id': Emp_Type_id,
-    'Employee_Password': Employee_Password,
-    'Employee_User': Employee_User,
-    'Line_Id': Line_Id,
-    'ValidUser': ValidUser,
-    'LoginMessage': LoginMessage,
-
-
-  };
+        'Id': Id,
+        'Employee_Name': Employee_Name,
+        'Employee_Barcode': Employee_Barcode,
+        'Depart_id': Depart_id,
+        'Employee_Image': Employee_Image,
+        'Job_title_id': Job_title_id,
+        'WorkerStatus': WorkerStatus,
+        'Card_Code': Card_Code,
+        'Emp_Type_id': Emp_Type_id,
+        'Employee_Password': Employee_Password,
+        'Employee_User': Employee_User,
+        'Line_Id': Line_Id,
+        'ValidUser': ValidUser,
+        'LoginMessage': LoginMessage,
+      };
 
   Map<String, String> toPost() => {
-
-
-    'Id': this.Id.toString(),
-    'Employee_Name': this.Employee_Name,
-    'Employee_Barcode': this.Employee_Barcode,
-    'Depart_id': this.Depart_id.toString(),
-    'Employee_Image': this.Employee_Image.toString(),
-    'Job_title_id': this.Job_title_id.toString(),
-    'WorkerStatus': this.WorkerStatus.toString(),
-    'Card_Code': this.Card_Code,
-    'Emp_Type_id': this.Emp_Type_id.toString(),
-    'Employee_Password': this.Employee_Password,
-    'Employee_User': this.Employee_User,
-    'Line_Id': this.Line_Id.toString(),
-    'ValidUser': this.ValidUser.toString(),
-    'LoginMessage': this.LoginMessage.toString(),
-
-  };
-
-
+        'Id': this.Id.toString(),
+        'Employee_Name': this.Employee_Name,
+        'Employee_Barcode': this.Employee_Barcode,
+        'Depart_id': this.Depart_id.toString(),
+        'Employee_Image': this.Employee_Image.toString(),
+        'Job_title_id': this.Job_title_id.toString(),
+        'WorkerStatus': this.WorkerStatus.toString(),
+        'Card_Code': this.Card_Code,
+        'Emp_Type_id': this.Emp_Type_id.toString(),
+        'Employee_Password': this.Employee_Password,
+        'Employee_User': this.Employee_User,
+        'Line_Id': this.Line_Id.toString(),
+        'ValidUser': this.ValidUser.toString(),
+        'LoginMessage': this.LoginMessage.toString(),
+      };
 
 //#endregion
 
@@ -111,35 +102,39 @@ class EmployeesBLL {
   Future<void> login() async {
     try {
       final String url =
-      SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection);
-      // print ("#########--- $url");
+          SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection);
 
+      var response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          toPost(),
+        ),
+      );
 
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(toPost()));
+      // print("the url is    $url");
 
-      print ("the url is    $url");
-
-
-      print(jsonEncode(toPost()));
-
+      // print(jsonEncode(toPost()));
 
       if (response.statusCode == 200) {
         this.LoadFromJson(json.decode(response.body));
-      }else
-        {
-          print(response.statusCode.toString() + ": " +response.toString());
-        }
+
+      } else {
+       // print ( 'errooorororoor heere ');
+      //  print(response.statusCode.toString() + ": " + response.toString());
+      }
     } catch (Excpetion) {
       print(Excpetion);
+
     }
   }
+
   /// TODO: WHAT IS THE DIFFERENCE BETWEEN LOGIN AND SIGNIN
   Sign_In(String UserName, String Password) async {
-    EmployeesBLL CheckUserLogin = new EmployeesBLL(Employee_User: UserName,Employee_Password: Password);
+    EmployeesBLL CheckUserLogin =
+        new EmployeesBLL(Employee_User: UserName, Employee_Password: Password);
     Map data = {'User': CheckUserLogin};
     var jsonResponse = null;
     var response = await http.post(
@@ -157,7 +152,4 @@ class EmployeesBLL {
 
 //#endregion
 
-
-
 }
-

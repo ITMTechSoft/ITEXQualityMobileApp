@@ -60,7 +60,9 @@ class PersonalProvider with ChangeNotifier {
     await _CurrentUser.login();
     await GetGlobalization(SharedPref.SelLanguage.Id);
     ///TODO
-    notifyListeners();
+
+    if ( _CurrentUser.ValidUser==true )
+     notifyListeners();
   }
 
   SetupAndLogin() async {
@@ -68,7 +70,7 @@ class PersonalProvider with ChangeNotifier {
     await SharedPref.SetupAndSave();
     _CurrentUser.Employee_User = SharedPref.UserName;
     _CurrentUser.Employee_Password = SharedPref.UserPassword;
-    // await _CurrentUser.login();
+     await _CurrentUser.login();
     notifyListeners();
   }
 

@@ -5,7 +5,6 @@ import 'package:itex_soft_qualityapp/Utility/Globalization.dart';
 import 'package:itex_soft_qualityapp/Utility/ResourceKeys.dart';
 import 'package:itex_soft_qualityapp/Widgets/Input.dart';
 import 'package:itex_soft_qualityapp/assets/Resources/StaticLable.dart';
-
 import '../SystemImports.dart';
 
 class SetupApplications extends StatefulWidget {
@@ -15,7 +14,9 @@ class SetupApplications extends StatefulWidget {
 
 class _SetupApplicationsState extends State<SetupApplications> {
   final _formKey = GlobalKey<FormState>();
-
+  /// CONTROLLERS
+  TextEditingController serverIpController = new TextEditingController();
+  TextEditingController portController = new TextEditingController();
   LanguagesBLL CurrentLanguage;
   final languageList = LanguagesBLL.Get_Languages();
 
@@ -23,9 +24,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
-    /// CONTROLLERS
-    TextEditingController serverIpController = new TextEditingController();
-    TextEditingController portController = new TextEditingController();
+
 
     return Scaffold(
       appBar: AppBar(
@@ -47,21 +46,18 @@ class _SetupApplicationsState extends State<SetupApplications> {
                   errorMessage: "Ip can't be empty ",
                   MaxLength: 15,
                   hintMessage: '192.158. 1.38',
-
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Standard_Input(
                   suffixIcon: Icon(FontAwesomeIcons.passport),
                   controller: portController,
                   placeholder: StaticLable.ServerPort,
                   errorMessage: "Port can't be empty ",
-                    Ktype:TextInputType.number,
-                    MaxLength: 4,
+                  Ktype: TextInputType.number,
+                  MaxLength: 5,
                   hintMessage: '3968',
-
-
-
-
-
                 ),
                 SizedBox(
                   height: 20,
@@ -75,8 +71,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 20),
-                    DropdownButton<LanguagesBLL>(
-
+                    DropdownButtonFormField<LanguagesBLL>(validator: (value) => value == null ? 'field required' : null,
                       hint: Text("Select item"),
                       isExpanded: true,
                       value: CurrentLanguage,
@@ -86,7 +81,12 @@ class _SetupApplicationsState extends State<SetupApplications> {
                       elevation: 40,
                       onChanged: (LanguagesBLL newValue) {
                         setState(() {
+
+                          // serverIpController.text = serverIpController.text;
+                          // portController .text = portController.text;
                           SharedPref.SelLanguage = CurrentLanguage = newValue;
+
+
                         });
                         // somehow set here selected 'value' above whith
                         // newValue
@@ -101,7 +101,6 @@ class _SetupApplicationsState extends State<SetupApplications> {
                     )
                   ],
                 ),
-
 
                 SizedBox(
                   height: 30,
@@ -122,7 +121,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                     if (_formKey.currentState.validate()) {
                       SharedPref.ServerIp = serverIpController.text;
                       SharedPref.ServerPort = portController.text;
-                      SharedPref.SelLanguage = CurrentLanguage;
+                     // SharedPref.SelLanguage = CurrentLanguage;
                       await PersonalCase.SetupAndLogin();
 
                       Navigator.pop(context);

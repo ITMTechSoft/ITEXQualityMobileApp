@@ -25,7 +25,8 @@ class _SetupApplicationState extends State<SetupApplication> {
   bool _EditUserName   = false;
   bool _EditPassword   = false;
 
-  TextEditingController _InputController;
+  TextEditingController
+  _InputController;
 
   DisableInput() {
     _EditServerIp   = false;

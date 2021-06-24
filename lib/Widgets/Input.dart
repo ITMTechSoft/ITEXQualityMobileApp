@@ -16,9 +16,11 @@ class Standard_Input extends StatelessWidget {
   final TextInputType Ktype;
   final int MinLines;
   final int MaxLines;
-  final int MaxLength ;
+  final int MaxLength;
+
   final String hintMessage;
   final String errorMessage;
+  bool isIp;
 
   Standard_Input(
       {this.placeholder,
@@ -34,7 +36,9 @@ class Standard_Input extends StatelessWidget {
       this.MinLines = 1,
       this.MaxLines = 1,
       this.errorMessage,
-      this.MaxLength, this.hintMessage});
+      this.MaxLength,
+      this.hintMessage,
+      this.isIp});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +57,10 @@ class Standard_Input extends StatelessWidget {
           minLines: this.MinLines,
           maxLines: this.MaxLines,
           maxLength: MaxLength,
-          inputFormatters: [maskFormatter],
+          /// TODO : CHANGE THE INPUT FORMATTER
+
+        //  inputFormatters: [maskFormatter],
+
           validator: (value) {
             if (value.isEmpty) return errorMessage;
 
@@ -63,38 +70,39 @@ class Standard_Input extends StatelessWidget {
               height: 0.85, fontSize: 16.0, color: ArgonColors.initial),
           textAlignVertical: TextAlignVertical(y: 0.6),
           decoration: InputDecoration(
-              labelText: placeholder,
-              hintText:hintMessage,
-
-              filled: true,
-              fillColor: ArgonColors.white,
-              hintStyle: TextStyle(
-                color: ArgonColors.black.withOpacity(0.3),
-              ),
-              suffixIcon: suffixIcon,
-              prefixIcon: prefixIcon,
-              errorBorder: OutlineInputBorder(
+            labelText: placeholder,
+            hintText: hintMessage,
+            filled: true,
+            fillColor: ArgonColors.white,
+            hintStyle: TextStyle(
+              color: ArgonColors.black.withOpacity(0.3),
+            ),
+            suffixIcon: suffixIcon,
+            prefixIcon: prefixIcon,
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(4.0),
+              borderSide: BorderSide(
+                  color: Colors.redAccent,
+                  width: 1.0,
+                  style: BorderStyle.solid),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(4.0),
+              borderSide: BorderSide(
+                  color: Colors.redAccent,
+                  width: 1.0,
+                  style: BorderStyle.solid),
+            ),
+            enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4.0),
                 borderSide: BorderSide(
-                    color: Colors.redAccent, width: 1.0, style: BorderStyle.solid),
-              ),
-              focusedErrorBorder:OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4.0),
-                borderSide: BorderSide(
-                    color: Colors.redAccent, width: 1.0, style: BorderStyle.solid),
-              ),
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4.0),
-                  borderSide: BorderSide(
-                      color: borderColor,
-                      width: 1.0,
-                      style: BorderStyle.solid)),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4.0),
-                borderSide: BorderSide(
-                    color: borderColor, width: 1.0, style: BorderStyle.solid),
-              ),
-              )),
+                    color: borderColor, width: 1.0, style: BorderStyle.solid)),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(4.0),
+              borderSide: BorderSide(
+                  color: borderColor, width: 1.0, style: BorderStyle.solid),
+            ),
+          )),
     );
   }
 }

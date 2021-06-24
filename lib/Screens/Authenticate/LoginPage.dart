@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Preferences/SetupApplications.dart';
+import 'package:itex_soft_qualityapp/Screens/Authenticate/LoginPages.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,7 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController PasswordController = new TextEditingController();
 
   //#region  SetupConfig
-  /// TODO : CHANGE IT'S TO CUSTOME TOOLBAR
   SetupConfig(context) => TextButton.icon(
         onPressed: () {
           Navigator.push(
@@ -35,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
 
   //#endregion SetupConfig
 
+  //// LOGIN FUNCTION
   LoginFunction(PersonalProvider PersonalCase) => () async {
         print("Login pressed");
         setState(() {
@@ -95,23 +96,44 @@ class _LoginPageState extends State<LoginPage> {
                   HeaderIcon,
                   SizedBox(height: 30.0),
                   Standard_Input(
-                    prefixIcon: Icon(Icons.person),
+                    suffixIcon: Icon(Icons.person),
                     controller: UserNameController,
                     placeholder: PersonalCase.GetLable(ResourceKey.User_Name),
+                    errorMessage: "User Name can not be empty ",
                   ),
-                  SizedBox(height: 30.0),
+                  SizedBox(height: 20.0),
                   Standard_Input(
-                      prefixIcon: Icon(Icons.lock),
+                      suffixIcon: Icon(Icons.lock),
                       controller: PasswordController,
                       placeholder:
                           PersonalCase.GetLable(ResourceKey.User_Password)),
-                  SizedBox(height: 30),
+                  SizedBox(height: 20),
                   StretchableButton(
                     buttonColor: ArgonColors.primary,
                     children: [
-                      Text("Sign In", style: TextStyle(color: Colors.white))
+                      Text(
+                        "Sign In",
+                        style: TextStyle(color: Colors.white),
+                      )
                     ],
                     onPressed: LoginFunction(PersonalCase),
+                  ),
+                  StretchableButton(
+                    buttonColor: ArgonColors.primary,
+                    children: [
+                      Text(
+                        "test button ",
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ],
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => LoginPages(),
+                        ),
+                      );
+                    },
                   ),
                   errorMsg == null
                       ? Container()
