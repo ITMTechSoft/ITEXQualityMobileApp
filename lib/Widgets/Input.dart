@@ -65,10 +65,11 @@ class Standard_Input extends StatelessWidget {
           decoration: InputDecoration(
               labelText: placeholder,
               hintText:hintMessage,
+
               filled: true,
               fillColor: ArgonColors.white,
               hintStyle: TextStyle(
-                color: ArgonColors.black.withOpacity(0.5),
+                color: ArgonColors.black.withOpacity(0.3),
               ),
               suffixIcon: suffixIcon,
               prefixIcon: prefixIcon,

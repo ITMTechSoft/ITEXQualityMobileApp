@@ -76,6 +76,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                     ),
                     SizedBox(height: 20),
                     DropdownButton<LanguagesBLL>(
+
                       hint: Text("Select item"),
                       isExpanded: true,
                       value: CurrentLanguage,
@@ -121,7 +122,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                     if (_formKey.currentState.validate()) {
                       SharedPref.ServerIp = serverIpController.text;
                       SharedPref.ServerPort = portController.text;
-
+                      SharedPref.SelLanguage = CurrentLanguage;
                       await PersonalCase.SetupAndLogin();
 
                       Navigator.pop(context);

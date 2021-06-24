@@ -59,6 +59,7 @@ class PersonalProvider with ChangeNotifier {
   Login() async {
     await _CurrentUser.login();
     await GetGlobalization(SharedPref.SelLanguage.Id);
+    ///TODO
     notifyListeners();
   }
 
