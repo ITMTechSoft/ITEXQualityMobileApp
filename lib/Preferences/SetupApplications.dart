@@ -14,6 +14,7 @@ class SetupApplications extends StatefulWidget {
 
 class _SetupApplicationsState extends State<SetupApplications> {
   final _formKey = GlobalKey<FormState>();
+
   /// CONTROLLERS
   TextEditingController serverIpController = new TextEditingController();
   TextEditingController portController = new TextEditingController();
@@ -23,8 +24,6 @@ class _SetupApplicationsState extends State<SetupApplications> {
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
-
-
 
     return Scaffold(
       appBar: AppBar(
@@ -46,6 +45,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                   errorMessage: "Ip can't be empty ",
                   MaxLength: 15,
                   hintMessage: '192.158. 1.38',
+                    isIp: true
                 ),
                 SizedBox(
                   height: 10,
@@ -56,8 +56,9 @@ class _SetupApplicationsState extends State<SetupApplications> {
                   placeholder: StaticLable.ServerPort,
                   errorMessage: "Port can't be empty ",
                   Ktype: TextInputType.number,
-                  MaxLength: 5,
+                  MaxLength: 4,
                   hintMessage: '3968',
+
                 ),
                 SizedBox(
                   height: 20,
@@ -71,34 +72,32 @@ class _SetupApplicationsState extends State<SetupApplications> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 20),
-                    DropdownButtonFormField<LanguagesBLL>(validator: (value) => value == null ? 'field required' : null,
-                      hint: Text("Select item"),
-                      isExpanded: true,
-                      value: CurrentLanguage,
-                      isDense: true,
-                      icon: Icon(Icons.keyboard_arrow_down),
-                      iconSize: 40,
-                      elevation: 40,
-                      onChanged: (LanguagesBLL newValue) {
-                        setState(() {
-
-                          // serverIpController.text = serverIpController.text;
-                          // portController .text = portController.text;
-                          SharedPref.SelLanguage = CurrentLanguage = newValue;
-
-
-                        });
-                        // somehow set here selected 'value' above whith
-                        // newValue
-                        // via setState or reactive.
-                      },
-                      items: languageList.map((LanguagesBLL value) {
-                        return DropdownMenuItem<LanguagesBLL>(
-                          value: value,
-                          child: Text(value.CultureName),
-                        );
-                      }).toList(),
-                    )
+                    // DropdownButtonFormField<LanguagesBLL>(
+                    //
+                    //   hint: Text("Select item"),
+                    //   isExpanded: true,
+                    //   value: CurrentLanguage,
+                    //   isDense: true,
+                    //   icon: Icon(Icons.keyboard_arrow_down),
+                    //   iconSize: 40,
+                    //   elevation: 40,
+                    //   onChanged: (LanguagesBLL newValue) {
+                    //     setState(() {
+                    //       // serverIpController.text = serverIpController.text;
+                    //       // portController .text = portController.text;
+                    //     //  SharedPref.SelLanguage = CurrentLanguage = newValue;
+                    //     });
+                    //     // somehow set here selected 'value' above whith
+                    //     // newValue
+                    //     // via setState or reactive.
+                    //   },
+                    //   items: languageList.map((LanguagesBLL value) {
+                    //     return DropdownMenuItem<LanguagesBLL>(
+                    //       value: value,
+                    //       child: Text(value.CultureName),
+                    //     );
+                    //   }).toList(),
+                    // )
                   ],
                 ),
 
@@ -121,10 +120,10 @@ class _SetupApplicationsState extends State<SetupApplications> {
                     if (_formKey.currentState.validate()) {
                       SharedPref.ServerIp = serverIpController.text;
                       SharedPref.ServerPort = portController.text;
-                     // SharedPref.SelLanguage = CurrentLanguage;
-                      await PersonalCase.SetupAndLogin();
+                    //  SharedPref.SelLanguage = CurrentLanguage;
+                     await PersonalCase.SetupAndLogin();
 
-                      Navigator.pop(context);
+                   Navigator.pop(context);
                     } else
                       print("Not Working");
                   },

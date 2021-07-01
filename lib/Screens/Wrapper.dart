@@ -5,6 +5,8 @@ import 'package:itex_soft_qualityapp/Screens/Authenticate/LoginPage.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/MainActivity.dart';
 import 'package:provider/provider.dart';
 
+import 'Authenticate/LoginPages.dart';
+
 class Wrapper extends StatefulWidget {
   @override
   _WrapperState createState() => _WrapperState();
@@ -13,6 +15,8 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   // SharedPref sharedPref = SharedPref();
   // MTM_UsersBLL userLoad = MTM_UsersBLL();
+
+  bool IsLoading = false;
 
   @override
   void initState() {
@@ -23,10 +27,16 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
-    if (!PersonalCase.GetCurrentUser().ValidUser) {
-      return LoginPage();
+
+
+
+
+    if (!PersonalCase.GetCurrentUser().ValidUser)
+    {
+      return LoginPages();
     } else {
       return MainActivity();
     }
+
   }
 }

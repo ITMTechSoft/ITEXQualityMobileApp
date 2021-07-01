@@ -58,14 +58,19 @@ class Standard_Input extends StatelessWidget {
           maxLines: this.MaxLines,
           maxLength: MaxLength,
           /// TODO : CHANGE THE INPUT FORMATTER
-
-        //  inputFormatters: [maskFormatter],
-
           validator: (value) {
-            if (value.isEmpty) return errorMessage;
+            if (value.isEmpty)
+              return errorMessage;
 
             return null;
           },
+          inputFormatters: isIp == true ?  [maskFormatter] :  null,
+
+          // validator: (value) {
+          //   if (value.isEmpty) return errorMessage;
+          //
+          //   return null;
+          // },
           style: TextStyle(
               height: 0.85, fontSize: 16.0, color: ArgonColors.initial),
           textAlignVertical: TextAlignVertical(y: 0.6),

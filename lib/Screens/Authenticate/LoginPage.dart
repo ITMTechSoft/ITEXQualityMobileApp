@@ -15,6 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController UserNameController = new TextEditingController();
   final TextEditingController PasswordController = new TextEditingController();
 
+
   //#region  SetupConfig
   SetupConfig(context) => TextButton.icon(
         onPressed: () {
@@ -36,15 +37,18 @@ class _LoginPageState extends State<LoginPage> {
   //#endregion SetupConfig
 
   //// LOGIN FUNCTION
-  LoginFunction(PersonalProvider PersonalCase) => () async {
+  LoginFunction(PersonalProvider PersonalCase ) => () async {
         print("Login pressed");
-        setState(() {
-          _isLoading = true;
-        });
+        // setState(() {
+        //   _isLoading = true;
+        // });
 
         PersonalCase.GetCurrentUser().Employee_User = UserNameController.text;
         PersonalCase.GetCurrentUser().Employee_Password =
             PasswordController.text;
+
+
+
 
         await PersonalCase.Login();
 
@@ -56,13 +60,19 @@ class _LoginPageState extends State<LoginPage> {
           print(
               "The error message is: ${PersonalCase.GetCurrentUser().LoginMessage}");
         }
+
       };
+
+
+
 
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     UserNameController.text = SharedPref.UserName;
     PasswordController.text = SharedPref.UserPassword;
+
+   // LoginFunction(PersonalCase,userName: SharedPref.UserName,password: SharedPref.UserPassword);
 
     //#region  Form Components
 
@@ -103,11 +113,21 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 20.0),
                   Standard_Input(
-                      suffixIcon: Icon(Icons.lock),
-                      controller: PasswordController,
-                      placeholder:
-                          PersonalCase.GetLable(ResourceKey.User_Password)),
+                    suffixIcon: Icon(Icons.lock),
+                    controller: PasswordController,
+                    placeholder:
+                        PersonalCase.GetLable(ResourceKey.User_Password),
+                  ),
                   SizedBox(height: 20),
+                  errorMsg == null
+                      ? Container()
+                      : Text(
+                    "${errorMsg}",
+                    style: TextStyle(
+                      color: Colors.redAccent,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   StretchableButton(
                     buttonColor: ArgonColors.primary,
                     children: [
@@ -118,32 +138,24 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                     onPressed: LoginFunction(PersonalCase),
                   ),
-                  StretchableButton(
-                    buttonColor: ArgonColors.primary,
-                    children: [
-                      Text(
-                        "test button ",
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => LoginPages(),
-                        ),
-                      );
-                    },
-                  ),
-                  errorMsg == null
-                      ? Container()
-                      : Text(
-                          "${errorMsg}",
-                          style: TextStyle(
-                            color: Colors.redAccent,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                  // StretchableButton(
+                  //   buttonColor: ArgonColors.primary,
+                  //   children: [
+                  //     Text(
+                  //       "test button ",
+                  //       style: TextStyle(color: Colors.white),
+                  //     )
+                  //   ],
+                  //   onPressed: () {
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //         builder: (BuildContext context) => LoginPages(),
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
+
                 ],
               ),
       ),

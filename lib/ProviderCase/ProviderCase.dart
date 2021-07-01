@@ -30,7 +30,7 @@ class PersonalProvider with ChangeNotifier {
 
     _UserPref = new SharedPref();
     if(SharedPref.SelLanguage == null)
-      SharedPref.SelLanguage =new LanguagesBLL(1, "Türkçe");
+      SharedPref.SelLanguage  = new LanguagesBLL(1, "Türkçe");
   }
   EmployeesBLL GetCurrentUser() {
 
@@ -39,39 +39,71 @@ class PersonalProvider with ChangeNotifier {
 
   Future<bool> loadSharedPrefs() async {
     try {
-      IsLoading =true;
+      IsLoading = true ;
+
       bool Status = await _UserPref.initiateAppPrefernce();
+
       if (Status) {
+        print ( ' before Status') ;
+
+
         _CurrentUser.Employee_User = SharedPref.UserName;
         _CurrentUser.Employee_Password = SharedPref.UserPassword;
         await _CurrentUser.login();
+        print('The user status is ${_CurrentUser.ValidUser} ');
 
-        if (_CurrentUser.ValidUser) await GetGlobalization(SharedPref.SelLanguage.Id);
+        if (_CurrentUser.ValidUser)
+          {
+            print ('testtest');
+
+
+          }await GetGlobalization(SharedPref.SelLanguage.Id);
         IsLoading = false;
       }
+
+      else{
+        _CurrentUser.LoginMessage="Error in the port or ip ";
+      }
+
       return Status;
     } catch (Excepetion) {
       print('When Try Loading loadSharedPrefs:' + Excepetion);
     }
+
     return false;
   }
 
   Login() async {
+
     await _CurrentUser.login();
     await GetGlobalization(SharedPref.SelLanguage.Id);
     ///TODO
 
-    if ( _CurrentUser.ValidUser==true )
-     notifyListeners();
+    if ( _CurrentUser.ValidUser==true ) {
+      SharedPref.UserName     =     _CurrentUser.Employee_User;
+      SharedPref.UserPassword =     _CurrentUser.Employee_Password;
+
+
+           SharedPref.SavePrefernce("UserName",  _CurrentUser.Employee_User);
+            SharedPref.SavePrefernce("UserPassword",  _CurrentUser.Employee_User);
+
+
+      notifyListeners();
+    }
+
   }
 
   SetupAndLogin() async {
-    /// TODO: HOW IT SEND DATA ?
+
+
+    print ( 'test ') ;
+
     await SharedPref.SetupAndSave();
-    _CurrentUser.Employee_User = SharedPref.UserName;
-    _CurrentUser.Employee_Password = SharedPref.UserPassword;
-     await _CurrentUser.login();
-    notifyListeners();
+    await _CurrentUser.login();
+
+
+
+   // notifyListeners();
   }
 
   UpdateInformation() async {
@@ -83,8 +115,17 @@ class PersonalProvider with ChangeNotifier {
   }
 
   void Logout() {
+    print('Logout');
+    _CurrentUser.Employee_Name="";
+    _CurrentUser.Employee_Password="";
+    SharedPref.UserName="";
+    SharedPref.UserPassword="";
     _CurrentUser.Logout();
-    notifyListeners();
+
+    SharedPref.SavePrefernce('UserName', '');
+    SharedPref.SavePrefernce('UserPassword', '');
+
+        notifyListeners();
   }
 
   String GetLable(ResourceKey KeyRes) {

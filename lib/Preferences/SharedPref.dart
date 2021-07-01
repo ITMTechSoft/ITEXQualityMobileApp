@@ -10,6 +10,7 @@ class SharedPref {
   static String UserPassword;
   static String WebApiDomain;
   static LanguagesBLL SelLanguage;
+  static bool isLogin ;
 
   readFromJson(String key) async {
     final prefs = await SharedPreferences.getInstance();
@@ -22,7 +23,14 @@ class SharedPref {
   Future<String> ReadFromString(String Key) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     String res = preferences.getString(Key) ?? '';
-    print('User Data Model Retrived ' + res.toString());
+    print('User Data Model Retrived1 ' + res.toString());
+    return res;
+  }
+
+  Future<bool> ReadFromBool(String Key) async {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    bool res = preferences.getBool(Key) ?? '';
+    print('User Data Model Retrived22222222 ' + res.toString());
     return res;
   }
 
@@ -31,24 +39,45 @@ class SharedPref {
     prefs.setString(key, value);
   }
 
+  static SaveBool(String key, value) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool(key, value);
+  }
+
   RemovePrefernce(String key) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(key);
   }
 
+  /// TODO  : CHANGE THIS FUNCTION NAME
+  /// TODO : DO THIS FUNCTION NEED TO RETURN FUTURE<BOOL> ?
   initiateAppPrefernce() async {
     try {
-      ServerIp = await ReadFromString("ServerIp");
-      ServerPort = await ReadFromString("PortServer");
-      UserName = await ReadFromString("UserName");
+      ServerIp     = await ReadFromString("ServerIp");
+      ServerPort   = await ReadFromString("PortServer");
+      UserName     = await ReadFromString("UserName");
       UserPassword = await ReadFromString("UserPassword");
-      String Lang = await ReadFromString("SelLanguage");
-      SelLanguage = LanguagesBLL.fromJson(json.decode(Lang));
+      String Lang  = await ReadFromString("SelLanguage");
+      //SelLanguage  = LanguagesBLL.fromJson(json.decode(Lang));
       WebApiDomain = "api/Quality";
 
-      if (ServerIp.isNotEmpty || ServerPort.isNotEmpty) return true;
+      /// TODO
+      if (ServerIp != null) {
+        if (ServerIp.isNotEmpty || ServerPort.isNotEmpty)
+          return true;
+        else {
+          return false;
+        }
+      } else {
+
+        return false;
+      }
     } catch (Exception) {
+
+
       print(Exception);
+
+      return false;
     }
     return false;
   }
@@ -93,7 +122,20 @@ class SharedPref {
       if (ServerIp.isNotEmpty || ServerPort.isNotEmpty) return true;
     } catch (Exception) {
       print(Exception);
+
     }
     return false;
+  }
+   SaveLogin() async
+  {
+    print ('test inside savelong#####');
+    await SaveBool("isLogin", true);
+
+
+  }
+
+   Future<bool> checkLogin() async
+  {
+    await ReadFromBool("isLogin");
   }
 }

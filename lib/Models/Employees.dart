@@ -103,7 +103,7 @@ class EmployeesBLL {
     try {
       final String url =
           SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection);
-
+      print(url.toString());
       var response = await http.post(
         url,
         headers: <String, String>{
@@ -119,13 +119,16 @@ class EmployeesBLL {
       // print(jsonEncode(toPost()));
 
       if (response.statusCode == 200) {
+
         this.LoadFromJson(json.decode(response.body));
 
       } else {
-       // print ( 'errooorororoor heere ');
-      //  print(response.statusCode.toString() + ": " + response.toString());
+          LoginMessage = "Problem with server ";
       }
     } catch (Excpetion) {
+      print ('########');
+      LoginMessage = "Problem with server ";
+
       print(Excpetion);
 
     }

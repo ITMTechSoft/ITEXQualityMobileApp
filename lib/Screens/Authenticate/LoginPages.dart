@@ -24,6 +24,7 @@ class _LoginPagesState extends State<LoginPages> {
   LoginFunction(PersonalProvider PersonalCase) => () async {
         setState(() {
           _isLoading = true;
+          errorMsg =  " ";
         });
 
         PersonalCase.GetCurrentUser().Employee_User = UserNameController.text;
@@ -46,7 +47,8 @@ class _LoginPagesState extends State<LoginPages> {
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
-
+    UserNameController.text = SharedPref.UserName;
+    PasswordController.text = SharedPref.UserPassword;
     return Scaffold(
       appBar: AppBar(
           title: Text(
@@ -74,7 +76,8 @@ class _LoginPagesState extends State<LoginPages> {
             )
           ]),
       body: SingleChildScrollView(
-        child: Column(
+        child:_isLoading  ? CircularProgressIndicator():
+        Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text('this is my page '),
@@ -102,8 +105,17 @@ class _LoginPagesState extends State<LoginPages> {
                     suffixIcon: Icon(Icons.lock),
                     controller: PasswordController,
                     placeholder:
-                        PersonalCase.GetLable(ResourceKey.User_Password),
+                    PersonalCase.GetLable(ResourceKey.User_Password),
                     errorMessage: " Password can not be empty ",
+                  ),
+                  errorMsg == null
+                      ? Container()
+                      : Text(
+                    "${errorMsg}",
+                    style: TextStyle(
+                      color: Colors.redAccent,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   StretchableButton(
                     buttonColor: ArgonColors.primary,

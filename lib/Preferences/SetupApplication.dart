@@ -245,7 +245,7 @@ class _SetupApplicationState extends State<SetupApplication> {
                     onPressed: () async {
                       await PersonalCase.SetupAndLogin();
 
-                      Navigator.pop(context);
+                   Navigator.pop(context);
                     },
                     backgroundColor: Colors.redAccent,
                     height: 40,
@@ -277,8 +277,10 @@ class _SetupApplicationState extends State<SetupApplication> {
               // fontFamily: 'Ninto',
               ),
         ),
+
+        /// TODO : PROBLEM IN LANGAUGE
         subtitle: Text(
-          subtitle,
+          'test',
           style: TextStyle(fontWeight: FontWeight.w500),
         ),
       ),
