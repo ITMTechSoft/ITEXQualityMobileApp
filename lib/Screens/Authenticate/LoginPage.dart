@@ -64,13 +64,19 @@ class _LoginPageState extends State<LoginPage> {
       };
 
 
+  @override
+  initStat()
+  {
+    UserNameController.text = SharedPref.UserName;
+  PasswordController.text = SharedPref.UserPassword;
+    super.initState();
+  }
 
 
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
-    UserNameController.text = SharedPref.UserName;
-    PasswordController.text = SharedPref.UserPassword;
+
 
    // LoginFunction(PersonalCase,userName: SharedPref.UserName,password: SharedPref.UserPassword);
 
@@ -138,23 +144,6 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                     onPressed: LoginFunction(PersonalCase),
                   ),
-                  // StretchableButton(
-                  //   buttonColor: ArgonColors.primary,
-                  //   children: [
-                  //     Text(
-                  //       "test button ",
-                  //       style: TextStyle(color: Colors.white),
-                  //     )
-                  //   ],
-                  //   onPressed: () {
-                  //     Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //         builder: (BuildContext context) => LoginPages(),
-                  //       ),
-                  //     );
-                  //   },
-                  // ),
 
                 ],
               ),

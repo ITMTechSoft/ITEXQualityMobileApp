@@ -72,32 +72,32 @@ class _SetupApplicationsState extends State<SetupApplications> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 20),
-                    // DropdownButtonFormField<LanguagesBLL>(
-                    //
-                    //   hint: Text("Select item"),
-                    //   isExpanded: true,
-                    //   value: CurrentLanguage,
-                    //   isDense: true,
-                    //   icon: Icon(Icons.keyboard_arrow_down),
-                    //   iconSize: 40,
-                    //   elevation: 40,
-                    //   onChanged: (LanguagesBLL newValue) {
-                    //     setState(() {
-                    //       // serverIpController.text = serverIpController.text;
-                    //       // portController .text = portController.text;
-                    //     //  SharedPref.SelLanguage = CurrentLanguage = newValue;
-                    //     });
-                    //     // somehow set here selected 'value' above whith
-                    //     // newValue
-                    //     // via setState or reactive.
-                    //   },
-                    //   items: languageList.map((LanguagesBLL value) {
-                    //     return DropdownMenuItem<LanguagesBLL>(
-                    //       value: value,
-                    //       child: Text(value.CultureName),
-                    //     );
-                    //   }).toList(),
-                    // )
+                    DropdownButtonFormField<LanguagesBLL>(
+
+                      hint: Text("Select item"),
+                      isExpanded: true,
+                      value: CurrentLanguage,
+                      isDense: true,
+                      icon: Icon(Icons.keyboard_arrow_down),
+                      iconSize: 40,
+                      elevation: 40,
+                      onChanged: (LanguagesBLL newValue) {
+                        setState(() {
+                          // serverIpController.text = serverIpController.text;
+                          // portController .text = portController.text;
+                        //  SharedPref.SelLanguage = CurrentLanguage = newValue;
+                        });
+                        // somehow set here selected 'value' above whith
+                        // newValue
+                        // via setState or reactive.
+                      },
+                      items: languageList.map((LanguagesBLL value) {
+                        return DropdownMenuItem<LanguagesBLL>(
+                          value: value,
+                          child: Text(value.CultureName),
+                        );
+                      }).toList(),
+                    )
                   ],
                 ),
 

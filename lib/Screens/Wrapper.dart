@@ -33,7 +33,7 @@ class _WrapperState extends State<Wrapper> {
 
     if (!PersonalCase.GetCurrentUser().ValidUser)
     {
-      return LoginPages();
+      return LoginPage();
     } else {
       return MainActivity();
     }
