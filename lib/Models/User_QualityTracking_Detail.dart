@@ -35,6 +35,13 @@ class User_QualityTracking_DetailBLL {
   int Entity_Order;
   int Group_Id;
   String Employee_Name;
+  String Inline_Employee_Name;
+  int Inline_Employee_Id;
+  String Operation;
+
+  int AssignAmount;
+  String ControlType;
+  int Order_Id;
 
   //#endregion
 
@@ -44,7 +51,7 @@ class User_QualityTracking_DetailBLL {
   LoadFromJson(Map<String, dynamic> json) {
     this.Id = json['Id'];
     this.QualityDept_ModelOrder_Tracking_Id =
-        json['QualityDept_ModelOrder_Tracking_Id'];
+    json['QualityDept_ModelOrder_Tracking_Id'];
     this.Create_Date = json['Create_Date'] == null
         ? null
         : DateTime.parse(json['Create_Date']);
@@ -81,12 +88,14 @@ class User_QualityTracking_DetailBLL {
     this.Item_Level = json['Item_Level'];
     this.Entity_Order = json['Entity_Order'];
     this.Employee_Name = json['Employee_Name'];
+    this.Inline_Employee_Id = json['Inline_Employee_Id'];
+    this.Inline_Employee_Name = json['Inline_Employee_Name'];
   }
 
   User_QualityTracking_DetailBLL.fromJson(Map<String, dynamic> json)
       : Id = json['Id'],
         QualityDept_ModelOrder_Tracking_Id =
-            json['QualityDept_ModelOrder_Tracking_Id'],
+        json['QualityDept_ModelOrder_Tracking_Id'],
         Create_Date = json['Create_Date'] == null
             ? null
             : DateTime.parse(json['Create_Date']),
@@ -117,94 +126,106 @@ class User_QualityTracking_DetailBLL {
         Item_Level = json['Item_Level'],
         Entity_Order = json['Entity_Order'],
         Group_Id = json['Group_Id'],
-        Employee_Name = json['Employee_Name'];
+        Employee_Name = json['Employee_Name'],
+        Inline_Employee_Name = json['Inline_Employee_Name'],
+        Inline_Employee_Id = json['Inline_Employee_Id'];
 
   Map<String, dynamic> toJson() => {
-        'Id': Id,
-        'QualityDept_ModelOrder_Tracking_Id':
-            QualityDept_ModelOrder_Tracking_Id,
-        'Create_Date': Create_Date,
-        'Update_Date': Update_Date,
-        'Amount': Amount,
-        'Xaxis_QualityItem_Id': Xaxis_QualityItem_Id,
-        'Yaxis_QualityItem_Id': Yaxis_QualityItem_Id,
-        'Recycle_Amount': Recycle_Amount,
-        'Recycle_Date': Recycle_Date,
-        'Recycle_Employee_Id': Recycle_Employee_Id,
-        'Operation_Id': Operation_Id,
-        'EmpLine_DailyMoves_Id': EmpLine_DailyMoves_Id,
-        'Employee_DailyProduction_Id': Employee_DailyProduction_Id,
-        'CheckStatus': CheckStatus,
-        'Reject_Note': Reject_Note,
-        'Correct_Amount': Correct_Amount,
-        'Error_Amount': Error_Amount,
-        'Employee_Id': Employee_Id,
-        'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id,
-        'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id,
-        'Accessory_ModelOrder_Id': Accessory_ModelOrder_Id,
-        'Plan_Daily_Production_Id': Plan_Daily_Production_Id,
-        'Item_Name': Item_Name,
-        'Item_Level': Item_Level,
-        'Entity_Order': Entity_Order,
-        'Id': Id,
-        'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id,
-        'Group_Id': Group_Id,
-        'Item_Name': Item_Name,
-        'Item_Level': Item_Level,
-        'Entity_Order': Entity_Order,
-        'Employee_Name': Employee_Name,
-      };
+    'Id': Id,
+    'QualityDept_ModelOrder_Tracking_Id':
+    QualityDept_ModelOrder_Tracking_Id,
+    'Create_Date': Create_Date,
+    'Update_Date': Update_Date,
+    'Amount': Amount,
+    'Xaxis_QualityItem_Id': Xaxis_QualityItem_Id,
+    'Yaxis_QualityItem_Id': Yaxis_QualityItem_Id,
+    'Recycle_Amount': Recycle_Amount,
+    'Recycle_Date': Recycle_Date,
+    'Recycle_Employee_Id': Recycle_Employee_Id,
+    'Operation_Id': Operation_Id,
+    'EmpLine_DailyMoves_Id': EmpLine_DailyMoves_Id,
+    'Employee_DailyProduction_Id': Employee_DailyProduction_Id,
+    'CheckStatus': CheckStatus,
+    'Reject_Note': Reject_Note,
+    'Correct_Amount': Correct_Amount,
+    'Error_Amount': Error_Amount,
+    'Employee_Id': Employee_Id,
+    'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id,
+    'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id,
+    'Accessory_ModelOrder_Id': Accessory_ModelOrder_Id,
+    'Plan_Daily_Production_Id': Plan_Daily_Production_Id,
+    'Item_Name': Item_Name,
+    'Item_Level': Item_Level,
+    'Entity_Order': Entity_Order,
+    'Id': Id,
+    'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id,
+    'Group_Id': Group_Id,
+    'Item_Name': Item_Name,
+    'Item_Level': Item_Level,
+    'Entity_Order': Entity_Order,
+    'Employee_Name': Employee_Name,
+    'Inline_Employee_Id': Inline_Employee_Id,
+    'Inline_Employee_Name': Inline_Employee_Name,
+  };
 
   Map<String, String> toPost() => {
-        'Id': Id.toString(),
-        'QualityDept_ModelOrder_Tracking_Id':
-            QualityDept_ModelOrder_Tracking_Id.toString(),
-        'Create_Date': Create_Date.toString(),
-        'Update_Date': Update_Date.toString(),
-        'Amount': Amount.toString(),
-        'Xaxis_QualityItem_Id': Xaxis_QualityItem_Id.toString(),
-        'Yaxis_QualityItem_Id': Yaxis_QualityItem_Id.toString(),
-        'Recycle_Amount': Recycle_Amount.toString(),
-        'Recycle_Date': Recycle_Date.toString(),
-        'Recycle_Employee_Id': Recycle_Employee_Id.toString(),
-        'Operation_Id': Operation_Id.toString(),
-        'EmpLine_DailyMoves_Id': EmpLine_DailyMoves_Id.toString(),
-        'Employee_DailyProduction_Id': Employee_DailyProduction_Id.toString(),
-        'CheckStatus': CheckStatus.toString(),
-        'Reject_Note': Reject_Note,
-        'Correct_Amount': Correct_Amount.toString(),
-        'Error_Amount': Error_Amount.toString(),
-        'Employee_Id': Employee_Id.toString(),
-        'DeptModelOrder_QualityTest_Id':
-            DeptModelOrder_QualityTest_Id.toString(),
-        'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id.toString(),
-        'Accessory_ModelOrder_Id': Accessory_ModelOrder_Id.toString(),
-        'Plan_Daily_Production_Id': Plan_Daily_Production_Id.toString(),
-        'Item_Name': Item_Name,
-        'Item_Level': Item_Level.toString(),
-        'Entity_Order': Entity_Order.toString(),
-        'Id': Id.toString(),
-        'DeptModelOrder_QualityTest_Id':
-            DeptModelOrder_QualityTest_Id.toString(),
-        'Group_Id': Group_Id.toString(),
-        'Item_Name': Item_Name,
-        'Item_Level': Item_Level.toString(),
-        'Entity_Order': Entity_Order.toString(),
-        'Employee_Name': Employee_Name,
-      };
+    'Id': Id.toString(),
+    'QualityDept_ModelOrder_Tracking_Id':
+    QualityDept_ModelOrder_Tracking_Id.toString(),
+    'Create_Date': Create_Date.toString(),
+    'Update_Date': Update_Date.toString(),
+    'Amount': Amount.toString(),
+    'Xaxis_QualityItem_Id': Xaxis_QualityItem_Id.toString(),
+    'Yaxis_QualityItem_Id': Yaxis_QualityItem_Id.toString(),
+    'Recycle_Amount': Recycle_Amount.toString(),
+    'Recycle_Date': Recycle_Date.toString(),
+    'Recycle_Employee_Id': Recycle_Employee_Id.toString(),
+    'Operation_Id': Operation_Id.toString(),
+    'EmpLine_DailyMoves_Id': EmpLine_DailyMoves_Id.toString(),
+    'Employee_DailyProduction_Id': Employee_DailyProduction_Id.toString(),
+    'CheckStatus': CheckStatus.toString(),
+    'Reject_Note': Reject_Note,
+    'Correct_Amount': Correct_Amount.toString(),
+    'Error_Amount': Error_Amount.toString(),
+    'Employee_Id': Employee_Id.toString(),
+    'DeptModelOrder_QualityTest_Id':
+    DeptModelOrder_QualityTest_Id.toString(),
+    'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id.toString(),
+    'Accessory_ModelOrder_Id': Accessory_ModelOrder_Id.toString(),
+    'Plan_Daily_Production_Id': Plan_Daily_Production_Id.toString(),
+    'Item_Name': Item_Name,
+    'Item_Level': Item_Level.toString(),
+    'Entity_Order': Entity_Order.toString(),
+    'Id': Id.toString(),
+    'DeptModelOrder_QualityTest_Id':
+    DeptModelOrder_QualityTest_Id.toString(),
+    'Group_Id': Group_Id.toString(),
+    'Item_Name': Item_Name,
+    'Item_Level': Item_Level.toString(),
+    'Entity_Order': Entity_Order.toString(),
+    'Employee_Name': Employee_Name,
+    'Inline_Employee_Id': Inline_Employee_Id.toString(),
+    'Inline_Employee_Name': Inline_Employee_Name,
+    'AssignAmount' : AssignAmount.toString(),
+    'ControlType':ControlType,
+    'Order_Id':Order_Id.toString(),
+
+  };
 
   //#endregion
 
   //#region GetWebApiUrl
   static Future<List<User_QualityTracking_DetailBLL>>
-      Get_User_QualityTracking_Detail(int Employee_Id) async {
-    /*  List<User_QualityTracking_DetailBLL> ItemList;
+  Get_User_QualityTracking_Detail(
+      int QualityDept_ModelOrder_Tracking_Id) async {
+    List<User_QualityTracking_DetailBLL> ItemList;
     try {
-      var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_User_QualityTracking_Detail) +
-              "?Employee_Id=" +
-              Employee_Id.toString());
+      var response = await http.get(SharedPref.GetWebApiUrl(
+          WebApiMethod.Get_User_QualityTracking_Detail) +
+          "?QualityDept_ModelOrder_Tracking_Id=" +
+          QualityDept_ModelOrder_Tracking_Id.toString());
 
+      print(response.request);
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
             .map((i) => User_QualityTracking_DetailBLL.fromJson(i))
@@ -214,13 +235,13 @@ class User_QualityTracking_DetailBLL {
       print(Excpetion);
     }
 
-    return ItemList;*/
+    return ItemList;
   }
 
   Future Set_User_QualityTracking_Detail() async {
     try {
       final String url =
-          SharedPref.GetWebApiUrl(WebApiMethod.Set_User_QualityTracking_Detail);
+      SharedPref.GetWebApiUrl(WebApiMethod.Set_User_QualityTracking_Detail);
 
       String val = jsonEncode(this.toPost());
       var response = await http.post(url,
@@ -232,6 +253,87 @@ class User_QualityTracking_DetailBLL {
       print(Excpetion);
     }
   }
+
+  Future<User_QualityTracking_DetailBLL>
+  GenerateInlineEmployeeOperation() async {
+    try {
+      final String url = SharedPref.GetWebApiUrl(
+          WebApiMethod.Set_GenerateInlineEmployeeOperation);
+
+      String val = jsonEncode(this.toPost());
+      var response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(this.toPost()));
+      if (response.statusCode == 200) {
+        LoadFromJson(json.decode(response.body));
+        return this;
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  Future<bool> Start_DikimInlineProcess() async {
+    try {
+      final String url =
+      SharedPref.GetWebApiUrl(WebApiMethod.Start_DikimInlineProcess);
+
+      String val = jsonEncode(this.toPost());
+      var response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(this.toPost()));
+      if (response.statusCode == 200) {
+        LoadFromJson(json.decode(response.body));
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
+  Future<bool> Assign_EmployeeControlAmount(
+      int assignAmount, String controlType) async {
+    try {
+      this.AssignAmount = assignAmount;
+      this.ControlType = controlType;
+      final String url =
+      SharedPref.GetWebApiUrl(WebApiMethod.Assign_EmployeeControlAmount);
+
+      String val = jsonEncode(this.toPost());
+      var response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(this.toPost()));
+      if (response.statusCode == 200) {
+        LoadFromJson(json.decode(response.body));
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
+  Future<bool> CloseEmployeeOperationControlRound() async {
+    try {
+      final String url =
+      SharedPref.GetWebApiUrl(WebApiMethod.CloseEmployeeOperationControlRound);
+
+      String val = jsonEncode(this.toPost());
+      var response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(this.toPost()));
+      if (response.statusCode == 200) {
+        LoadFromJson(json.decode(response.body));
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
 //#endregion
 
 }

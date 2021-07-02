@@ -78,7 +78,7 @@ class Criteria_ModelOrderBLL {
           SharedPref.GetWebApiUrl(WebApiMethod.Get_Criteria_ModelOrder) +
               "?DeptModelOrder_QualityTest_Id=" +
               DeptModelOrder_QualityTest_Id.toString();
-     // print(URL);
+      print(URL);
       var response = await http.get(URL);
 
       if (response.statusCode == 200) {

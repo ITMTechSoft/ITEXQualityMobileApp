@@ -5,5 +5,5 @@ export 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Cutting_Pastal.dar
 export 'package:itex_soft_qualityapp/Screens/Home/QualityTest/TasnifControl/Tasnif_Control.dart';
 export 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Tasnif_Amount.dart';
 export 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Accessory_Control.dart';
-export 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Dikim_InlineControl.dart';
+export 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Dikim_InlineControl/Dikim_InlineControl.dart';
 export 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Dikim_LastControl.dart';

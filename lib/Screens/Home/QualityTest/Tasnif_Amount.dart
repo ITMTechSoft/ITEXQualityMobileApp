@@ -15,7 +15,7 @@ class _Tasnif_AmountState extends State<Tasnif_Amount> {
   int IntiteStatus = 0;
 
   final TextEditingController TasnifAmountController =
-      new TextEditingController();
+  new TextEditingController();
 
   String ActionMessage = "";
 

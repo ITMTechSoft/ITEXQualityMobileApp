@@ -1,0 +1,108 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
+import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
+import 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Dikim_InlineControl/Dikim_EmployeeOperationMerge.dart';
+import 'package:itex_soft_qualityapp/SystemImports.dart';
+import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
+
+
+class Dikim_InlineRound extends StatefulWidget {
+  QualityDept_ModelOrder_TrackingBLL RoundItem;
+
+  Dikim_InlineRound({this.RoundItem});
+
+  @override
+  _Dikim_InlineRoundState createState() => _Dikim_InlineRoundState();
+}
+
+class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
+
+  int IntiteStatus = 0;
+
+  Future<List<User_QualityTracking_DetailBLL>> LoadingOpenPage(
+      PersonalProvider PersonalCase) async {
+    List<User_QualityTracking_DetailBLL> Criteria =
+    await User_QualityTracking_DetailBLL.Get_User_QualityTracking_Detail(
+        widget.RoundItem.Id);
+
+    if (Criteria != null) {
+      IntiteStatus = 1;
+      return Criteria;
+    } else {
+      IntiteStatus = -1;
+    }
+    return null;
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    final PersonalCase = Provider.of<PersonalProvider>(context);
+
+    return Scaffold(
+      appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+        Navigator.pop(context);
+      }),
+      body: ListView(children: [
+        ListTile(
+          title: HeaderTitle(
+              PersonalCase.SelectedTest.Test_Name +
+                  ": " +
+                  PersonalCase.SelectedOrder.Order_Number,
+              color: ArgonColors.header,
+              FontSize: ArgonSize.Header2),
+          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+          dense: true,
+          selected: true,
+        ),
+        FutureBuilder(
+          future: LoadingOpenPage(PersonalCase),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Container(
+                margin: EdgeInsets.all(2),
+                padding: EdgeInsets.all(2),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    StandardButton(
+                        Lable:
+                        PersonalCase.GetLable(ResourceKey.AddControlEmployee),
+                        ForColor: ArgonColors.white,
+                        BakColor: ArgonColors.primary,
+                        OnTap: ()async{
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                              Dikim_EmployeeOperationMerge(RoundItem: widget.RoundItem,)));
+                        }),
+                    Tb_InlineRoundList(
+                      OnClickItems: (int Index) {
+                        if (snapshot.data[Index].Status == DikimInlineStatus
+                            .Open.index)
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) =>
+                                  Dikim_InlineRound(
+                                      RoundItem: snapshot.data[Index])));
+                      },
+                      Items: snapshot.data,
+
+                    ),
+                  ],
+                ),
+              );
+
+            } else if (IntiteStatus == 0)
+              return Center(child: CircularProgressIndicator());
+            else
+              return ErrorPage(
+                  ActionName: PersonalCase.GetLable(ResourceKey.Loading),
+                  MessageError: PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
+                  DetailError: PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
+          },
+        )
+      ]),
+    );
+  }
+}
