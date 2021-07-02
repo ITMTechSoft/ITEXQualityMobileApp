@@ -25,7 +25,9 @@ enum WebApiMethod{
   Set_User_QualityTracking_Detail,
   Set_CloseTanifSample,
   Set_TasnifOrderSizeColorDetails,
-  Get_Accessory_ModelOrder
+  Get_Accessory_ModelOrder ,
+  Get_Version
+
 }
 
 

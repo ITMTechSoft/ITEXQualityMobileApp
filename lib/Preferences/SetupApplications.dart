@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:itex_soft_qualityapp/Models/Languages.dart';
+import 'package:itex_soft_qualityapp/Screens/Authenticate/LoginPage.dart';
 import 'package:itex_soft_qualityapp/Utility/Globalization.dart';
 import 'package:itex_soft_qualityapp/Utility/ResourceKeys.dart';
 import 'package:itex_soft_qualityapp/Widgets/Input.dart';
@@ -16,10 +17,13 @@ class _SetupApplicationsState extends State<SetupApplications> {
   final _formKey = GlobalKey<FormState>();
 
   /// CONTROLLERS
-  TextEditingController serverIpController = new TextEditingController();
-  TextEditingController portController = new TextEditingController();
+  TextEditingController serverIpController =
+      new TextEditingController(text: SharedPref.ServerIp);
+  TextEditingController portController =
+      new TextEditingController(text: SharedPref.ServerPort);
   LanguagesBLL CurrentLanguage;
   final languageList = LanguagesBLL.Get_Languages();
+  String errorMsg;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +49,9 @@ class _SetupApplicationsState extends State<SetupApplications> {
                   errorMessage: "Ip can't be empty ",
                   MaxLength: 15,
                   hintMessage: '192.158. 1.38',
-                    isIp: true
+                  isIp: true,
+                  Ktype: TextInputType.number,
+                  //  initialValue: serverIpController.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -58,8 +64,17 @@ class _SetupApplicationsState extends State<SetupApplications> {
                   Ktype: TextInputType.number,
                   MaxLength: 4,
                   hintMessage: '3968',
-
+                  //initialValue: portController.text,
                 ),
+                errorMsg == null
+                    ? Container()
+                    : Text(
+                        "${errorMsg}",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                 SizedBox(
                   height: 20,
                 ),
@@ -73,7 +88,6 @@ class _SetupApplicationsState extends State<SetupApplications> {
                     ),
                     SizedBox(height: 20),
                     DropdownButtonFormField<LanguagesBLL>(
-
                       hint: Text("Select item"),
                       isExpanded: true,
                       value: CurrentLanguage,
@@ -83,9 +97,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                       elevation: 40,
                       onChanged: (LanguagesBLL newValue) {
                         setState(() {
-                          // serverIpController.text = serverIpController.text;
-                          // portController .text = portController.text;
-                        //  SharedPref.SelLanguage = CurrentLanguage = newValue;
+                          SharedPref.SelLanguage = CurrentLanguage = newValue;
                         });
                         // somehow set here selected 'value' above whith
                         // newValue
@@ -114,18 +126,32 @@ class _SetupApplicationsState extends State<SetupApplications> {
                 StretchableButton(
                   buttonColor: ArgonColors.primary,
                   children: [
-                    Text("Sign In", style: TextStyle(color: Colors.white))
+                    Text("Save", style: TextStyle(color: Colors.white))
                   ],
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
                       SharedPref.ServerIp = serverIpController.text;
                       SharedPref.ServerPort = portController.text;
-                    //  SharedPref.SelLanguage = CurrentLanguage;
-                     await PersonalCase.SetupAndLogin();
+                      //  SharedPref.SelLanguage = CurrentLanguage;
+                      bool status = await PersonalCase.SetupAndLogin();
+                      if (status == true) {
+                        print('the status is $status');
 
-                   Navigator.pop(context);
-                    } else
-                      print("Not Working");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginPage(),
+                          ),
+                        );
+                      }
+                      else{
+                        setState(() {
+                          errorMsg = "check the ip and port ";
+                        });
+                      }
+
+                    }
+
                   },
                 ),
               ],

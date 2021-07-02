@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
@@ -104,7 +106,8 @@ class EmployeesBLL {
       final String url =
           SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection);
       print(url.toString());
-      var response = await http.post(
+      var response = await http
+          .post(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -112,26 +115,58 @@ class EmployeesBLL {
         body: jsonEncode(
           toPost(),
         ),
-      );
+      )
+          .timeout(const Duration(seconds: 1), onTimeout: () {
+        LoginMessage = "server is not true ";
+
+        throw TimeoutException(
+            'The connection has timed out, Please try again!');
+      });
 
       // print("the url is    $url");
 
       // print(jsonEncode(toPost()));
 
       if (response.statusCode == 200) {
-
         this.LoadFromJson(json.decode(response.body));
+      } else {}
+    } on TimeoutException catch (_) {
+      LoginMessage = "time out ";
 
-      } else {
-          LoginMessage = "Problem with server ";
-      }
-    } catch (Excpetion) {
-      print ('########');
-      LoginMessage = "Problem with server ";
+      // A timeout occurred.
+    } on SocketException catch (_) {
+      LoginMessage = _.message;
 
-      print(Excpetion);
-
+      // Other exception
     }
+  }
+
+  /// CHECK IF IP AND PORT ARE CORRECT
+  Future<String> CheckIP() async {
+    try {
+      final String url =
+      SharedPref.GetWebApiUrl(WebApiMethod.Get_Version,WebApiDomain: "api/MaksitusTable");
+      print(url.toString());
+      var response = await http.get(url)
+          .timeout(const Duration(seconds: 2), onTimeout: () {
+        LoginMessage = "server ip is not true ";
+
+        throw TimeoutException(
+            'The connection has timed out, Please try again!');
+      });;
+
+      if (response.statusCode==200)
+        {
+          print ( response.body);
+          return "True";
+        }
+      else{
+        return "False";
+      }
+    } catch (e) {
+      print(e);
+    }
+    return "False";
   }
 
   /// TODO: WHAT IS THE DIFFERENCE BETWEEN LOGIN AND SIGNIN

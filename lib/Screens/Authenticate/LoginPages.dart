@@ -21,29 +21,47 @@ class _LoginPagesState extends State<LoginPages> {
   final TextEditingController PasswordController = new TextEditingController();
 
   //// LOGIN FUNCTION
-  LoginFunction(PersonalProvider PersonalCase) => () async {
-        setState(() {
-          _isLoading = true;
-          errorMsg =  " ";
-        });
+  Future<bool> LoginFunction(PersonalProvider PersonalCase) async {
+    // setState(() {
+    //   _isLoading = true;
+    //   errorMsg =  " ";
+    // });
 
-        PersonalCase.GetCurrentUser().Employee_User = UserNameController.text;
-        PersonalCase.GetCurrentUser().Employee_Password =
-            PasswordController.text;
+    String status = await PersonalCase.GetCurrentUser().CheckIP();
 
-        await PersonalCase.Login();
 
-        setState(() {
-          _isLoading = false;
-        });
-        if (!PersonalCase.GetCurrentUser().ValidUser) {
-          errorMsg = PersonalCase.GetCurrentUser().LoginMessage;
-          print(
-              "The error message is: ${PersonalCase.GetCurrentUser().LoginMessage}");
-        }
-      };
+    if (status == "True") {
+      print('####- the ip is true ');
+      PersonalCase.GetCurrentUser().Employee_User = UserNameController.text;
+      PersonalCase.GetCurrentUser().Employee_Password = PasswordController.text;
 
-  ////
+      await PersonalCase.Login();
+
+      // setState(() {
+      //   _isLoading = false;
+      // });
+      if (!PersonalCase.GetCurrentUser().ValidUser) {
+        errorMsg = PersonalCase.GetCurrentUser().LoginMessage;
+        print(
+            "The error message is: ${PersonalCase.GetCurrentUser().LoginMessage}");
+      }
+    } else {
+      // setState(
+      //   () {
+      //     errorMsg = "The ip is not correct ";
+      //
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (BuildContext context) => SetupApplications(),
+      //       ),
+      //     );
+      //   },
+      // );
+    }
+  }
+
+////
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
@@ -76,72 +94,74 @@ class _LoginPagesState extends State<LoginPages> {
             )
           ]),
       body: SingleChildScrollView(
-        child:_isLoading  ? CircularProgressIndicator():
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('this is my page '),
-            CircleAvatar(
-              radius: 100.0,
-              foregroundColor: Colors.red,
-              backgroundColor: Colors.white10,
-              child: Image.asset(
-                ImgAssets.QualityIcon,
-                fit: BoxFit.fill,
-                alignment: Alignment.center,
-              ),
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
+        child: _isLoading
+            ? CircularProgressIndicator()
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Standard_Input(
-                    suffixIcon: Icon(Icons.person),
-                    controller: UserNameController,
-                    placeholder: PersonalCase.GetLable(ResourceKey.User_Name),
-                    errorMessage: "User Name can not be empty ",
-                  ),
-                  Standard_Input(
-                    suffixIcon: Icon(Icons.lock),
-                    controller: PasswordController,
-                    placeholder:
-                    PersonalCase.GetLable(ResourceKey.User_Password),
-                    errorMessage: " Password can not be empty ",
-                  ),
-                  errorMsg == null
-                      ? Container()
-                      : Text(
-                    "${errorMsg}",
-                    style: TextStyle(
-                      color: Colors.redAccent,
-                      fontWeight: FontWeight.bold,
+                  Text('this is my page '),
+                  CircleAvatar(
+                    radius: 100.0,
+                    foregroundColor: Colors.red,
+                    backgroundColor: Colors.white10,
+                    child: Image.asset(
+                      ImgAssets.QualityIcon,
+                      fit: BoxFit.fill,
+                      alignment: Alignment.center,
                     ),
                   ),
-                  StretchableButton(
-                    buttonColor: ArgonColors.primary,
-                    children: [
-                      Text(
-                        "Sign In",
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                    //  onPressed:
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Standard_Input(
+                          suffixIcon: Icon(Icons.person),
+                          controller: UserNameController,
+                          placeholder:
+                              PersonalCase.GetLable(ResourceKey.User_Name),
+                          errorMessage: "User Name can not be empty ",
+                        ),
+                        Standard_Input(
+                          suffixIcon: Icon(Icons.lock),
+                          controller: PasswordController,
+                          placeholder:
+                              PersonalCase.GetLable(ResourceKey.User_Password),
+                          errorMessage: " Password can not be empty ",
+                        ),
+                        errorMsg == null
+                            ? Container()
+                            : Text(
+                                "${errorMsg}",
+                                style: TextStyle(
+                                  color: Colors.redAccent,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                        StretchableButton(
+                          buttonColor: ArgonColors.primary,
+                          children: [
+                            Text(
+                              "Sign In",
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ],
+                          //  onPressed:
 
-                    onPressed: () async {
-                      if (_formKey.currentState.validate()) {
-                        LoginFunction(PersonalCase);
-                        print('working ');
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                            await  LoginFunction(PersonalCase);
+                              print('working ');
 
-                        //   Navigator.pop(context);
-                      } else
-                        print("Not Working");
-                    },
+                              //   Navigator.pop(context);
+                            } else
+                              print("Not Working");
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

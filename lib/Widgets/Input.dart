@@ -32,17 +32,18 @@ class Standard_Input extends StatelessWidget {
       this.borderColor = ArgonColors.border,
       this.controller,
       this.onValidator,
-      this.Ktype = TextInputType.text,
+      this.Ktype ,
       this.MinLines = 1,
       this.MaxLines = 1,
       this.errorMessage,
       this.MaxLength,
       this.hintMessage,
-      this.isIp});
+      this.isIp,
+     });
 
   @override
   Widget build(BuildContext context) {
-    var maskFormatter = new MaskTextInputFormatter(mask: '###.###.#.###');
+    var maskFormatter = new MaskTextInputFormatter(mask: '###.....');
 
     return Container(
       padding: EdgeInsets.all(5),
@@ -50,6 +51,7 @@ class Standard_Input extends StatelessWidget {
       child: TextFormField(
           cursorColor: ArgonColors.muted,
           onTap: onTap,
+
           onChanged: onChanged,
           controller: controller,
           keyboardType: Ktype,
@@ -64,7 +66,7 @@ class Standard_Input extends StatelessWidget {
 
             return null;
           },
-          inputFormatters: isIp == true ?  [maskFormatter] :  null,
+         //inputFormatters: isIp == true ?  [maskFormatter] :  null,
 
           // validator: (value) {
           //   if (value.isEmpty) return errorMessage;

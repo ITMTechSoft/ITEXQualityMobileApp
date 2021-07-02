@@ -24,6 +24,7 @@ class SharedPref {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     String res = preferences.getString(Key) ?? '';
     print('User Data Model Retrived1 ' + res.toString());
+    print ('test here');
     return res;
   }
 
@@ -53,13 +54,13 @@ class SharedPref {
   /// TODO : DO THIS FUNCTION NEED TO RETURN FUTURE<BOOL> ?
   initiateAppPrefernce() async {
     try {
-      ServerIp     = await ReadFromString("ServerIp");
-      ServerPort   = await ReadFromString("PortServer");
-      UserName     = await ReadFromString("UserName");
-      UserPassword = await ReadFromString("UserPassword");
-      String Lang  = await ReadFromString("SelLanguage");
-      //SelLanguage  = LanguagesBLL.fromJson(json.decode(Lang));
-      WebApiDomain = "api/Quality";
+     ServerIp       = await ReadFromString("ServerIp");
+     ServerPort     = await ReadFromString("PortServer");
+     UserName       = await ReadFromString("UserName");
+      UserPassword  = await ReadFromString("UserPassword");
+      String Lang   = await ReadFromString("SelLanguage");
+   //   SelLanguage  = LanguagesBLL.fromJson(json.decode(Lang));
+      WebApiDomain  = "api/Quality";
 
       /// TODO
       if (ServerIp != null) {
@@ -75,14 +76,14 @@ class SharedPref {
     } catch (Exception) {
 
 
-      print(Exception);
+      print('the exception is here $Exception');
 
       return false;
     }
     return false;
   }
 
-  static String GetWebApiUrl(WebApiMethod MethodName) {
+  static String GetWebApiUrl(WebApiMethod MethodName,{WebApiDomain="api/Quality"}) {
     return "http://$ServerIp:$ServerPort/$WebApiDomain/${MethodName.toString().split('.').last}";
   }
 
@@ -117,11 +118,12 @@ class SharedPref {
       await SavePrefernce("UserName", UserName);
       await SavePrefernce("UserPassword", UserPassword);
 
-      await SavePrefernce("SelLanguage", json.encode(SelLanguage.toJson()));
+     // await SavePrefernce("SelLanguage", json.encode(SelLanguage.toJson()));
 
       if (ServerIp.isNotEmpty || ServerPort.isNotEmpty) return true;
     } catch (Exception) {
-      print(Exception);
+
+      print( Exception);
 
     }
     return false;
