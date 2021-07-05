@@ -10,7 +10,7 @@ class SharedPref {
   static String UserPassword;
   static String WebApiDomain;
   static LanguagesBLL SelLanguage;
-  static bool isLogin ;
+  static bool isLogin;
 
   readFromJson(String key) async {
     final prefs = await SharedPreferences.getInstance();
@@ -22,28 +22,21 @@ class SharedPref {
 
   Future<String> ReadFromString(String Key) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    /// TODO : CHANGE THE '' TO TEST VALUE
     String res = preferences.getString(Key) ?? '';
     print('User Data Model Retrived1 ' + res.toString());
-    print ('test here');
     return res;
   }
 
-  Future<bool> ReadFromBool(String Key) async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-    bool res = preferences.getBool(Key) ?? '';
-    print('User Data Model Retrived22222222 ' + res.toString());
-    return res;
-  }
+
 
   static SavePrefernce(String key, value) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString(key, value);
   }
 
-  static SaveBool(String key, value) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setBool(key, value);
-  }
+
 
   RemovePrefernce(String key) async {
     final prefs = await SharedPreferences.getInstance();
@@ -54,36 +47,36 @@ class SharedPref {
   /// TODO : DO THIS FUNCTION NEED TO RETURN FUTURE<BOOL> ?
   initiateAppPrefernce() async {
     try {
-     ServerIp       = await ReadFromString("ServerIp");
-     ServerPort     = await ReadFromString("PortServer");
-     UserName       = await ReadFromString("UserName");
-      UserPassword  = await ReadFromString("UserPassword");
-      String Lang   = await ReadFromString("SelLanguage");
-   //   SelLanguage  = LanguagesBLL.fromJson(json.decode(Lang));
-      WebApiDomain  = "api/Quality";
+      ServerIp = await ReadFromString("ServerIp");
+      ServerPort = await ReadFromString("PortServer");
+
+      /// TODO HERE IT SHOULD NOT LOAD USERNAME AND PASSWORD
+      UserName = await ReadFromString("UserName");
+      UserPassword = await ReadFromString("UserPassword");
+      String Lang = await ReadFromString("SelLanguage");
+      SelLanguage = LanguagesBLL.fromJson(json.decode(Lang));
+      WebApiDomain = "api/Quality";
 
       /// TODO
-      if (ServerIp != null) {
+
         if (ServerIp.isNotEmpty || ServerPort.isNotEmpty)
           return true;
         else {
           return false;
         }
-      } else {
 
-        return false;
-      }
     } catch (Exception) {
-
-
-      print('the exception is here $Exception');
+      print('Shared Prefrence class , initiateAppPrefernce Function   $Exception');
 
       return false;
     }
     return false;
   }
 
-  static String GetWebApiUrl(WebApiMethod MethodName,{WebApiDomain="api/Quality"}) {
+  static String GetWebApiUrl(WebApiMethod MethodName,
+      {WebApiDomain = "api/Quality"}) {
+
+
     return "http://$ServerIp:$ServerPort/$WebApiDomain/${MethodName.toString().split('.').last}";
   }
 
@@ -115,29 +108,18 @@ class SharedPref {
       await SavePrefernce("ServerIp", ServerIp);
       await SavePrefernce("PortServer", ServerPort);
 
-      await SavePrefernce("UserName", UserName);
-      await SavePrefernce("UserPassword", UserPassword);
+      // /// TODO : YOU DON'T HAVE TO SAVE USERNAME AND PASSWORD HERE
+      // await SavePrefernce("UserName", UserName);
+      // await SavePrefernce("UserPassword", UserPassword);
 
-     // await SavePrefernce("SelLanguage", json.encode(SelLanguage.toJson()));
+      /// TODO : CHECK LANGUAGE HERE
+      await SavePrefernce("SelLanguage", json.encode(SelLanguage.toJson()));
 
       if (ServerIp.isNotEmpty || ServerPort.isNotEmpty) return true;
     } catch (Exception) {
-
-      print( Exception);
-
+      print(Exception);
     }
     return false;
   }
-   SaveLogin() async
-  {
-    print ('test inside savelong#####');
-    await SaveBool("isLogin", true);
 
-
-  }
-
-   Future<bool> checkLogin() async
-  {
-    await ReadFromBool("isLogin");
-  }
 }

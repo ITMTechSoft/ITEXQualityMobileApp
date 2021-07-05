@@ -20,49 +20,44 @@ class PersonalProvider with ChangeNotifier {
   OrderSizeColorDetailsBLL SelectedMatrix;
   QualityDept_ModelOrder_TrackingBLL SelectedTracking;
   List<Language_ResourcesKeyBLL> GlobalKeys;
-  bool IsLoading=false;
+  bool IsLoading = false;
 
   Accessory_ModelOrderBLL SelectedAccessoryModel;
 
   PersonalProvider() {
     _CurrentUser = new EmployeesBLL();
 
-
     _UserPref = new SharedPref();
-    if(SharedPref.SelLanguage == null)
-      SharedPref.SelLanguage  = new LanguagesBLL(1, "Türkçe");
+    if (SharedPref.SelLanguage == null)
+      SharedPref.SelLanguage = new LanguagesBLL(1, "Türkçe");
   }
-  EmployeesBLL GetCurrentUser() {
 
+  EmployeesBLL GetCurrentUser() {
     return _CurrentUser;
   }
 
   Future<bool> loadSharedPrefs() async {
     try {
-      IsLoading = true ;
+      IsLoading = true;
 
       bool Status = await _UserPref.initiateAppPrefernce();
 
       if (Status) {
-        print ( ' before Status') ;
-
-
+        ///TODO : I THINK HERE IT SHOULD NOT DO ANY THING AT ALL
+        ///HERE IT SHOULD ONLY CHECK IF THE IP IS CORRECT OR NOT
         _CurrentUser.Employee_User = SharedPref.UserName;
         _CurrentUser.Employee_Password = SharedPref.UserPassword;
+
+        ///TODO IT SHOULD NOT BE A  LOGIN HERE
+        ///TODO : I THINK HERE THERE ARE A LOOP xxxxxxxxxxxxxxxxxxxxxxxxxxx
         await _CurrentUser.login();
-        print('The user status is ${_CurrentUser.ValidUser} ');
 
-        if (_CurrentUser.ValidUser)
-          {
-            print ('testtest');
-
-
-          }await GetGlobalization(SharedPref.SelLanguage.Id);
+        if (_CurrentUser.ValidUser) {
+          notifyListeners();
+        }
         IsLoading = false;
-      }
-
-      else{
-        _CurrentUser.LoginMessage="Error in the port or ip ";
+      } else {
+        _CurrentUser.LoginMessage = "Error in the port or ip ";
       }
 
       return Status;
@@ -74,36 +69,35 @@ class PersonalProvider with ChangeNotifier {
   }
 
   Login() async {
-
     await _CurrentUser.login();
-    await GetGlobalization(SharedPref.SelLanguage.Id);
-    ///TODO
 
-    if ( _CurrentUser.ValidUser==true ) {
-      SharedPref.UserName     =     _CurrentUser.Employee_User;
-      SharedPref.UserPassword =     _CurrentUser.Employee_Password;
+    if (_CurrentUser.ValidUser == true) {
+      SharedPref.UserName     = _CurrentUser.Employee_User;
+      SharedPref.UserPassword = _CurrentUser.Employee_Password;
 
-
-           SharedPref.SavePrefernce("UserName",  _CurrentUser.Employee_User);
-            SharedPref.SavePrefernce("UserPassword",  _CurrentUser.Employee_User);
-
+      SharedPref.SavePrefernce("UserName", _CurrentUser.Employee_User);
+      SharedPref.SavePrefernce("UserPassword", _CurrentUser.Employee_User);
 
       notifyListeners();
     }
-
   }
 
-  SetupAndLogin() async {
+  Future<bool> SetupAndLogin() async {
+    String test = await _CurrentUser.CheckIP();
 
+    /// CHECK IF THE IP AND PORT IS CORRECT
 
-    print ( 'test ') ;
+    if (test == "True") {
+      await GetGlobalization(SharedPref.SelLanguage.Id);
 
-    await SharedPref.SetupAndSave();
-    await _CurrentUser.login();
+      await SharedPref.SetupAndSave();
 
+      return true;
+    } else {
+      return false;
+    }
 
-
-   // notifyListeners();
+    /// TODO : CHECK HERE
   }
 
   UpdateInformation() async {
@@ -116,28 +110,28 @@ class PersonalProvider with ChangeNotifier {
 
   void Logout() {
     print('Logout');
-    _CurrentUser.Employee_Name="";
-    _CurrentUser.Employee_Password="";
-    SharedPref.UserName="";
-    SharedPref.UserPassword="";
+
+    /// TODO : I should not do all that just
+    _CurrentUser.Employee_Name = "";
+    _CurrentUser.Employee_Password = "";
+    SharedPref.UserName = "";
+    SharedPref.UserPassword = "";
     _CurrentUser.Logout();
 
     SharedPref.SavePrefernce('UserName', '');
     SharedPref.SavePrefernce('UserPassword', '');
 
-        notifyListeners();
+    notifyListeners();
   }
 
   String GetLable(ResourceKey KeyRes) {
-    if(GlobalKeys !=null && GlobalKeys.length > 0) {
-      var GetResournce =
-      GlobalKeys.where((element) => element.ResKey == KeyRes.toShortString())
-          .toList();
-      if (GetResournce.length > 0)
-        return GetResournce.first.ResourceValue;
+    if (GlobalKeys != null && GlobalKeys.length > 0) {
+      var GetResournce = GlobalKeys.where(
+          (element) => element.ResKey == KeyRes.toShortString()).toList();
+      if (GetResournce.length > 0) return GetResournce.first.ResourceValue;
     }
 
-    return  KeyRes.toShortString();
+    return KeyRes.toShortString();
   }
 
   Future<bool> GetGlobalization(int Language_Id) async {

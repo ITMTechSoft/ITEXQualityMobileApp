@@ -46,18 +46,18 @@ class _LoginPagesState extends State<LoginPages> {
             "The error message is: ${PersonalCase.GetCurrentUser().LoginMessage}");
       }
     } else {
-      // setState(
-      //   () {
-      //     errorMsg = "The ip is not correct ";
-      //
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (BuildContext context) => SetupApplications(),
-      //       ),
-      //     );
-      //   },
-      // );
+      setState(
+        () {
+          errorMsg = "The ip is not correct ";
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => SetupApplications(),
+            ),
+          );
+        },
+      );
     }
   }
 
@@ -118,7 +118,7 @@ class _LoginPagesState extends State<LoginPages> {
                           suffixIcon: Icon(Icons.person),
                           controller: UserNameController,
                           placeholder:
-                              PersonalCase.GetLable(ResourceKey.User_Name),
+                              'password',
                           errorMessage: "User Name can not be empty ",
                         ),
                         Standard_Input(

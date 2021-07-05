@@ -106,8 +106,7 @@ class EmployeesBLL {
       final String url =
           SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection);
       print(url.toString());
-      var response = await http
-          .post(
+      var response = await http.post(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -115,13 +114,7 @@ class EmployeesBLL {
         body: jsonEncode(
           toPost(),
         ),
-      )
-          .timeout(const Duration(seconds: 1), onTimeout: () {
-        LoginMessage = "server is not true ";
-
-        throw TimeoutException(
-            'The connection has timed out, Please try again!');
-      });
+      );
 
       // print("the url is    $url");
 
@@ -143,24 +136,24 @@ class EmployeesBLL {
 
   /// CHECK IF IP AND PORT ARE CORRECT
   Future<String> CheckIP() async {
+
+
     try {
-      final String url =
-      SharedPref.GetWebApiUrl(WebApiMethod.Get_Version,WebApiDomain: "api/MaksitusTable");
+      final String url = SharedPref.GetWebApiUrl(WebApiMethod.Get_Version,
+          WebApiDomain: "api/MaksitusTable");
       print(url.toString());
-      var response = await http.get(url)
-          .timeout(const Duration(seconds: 2), onTimeout: () {
-        LoginMessage = "server ip is not true ";
+      var response = await http.get(url).timeout(const Duration(seconds: 3),
+          onTimeout: () {
+        LoginMessage = "SERVER CAN'T BE REACHED";
 
         throw TimeoutException(
             'The connection has timed out, Please try again!');
-      });;
+      });
 
-      if (response.statusCode==200)
-        {
-          print ( response.body);
-          return "True";
-        }
-      else{
+      if (response.statusCode == 200) {
+        print(response.body);
+        return "True";
+      } else {
         return "False";
       }
     } catch (e) {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Preferences/SetupApplication.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
+import 'package:itex_soft_qualityapp/Screens/Authenticate/LoginPage.dart';
+import 'package:itex_soft_qualityapp/Screens/Home/MainActivity.dart';
 import 'package:provider/provider.dart';
 import 'Preferences/SetupApplications.dart';
 import 'Screens/Wrapper.dart';
@@ -20,7 +22,7 @@ class ITMTechSoftQuality extends StatefulWidget {
 
 class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
 
-  /// TODO : CHANGE NAME FROM PERSONALCASE TO
+
   PersonalProvider PersonalCase = new PersonalProvider();
   bool IsLoading = false;
 
@@ -46,18 +48,26 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
       return TargetItem;
     }
 
+
     return FutureBuilder (
         future:  LoadingSharedPreference(PersonalCase),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           return ChangeNotifierProvider<PersonalProvider>(
             create: (context) => PersonalCase,
+            ///TODO:SHOW THE PROGRESSBAR
             child: IsLoading
                 ? Center(child: CircularProgressIndicator())
                 : MaterialApp(
                     debugShowCheckedModeBanner: false,
                     theme: themeNotifier.GetTheme(),
                     home: RetVal(snapshot.data),
+              routes: <String, WidgetBuilder> {
+                '/login' : (BuildContext context) => new LoginPage(),
+                '/main' : (BuildContext context) => new MainActivity(),
+
+              },
                   ),
+
           );
         });
   }

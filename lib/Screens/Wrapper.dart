@@ -28,15 +28,12 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
+    print('Valid user is ${PersonalCase.GetCurrentUser().ValidUser}');
 
-
-
-    if (!PersonalCase.GetCurrentUser().ValidUser)
-    {
-      return LoginPage();
-    } else {
+    if (PersonalCase.GetCurrentUser().ValidUser) {
       return MainActivity();
+    } else {
+      return LoginPage();
     }
-
   }
 }

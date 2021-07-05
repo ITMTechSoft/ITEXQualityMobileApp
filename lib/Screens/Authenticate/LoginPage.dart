@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Preferences/SetupApplications.dart';
 import 'package:itex_soft_qualityapp/Screens/Authenticate/LoginPages.dart';
+import 'package:itex_soft_qualityapp/Screens/Home/MainActivity.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,9 +13,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
   var errorMsg;
-  final TextEditingController UserNameController = new TextEditingController();
-  final TextEditingController PasswordController = new TextEditingController();
 
+  /// CONTROLLERS
+  TextEditingController UserNameController =
+      new TextEditingController(text: SharedPref.UserName);
+  TextEditingController PasswordController =
+      new TextEditingController(text: SharedPref.UserPassword);
 
   //#region  SetupConfig
   SetupConfig(context) => TextButton.icon(
@@ -36,8 +40,8 @@ class _LoginPageState extends State<LoginPage> {
 
   //#endregion SetupConfig
 
-  //// LOGIN FUNCTION
-  LoginFunction(PersonalProvider PersonalCase ) => () async {
+  // LOGIN FUNCTION
+  LoginFunction(PersonalProvider PersonalCase) => () async {
         print("Login pressed");
         // setState(() {
         //   _isLoading = true;
@@ -47,38 +51,82 @@ class _LoginPageState extends State<LoginPage> {
         PersonalCase.GetCurrentUser().Employee_Password =
             PasswordController.text;
 
-
-
-
         await PersonalCase.Login();
 
-        setState(() {
-          _isLoading = false;
-        });
+        // setState(() {
+        //   _isLoading = false;
+        // });
         if (!PersonalCase.GetCurrentUser().ValidUser) {
-          errorMsg = PersonalCase.GetCurrentUser().LoginMessage;
+          setState(() {
+            errorMsg = PersonalCase.GetCurrentUser().LoginMessage;
+          });
+
           print(
               "The error message is: ${PersonalCase.GetCurrentUser().LoginMessage}");
         }
+        else {
+
+          Navigator.popAndPushNamed(context, '/main');
+        }
+
+
 
       };
 
+  // LoginFunction(PersonalProvider PersonalCase) => () async {
+  //       // setState(() {
+  //       //   _isLoading = true;
+  //       //   errorMsg =  " ";
+  //       // });
+  //
+  //       String status = await PersonalCase.GetCurrentUser().CheckIP();
+  //
+  //       if (status == "True") {
+  //         print('####- the ip is true ');
+  //         PersonalCase.GetCurrentUser().Employee_User = UserNameController.text;
+  //         PersonalCase.GetCurrentUser().Employee_Password =
+  //             PasswordController.text;
+  //
+  //         await PersonalCase.Login();
+  //
+  //         // setState(() {
+  //         //   _isLoading = false;
+  //         // });
+  //         if (!PersonalCase.GetCurrentUser().ValidUser) {
+  //           errorMsg = PersonalCase.GetCurrentUser().LoginMessage;
+  //           print(
+  //               "The error message is: ${PersonalCase.GetCurrentUser().LoginMessage}");
+  //           print ('## Error MEssage $errorMsg');
+  //           setState(() {
+  //             errorMsg =errorMsg;
+  //           });
+  //         }
+  //       } else {
+  //         setState(
+  //           () {
+  //             errorMsg = "The ip is not correct ";
+  //
+  //             Navigator.push(
+  //               context,
+  //               MaterialPageRoute(
+  //                 builder: (BuildContext context) => SetupApplications(),
+  //               ),
+  //             );
+  //           },
+  //         );
+  //       }
+  //     };
 
   @override
-  initStat()
-  {
+  initStat() {
+    ///TODO : HERE AT THE FIRST TIME IT WILL BE NULL
     UserNameController.text = SharedPref.UserName;
-  PasswordController.text = SharedPref.UserPassword;
-    super.initState();
+    PasswordController.text = SharedPref.UserPassword;
   }
-
 
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
-
-
-   // LoginFunction(PersonalCase,userName: SharedPref.UserName,password: SharedPref.UserPassword);
 
     //#region  Form Components
 
@@ -128,12 +176,12 @@ class _LoginPageState extends State<LoginPage> {
                   errorMsg == null
                       ? Container()
                       : Text(
-                    "${errorMsg}",
-                    style: TextStyle(
-                      color: Colors.redAccent,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                          errorMsg,
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                   StretchableButton(
                     buttonColor: ArgonColors.primary,
                     children: [
@@ -144,7 +192,6 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                     onPressed: LoginFunction(PersonalCase),
                   ),
-
                 ],
               ),
       ),

@@ -8,7 +8,7 @@ import 'package:itex_soft_qualityapp/Widgets/Input.dart';
 import 'package:itex_soft_qualityapp/assets/Resources/StaticLable.dart';
 import '../SystemImports.dart';
 
-class SetupApplications extends StatefulWidget {
+class   SetupApplications extends StatefulWidget {
   @override
   _SetupApplicationsState createState() => _SetupApplicationsState();
 }
@@ -21,9 +21,16 @@ class _SetupApplicationsState extends State<SetupApplications> {
       new TextEditingController(text: SharedPref.ServerIp);
   TextEditingController portController =
       new TextEditingController(text: SharedPref.ServerPort);
-  LanguagesBLL CurrentLanguage;
-  final languageList = LanguagesBLL.Get_Languages();
+  final List<LanguagesBLL> languageList = LanguagesBLL.Get_Languages();
+
   String errorMsg;
+  LanguagesBLL CurrentLanguage;
+
+  @override
+  void initState() {
+    CurrentLanguage = languageList[1];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +39,9 @@ class _SetupApplicationsState extends State<SetupApplications> {
     return Scaffold(
       appBar: AppBar(
         title: new Text(
-            GlobalizationBLL.Get_GlobalItem(ResourceKey.Configuration)),
+          /// TODO:CHECK THIS AGAIN
+          GlobalizationBLL.Get_GlobalItem(ResourceKey.Configuration),
+        ),
         actions: <Widget>[],
       ),
       body: SingleChildScrollView(
@@ -83,7 +92,8 @@ class _SetupApplicationsState extends State<SetupApplications> {
                 Column(
                   children: [
                     Text(
-                      "Choose you language ",
+                      GlobalizationBLL.Get_GlobalItem(
+                          ResourceKey.Configuration),
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 20),
@@ -117,7 +127,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                   height: 30,
                 ),
                 Text(
-                  SharedPref.SelLanguage.CultureName,
+                  CurrentLanguage.CultureName,
                   style: TextStyle(fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
@@ -126,32 +136,35 @@ class _SetupApplicationsState extends State<SetupApplications> {
                 StretchableButton(
                   buttonColor: ArgonColors.primary,
                   children: [
-                    Text("Save", style: TextStyle(color: Colors.white))
+                    Text(
+                      StaticLable.Save,
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ],
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
                       SharedPref.ServerIp = serverIpController.text;
                       SharedPref.ServerPort = portController.text;
                       //  SharedPref.SelLanguage = CurrentLanguage;
-                      bool status = await PersonalCase.SetupAndLogin();
-                      if (status == true) {
-                        print('the status is $status');
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginPage(),
-                          ),
-                        );
-                      }
-                      else{
+                      bool status = await PersonalCase.SetupAndLogin();
+
+                      ///
+                      if (status == true) {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => LoginPage(),
+                        //   ),
+                        // );
+                        Navigator.popAndPushNamed(context, '/login');
+
+                      } else {
                         setState(() {
-                          errorMsg = "check the ip and port ";
+                          errorMsg = "Server can't be reached ";
                         });
                       }
-
                     }
-
                   },
                 ),
               ],
