@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:itex_soft_qualityapp/Preferences/SetupApplications.dart';
-import 'package:itex_soft_qualityapp/Screens/Authenticate/LoginPages.dart';
-import 'package:itex_soft_qualityapp/Screens/Home/MainActivity.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 
 class LoginPage extends StatefulWidget {
@@ -43,9 +44,7 @@ class _LoginPageState extends State<LoginPage> {
   // LOGIN FUNCTION
   LoginFunction(PersonalProvider PersonalCase) => () async {
         print("Login pressed");
-        // setState(() {
-        //   _isLoading = true;
-        // });
+
 
         PersonalCase.GetCurrentUser().Employee_User = UserNameController.text;
         PersonalCase.GetCurrentUser().Employee_Password =
@@ -53,16 +52,13 @@ class _LoginPageState extends State<LoginPage> {
 
         await PersonalCase.Login();
 
-        // setState(() {
-        //   _isLoading = false;
-        // });
+
         if (!PersonalCase.GetCurrentUser().ValidUser) {
           setState(() {
             errorMsg = PersonalCase.GetCurrentUser().LoginMessage;
           });
 
-          print(
-              "The error message is: ${PersonalCase.GetCurrentUser().LoginMessage}");
+
         }
         else {
 
@@ -72,50 +68,6 @@ class _LoginPageState extends State<LoginPage> {
 
 
       };
-
-  // LoginFunction(PersonalProvider PersonalCase) => () async {
-  //       // setState(() {
-  //       //   _isLoading = true;
-  //       //   errorMsg =  " ";
-  //       // });
-  //
-  //       String status = await PersonalCase.GetCurrentUser().CheckIP();
-  //
-  //       if (status == "True") {
-  //         print('####- the ip is true ');
-  //         PersonalCase.GetCurrentUser().Employee_User = UserNameController.text;
-  //         PersonalCase.GetCurrentUser().Employee_Password =
-  //             PasswordController.text;
-  //
-  //         await PersonalCase.Login();
-  //
-  //         // setState(() {
-  //         //   _isLoading = false;
-  //         // });
-  //         if (!PersonalCase.GetCurrentUser().ValidUser) {
-  //           errorMsg = PersonalCase.GetCurrentUser().LoginMessage;
-  //           print(
-  //               "The error message is: ${PersonalCase.GetCurrentUser().LoginMessage}");
-  //           print ('## Error MEssage $errorMsg');
-  //           setState(() {
-  //             errorMsg =errorMsg;
-  //           });
-  //         }
-  //       } else {
-  //         setState(
-  //           () {
-  //             errorMsg = "The ip is not correct ";
-  //
-  //             Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                 builder: (BuildContext context) => SetupApplications(),
-  //               ),
-  //             );
-  //           },
-  //         );
-  //       }
-  //     };
 
   @override
   initStat() {
@@ -143,57 +95,66 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     //#endregion
-    return Scaffold(
-      appBar: new AppBar(
-        title: Text(
-          GlobalizationBLL.Get_GlobalItem(ResourceKey.Login),
-          textAlign: TextAlign.center,
+
+    return WillPopScope(
+      onWillPop:  () {
+        SystemNavigator.pop();
+       // exit(0);
+        return Future.value(false); // if true allow back else block it
+      },
+
+      child: Scaffold(
+        appBar: new AppBar(
+          title: Text(
+            GlobalizationBLL.Get_GlobalItem(ResourceKey.Login),
+            textAlign: TextAlign.center,
+          ),
+          actions: <Widget>[SetupConfig(context)],
         ),
-        actions: <Widget>[SetupConfig(context)],
-      ),
-      body: Container(
-        margin: EdgeInsets.all(30),
-        child: _isLoading
-            ? Center(child: CircularProgressIndicator())
-            : ListView(
-                children: <Widget>[
-                  HeaderIcon,
-                  SizedBox(height: 30.0),
-                  Standard_Input(
-                    suffixIcon: Icon(Icons.person),
-                    controller: UserNameController,
-                    placeholder: PersonalCase.GetLable(ResourceKey.User_Name),
-                    errorMessage: "User Name can not be empty ",
-                  ),
-                  SizedBox(height: 20.0),
-                  Standard_Input(
-                    suffixIcon: Icon(Icons.lock),
-                    controller: PasswordController,
-                    placeholder:
-                        PersonalCase.GetLable(ResourceKey.User_Password),
-                  ),
-                  SizedBox(height: 20),
-                  errorMsg == null
-                      ? Container()
-                      : Text(
-                          errorMsg,
-                          style: TextStyle(
-                            color: Colors.redAccent,
-                            fontWeight: FontWeight.bold,
+        body: Container(
+          margin: EdgeInsets.all(30),
+          child: _isLoading
+              ? Center(child: CircularProgressIndicator())
+              : ListView(
+                  children: <Widget>[
+                    HeaderIcon,
+                    SizedBox(height: 30.0),
+                    Standard_Input(
+                      suffixIcon: Icon(Icons.person),
+                      controller: UserNameController,
+                      placeholder: PersonalCase.GetLable(ResourceKey.User_Name),
+                      errorMessage: "User Name can not be empty ",
+                    ),
+                    SizedBox(height: 20.0),
+                    Standard_Input(
+                      suffixIcon: Icon(Icons.lock),
+                      controller: PasswordController,
+                      placeholder:
+                          PersonalCase.GetLable(ResourceKey.User_Password),
+                    ),
+                    SizedBox(height: 20),
+                    errorMsg == null
+                        ? Container()
+                        : Text(
+                            errorMsg,
+                            style: TextStyle(
+                              color: Colors.redAccent,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                  StretchableButton(
-                    buttonColor: ArgonColors.primary,
-                    children: [
-                      Text(
-                        "Sign In",
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                    onPressed: LoginFunction(PersonalCase),
-                  ),
-                ],
-              ),
+                    StretchableButton(
+                      buttonColor: ArgonColors.primary,
+                      children: [
+                        Text(
+                          "Sign In",
+                          style: TextStyle(color: Colors.white),
+                        )
+                      ],
+                      onPressed: LoginFunction(PersonalCase),
+                    ),
+                  ],
+                ),
+        ),
       ),
     );
   }

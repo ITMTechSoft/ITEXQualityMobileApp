@@ -43,7 +43,7 @@ class _MainActivityState extends State<MainActivity> {
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     return Scaffold(
-        appBar: MainBar(PersonalCase),
+        appBar: MainBar(PersonalCase,context),
         body: FutureBuilder(
             future: LoadDepartment(PersonalCase),
             builder: (context, snapshot) {

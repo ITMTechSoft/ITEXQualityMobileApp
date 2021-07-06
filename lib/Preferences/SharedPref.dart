@@ -66,7 +66,6 @@ class SharedPref {
         }
 
     } catch (Exception) {
-      print('Shared Prefrence class , initiateAppPrefernce Function   $Exception');
 
       return false;
     }
@@ -99,7 +98,6 @@ class SharedPref {
           path: path,
           queryParameters: Paramters);
 
-    print(target);
     return target;
   }
 
@@ -117,7 +115,6 @@ class SharedPref {
 
       if (ServerIp.isNotEmpty || ServerPort.isNotEmpty) return true;
     } catch (Exception) {
-      print(Exception);
     }
     return false;
   }

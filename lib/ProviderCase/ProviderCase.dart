@@ -43,13 +43,10 @@ class PersonalProvider with ChangeNotifier {
       bool Status = await _UserPref.initiateAppPrefernce();
 
       if (Status) {
-        ///TODO : I THINK HERE IT SHOULD NOT DO ANY THING AT ALL
-        ///HERE IT SHOULD ONLY CHECK IF THE IP IS CORRECT OR NOT
+
         _CurrentUser.Employee_User = SharedPref.UserName;
         _CurrentUser.Employee_Password = SharedPref.UserPassword;
 
-        ///TODO IT SHOULD NOT BE A  LOGIN HERE
-        ///TODO : I THINK HERE THERE ARE A LOOP xxxxxxxxxxxxxxxxxxxxxxxxxxx
         await _CurrentUser.login();
 
         if (_CurrentUser.ValidUser) {
@@ -62,7 +59,6 @@ class PersonalProvider with ChangeNotifier {
 
       return Status;
     } catch (Excepetion) {
-      print('When Try Loading loadSharedPrefs:' + Excepetion);
     }
 
     return false;
@@ -85,7 +81,6 @@ class PersonalProvider with ChangeNotifier {
   Future<bool> SetupAndLogin() async {
     String test = await _CurrentUser.CheckIP();
 
-    /// CHECK IF THE IP AND PORT IS CORRECT
 
     if (test == "True") {
       await GetGlobalization(SharedPref.SelLanguage.Id);
@@ -97,7 +92,6 @@ class PersonalProvider with ChangeNotifier {
       return false;
     }
 
-    /// TODO : CHECK HERE
   }
 
   UpdateInformation() async {
@@ -109,14 +103,14 @@ class PersonalProvider with ChangeNotifier {
   }
 
   void Logout() {
-    print('Logout');
 
     /// TODO : I should not do all that just
-    _CurrentUser.Employee_Name = "";
-    _CurrentUser.Employee_Password = "";
-    SharedPref.UserName = "";
-    SharedPref.UserPassword = "";
+    // _CurrentUser.Employee_Name = "";
+    // _CurrentUser.Employee_Password = "";
+    // SharedPref.UserName = "";
+    // SharedPref.UserPassword = "";
     _CurrentUser.Logout();
+    print ('logout');
 
     SharedPref.SavePrefernce('UserName', '');
     SharedPref.SavePrefernce('UserPassword', '');

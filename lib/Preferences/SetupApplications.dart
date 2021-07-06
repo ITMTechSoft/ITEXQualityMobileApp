@@ -39,7 +39,6 @@ class _SetupApplicationsState extends State<SetupApplications> {
     return Scaffold(
       appBar: AppBar(
         title: new Text(
-          /// TODO:CHECK THIS AGAIN
           GlobalizationBLL.Get_GlobalItem(ResourceKey.Configuration),
         ),
         actions: <Widget>[],
@@ -92,8 +91,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                 Column(
                   children: [
                     Text(
-                      GlobalizationBLL.Get_GlobalItem(
-                          ResourceKey.Configuration),
+                    "Language",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 20),

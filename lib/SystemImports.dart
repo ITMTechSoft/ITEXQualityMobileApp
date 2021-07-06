@@ -1,4 +1,4 @@
-export 'package:itex_soft_qualityapp/Preferences/SetupApplication.dart';
+export 'package:itex_soft_qualityapp/Preferences/SetupApplications.dart';
 export 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 export 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 export 'package:itex_soft_qualityapp/Utility/Globalization.dart';

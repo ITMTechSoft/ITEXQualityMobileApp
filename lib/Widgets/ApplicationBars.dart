@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
+import 'package:itex_soft_qualityapp/Screens/Authenticate/LoginPage.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 
 
- MainBar(PersonalProvider PersonalCase)=>new AppBar(
+ MainBar(PersonalProvider PersonalCase, BuildContext context)=>new AppBar(
    title: new Text(PersonalCase.GetLable(ResourceKey.Department)),
    actions: <Widget>[
      TextButton.icon(
          onPressed: () {
            PersonalCase.Logout();
+
+
+           Route route = MaterialPageRoute(builder: (context) => LoginPage());
+
+           Navigator.popAndPushNamed(context, '/login');
+
          },
          icon: Icon(
            Icons.person,
