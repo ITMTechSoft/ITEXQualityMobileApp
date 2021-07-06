@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
+import 'package:itex_soft_qualityapp/ProviderCase/Dikim_InlineProcess.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Dikim_InlineControl/Dikim_EmployeeOperationMerge.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
@@ -40,9 +41,10 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
-
+    final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+        CaseProvider.ReloadAction();
         Navigator.pop(context);
       }),
       body: ListView(children: [
@@ -78,6 +80,7 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                             ForColor: ArgonColors.white,
                             BakColor: ArgonColors.primary,
                             OnTap: () async {
+                              CaseProvider.ReloadAction();
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -105,6 +108,7 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                                   PersonalCase.GetLable(ResourceKey.Cancel),
                                   OnFirstAction: () async {
                                     await widget.RoundItem.CloseDikimInlineTur();
+                                    CaseProvider.ReloadAction();
                                     Navigator.pop(context);
                                   });
 

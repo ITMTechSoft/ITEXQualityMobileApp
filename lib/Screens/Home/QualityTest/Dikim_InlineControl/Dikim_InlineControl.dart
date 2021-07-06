@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:itex_soft_qualityapp/Models/Employees.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
+import 'package:itex_soft_qualityapp/ProviderCase/Dikim_InlineProcess.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Dikim_InlineControl/Dikim_InlineRound.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
@@ -15,6 +17,8 @@ class Dikim_InlineControl extends StatefulWidget {
 }
 
 class _Accessory_ControlState extends State<Dikim_InlineControl> {
+
+
   int IntiteStatus = 0;
   DateTime SelectedDate = DateTime.now();
 
@@ -40,7 +44,8 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
     AlertPopupDialogWithAction(context,
         title: PersonalCase.GetLable(ResourceKey.WarrningMessage),
         Children: <Widget>[
-          LableTitle(PersonalCase.GetLable(ResourceKey.OpenNewRoundWillCloseOldOne),
+          LableTitle(
+              PersonalCase.GetLable(ResourceKey.OpenNewRoundWillCloseOldOne),
               FontSize: ArgonSize.Header4)
         ],
         FirstActionLable: PersonalCase.GetLable(ResourceKey.Okay),
@@ -64,9 +69,10 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
-
+    final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
-      appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+      appBar:
+      DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
       }),
       body: ListView(children: [
@@ -94,7 +100,8 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     StandardButton(
-                        Lable: PersonalCase.GetLable(ResourceKey.ControlValid),
+                        Lable:
+                        PersonalCase.GetLable(ResourceKey.ControlValid),
                         ForColor: ArgonColors.white,
                         BakColor: ArgonColors.primary,
                         OnTap: () async {
@@ -122,7 +129,8 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                         HeaderLable(
                             PersonalCase.GetLable(ResourceKey.Start_Time),
                             Flex: 2),
-                        HeaderLable(PersonalCase.GetLable(ResourceKey.End_Time),
+                        HeaderLable(
+                            PersonalCase.GetLable(ResourceKey.End_Time),
                             Flex: 2),
                         HeaderLable(PersonalCase.GetLable(ResourceKey.Status),
                             Flex: 1)
@@ -136,8 +144,8 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
             else
               return ErrorPage(
                   ActionName: PersonalCase.GetLable(ResourceKey.Loading),
-                  MessageError:
-                      PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
+                  MessageError: PersonalCase.GetLable(
+                      ResourceKey.ErrorWhileLoadingData),
                   DetailError: PersonalCase.GetLable(
                       ResourceKey.InvalidNetWorkConnection));
           },

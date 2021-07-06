@@ -5,6 +5,7 @@ import 'package:itex_soft_qualityapp/Models/Employees.dart';
 import 'package:itex_soft_qualityapp/Models/Operation.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
+import 'package:itex_soft_qualityapp/ProviderCase/Dikim_InlineProcess.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Dikim_InlineControl/Dikim_InlineEmployeeOperationControl.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Dikim_InlineControl/Dikim_InlineRound.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
@@ -47,7 +48,7 @@ class _Dikim_EmployeeOperationMergeState
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
-
+    final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
@@ -72,14 +73,16 @@ class _Dikim_EmployeeOperationMergeState
                 children: [
                   Row(
                     children: <Widget>[
-                      Expanded(child: Employee_List(
+                      Expanded(
+                          child: Employee_List(
                         PersonalCase: PersonalCase,
                         Items: OperatorList,
                         OnClickItems: (EmployeesBLL SelectedItem) {
                           SelectedEmployee = SelectedItem;
                         },
                       )),
-                      Expanded(child: Operation_List(
+                      Expanded(
+                          child: Operation_List(
                         PersonalCase: PersonalCase,
                         Items: OperationList,
                         OnClickItems: (OperationBLL SelectedItem) {
@@ -96,23 +99,29 @@ class _Dikim_EmployeeOperationMergeState
                         if (SelectedEmployee != null &&
                             SelectedOperation != null) {
                           var UserQuality =
-                          new User_QualityTracking_DetailBLL();
+                              new User_QualityTracking_DetailBLL();
                           UserQuality.QualityDept_ModelOrder_Tracking_Id =
                               widget.RoundItem.Id;
                           UserQuality.Create_Date = DateTime.now();
                           UserQuality.Operation_Id =
                               SelectedOperation.Operation_Id;
-                          UserQuality.Inline_Employee_Id =
-                              SelectedEmployee.Id;
+                          UserQuality.Inline_Employee_Id = SelectedEmployee.Id;
                           UserQuality.CheckStatus =
                               InlineOperatorStatus.Pending;
 
-                          UserQuality  = await UserQuality.GenerateInlineEmployeeOperation();
-                          if(UserQuality.Id > 0)
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) =>
-                                    Dikim_InlineEmployeeOperationControl(
-                                        EmployeeOperation: UserQuality)));
+                          UserQuality = await UserQuality
+                              .GenerateInlineEmployeeOperation();
+                          if (UserQuality.Id > 0) {
+                            CaseProvider.ReloadAction();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Dikim_InlineEmployeeOperationControl(
+                                          EmployeeOperation: UserQuality,
+                                          IsDirect: false,
+                                        )));
+                          }
                         }
                       }),
                 ],

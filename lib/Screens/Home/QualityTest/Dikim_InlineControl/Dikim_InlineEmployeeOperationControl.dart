@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
+import 'package:itex_soft_qualityapp/ProviderCase/Dikim_InlineProcess.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
@@ -10,8 +11,9 @@ import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 
 class Dikim_InlineEmployeeOperationControl extends StatefulWidget {
   User_QualityTracking_DetailBLL EmployeeOperation;
+  bool IsDirect =true;
 
-  Dikim_InlineEmployeeOperationControl({this.EmployeeOperation});
+  Dikim_InlineEmployeeOperationControl({this.EmployeeOperation,this.IsDirect});
 
   @override
   _Dikim_InlineEmployeeOperationControlState createState() =>
@@ -35,7 +37,7 @@ class _Dikim_InlineEmployeeOperationControlState
     return false;
   }
 
-  Widget MainPageAction(PersonalProvider PersonalCase) {
+  Widget MainPageAction(PersonalProvider PersonalCase,SubCaseProvider CaseProvider) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
@@ -90,7 +92,9 @@ class _Dikim_InlineEmployeeOperationControlState
                       OnTap: () async {
                         bool Check = await widget.EmployeeOperation
                             .Assign_EmployeeControlAmount(AssignAmount, "C");
+
                         if (Check) setState(() {});
+
                       })),
               Expanded(
                 child: Padding(
@@ -130,6 +134,7 @@ class _Dikim_InlineEmployeeOperationControlState
                 var Check = await widget.EmployeeOperation
                     .CloseEmployeeOperationControlRound();
                 if (Check) {
+                  CaseProvider.ReloadAction();
                   Navigator.pop(context);
                 } else {
                   AlertPopupDialog(
@@ -149,15 +154,22 @@ class _Dikim_InlineEmployeeOperationControlState
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
+    final CaseProvider = Provider.of<SubCaseProvider>(context);
 
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
-        // Navigator.pop(context);
-        //  Navigator.of(context).popUntil((route) => route.);
-        int Counter = 0;
-        Navigator.of(context).popUntil((route) {
-          return Counter++ == 2;
-        });
+
+        CaseProvider.ReloadAction();
+        if(widget.IsDirect)
+          Navigator.pop(context);
+        else
+          {
+            int Counter = 0;
+            Navigator.of(context).popUntil((route) {
+              return Counter++ == 2;
+            });
+          }
+
       }),
       body: ListView(children: [
         ListTile(
@@ -175,7 +187,7 @@ class _Dikim_InlineEmployeeOperationControlState
           future: LoadingOpenPage(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return MainPageAction(PersonalCase);
+              return MainPageAction(PersonalCase,CaseProvider);
             } else if (IntiteStatus == 0)
               return Center(child: CircularProgressIndicator());
             else
