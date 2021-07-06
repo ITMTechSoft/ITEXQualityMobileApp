@@ -62,6 +62,7 @@ class Accessory_ModelOrderBLL {
     'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id,
     'Accessory': Accessory,
     'Group_Name': Group_Name,
+
   };
 
   Map<String, String> toPost() => {
@@ -77,6 +78,7 @@ class Accessory_ModelOrderBLL {
     'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),
     'Accessory': Accessory,
     'Group_Name': Group_Name,
+
   };
 
 
@@ -103,62 +105,10 @@ class Accessory_ModelOrderBLL {
 
     return ItemList;
   }
- /* Future<bool> SaveEntity() async {
-    try {
-      final String url = SharedPref.GetWebApiUrl(
-          WebApiMethod.Set_CreateAccessory_ModelOrder);
 
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(toPost()));
 
-      if (response.statusCode == 200) {
-        // Item.LoadFromJson(json.decode(response.body));
-        return true;
-      }
-    } catch (e) {}
-    return false;
-  }
 
-  Future<bool> UpdateEntity() async {
-    try {
-      final String url = SharedPref.GetWebApiUrl(
-          WebApiMethod.Set_UpdateAccessory_ModelOrder);
 
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(toPost()));
-
-      if (response.statusCode == 200) {
-        // Item.LoadFromJson(json.decode(response.body));
-        return true;
-      }
-    } catch (e) {}
-    return false;
-  }
-
-  Future<bool> DeleteEntity() async {
-    try {
-      final String url = SharedPref.GetWebApiUrl(
-          WebApiMethod.Set_DeleteAccessory_ModelOrder);
-
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(toPost()));
-
-      if (response.statusCode == 200) {
-        // Item.LoadFromJson(json.decode(response.body));
-        return true;
-      }
-    } catch (e) {}
-    return false;
-  } */
 //#endregion
 
 

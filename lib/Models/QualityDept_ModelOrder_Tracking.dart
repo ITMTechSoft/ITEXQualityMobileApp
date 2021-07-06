@@ -1,13 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
-
-import 'DeptModOrderQuality_Items.dart';
 import 'User_QualityTracking_Detail.dart';
+
 
 class QualityDept_ModelOrder_TrackingBLL {
   //#region Properties
@@ -47,7 +43,9 @@ class QualityDept_ModelOrder_TrackingBLL {
 
   //#endregion
 
-  QualityDept_ModelOrder_TrackingBLL() {}
+  QualityDept_ModelOrder_TrackingBLL() {
+    this.Id = 0;
+  }
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -233,6 +231,39 @@ class QualityDept_ModelOrder_TrackingBLL {
     return ItemList;
   }
 
+  static Future<List<QualityDept_ModelOrder_TrackingBLL>>
+  GetInlineDikim_QualityDept_ModelOrder_Tracking(
+      {int Employee_Id, int DeptModelOrder_QualityTest_Id,DateTime SelectDate}) async {
+    List<QualityDept_ModelOrder_TrackingBLL> ItemList;
+    try {
+      var Tracking = new QualityDept_ModelOrder_TrackingBLL();
+      Tracking.Employee_Id = Employee_Id;
+      Tracking.DeptModelOrder_QualityTest_Id = DeptModelOrder_QualityTest_Id;
+      Tracking.StartDate = SelectDate;
+
+      final String url = SharedPref.GetWebApiUrl(
+          WebApiMethod.GetInlineDikim_QualityDept_ModelOrder_Tracking);
+
+      print(url);
+      print(jsonEncode(Tracking.toPost()));
+      var response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(Tracking.toPost()));
+
+      if (response.statusCode == 200) {
+        ItemList = (json.decode(response.body) as List)
+            .map((i) => QualityDept_ModelOrder_TrackingBLL.fromJson(i))
+            .toList();
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return ItemList;
+  }
+
   Future<bool> SetReadValidationAction() async {
     try {
       var Item = new QualityDept_ModelOrder_TrackingBLL();
@@ -305,6 +336,29 @@ class QualityDept_ModelOrder_TrackingBLL {
     return false;
   }
 
+  Future<bool> RegisterAccessoryAmount() async {
+    try {
+      final String url = SharedPref.GetWebApiUrl(
+          WebApiMethod.Set_RegisterCheckAmount);
+
+      String Url= url.toString();
+      String val = jsonEncode(toPost());
+      print(Url);
+      print(val);
+      var response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(toPost()));
+
+      if (response.statusCode == 200) {
+        // Item.LoadFromJson(json.decode(response.body));
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
   static Future<QualityDept_ModelOrder_TrackingBLL>
       GetOrCreate_QualityDept_ModelOrder_Tracking(
           int Employee_Id, int DeptModelOrder_QualityTest_Id,
@@ -349,6 +403,30 @@ class QualityDept_ModelOrder_TrackingBLL {
 
      // String Val = jsonEncode(toPost());
      // print(Val);
+
+      if (response.statusCode == 200) {
+        LoadFromJson(json.decode(response.body));
+        return this;
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  Future<QualityDept_ModelOrder_TrackingBLL>
+  Generate_DikimInline_Tracking() async {
+    try {
+      final String url = SharedPref.GetWebApiUrl(
+          WebApiMethod.Generate_DikimInline_Tracking);
+
+      var response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(toPost()));
+
+       String Val = jsonEncode(toPost());
+       print(Val);
+       print(url);
 
       if (response.statusCode == 200) {
         LoadFromJson(json.decode(response.body));
@@ -424,6 +502,23 @@ class QualityDept_ModelOrder_TrackingBLL {
 
     return false;
   }
+
+  Future<bool> CloseDikimInlineTur() async {
+    try {
+      var response = await http.get(
+          SharedPref.GetWebApiUrl(WebApiMethod.CloseDikimInlineTur) +
+              "?QualityDept_ModelOrder_Tracking_Id=" +
+              Id.toString());
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return false;
+  }
 //#endregion
 
 }
@@ -432,3 +527,17 @@ class ControlStatus {
   static int TansifControlOpenStatus = 1;
   static int TansifControlCloseStatus = 2;
 }
+
+enum DikimInlineStatus{
+  Open ,
+  Closed
+}
+
+class InlineOperatorStatus {
+  static int Pending = 0;
+  static int Success = 1;
+  static int UnderCheck = 2;
+  static int Invalid = 3;
+
+}
+

@@ -1,4 +1,5 @@
 enum WebApiMethod{
+  CloseDikimInlineTur,
   login,
   Get_Language_ResourcesKey,
   CheckUserConnection,
@@ -25,9 +26,18 @@ enum WebApiMethod{
   Set_User_QualityTracking_Detail,
   Set_CloseTanifSample,
   Set_TasnifOrderSizeColorDetails,
-  Get_Accessory_ModelOrder ,
+  Get_Accessory_ModelOrder,
+  Set_RegisterCheckAmount,
+  GetInlineDikim_QualityDept_ModelOrder_Tracking,
+  Get_User_QualityTracking_Detail,
+  Generate_DikimInline_Tracking,
+  Get_ModelOrderOperation,
+  Get_Employees,
+  Set_GenerateInlineEmployeeOperation,
+  Start_DikimInlineProcess,
+  Assign_EmployeeControlAmount,
+  CloseEmployeeOperationControlRound,
   Get_Version
-
 }
 
 

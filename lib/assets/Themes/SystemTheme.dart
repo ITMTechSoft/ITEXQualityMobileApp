@@ -42,6 +42,10 @@ class ArgonColors {
   static const Color Group = Color.fromRGBO(255, 255, 204, 1.0);
 
   static const Color Title = Color.fromRGBO(64, 0, 0, 1.0);
+  static const Color Pending = Color.fromRGBO(194, 191, 191, 1.0);
+  static const Color Success = Color.fromRGBO(0, 110, 50, 1.0);
+  static const Color Invalid = Color.fromRGBO(252, 50, 50, 1.0);
+  static const Color UnderCheck = Color.fromRGBO(255, 255, 100, 1.0);
 }
 class ArgonSize{
   static const double Header = 35;
@@ -50,6 +54,7 @@ class ArgonSize{
   static const double Header1 = 30;
   static const double Header2 = 25;
   static const double Header3 = 20;
+  static const double Header4 = 15;
 }
 
 final BlueTheme = ThemeData(

@@ -110,12 +110,12 @@ HTMLViewPage(htmlData) {
         networkSourceMatcher():
             networkImageRender(altWidget: (_) => FlutterLogo()),
       },
-      onLinkTap: (url) {
+    /*  onLinkTap: (url) {
         print("Opening $url...");
       },
       onImageTap: (src) {
         print(src);
-      },
+      },*/
       onImageError: (exception, stackTrace) {
         print(exception);
       },

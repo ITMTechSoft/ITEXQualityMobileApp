@@ -1,30 +1,30 @@
-import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:itex_soft_qualityapp/Models/Accessory_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Models/DeptModOrderQuality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/Employee_Department.dart';
+import 'package:itex_soft_qualityapp/Models/Employees.dart';
 import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDepartment_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
+import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
+import 'package:intl/intl.dart';
 
 Widget DepartmentCard(Employee_DepartmentBLL Item, Function OnTap) {
   return Card(
-    shadowColor: ArgonColors.black,
-    elevation: 10,
-    child: ListTile(
-      onTap: OnTap,
-      title: Text(
-        Item.Depart_Name,
-        style: TextStyle(fontSize: 20, color: ArgonColors.text),
-      ),
-      subtitle: Text(Item.Depart_Name),
-    ),
-  );
+      shadowColor: ArgonColors.black,
+      elevation: 10,
+      child: ListTile(
+        onTap: OnTap,
+        title: Text(
+          Item.Depart_Name,
+          style: TextStyle(fontSize: 20, color: ArgonColors.text),
+        ),
+        subtitle: Text(Item.Depart_Name),
+      ));
 }
 
 Widget OneItem({String ItemName, String ItemValue, Function OnTap}) {
@@ -45,13 +45,13 @@ Widget OrderCard(QualityDepartment_ModelOrderBLL Item, Function OnTap) {
   return Card(
     child: ListTile(
       onTap: OnTap,
-      title: Text(Item.Order_Number),
-      subtitle: Text(Item.Model_Name),
+      title: Text(Item.Order_Number ?? ""),
+      subtitle: Text(Item.Model_Name ?? ""),
       leading: Stack(
         children: <Widget>[
           Container(
             child: Text(
-              Item.Order_Number.toUpperCase(),
+              Item.Order_Number != null ? Item.Order_Number.toUpperCase() : "",
             ),
             width: 40,
             height: 40,
@@ -488,15 +488,19 @@ Widget QualityAxisItem(DeptModOrderQuality_ItemsBLL Item,
   );
 }
 
-Widget HeaderLable(String LableText) {
-  return Expanded(child: LableTitle(LableText, IsCenter: true));
+///// Table Headers
+Widget HeaderLable(String LableText, {double fontSize = 12, int Flex = 1}) {
+  return Expanded(
+      flex: Flex,
+      child: LableTitle(LableText, FontSize: fontSize, IsCenter: true));
 }
 
-Widget TableLable(String TableText) {
+Widget TableLable(String TableText, {int Flex = 1}) {
   return Expanded(
+      flex: Flex,
       child: Center(
-    child: LableTitle(TableText, color: ArgonColors.text),
-  ));
+        child: LableTitle(TableText, color: ArgonColors.text),
+      ));
 }
 
 Color NormalColor = ArgonColors.white;
@@ -547,47 +551,397 @@ Widget TableColumn(
       ));
 }
 
-Widget Accessory_Model_List(
-    {PersonalProvider PersonalCase,
-    List<Accessory_ModelOrderBLL> Items,
-    context,
-    Function onClick(int Index)}) {
-  Widget ListData = SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          primary: false,
-          shrinkWrap: true,
-          itemCount: Items.length,
-          itemBuilder: (context, int i) {
-            return InkWell(
-              onDoubleTap: onClick(i),
-              child: TableColumn(
-                  children: [
-                    //      TableLable(Items[i].Id.toString()),
-                    TableLable(Items[i].Group_Name),
-                    TableLable(Items[i].Accessory),
-                    TableLable((Items[i].Quantity ?? 0).toString()),
-                    TableLable((Items[i].Checks_Quantity ?? 0).toString()),
-                  ],
-                  IsSelectedItem:
-                      PersonalCase.SelectedAccessoryModel == Items[i]),
-            );
-          }));
+//// New Design for Header and Table Information
+class TableBodyGList<T> extends StatefulWidget {
+  List<T> Items;
+  Function OnClickItems;
+  List<Widget> Headers;
 
-  return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        HeaderColumn(
-          children: [
-            //  HeaderLable(PersonalCase.GetLable(ResourceKey.Id)),
-            HeaderLable(PersonalCase.GetLable(ResourceKey.Group)),
-            HeaderLable(PersonalCase.GetLable(ResourceKey.Accessory)),
-            HeaderLable(PersonalCase.GetLable(ResourceKey.Quantity)),
-            HeaderLable(PersonalCase.GetLable(ResourceKey.Checks_Quantity)),
-          ],
+  TableBodyGList({this.Headers, this.Items, this.OnClickItems});
+
+  @override
+  _TableBodyGListState createState() => _TableBodyGListState();
+}
+
+class _TableBodyGListState extends State<TableBodyGList> {
+  int SelectedIndex = -1;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          HeaderColumn(
+            children: widget.Headers,
+          ),
+          SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  primary: false,
+                  shrinkWrap: true,
+                  itemCount: widget.Items.length,
+                  itemBuilder: (context, int i) {
+                    return InkWell(
+                      onTap: () {
+                        if (widget.OnClickItems != null) widget.OnClickItems(i);
+                        setState(() {
+                          SelectedIndex = i;
+                        });
+                      },
+                      child: TableColumn(children: [
+                        TableLable(widget.Items[i].Group_Name),
+                        TableLable(widget.Items[i].Accessory, Flex: 2),
+                        TableLable((widget.Items[i].Quantity ?? 0).toString()),
+                        TableLable(
+                            (widget.Items[i].Checks_Quantity ?? 0).toString()),
+                      ], IsSelectedItem: SelectedIndex == i),
+                    );
+                  }))
+        ]);
+  }
+}
+///// Dikim Inline
+
+class Tb_InlineDikimList extends StatefulWidget {
+  List<QualityDept_ModelOrder_TrackingBLL> Items;
+  Function OnClickItems;
+  List<Widget> Headers;
+
+  Tb_InlineDikimList({this.Headers, this.Items, this.OnClickItems});
+
+  @override
+  _Tb_InlineDikimListState createState() => _Tb_InlineDikimListState();
+}
+
+class _Tb_InlineDikimListState extends State<Tb_InlineDikimList> {
+  int SelectedIndex = -1;
+
+  Widget GetStatusIcon(int Status) {
+    if (Status == 1)
+      return Row(
+        children: [
+          ClipOval(
+            child: Icon(
+              Icons.check_circle_rounded,
+              color: ArgonColors.success,
+            ),
+          )
+        ],
+      );
+    else
+      return Row(
+        children: [
+          ClipOval(
+            child: Icon(
+              Icons.brightness_1_outlined,
+              color: ArgonColors.warning,
+            ),
+          )
+        ],
+      );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          HeaderColumn(
+            children: widget.Headers,
+          ),
+          SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  primary: false,
+                  shrinkWrap: true,
+                  itemCount: widget.Items.length,
+                  itemBuilder: (context, int i) {
+                    return InkWell(
+                      onTap: () {
+                        if (widget.OnClickItems != null) widget.OnClickItems(i);
+                        setState(() {
+                          SelectedIndex = i;
+                        });
+                      },
+                      child: TableColumn(children: [
+                        TableLable("Tur " + widget.Items[i].SampleNo.toString(),
+                            Flex: 1),
+                        TableLable(
+                            DateFormat('HH:mm')
+                                .format(widget.Items[i].StartDate),
+                            Flex: 3),
+                        TableLable(
+                            widget.Items[i].EndDate != null
+                                ? DateFormat('HH:mm')
+                                    .format(widget.Items[i].EndDate)
+                                : "",
+                            Flex: 3),
+                        Expanded(child: GetStatusIcon(widget.Items[i].Status)),
+                      ], IsSelectedItem: SelectedIndex == i),
+                    );
+                  }))
+        ]);
+  }
+}
+
+Widget BoxColorWithText(String Lable, Color SelectedColor,
+    {double Width = 50,
+    double Height = 50,
+    FontColor = ArgonColors.text,
+    FontSize = ArgonSize.Header3}) {
+  return Container(
+    width: Width,
+    height: Height,
+    decoration: BoxDecoration(
+      color: SelectedColor ?? Colors.amberAccent,
+      border: Border.all(
+        color: Color.fromARGB(2, 116, 193, 232),
+        width: 1,
+      ),
+      borderRadius: BorderRadius.circular(10),
+      boxShadow: [
+        new BoxShadow(
+          color: Color.fromARGB(2, 3, 59, 87),
+          offset: new Offset(3.0, 3.0),
         ),
-        ListData
-      ]);
+      ],
+    ),
+    child: Center(
+        child: Text(Lable,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: FontSize,
+                color: FontColor))),
+  );
+}
+
+/// Dikim Inline Round List
+class Tb_InlineRoundList extends StatefulWidget {
+  List<User_QualityTracking_DetailBLL> Items;
+  Function OnClickItems;
+  PersonalProvider PersonalCase;
+
+  Tb_InlineRoundList(
+      {@required this.PersonalCase,
+      @required this.Items,
+      @required this.OnClickItems});
+
+  @override
+  _Tb_InlineRoundListState createState() => _Tb_InlineRoundListState();
+}
+
+class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
+  int SelectedIndex = -1;
+
+  Widget GetBoxInfo(int CheckStatus) {
+    switch (CheckStatus) {
+      case 0:
+        return BoxColorWithText(
+            widget.PersonalCase.GetLable(ResourceKey.Pending),
+            ArgonColors.Pending,
+            Width: 100,
+            Height: 50);
+      case 1:
+        return BoxColorWithText(
+            widget.PersonalCase.GetLable(ResourceKey.Success),
+            ArgonColors.Success,
+            Width: 100,
+            Height: 50,
+            FontColor: ArgonColors.white);
+      case 2:
+        return BoxColorWithText(
+            widget.PersonalCase.GetLable(ResourceKey.UnderCheck),
+            ArgonColors.UnderCheck,
+            Width: 100,
+            Height: 50);
+      case 3:
+        return BoxColorWithText(
+            widget.PersonalCase.GetLable(ResourceKey.Invalid),
+            ArgonColors.Invalid,
+            Width: 100,
+            Height: 50,
+            FontColor: ArgonColors.white);
+    }
+    return BoxColorWithText(
+        widget.PersonalCase.GetLable(ResourceKey.Pending), ArgonColors.Pending,
+        Width: 100, Height: 50);
+  }
+
+  Widget RoundControl(
+      PersonalProvider PersonalCase, User_QualityTracking_DetailBLL Item) {
+    return Flexible(
+        child: Card(
+      shadowColor: ArgonColors.black,
+      elevation: 10,
+      child: Container(
+        margin: EdgeInsets.all(5),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                            child: LableTitle(
+                                PersonalCase.GetLable(ResourceKey.Operator)),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle(
+                                (Item.Inline_Employee_Name ?? 0).toString(),
+                                color: ArgonColors.text,
+                                IsCenter: true),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle(
+                              PersonalCase.GetLable(ResourceKey.Sample_Amount),
+                            ),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle((Item.Amount ?? 0).toString(),
+                                color: ArgonColors.text, IsCenter: true)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                            child: LableTitle(
+                              PersonalCase.GetLable(ResourceKey.Operation),
+                            ),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle(Item.Operation_Name,
+                                color: ArgonColors.text, IsCenter: true),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle(
+                              PersonalCase.GetLable(ResourceKey.Error_Amount),
+                            ),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle(
+                                (Item.Error_Amount ?? 0).toString(),
+                                color: ArgonColors.text,
+                                IsCenter: true)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                            child: LableTitle(
+                              PersonalCase.GetLable(ResourceKey.Start_Time),
+                            ),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle(
+                                Item.Create_Date != null
+                                    ? DateFormat("HH:mm")
+                                        .format(Item.Create_Date)
+                                    : "",
+                                color: ArgonColors.text,
+                                IsCenter: true)),
+                        Expanded(
+                          child: LableTitle(
+                            PersonalCase.GetLable(ResourceKey.End_Time),
+                          ),
+                          flex: 2,
+                        ),
+                        Expanded(
+                            child: LableTitle(
+                                Item.Update_Date != null
+                                    ? DateFormat("HH:mm")
+                                        .format(Item.Update_Date)
+                                    : "",
+                                color: ArgonColors.text,
+                                IsCenter: true)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          child: GetBoxInfo(Item.CheckStatus),
+                          padding: EdgeInsets.all(5),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+                flex: 4,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  primary: false,
+                  shrinkWrap: true,
+                  itemCount: widget.Items.length,
+                  itemBuilder: (context, int i) {
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          SelectedIndex = i;
+                        });
+                        if (widget.OnClickItems != null) widget.OnClickItems(i);
+                      },
+                      child: TableColumn(children: [
+                        RoundControl(widget.PersonalCase, widget.Items[i])
+                      ], IsSelectedItem: SelectedIndex == i),
+                    );
+                  }))
+        ]);
+  }
+}
+
+/// Employee List Filter
+Widget DropDownBox({String ItemName, Function OnTap, bool IsSelected = false}) {
+  return Card(
+      shadowColor: ArgonColors.black,
+      elevation: 1,
+      //   margin: EdgeInsets.all(1),
+      child: InkWell(
+          onTap: OnTap,
+          child: Container(
+            height: 30,
+            margin: EdgeInsets.all(0),
+            color: IsSelected ? ArgonColors.muted : ArgonColors.white,
+            padding: EdgeInsets.all(0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                ItemName,
+                style: TextStyle(
+                    fontSize: ArgonSize.normal, color: ArgonColors.text),
+              ),
+            ),
+          )));
 }

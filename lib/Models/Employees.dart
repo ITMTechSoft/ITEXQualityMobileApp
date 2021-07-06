@@ -181,6 +181,24 @@ class EmployeesBLL {
     this.ValidUser = false;
   }
 
+  static Future<List<EmployeesBLL>> Get_Employees() async {
+    List<EmployeesBLL> ItemList;
+    try {
+      var response = await http.get(
+          SharedPref.GetWebApiUrl(WebApiMethod.Get_Employees));
+
+      if (response.statusCode == 200) {
+        ItemList = (json.decode(response.body) as List)
+            .map((i) => EmployeesBLL.fromJson(i))
+            .toList();
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return ItemList;
+  }
+
 //#endregion
 
 }

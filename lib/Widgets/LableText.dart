@@ -3,7 +3,7 @@ import 'package:itex_soft_qualityapp/Utility/ResourceKeys.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 const double _kActiveFontSize = 14.0;
-const double _LableFontSize = 14.0;
+const double _LableFontSize = 13.0;
 const double _kBottomMargin = 10.0;
 const double _HeaderFontSize = 20.0;
 
@@ -24,9 +24,10 @@ Widget LableTitle(String Title,
 
     return Container(
       padding: EdgeInsets.all(2),
+      margin: EdgeInsets.fromLTRB(0, 3, 0, 3),
       child: Center(
         child: Text(
-          Title.toUpperCase(),
+          Title!=null ?Title.toUpperCase():"",
           style: TextStyle(
             fontSize: FontSize == null ? _LableFontSize : FontSize,
             fontWeight: FontWeight.bold,
@@ -51,10 +52,7 @@ Widget LableTitle(String Title,
 Widget ExpandedLableTitle(String Title,
     {Color color, double FontSize, bool IsCenter = false}) {
   if (IsCenter)
-
-
     return Expanded(child: Text(
-
       (Title??"").toUpperCase(),
       style: TextStyle(
         fontSize: FontSize == null ? _LableFontSize : FontSize,

@@ -1,4 +1,13 @@
 enum ResourceKey{
+  OpenNewRoundWillCloseOldOne,
+  ConfirmationCloseControl,
+  CloseControl,
+  Correct_Amount,
+  AddControlEmployee,
+  Pending,
+  Success,
+  UnderCheck,
+  Invalid,
   Accessory,
   Checks_Quantity,
   RegisterTasnifAmount,
