@@ -155,7 +155,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                         //     builder: (context) => LoginPage(),
                         //   ),
                         // );
-                        Navigator.popAndPushNamed(context, '/login');
+                        Navigator.popAndPushNamed(context, '/logins');
 
                       } else {
                         setState(() {

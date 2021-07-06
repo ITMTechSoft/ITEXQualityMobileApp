@@ -20,44 +20,65 @@ class _LoginPagesState extends State<LoginPages> {
   final TextEditingController UserNameController = new TextEditingController();
   final TextEditingController PasswordController = new TextEditingController();
 
-  //// LOGIN FUNCTION
-  Future<bool> LoginFunction(PersonalProvider PersonalCase) async {
-    // setState(() {
-    //   _isLoading = true;
-    //   errorMsg =  " ";
-    // });
+  // //// LOGIN FUNCTION
+  // Future<bool> LoginFunction(PersonalProvider PersonalCase) async {
+  //   // setState(() {
+  //   //   _isLoading = true;
+  //   //   errorMsg =  " ";
+  //   // });
+  //
+  //   String status = await PersonalCase.GetCurrentUser().CheckIP();
+  //
+  //
+  //   if (status == "True") {
+  //     print('####- the ip is true ');
+  //     PersonalCase.GetCurrentUser().Employee_User = UserNameController.text;
+  //     PersonalCase.GetCurrentUser().Employee_Password = PasswordController.text;
+  //
+  //     await PersonalCase.Login();
+  //
+  //     // setState(() {
+  //     //   _isLoading = false;
+  //     // });
+  //     if (!PersonalCase.GetCurrentUser().ValidUser) {
+  //       errorMsg = PersonalCase.GetCurrentUser().LoginMessage;
+  //       print(
+  //           "The error message is: ${PersonalCase.GetCurrentUser().LoginMessage}");
+  //     }
+  //   } else {
+  //     setState(
+  //       () {
+  //         errorMsg = "The ip is not correct ";
+  //
+  //         Navigator.push(
+  //           context,
+  //           MaterialPageRoute(
+  //             builder: (BuildContext context) => SetupApplications(),
+  //           ),
+  //         );
+  //       },
+  //     );
+  //   }
+  // }
+  void print1() {
+    print("testing function");
+  }
 
-    String status = await PersonalCase.GetCurrentUser().CheckIP();
+  // LOGIN FUNCTION
+  Future<void> LoginFunction(PersonalProvider PersonalCase) async {
+    // print("Login pressed");
 
+    PersonalCase.GetCurrentUser().Employee_User = UserNameController.text;
+    PersonalCase.GetCurrentUser().Employee_Password = PasswordController.text;
 
-    if (status == "True") {
-      print('####- the ip is true ');
-      PersonalCase.GetCurrentUser().Employee_User = UserNameController.text;
-      PersonalCase.GetCurrentUser().Employee_Password = PasswordController.text;
+    await PersonalCase.Login();
 
-      await PersonalCase.Login();
-
-      // setState(() {
-      //   _isLoading = false;
-      // });
-      if (!PersonalCase.GetCurrentUser().ValidUser) {
+    if (!PersonalCase.GetCurrentUser().ValidUser) {
+      setState(() {
         errorMsg = PersonalCase.GetCurrentUser().LoginMessage;
-        print(
-            "The error message is: ${PersonalCase.GetCurrentUser().LoginMessage}");
-      }
+      });
     } else {
-      setState(
-        () {
-          errorMsg = "The ip is not correct ";
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => SetupApplications(),
-            ),
-          );
-        },
-      );
+      Navigator.popAndPushNamed(context, '/main');
     }
   }
 
@@ -117,8 +138,7 @@ class _LoginPagesState extends State<LoginPages> {
                         Standard_Input(
                           suffixIcon: Icon(Icons.person),
                           controller: UserNameController,
-                          placeholder:
-                              'password',
+                          placeholder: 'password',
                           errorMessage: "User Name can not be empty ",
                         ),
                         Standard_Input(
@@ -149,7 +169,8 @@ class _LoginPagesState extends State<LoginPages> {
 
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
-                            await  LoginFunction(PersonalCase);
+                              await LoginFunction(PersonalCase);
+                              print1();
                               print('working ');
 
                               //   Navigator.pop(context);

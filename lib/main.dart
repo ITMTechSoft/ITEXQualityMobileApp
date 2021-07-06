@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/Screens/Authenticate/LoginPage.dart';
+import 'package:itex_soft_qualityapp/Screens/Authenticate/LoginPages.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/MainActivity.dart';
 import 'package:provider/provider.dart';
 import 'Preferences/SetupApplications.dart';
@@ -60,6 +61,8 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
                     home: RetVal(snapshot.data),
               routes: <String, WidgetBuilder> {
                 '/login' : (BuildContext context) => new LoginPage(),
+                '/logins' : (BuildContext context) => new LoginPages(),
+
                 '/main' : (BuildContext context) => new MainActivity(),
 
               },
