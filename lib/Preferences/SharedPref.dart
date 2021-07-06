@@ -51,13 +51,13 @@ class SharedPref {
       ServerPort = await ReadFromString("PortServer");
 
       /// TODO HERE IT SHOULD NOT LOAD USERNAME AND PASSWORD
-      UserName = await ReadFromString("UserName");
+      UserName     = await ReadFromString("UserName");
       UserPassword = await ReadFromString("UserPassword");
-      String Lang = await ReadFromString("SelLanguage");
-      SelLanguage = LanguagesBLL.fromJson(json.decode(Lang));
+      String Lang  = await ReadFromString("SelLanguage");
+      SelLanguage  = LanguagesBLL.fromJson(json.decode(Lang));
       WebApiDomain = "api/Quality";
 
-      /// TODO
+
 
         if (ServerIp.isNotEmpty || ServerPort.isNotEmpty)
           return true;

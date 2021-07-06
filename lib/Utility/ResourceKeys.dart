@@ -321,6 +321,7 @@ enum ResourceKey{
   User_FullName,
   User_Name,
   User_Password,
+  Setting,
   RoleName,
   UserQualityManagment,
   QualityUser,

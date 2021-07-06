@@ -142,7 +142,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                     if (_formKey.currentState.validate()) {
                       SharedPref.ServerIp = serverIpController.text;
                       SharedPref.ServerPort = portController.text;
-                      //  SharedPref.SelLanguage = CurrentLanguage;
+                    //  SharedPref.SelLanguage = CurrentLanguage;
 
                       bool status = await PersonalCase.SetupAndLogin();
 

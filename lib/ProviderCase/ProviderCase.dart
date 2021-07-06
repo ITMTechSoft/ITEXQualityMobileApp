@@ -38,10 +38,12 @@ class PersonalProvider with ChangeNotifier {
 
   Future<bool> loadSharedPrefs() async {
     try {
+
       IsLoading = true;
 
       bool Status = await _UserPref.initiateAppPrefernce();
-
+       await GetGlobalization(SharedPref.SelLanguage.Id);
+        print('the language is ${SharedPref.SelLanguage.Id}') ;
       if (Status) {
 
         _CurrentUser.Employee_User = SharedPref.UserName;
@@ -80,10 +82,10 @@ class PersonalProvider with ChangeNotifier {
 
   Future<bool> SetupAndLogin() async {
     String test = await _CurrentUser.CheckIP();
+    await GetGlobalization(SharedPref.SelLanguage.Id);
 
 
     if (test == "True") {
-      await GetGlobalization(SharedPref.SelLanguage.Id);
 
       await SharedPref.SetupAndSave();
 

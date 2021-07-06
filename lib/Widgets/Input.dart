@@ -60,12 +60,12 @@ class Standard_Input extends StatelessWidget {
           maxLines: this.MaxLines,
           maxLength: MaxLength,
           /// TODO : CHANGE THE INPUT FORMATTER
-          validator: (value) {
-            if (value.isEmpty)
-              return errorMessage;
-
-            return null;
-          },
+          // validator: (value) {
+          //   if (value.isEmpty)
+          //     return errorMessage;
+          //
+          //   return null;
+          // },
          //inputFormatters: isIp == true ?  [maskFormatter] :  null,
 
           // validator: (value) {
