@@ -19,46 +19,63 @@ class Operation_List extends StatefulWidget {
 class _Operation_ListState extends State<Operation_List> {
 
   final TextEditingController SearchController = new TextEditingController();
+  int SelectedItem = -1;
 
   Widget FilterItem(Function onSearchTextChanged) =>
       new Container(
-        color: ArgonColors.inputSuccess,
-        child: new Padding(
-          padding: const EdgeInsets.all(1.0),
-          child: new Card(
-            child: new ListTile(
-              leading: new Icon(Icons.search),
-              title: new TextField(
+        height: 45,
+
+        child: new Card(
+          shadowColor: ArgonColors.border,
+          elevation: 20,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize:MainAxisSize.max,
+            children: <Widget>[
+              Expanded(child: Icon(Icons.search),),
+              Expanded(child: TextField(
+                textAlign: TextAlign.left,
+                style: TextStyle(color: ArgonColors.Title, fontSize: ArgonSize.Header4,fontWeight:FontWeight.bold),
                 controller: SearchController,
                 decoration: new InputDecoration(
+
                     hintText: widget.PersonalCase.GetLable(ResourceKey.Search),
                     border: InputBorder.none),
                 onChanged: onSearchTextChanged,
-              ),
-              trailing: new IconButton(
+              ),flex:3),
+              Expanded(child: IconButton(
                 icon: new Icon(Icons.cancel),
                 onPressed: () {
                   SearchController.clear();
                   onSearchTextChanged('');
                 },
-              ),
-            ),
+              ),),
+            ],
+
           ),
         ),
       );
 
   Widget FilterList() {
-    var FilterEmployee = widget.Items.where((r) =>
+    var FilterListItem = widget.Items.where((r) =>
         r.Operation_Name.toUpperCase().contains(SearchController.text.toUpperCase())).toList();
     return SingleChildScrollView(
-      primary: true,
+      primary: false,
+      scrollDirection: Axis.vertical,
       child: ListView.builder(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          itemCount: FilterEmployee.length,
+          primary: false,
+          itemCount: FilterListItem.length,
           itemBuilder: (context, int i) {
-            return DropDownBox(ItemName: FilterEmployee[i].Operation_Name,
-                OnTap: widget.OnClickItems(FilterEmployee[i]));
+            return DropDownBox(ItemName: FilterListItem[i].Operation_Name,
+                OnTap: (){
+                  widget.OnClickItems(FilterListItem[i]);
+                  setState(() {
+                    SelectedItem = i;
+                  });
+                },
+            IsSelected:  SelectedItem == i);
           }),
     );
   }

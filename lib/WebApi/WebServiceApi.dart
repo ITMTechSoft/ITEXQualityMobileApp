@@ -1,4 +1,5 @@
 enum WebApiMethod{
+  CloseDikimInlineTur,
   login,
   Get_Language_ResourcesKey,
   CheckUserConnection,

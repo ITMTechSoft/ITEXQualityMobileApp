@@ -688,24 +688,34 @@ class _Tb_InlineDikimListState extends State<Tb_InlineDikimList> {
   }
 }
 
-Widget BoxColorWithText(String Lable, Color color) {
+Widget BoxColorWithText(String Lable, Color SelectedColor,
+    {double Width = 50,
+    double Height = 50,
+    FontColor = ArgonColors.text,
+    FontSize = ArgonSize.Header3}) {
   return Container(
-    width: 250,
-    height: 200,
+    width: Width,
+    height: Height,
     decoration: BoxDecoration(
+      color: SelectedColor ?? Colors.amberAccent,
       border: Border.all(
-        color: Colors.black,
-        width: 5,
+        color: Color.fromARGB(2, 116, 193, 232),
+        width: 1,
       ),
       borderRadius: BorderRadius.circular(10),
       boxShadow: [
         new BoxShadow(
-          color: color,
+          color: Color.fromARGB(2, 3, 59, 87),
           offset: new Offset(3.0, 3.0),
         ),
       ],
     ),
-    child: Center(child: Text(Lable, style: TextStyle(fontSize: 12))),
+    child: Center(
+        child: Text(Lable,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: FontSize,
+                color: FontColor))),
   );
 }
 
@@ -715,7 +725,10 @@ class Tb_InlineRoundList extends StatefulWidget {
   Function OnClickItems;
   PersonalProvider PersonalCase;
 
-  Tb_InlineRoundList({this.PersonalCase, this.Items, this.OnClickItems});
+  Tb_InlineRoundList(
+      {@required this.PersonalCase,
+      @required this.Items,
+      @required this.OnClickItems});
 
   @override
   _Tb_InlineRoundListState createState() => _Tb_InlineRoundListState();
@@ -728,115 +741,155 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
     switch (CheckStatus) {
       case 0:
         return BoxColorWithText(
-            widget.PersonalCase.GetLable(ResourceKey.Pending), Colors.white54);
+            widget.PersonalCase.GetLable(ResourceKey.Pending),
+            ArgonColors.Pending,
+            Width: 100,
+            Height: 50);
       case 1:
         return BoxColorWithText(
-            widget.PersonalCase.GetLable(ResourceKey.Success), Colors.white54);
+            widget.PersonalCase.GetLable(ResourceKey.Success),
+            ArgonColors.Success,
+            Width: 100,
+            Height: 50,
+            FontColor: ArgonColors.white);
       case 2:
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.UnderCheck),
-            Colors.white54);
+            ArgonColors.UnderCheck,
+            Width: 100,
+            Height: 50);
       case 3:
         return BoxColorWithText(
-            widget.PersonalCase.GetLable(ResourceKey.Invalid), Colors.white54);
+            widget.PersonalCase.GetLable(ResourceKey.Invalid),
+            ArgonColors.Invalid,
+            Width: 100,
+            Height: 50,
+            FontColor: ArgonColors.white);
     }
     return BoxColorWithText(
-        widget.PersonalCase.GetLable(ResourceKey.Pending), Colors.white54);
+        widget.PersonalCase.GetLable(ResourceKey.Pending), ArgonColors.Pending,
+        Width: 100, Height: 50);
   }
 
   Widget RoundControl(
       PersonalProvider PersonalCase, User_QualityTracking_DetailBLL Item) {
-    return Card(
+    return Flexible(
+        child: Card(
       shadowColor: ArgonColors.black,
       elevation: 10,
       child: Container(
-        padding: EdgeInsets.all(1),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Row(
+        margin: EdgeInsets.all(5),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Expanded(
-                        child: LableTitle(
-                            PersonalCase.GetLable(ResourceKey.Operator))),
-                    Expanded(
-                        child: LableTitle(
-                            (Item.Inline_Employee_Name ?? 0).toString(),
-                            color: ArgonColors.text,
-                            IsCenter: true)),
-                    Expanded(
-                        child: LableTitle(
-                      PersonalCase.GetLable(ResourceKey.Sample_Amount),
-                    )),
-                    Expanded(
-                        child: LableTitle((Item.Amount ?? 0).toString(),
-                            color: ArgonColors.text, IsCenter: true)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                            child: LableTitle(
+                                PersonalCase.GetLable(ResourceKey.Operator)),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle(
+                                (Item.Inline_Employee_Name ?? 0).toString(),
+                                color: ArgonColors.text,
+                                IsCenter: true),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle(
+                              PersonalCase.GetLable(ResourceKey.Sample_Amount),
+                            ),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle((Item.Amount ?? 0).toString(),
+                                color: ArgonColors.text, IsCenter: true)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                            child: LableTitle(
+                              PersonalCase.GetLable(ResourceKey.Operation),
+                            ),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle(Item.Operation_Name,
+                                color: ArgonColors.text, IsCenter: true),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle(
+                              PersonalCase.GetLable(ResourceKey.Error_Amount),
+                            ),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle(
+                                (Item.Error_Amount ?? 0).toString(),
+                                color: ArgonColors.text,
+                                IsCenter: true)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                            child: LableTitle(
+                              PersonalCase.GetLable(ResourceKey.Start_Time),
+                            ),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle(
+                                Item.Create_Date != null
+                                    ? DateFormat("HH:mm")
+                                        .format(Item.Create_Date)
+                                    : "",
+                                color: ArgonColors.text,
+                                IsCenter: true)),
+                        Expanded(
+                          child: LableTitle(
+                            PersonalCase.GetLable(ResourceKey.End_Time),
+                          ),
+                          flex: 2,
+                        ),
+                        Expanded(
+                            child: LableTitle(
+                                Item.Update_Date != null
+                                    ? DateFormat("HH:mm")
+                                        .format(Item.Update_Date)
+                                    : "",
+                                color: ArgonColors.text,
+                                IsCenter: true)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          child: GetBoxInfo(Item.CheckStatus),
+                          padding: EdgeInsets.all(5),
+                        )
+                      ],
+                    )
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                        child: LableTitle(
-                      PersonalCase.GetLable(ResourceKey.Operation),
-                    )),
-                    Expanded(
-                        child: LableTitle(Item.Operation,
-                            color: ArgonColors.text, IsCenter: true)),
-                    Expanded(
-                        child: LableTitle(
-                      PersonalCase.GetLable(ResourceKey.Error_Amount),
-                    )),
-                    Expanded(
-                        child: LableTitle((Item.Error_Amount ?? 0).toString(),
-                            color: ArgonColors.text, IsCenter: true)),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                        child: LableTitle(
-                      PersonalCase.GetLable(ResourceKey.Start_Time),
-                    )),
-                    Expanded(
-                        child: LableTitle(
-                            DateFormat("yyyy-MM-dd HH:mm")
-                                .format(Item.Create_Date),
-                            color: ArgonColors.text,
-                            IsCenter: true)),
-                    Expanded(
-                        child: LableTitle(
-                      PersonalCase.GetLable(ResourceKey.End_Time),
-                    )),
-                    Expanded(
-                        child: LableTitle(
-                            DateFormat("yyyy-MM-dd HH:mm")
-                                .format(Item.Update_Date),
-                            color: ArgonColors.text,
-                            IsCenter: true)),
-                  ],
-                )
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [GetBoxInfo(Item.CheckStatus)],
-            )
-          ],
+                flex: 4,
+              ),
+            ],
+          ),
         ),
       ),
-    );
+    ));
   }
 
   @override
@@ -855,10 +908,10 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
                   itemBuilder: (context, int i) {
                     return InkWell(
                       onTap: () {
-                        if (widget.OnClickItems != null) widget.OnClickItems(i);
                         setState(() {
                           SelectedIndex = i;
                         });
+                        if (widget.OnClickItems != null) widget.OnClickItems(i);
                       },
                       child: TableColumn(children: [
                         RoundControl(widget.PersonalCase, widget.Items[i])
@@ -870,16 +923,18 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
 }
 
 /// Employee List Filter
-Widget DropDownBox({String ItemName, Function OnTap}) {
+Widget DropDownBox({String ItemName, Function OnTap, bool IsSelected = false}) {
   return Card(
       shadowColor: ArgonColors.black,
       elevation: 1,
-      margin: EdgeInsets.all(1),
+      //   margin: EdgeInsets.all(1),
       child: InkWell(
           onTap: OnTap,
           child: Container(
             height: 30,
-            padding: EdgeInsets.all(2),
+            margin: EdgeInsets.all(0),
+            color: IsSelected ? ArgonColors.muted : ArgonColors.white,
+            padding: EdgeInsets.all(0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -889,85 +944,4 @@ Widget DropDownBox({String ItemName, Function OnTap}) {
               ),
             ),
           )));
-}
-
-class Employee_List extends StatefulWidget {
-  List<EmployeesBLL> Items;
-  Function OnClickItems;
-  PersonalProvider PersonalCase;
-
-  Employee_List({this.PersonalCase, this.Items, this.OnClickItems});
-
-  @override
-  _Employee_ListState createState() => _Employee_ListState();
-}
-
-class _Employee_ListState extends State<Employee_List> {
-  final TextEditingController SearchController = new TextEditingController();
-
-  Widget FilterItem(Function onSearchTextChanged) {
-    return Container(
-      height: 50,
-      color: ArgonColors.Group,
-      child: new Padding(
-        padding: const EdgeInsets.all(0.0),
-        child: new Card(
-          child: new ListTile(
-            leading: new Icon(Icons.search),
-            title: new TextField(
-              controller: SearchController,
-              decoration: new InputDecoration(
-                  hintText: widget.PersonalCase.GetLable(ResourceKey.Search),
-                  border: InputBorder.none),
-              onChanged: onSearchTextChanged,
-            ),
-            trailing: new IconButton(
-              icon: new Icon(Icons.cancel),
-              onPressed: () {
-                SearchController.clear();
-                // onSearchTextChanged('');
-              },
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget FilterList() {
-    var FilterEmployee = widget.Items.where((r) => r.Employee_Name.toUpperCase()
-        .contains(SearchController.text.toUpperCase())).toList();
-    return SingleChildScrollView(
-      primary: false,
-      child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: FilterEmployee.length,
-          itemBuilder: (context, int i) {
-            return DropDownBox(
-                ItemName: FilterEmployee[i].Employee_Name,
-                OnTap: widget.OnClickItems(FilterEmployee[i]));
-          }),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      padding: EdgeInsets.all(1),
-      margin: EdgeInsets.only(left: 2, top: 2, right: 2, bottom: 2),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          HeaderLable(widget.PersonalCase.GetLable(ResourceKey.Employee_Name)),
-          FilterItem((String Text) {
-            setState(() {});
-          }),
-          FilterList()
-        ],
-      ),
-    );
-  }
 }

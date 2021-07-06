@@ -502,6 +502,23 @@ class QualityDept_ModelOrder_TrackingBLL {
 
     return false;
   }
+
+  Future<bool> CloseDikimInlineTur() async {
+    try {
+      var response = await http.get(
+          SharedPref.GetWebApiUrl(WebApiMethod.CloseDikimInlineTur) +
+              "?QualityDept_ModelOrder_Tracking_Id=" +
+              Id.toString());
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return false;
+  }
 //#endregion
 
 }

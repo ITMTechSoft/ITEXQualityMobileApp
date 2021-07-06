@@ -37,7 +37,7 @@ class User_QualityTracking_DetailBLL {
   String Employee_Name;
   String Inline_Employee_Name;
   int Inline_Employee_Id;
-  String Operation;
+  String Operation_Name;
 
   int AssignAmount;
   String ControlType;
@@ -90,6 +90,7 @@ class User_QualityTracking_DetailBLL {
     this.Employee_Name = json['Employee_Name'];
     this.Inline_Employee_Id = json['Inline_Employee_Id'];
     this.Inline_Employee_Name = json['Inline_Employee_Name'];
+    this.Operation_Name = json['Operation_Name'];
   }
 
   User_QualityTracking_DetailBLL.fromJson(Map<String, dynamic> json)
@@ -128,7 +129,8 @@ class User_QualityTracking_DetailBLL {
         Group_Id = json['Group_Id'],
         Employee_Name = json['Employee_Name'],
         Inline_Employee_Name = json['Inline_Employee_Name'],
-        Inline_Employee_Id = json['Inline_Employee_Id'];
+        Inline_Employee_Id = json['Inline_Employee_Id'],
+        Operation_Name = json['Operation_Name'];
 
   Map<String, dynamic> toJson() => {
     'Id': Id,
@@ -166,6 +168,7 @@ class User_QualityTracking_DetailBLL {
     'Employee_Name': Employee_Name,
     'Inline_Employee_Id': Inline_Employee_Id,
     'Inline_Employee_Name': Inline_Employee_Name,
+    'Operation_Name' : Operation_Name
   };
 
   Map<String, String> toPost() => {
@@ -280,6 +283,9 @@ class User_QualityTracking_DetailBLL {
       SharedPref.GetWebApiUrl(WebApiMethod.Start_DikimInlineProcess);
 
       String val = jsonEncode(this.toPost());
+
+      print(url);
+      print(val);
       var response = await http.post(url,
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
@@ -321,6 +327,9 @@ class User_QualityTracking_DetailBLL {
       SharedPref.GetWebApiUrl(WebApiMethod.CloseEmployeeOperationControlRound);
 
       String val = jsonEncode(this.toPost());
+      print(url);
+      print(val);
+
       var response = await http.post(url,
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',

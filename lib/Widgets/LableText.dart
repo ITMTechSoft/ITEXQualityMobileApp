@@ -24,9 +24,10 @@ Widget LableTitle(String Title,
 
     return Container(
       padding: EdgeInsets.all(2),
+      margin: EdgeInsets.fromLTRB(0, 3, 0, 3),
       child: Center(
         child: Text(
-          Title.toUpperCase(),
+          Title!=null ?Title.toUpperCase():"",
           style: TextStyle(
             fontSize: FontSize == null ? _LableFontSize : FontSize,
             fontWeight: FontWeight.bold,

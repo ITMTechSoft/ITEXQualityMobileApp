@@ -1,4 +1,7 @@
 enum ResourceKey{
+  OpenNewRoundWillCloseOldOne,
+  ConfirmationCloseControl,
+  CloseControl,
   Correct_Amount,
   AddControlEmployee,
   Pending,
