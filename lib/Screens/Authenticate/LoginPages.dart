@@ -46,8 +46,7 @@ class _LoginPagesState extends State<LoginPages> {
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
-    UserNameController.text = SharedPref.UserName;
-    PasswordController.text = SharedPref.UserPassword;
+
     return Scaffold(
       appBar: AppBar(
           title: Text(
