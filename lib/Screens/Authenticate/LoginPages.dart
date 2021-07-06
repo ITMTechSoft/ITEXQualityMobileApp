@@ -20,46 +20,6 @@ class _LoginPagesState extends State<LoginPages> {
   final TextEditingController UserNameController = new TextEditingController();
   final TextEditingController PasswordController = new TextEditingController();
 
-  // //// LOGIN FUNCTION
-  // Future<bool> LoginFunction(PersonalProvider PersonalCase) async {
-  //   // setState(() {
-  //   //   _isLoading = true;
-  //   //   errorMsg =  " ";
-  //   // });
-  //
-  //   String status = await PersonalCase.GetCurrentUser().CheckIP();
-  //
-  //
-  //   if (status == "True") {
-  //     print('####- the ip is true ');
-  //     PersonalCase.GetCurrentUser().Employee_User = UserNameController.text;
-  //     PersonalCase.GetCurrentUser().Employee_Password = PasswordController.text;
-  //
-  //     await PersonalCase.Login();
-  //
-  //     // setState(() {
-  //     //   _isLoading = false;
-  //     // });
-  //     if (!PersonalCase.GetCurrentUser().ValidUser) {
-  //       errorMsg = PersonalCase.GetCurrentUser().LoginMessage;
-  //       print(
-  //           "The error message is: ${PersonalCase.GetCurrentUser().LoginMessage}");
-  //     }
-  //   } else {
-  //     setState(
-  //       () {
-  //         errorMsg = "The ip is not correct ";
-  //
-  //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(
-  //             builder: (BuildContext context) => SetupApplications(),
-  //           ),
-  //         );
-  //       },
-  //     );
-  //   }
-  // }
   void print1() {
     print("testing function");
   }

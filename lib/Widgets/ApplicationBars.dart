@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
-import 'package:itex_soft_qualityapp/Screens/Authenticate/LoginPage.dart';
+import 'package:itex_soft_qualityapp/Screens/Authenticate/LoginPages.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 
 
@@ -12,7 +12,7 @@ import 'package:itex_soft_qualityapp/SystemImports.dart';
            PersonalCase.Logout();
 
 
-           Route route = MaterialPageRoute(builder: (context) => LoginPage());
+           Route route = MaterialPageRoute(builder: (context) => LoginPages());
 
            Navigator.popAndPushNamed(context, '/login');
 
