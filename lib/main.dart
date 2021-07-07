@@ -6,6 +6,7 @@ import 'package:itex_soft_qualityapp/Screens/Home/MainActivity.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:provider/provider.dart';
 import 'Preferences/SetupApplications.dart';
+import 'Screens/Home/QualityTest/FinalControl/FinalControl.dart';
 import 'Screens/Wrapper.dart';
 import 'assets/Themes/SystemTheme.dart';
 
@@ -59,7 +60,7 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
                 : MaterialApp(
                     debugShowCheckedModeBanner: false,
                     theme: themeNotifier.GetTheme(),
-                    home: RetVal(snapshot.data),
+                    home: FinalControl(),
                     routes: <String, WidgetBuilder>{
                       '/login': (BuildContext context) => new LoginPages(),
                       '/main': (BuildContext context) => new MainActivity(),

@@ -7,6 +7,18 @@ class ArgonColors {
 
   static const Color white = Color(0xFFFFFFFF);
 
+  static const Color myGreen = Color.fromRGBO(33, 155, 84, 1.0);
+  static const Color myYellow = Color.fromRGBO(233 , 237, 82, 1.0);
+  static const Color myRed = Color.fromRGBO(237  , 82, 82, 1.0);
+  static const Color myBlue = Color.fromRGBO(2  , 8, 74, 1.0);
+  static const Color myVinous = Color.fromRGBO(74  , 2, 2, 1.0);
+  static const Color myOrange = Color.fromRGBO(217  , 154, 70, 1.0);
+  static const Color myLightBlue = Color.fromRGBO(	63, 81, 181,1.0);
+  static const Color myLightRed = Color.fromRGBO(  212, 53, 58,1.0);
+
+
+  static const Color myGrey = Color.fromRGBO(124  , 124, 124, 1.0);
+
   static const Color initial = Color.fromRGBO(23, 43, 77, 1.0);
 
   static const Color primary = Color.fromRGBO(94, 114, 228, 1.0);
@@ -87,3 +99,48 @@ class ThemeNotifier with ChangeNotifier {
     notifyListeners();
   }
 }
+
+class SizeConfig {
+  static MediaQueryData _mediaQueryData;
+  static double screenWidth;
+  static double screenHeight;
+  static double defaultSize;
+  static Orientation orientation;
+
+  void init(BuildContext context) {
+    _mediaQueryData = MediaQuery.of(context);
+    screenWidth = _mediaQueryData.size.width;
+    screenHeight = _mediaQueryData.size.height;
+    orientation = _mediaQueryData.orientation;
+  }
+}
+
+// Get the proportionate height as per screen size
+double getProportionateScreenHeight(double inputHeight) {
+  double screenHeight = SizeConfig.screenHeight;
+  // 812 is the layout height that designer use
+  return (inputHeight / 812.0) * screenHeight;
+}
+
+double getScreenWidth() {
+  double screenWidth = SizeConfig.screenWidth;
+  return screenWidth;
+}
+double getScreenHeight() {
+  double screenHeight = SizeConfig.screenHeight;
+  return screenHeight;
+}
+// Get the proportionate height as per screen size
+double getProportionateScreenWidth(double inputWidth) {
+  double screenWidth = SizeConfig.screenWidth;
+  // 375 is the layout width that designer use
+  return (inputWidth / 375.0) * screenWidth;
+}
+
+double getWidgetHeight(double num)
+{
+  double screenHeight = SizeConfig.screenHeight;
+  return (screenHeight/num);
+}
+
+
