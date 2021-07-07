@@ -848,11 +848,9 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
                             ),
                             flex: 2),
                         Expanded(
-                            child: LableTitle(
-                                Item.Create_Date != null
-                                    ? DateFormat("HH:mm")
-                                        .format(Item.Create_Date)
-                                    : "",
+                            child: LableDateTime(
+                                Item.StartDate ,
+                                Format : "HH:mm",
                                 color: ArgonColors.text,
                                 IsCenter: true)),
                         Expanded(
@@ -862,11 +860,9 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
                           flex: 2,
                         ),
                         Expanded(
-                            child: LableTitle(
-                                Item.Update_Date != null
-                                    ? DateFormat("HH:mm")
-                                        .format(Item.Update_Date)
-                                    : "",
+                            child: LableDateTime(
+                                Item.EndDate ,
+                                Format : "HH:mm",
                                 color: ArgonColors.text,
                                 IsCenter: true)),
                       ],

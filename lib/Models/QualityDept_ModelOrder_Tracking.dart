@@ -418,15 +418,17 @@ class QualityDept_ModelOrder_TrackingBLL {
       final String url = SharedPref.GetWebApiUrl(
           WebApiMethod.Generate_DikimInline_Tracking);
 
+      String Val = jsonEncode(toPost());
+      print(Val);
+      print(url);
+
       var response = await http.post(url,
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(toPost()));
 
-       String Val = jsonEncode(toPost());
-       print(Val);
-       print(url);
+
 
       if (response.statusCode == 200) {
         LoadFromJson(json.decode(response.body));

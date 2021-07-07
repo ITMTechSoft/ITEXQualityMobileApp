@@ -11,9 +11,9 @@ import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 
 class Dikim_InlineEmployeeOperationControl extends StatefulWidget {
   User_QualityTracking_DetailBLL EmployeeOperation;
-  bool IsDirect =true;
+  bool IsDirect;
 
-  Dikim_InlineEmployeeOperationControl({this.EmployeeOperation,this.IsDirect});
+  Dikim_InlineEmployeeOperationControl({this.EmployeeOperation,this.IsDirect = true});
 
   @override
   _Dikim_InlineEmployeeOperationControlState createState() =>
@@ -35,6 +35,19 @@ class _Dikim_InlineEmployeeOperationControlState
       IntiteStatus = -1;
     }
     return false;
+  }
+
+  void OnCloseCurrentWidget(CaseProvider){
+    CaseProvider.ReloadAction();
+    if(widget.IsDirect)
+      Navigator.pop(context);
+    else
+    {
+      int Counter = 0;
+      Navigator.of(context).popUntil((route) {
+        return Counter++ == 2;
+      });
+    }
   }
 
   Widget MainPageAction(PersonalProvider PersonalCase,SubCaseProvider CaseProvider) {
@@ -130,12 +143,11 @@ class _Dikim_InlineEmployeeOperationControlState
               BakColor: ArgonColors.primary,
               OnTap: () async {
                 widget.EmployeeOperation.Order_Id =
-                    PersonalCase.SelectedOrder.Id;
+                    PersonalCase.SelectedOrder.Order_Id;
                 var Check = await widget.EmployeeOperation
                     .CloseEmployeeOperationControlRound();
                 if (Check) {
-                  CaseProvider.ReloadAction();
-                  Navigator.pop(context);
+                  OnCloseCurrentWidget(CaseProvider);
                 } else {
                   AlertPopupDialog(
                       context,
@@ -158,18 +170,7 @@ class _Dikim_InlineEmployeeOperationControlState
 
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
-
-        CaseProvider.ReloadAction();
-        if(widget.IsDirect)
-          Navigator.pop(context);
-        else
-          {
-            int Counter = 0;
-            Navigator.of(context).popUntil((route) {
-              return Counter++ == 2;
-            });
-          }
-
+        OnCloseCurrentWidget(CaseProvider);
       }),
       body: ListView(children: [
         ListTile(
