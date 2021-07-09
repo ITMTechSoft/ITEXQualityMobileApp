@@ -60,7 +60,7 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
                 : MaterialApp(
                     debugShowCheckedModeBanner: false,
                     theme: themeNotifier.GetTheme(),
-                    home: FinalControl(),
+                     home: RetVal(snapshot.data),
                     routes: <String, WidgetBuilder>{
                       '/login': (BuildContext context) => new LoginPages(),
                       '/main': (BuildContext context) => new MainActivity(),

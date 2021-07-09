@@ -489,19 +489,7 @@ Widget QualityAxisItem(DeptModOrderQuality_ItemsBLL Item,
 }
 
 ///// Table Headers
-Widget HeaderLable(String LableText, {double fontSize = 12, int Flex = 1}) {
-  return Expanded(
-      flex: Flex,
-      child: LableTitle(LableText, FontSize: fontSize, IsCenter: true));
-}
 
-Widget TableLable(String TableText, {int Flex = 1}) {
-  return Expanded(
-      flex: Flex,
-      child: Center(
-        child: LableTitle(TableText, color: ArgonColors.text),
-      ));
-}
 
 Color NormalColor = ArgonColors.white;
 Color SelectedColor = ArgonColors.muted;
