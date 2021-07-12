@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 
-AlertDialog AlertPopupDialog(@required BuildContext context,
-    @required String title, @required String Message,
-    {String ActionLable}) {
+AlertDialog AlertPopupDialog(
+    @required BuildContext context,
+    @required String title,
+    @required String Message,
+    {String ActionLable ="Okay"}) {
   showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(

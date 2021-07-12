@@ -57,3 +57,28 @@ class BoxMaterialCard extends StatelessWidget {
   }
 }
 
+class BoxScrollMaterialCard extends StatelessWidget {
+  var Childrens;
+  BoxScrollMaterialCard({this.Childrens});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shadowColor: ArgonColors.black,
+      elevation: 10,
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          primary: false,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: Childrens,
+          ),
+        ),
+      ),
+    );
+  }
+}
+

@@ -30,6 +30,10 @@ class OrderSizeColorDetailsBLL {
   int ColorEntityOrder;
 
   bool IsChecked;
+
+  int ControlAmount;
+  int Remain_Value;
+
   //#endregion
 
   OrderSizeColorDetailsBLL() {}

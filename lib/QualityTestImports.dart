@@ -6,4 +6,4 @@ export 'package:itex_soft_qualityapp/Screens/Home/QualityTest/TasnifControl/Tasn
 export 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Tasnif_Amount.dart';
 export 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Accessory_Control.dart';
 export 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Dikim_InlineControl/Dikim_InlineControl.dart';
-export 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Dikim_LastControl.dart';
+export 'package:itex_soft_qualityapp/Screens/Home/QualityTest/FinalControl/Dikim_LastControl.dart';

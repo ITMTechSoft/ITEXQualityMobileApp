@@ -1,4 +1,8 @@
 enum WebApiMethod{
+  Set_UserQualityFinalControl,
+  Get_Quality_Items,
+  Get_Model_Order_Control,
+  Get_ModelOrder_Image,
   CloseDikimInlineTur,
   login,
   Get_Language_ResourcesKey,
@@ -37,7 +41,8 @@ enum WebApiMethod{
   Start_DikimInlineProcess,
   Assign_EmployeeControlAmount,
   CloseEmployeeOperationControlRound,
-  Get_Version
+  Get_Version,
+  Get_ModelOrder_Matrix
 }
 
 

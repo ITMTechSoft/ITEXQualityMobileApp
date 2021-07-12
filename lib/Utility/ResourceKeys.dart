@@ -1,4 +1,7 @@
 enum ResourceKey{
+  RecycleReturn,
+  Employee,
+  SizeColor,
   OpenNewRoundWillCloseOldOne,
   ConfirmationCloseControl,
   CloseControl,

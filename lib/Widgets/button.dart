@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:itex_soft_qualityapp/Screens/Home/QualityTest/FinalControl/FinalControl.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
+
+
 
 const double defaultBorderRadius = 3.0;
 
@@ -71,38 +73,27 @@ class StretchableButton extends StatelessWidget {
   }
 }
 
-Widget StandardButton({String Lable,
-  Color ForColor,
-  Color BakColor,
-  Function OnTap,
-  double FontSize = 14}) =>
+Widget StandardButton({String Lable, Color ForColor,Color BakColor, Function OnTap,double FontSize = 14 }) =>
     TextButton(
         child: Text(Lable.toUpperCase(), style: TextStyle(fontSize: FontSize)),
         style: ButtonStyle(
             padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(13)),
             foregroundColor: MaterialStateProperty.all<Color>(ForColor),
-            backgroundColor: MaterialStateProperty.all<Color>(BakColor),
+            backgroundColor:MaterialStateProperty.all<Color>(BakColor) ,
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     side: BorderSide(color: ForColor)))),
         onPressed: OnTap);
 
-Widget CircleButton(
-    {Color ForColor, Color BakColor, IconData ActionIcon, Function OnTap}) {
+
+Widget CircleButton({Color ForColor,Color BakColor,IconData ActionIcon,Function OnTap}){
   return ClipOval(
     child: Material(
       color: BakColor, // button color
       child: InkWell(
         splashColor: ForColor, // inkwell color
-        child: SizedBox(
-            width: 56,
-            height: 100,
-            child: Icon(
-              ActionIcon,
-              color: ForColor,
-              size: 50,
-            )),
+        child: SizedBox(width: 56, height: 100, child: Icon(ActionIcon,color: ForColor,size: 50,)),
         onTap: OnTap,
       ),
     ),
@@ -215,6 +206,10 @@ Widget CircleShape({String text,
   );
 }
 
+
+
+
+
 class CustomButton extends StatelessWidget {
   const CustomButton({
     Key key,
@@ -301,39 +296,6 @@ class CustomContainer extends StatelessWidget {
             fontWeight: FontWeight.w800,
           ),
         ),
-      ),
-    );
-  }
-}
-
-class CustomText extends StatelessWidget {
-  final String text;
-  final double size;
-  final Color color;
-  final FontWeight fontWeight;
-
-  final TextDecoration textDecoration;
-  final TextAlign textAlign;
-
-  const CustomText({Key key,
-    this.text,
-    this.size,
-    this.color = ArgonColors.Title,
-    this.fontWeight = FontWeight.bold,
-    this.textDecoration = TextDecoration.none,
-    this.textAlign = TextAlign.center})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      textAlign: textAlign,
-      style: TextStyle(
-        fontSize: size,
-        color: color,
-        fontWeight: fontWeight,
-        decoration: textDecoration,
       ),
     );
   }

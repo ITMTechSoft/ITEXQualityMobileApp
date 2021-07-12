@@ -22,13 +22,12 @@ Text HeaderTitle(String Title, {Color color, double FontSize}) {
 Widget LableTitle(String Title,
     {Color color, double FontSize, bool IsCenter = false}) {
   if (IsCenter)
-
     return Container(
       padding: EdgeInsets.all(2),
       margin: EdgeInsets.fromLTRB(0, 3, 0, 3),
       child: Center(
         child: Text(
-          Title!=null ?Title.toUpperCase():"",
+          Title != null ? Title.toUpperCase() : "",
           style: TextStyle(
             fontSize: FontSize == null ? _LableFontSize : FontSize,
             fontWeight: FontWeight.bold,
@@ -39,26 +38,54 @@ Widget LableTitle(String Title,
     );
   else
     return Text(
-
-      (Title??"").toUpperCase(),
+      (Title ?? "").toUpperCase(),
       style: TextStyle(
         fontSize: FontSize == null ? _LableFontSize : FontSize,
         fontWeight: FontWeight.bold,
         color: color == null ? ArgonColors.Title : color,
       ),
     );
+}
+
+Widget LableInteger(int Value,
+    {Color color,
+    double FontSize = _LableFontSize,
+    bool IsCenter = false,
+    int Flex = 1}) {
+  Widget TextValue(String TextVal) => new Text(
+        TextVal,
+        style: TextStyle(
+          fontSize: FontSize,
+          fontWeight: FontWeight.bold,
+          color: color == null ? ArgonColors.Title : color,
+        ),
+      );
+
+  Widget Child = TextValue((Value ?? 0).toString());
+  if (IsCenter)
+    Child = Container(
+      padding: EdgeInsets.all(2),
+      margin: EdgeInsets.fromLTRB(0, 3, 0, 3),
+      child: Center(
+        child: TextValue((Value ?? 0).toString()),
+      ),
+    );
+
+  return Expanded(flex: Flex, child: Child);
 }
 
 Widget LableDateTime(DateTime TargetDate,
-    {String Format="yyyy/MM/dd HH:mm", Color color, double FontSize, bool IsCenter = false}) {
+    {String Format = "yyyy/MM/dd HH:mm",
+    Color color,
+    double FontSize,
+    bool IsCenter = false}) {
   if (IsCenter)
-
     return Container(
       padding: EdgeInsets.all(2),
       margin: EdgeInsets.fromLTRB(0, 3, 0, 3),
       child: Center(
         child: Text(
-          TargetDate != null? DateFormat(Format).format(TargetDate): "",
+          TargetDate != null ? DateFormat(Format).format(TargetDate) : "",
           style: TextStyle(
             fontSize: FontSize == null ? _LableFontSize : FontSize,
             fontWeight: FontWeight.bold,
@@ -69,7 +96,7 @@ Widget LableDateTime(DateTime TargetDate,
     );
   else
     return Text(
-      TargetDate != null? DateFormat(Format).format(TargetDate): "",
+      TargetDate != null ? DateFormat(Format).format(TargetDate) : "",
       style: TextStyle(
         fontSize: FontSize == null ? _LableFontSize : FontSize,
         fontWeight: FontWeight.bold,
@@ -78,18 +105,33 @@ Widget LableDateTime(DateTime TargetDate,
     );
 }
 
+Widget HeaderLable(String LableText, {double fontSize = 12, int Flex = 1}) {
+  return Expanded(
+      flex: Flex,
+      child: LableTitle(LableText, FontSize: fontSize, IsCenter: true));
+}
+
+Widget TableLable(String TableText, {int Flex = 1}) {
+  return Expanded(
+      flex: Flex,
+      child: Center(
+        child: LableTitle(TableText, color: ArgonColors.text),
+      ));
+}
 
 Widget ExpandedLableTitle(String Title,
     {Color color, double FontSize, bool IsCenter = false}) {
   if (IsCenter)
-    return Expanded(child: Text(
-      (Title??"").toUpperCase(),
-      style: TextStyle(
-        fontSize: FontSize == null ? _LableFontSize : FontSize,
-        fontWeight: FontWeight.bold,
-        color: color == null ? ArgonColors.Title : color,
+    return Expanded(
+      child: Text(
+        (Title ?? "").toUpperCase(),
+        style: TextStyle(
+          fontSize: FontSize == null ? _LableFontSize : FontSize,
+          fontWeight: FontWeight.bold,
+          color: color == null ? ArgonColors.Title : color,
+        ),
       ),
-    ),);
+    );
 }
 
 Widget FilterItem(
@@ -119,3 +161,106 @@ Widget FilterItem(
         ),
       ),
     );
+
+
+class LabelWithValue extends StatelessWidget {
+  @required
+  final String label;
+  @required
+  final String value;
+
+  const LabelWithValue({Key key, this.label, this.value}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const textStyle =
+    TextStyle(color: ArgonColors.myVinous, fontWeight: FontWeight.bold);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+                color: ArgonColors.myVinous, fontWeight: FontWeight.bold),
+          ),
+
+          Text(
+            value,
+            style: TextStyle(
+                color: ArgonColors.myBlue, fontWeight: FontWeight.bold),
+          )
+        ],
+      ),
+    );
+  }
+}
+class LabelWithIntegerVal extends StatelessWidget {
+  @required
+  final String label;
+  @required
+  final int value;
+
+  const LabelWithIntegerVal({Key key, this.label, this.value}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const textStyle =
+    TextStyle(color: ArgonColors.myVinous, fontWeight: FontWeight.bold);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+                color: ArgonColors.myVinous, fontWeight: FontWeight.bold),
+          ),
+
+          Text(
+            (value??0).toString(),
+            style: TextStyle(
+                color: ArgonColors.myBlue, fontWeight: FontWeight.bold),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class CustomText extends StatelessWidget {
+  final String text;
+  final double size;
+  final Color color;
+  final FontWeight fontWeight;
+
+  final TextDecoration textDecoration;
+  final TextAlign textAlign;
+
+  const CustomText({Key key,
+    this.text,
+    this.size,
+    this.color = ArgonColors.Title,
+    this.fontWeight = FontWeight.bold,
+    this.textDecoration = TextDecoration.none,
+    this.textAlign = TextAlign.center})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: textAlign,
+      style: TextStyle(
+        fontSize: size,
+        color: color,
+        fontWeight: fontWeight,
+        decoration: textDecoration,
+      ),
+    );
+  }
+}
