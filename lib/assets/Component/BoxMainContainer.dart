@@ -50,7 +50,7 @@ class BoxMaterialCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
-          children: Childrens,
+          children: [Childrens],
         ),
       ),
     );

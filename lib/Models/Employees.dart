@@ -187,6 +187,7 @@ class EmployeesBLL {
       var response = await http.get(
           SharedPref.GetWebApiUrl(WebApiMethod.Get_Employees));
 
+      print(  SharedPref.GetWebApiUrl(WebApiMethod.Get_Employees));
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
             .map((i) => EmployeesBLL.fromJson(i))

@@ -301,6 +301,10 @@ class OperationBLL {
               "?DeptModelOrder_QualityTest_Id=" +
               DeptModelOrder_QualityTest_Id.toString());
 
+      print(SharedPref.GetWebApiUrl(WebApiMethod.Get_ModelOrderOperation) +
+          "?DeptModelOrder_QualityTest_Id=" +
+          DeptModelOrder_QualityTest_Id.toString());
+
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
             .map((i) => OperationBLL.fromJson(i))
