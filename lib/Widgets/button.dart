@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
 
 const double defaultBorderRadius = 3.0;
 
@@ -93,4 +94,51 @@ Widget CircleButton({Color ForColor,Color BakColor,IconData ActionIcon,Function 
       ),
     ),
   );
+}
+
+
+
+class CustomButton extends StatelessWidget {
+  const CustomButton({
+    Key key,
+    this.value,
+    this.function,
+    this.backGroundColor,
+    this.width,
+    this.height,
+    this.textColor,
+    this.textSize = 20,
+  }) : super(key: key);
+
+  final String value;
+
+  final Function function;
+
+  final Color backGroundColor;
+  final Color textColor;
+  final double width;
+
+  final double height;
+  final double textSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: backGroundColor, // background
+          onPrimary: Colors.white, // foreground
+        ),
+        onPressed: function,
+        child: CustomText(
+          text: value,
+          size: textSize,
+          color: textColor,
+          fontWeight: FontWeight.w800,
+        ),
+      ),
+    );
+  }
 }

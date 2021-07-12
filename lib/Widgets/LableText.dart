@@ -231,3 +231,36 @@ class LabelWithIntegerVal extends StatelessWidget {
     );
   }
 }
+
+class CustomText extends StatelessWidget {
+  final String text;
+  final double size;
+  final Color color;
+  final FontWeight fontWeight;
+
+  final TextDecoration textDecoration;
+  final TextAlign textAlign;
+
+  const CustomText({Key key,
+    this.text,
+    this.size,
+    this.color = ArgonColors.Title,
+    this.fontWeight = FontWeight.bold,
+    this.textDecoration = TextDecoration.none,
+    this.textAlign = TextAlign.center})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: textAlign,
+      style: TextStyle(
+        fontSize: size,
+        color: color,
+        fontWeight: fontWeight,
+        decoration: textDecoration,
+      ),
+    );
+  }
+}

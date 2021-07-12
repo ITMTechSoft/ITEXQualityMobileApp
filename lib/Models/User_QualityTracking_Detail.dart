@@ -238,6 +238,7 @@ class User_QualityTracking_DetailBLL {
     'AssignAmount': AssignAmount.toString(),
     'ControlType': ControlType,
     'Order_Id': Order_Id.toString(),
+    'IsRecycle': IsRecycle.toString(),
   };
 
   //#endregion

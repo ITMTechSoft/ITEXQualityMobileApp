@@ -178,10 +178,21 @@ class _FinalControlState extends State<FinalControl> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Expanded(
-                              child: ProductSecondQuality(),
+                              child: ProductSecondQuality(
+                                SecondQualityInfo:new Model_Order_ControlBLL(
+                                    Control_Type: GroupType.SecondQuality,
+                                    QualityDept_ModelOrder_Tracking_Id: CaseProvider
+                                        .QualityTracking.Id
+                                ) ,
+                              ),
                             ),
                             Expanded(
-                              child: ProductTamirQuality(),
+                              child: ProductTamirQuality(
+                                TamirQualityInfo:new Model_Order_ControlBLL(
+                                  Control_Type: GroupType.SecondQuality,
+                                  QualityDept_ModelOrder_Tracking_Id: CaseProvider
+                                      .QualityTracking.Id
+                              ) ,),
                             ),
                           ],
                         ),
@@ -221,15 +232,18 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
-      await widget.FirstQualityInfo.Get_Model_Order_Control();
+      List<Model_Order_ControlBLL>  ModelList =  await widget.FirstQualityInfo.Get_Model_Order_Control();
+
+     if (widget.FirstQualityInfo != null) {
+       IntiteStatus = 1;
+       widget.FirstQualityInfo = ModelList[0];
+     } else {
+       IntiteStatus = -1;
+     }
     } catch (e) {
 
     }
-    if (widget.FirstQualityInfo != null) {
-      IntiteStatus = 1;
-    } else {
-      IntiteStatus = -1;
-    }
+
     return true;
   }
 
@@ -340,172 +354,185 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
 
 
 class ProductSecondQuality extends StatefulWidget {
+ 
+  Model_Order_ControlBLL SecondQualityInfo;
 
+  ProductSecondQuality({this.SecondQualityInfo});
   @override
   _ProductSecondQualityState createState() => _ProductSecondQualityState();
 }
 
 class _ProductSecondQualityState extends State<ProductSecondQuality> {
+  
+  Model_Order_ControlBLL Critiera;
+  int IntiteStatus = 0;
+
+  Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
+    try {
+      List<Model_Order_ControlBLL>  ModelList =  await widget.SecondQualityInfo.Get_Model_Order_Control();
+
+      if (widget.SecondQualityInfo != null) {
+        IntiteStatus = 1;
+        widget.SecondQualityInfo = ModelList[0];
+      } else {
+        IntiteStatus = -1;
+      }
+    } catch (e) {
+
+    }
+
+    return true;
+  }
+  
   @override
   Widget build(BuildContext context) {
-    return BoxMaterialCard(
-      Childrens: <Widget>[Column(children: [
-        CustomText(
-          text: "2.Kalite",
-          size: 25,
-          color: ArgonColors.myGrey,
-        ),
-        SizedBox(height: 20),
-        CustomButton(
-            width: 200,
-            height: 60,
-            value: "100",
-            textColor: Colors.white,
-            backGroundColor: ArgonColors.myRed,
-            textSize: 30,
-            function: () {}),
-        SizedBox(height: 20),
-        CustomButton(
-            width: 200,
-            height: 60,
-            value: 'Dikim',
-            textColor: Colors.white,
-            backGroundColor: ArgonColors.Invalid,
-            textSize: 30,
-            function: () {})
-      ])
-      ],
+    final PersonalCase = Provider.of<PersonalProvider>(context);
+    final CaseProvider = Provider.of<SubCaseProvider>(context);
+
+
+    return FutureBuilder(
+      future: LoadingOpenPage(PersonalCase),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return BoxMaterialCard(
+            Childrens: <Widget>[Column(children: [
+              CustomText(
+                text: PersonalCase.GetLable(ResourceKey.SecondQuality),
+                size: 25,
+                color: ArgonColors.myGrey,
+              ),
+              SizedBox(height: 20),
+              CustomButton(
+                  width: 200,
+                  height: 60,
+                  value: (widget.SecondQualityInfo.Employee_Matrix_Amount??0).toString(),
+                  textColor: Colors.white,
+                  backGroundColor: ArgonColors.myRed,
+                  textSize: 30,
+                  function: () {}),
+              SizedBox(height: 20),
+              CustomButton(
+                  width: 200,
+                  height: 90,
+                  value: PersonalCase.GetLable(ResourceKey.Tamir_Dikim),
+                  textColor: Colors.white,
+                  backGroundColor: ArgonColors.Invalid,
+                  textSize: 30,
+                  function: () {})
+            ])
+            ],
+          );
+        } else if (IntiteStatus == 0)
+          return Center(child: CircularProgressIndicator());
+        else
+          return ErrorPage(
+              ActionName: PersonalCase.GetLable(ResourceKey.Loading),
+              MessageError: PersonalCase.GetLable(
+                  ResourceKey.ErrorWhileLoadingData),
+              DetailError: PersonalCase.GetLable(
+                  ResourceKey.InvalidNetWorkConnection));
+      },
     );
+
   }
 }
 
 class ProductTamirQuality extends StatefulWidget {
+  Model_Order_ControlBLL TamirQualityInfo;
 
+  ProductTamirQuality({this.TamirQualityInfo});
   @override
   _ProductTamirQualityState createState() => _ProductTamirQualityState();
 }
 
 class _ProductTamirQualityState extends State<ProductTamirQuality> {
+  Model_Order_ControlBLL Critiera;
+  int IntiteStatus = 0;
+
+  Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
+    try {
+      List<Model_Order_ControlBLL>  ModelList =  await widget.TamirQualityInfo.Get_Model_Order_Control();
+
+      if (widget.TamirQualityInfo != null) {
+        IntiteStatus = 1;
+        widget.TamirQualityInfo = ModelList[0];
+      } else {
+        IntiteStatus = -1;
+      }
+    } catch (e) {
+
+    }
+
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BoxMaterialCard(
-      Childrens: <Widget>[Column(children: [
-        CustomText(
-          text: "Tamir",
-          size: 25,
-          color: ArgonColors.myGrey,
-        ),
-        SizedBox(height: 20),
-        CustomButton(
-            width: 200,
-            height: 60,
-            value: '150',
-            textColor: Colors.white,
-            textSize: 30,
-            backGroundColor: ArgonColors.myYellow,
-            function: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        ErrorFixing()),
-              );
-            }),
-        SizedBox(height: 20),
-        CustomButton(
-            width: 200,
-            height: 60,
-            value: 'Dikim',
-            textColor: Colors.white,
-            backGroundColor: ArgonColors.myYellow,
-            textSize: 30,
-            function: () {
-              print('Dikim ');
-            }),
-      ])
-      ],
+
+    final PersonalCase = Provider.of<PersonalProvider>(context);
+    final CaseProvider = Provider.of<SubCaseProvider>(context);
+
+
+    return FutureBuilder(
+      future: LoadingOpenPage(PersonalCase),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return BoxMaterialCard(
+            Childrens: <Widget>[Column(children: [
+              CustomText(
+                text: PersonalCase.GetLable(ResourceKey.Quality_TAMIR),
+                size: 25,
+                color: ArgonColors.myGrey,
+              ),
+              SizedBox(height: 20),
+              CustomButton(
+                  width: 200,
+                  height: 60,
+                  value: (widget.TamirQualityInfo.Employee_Matrix_Amount??0).toString(),
+                  textColor: Colors.white,
+                  textSize: 30,
+                  backGroundColor: ArgonColors.myYellow,
+                  function: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ErrorFixing()),
+                    );
+                  }),
+              SizedBox(height: 20),
+              CustomButton(
+                  width: 200,
+                  height: 90,
+                  value: PersonalCase.GetLable(ResourceKey.Tamir_Dikim),
+                  textColor: Colors.white,
+                  backGroundColor: ArgonColors.myYellow,
+                  textSize: 30,
+                  function: () {
+
+                  }),
+            ])
+            ],
+          );
+        } else if (IntiteStatus == 0)
+          return Center(child: CircularProgressIndicator());
+        else
+          return ErrorPage(
+              ActionName: PersonalCase.GetLable(ResourceKey.Loading),
+              MessageError: PersonalCase.GetLable(
+                  ResourceKey.ErrorWhileLoadingData),
+              DetailError: PersonalCase.GetLable(
+                  ResourceKey.InvalidNetWorkConnection));
+      },
     );
+
+
   }
 }
 
 
-class CustomButton extends StatelessWidget {
-  const CustomButton({
-    Key key,
-    this.value,
-    this.function,
-    this.backGroundColor,
-    this.width,
-    this.height,
-    this.textColor,
-    this.textSize = 20,
-  }) : super(key: key);
 
-  final String value;
 
-  final Function function;
-
-  final Color backGroundColor;
-  final Color textColor;
-  final double width;
-
-  final double height;
-  final double textSize;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      height: height,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: backGroundColor, // background
-          onPrimary: Colors.white, // foreground
-        ),
-        onPressed: function,
-        child: CustomText(
-          text: value,
-          size: textSize,
-          color: textColor,
-          fontWeight: FontWeight.w800,
-        ),
-      ),
-    );
-  }
-}
-
-class CustomText extends StatelessWidget {
-  final String text;
-  final double size;
-  final Color color;
-  final FontWeight fontWeight;
-
-  final TextDecoration textDecoration;
-  final TextAlign textAlign;
-
-  const CustomText({Key key,
-    this.text,
-    this.size,
-    this.color = ArgonColors.Title,
-    this.fontWeight = FontWeight.bold,
-    this.textDecoration = TextDecoration.none,
-    this.textAlign = TextAlign.center})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      textAlign: textAlign,
-      style: TextStyle(
-        fontSize: size,
-        color: color,
-        fontWeight: fontWeight,
-        decoration: textDecoration,
-      ),
-    );
-  }
-}
 
 AppBar MyAppBar(BuildContext context) {
   return AppBar(

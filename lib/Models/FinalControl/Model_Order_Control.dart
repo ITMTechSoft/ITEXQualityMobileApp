@@ -90,6 +90,8 @@ class Model_Order_ControlBLL {
           },
           body: jsonEncode(toPost()));
 
+      print(url);
+      print(jsonEncode(toPost()));
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
             .map((i) => Model_Order_ControlBLL.fromJson(i))
