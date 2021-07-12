@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/QualityTest/FinalControl/FinalControl.dart';
+import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
 import 'package:itex_soft_qualityapp/Widgets/button.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
