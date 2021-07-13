@@ -1,4 +1,5 @@
 enum WebApiMethod{
+  Get_EmployeesByOperation,
   Get_Quality_Items_WithValue,
   Set_UserQualityFinalControl,
   Get_Quality_Items,
