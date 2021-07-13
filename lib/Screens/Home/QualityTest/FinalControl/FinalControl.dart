@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:itex_soft_qualityapp/Models/FinalControl/ModelOrder_Matrix.dart';
 import 'package:itex_soft_qualityapp/Models/FinalControl/Model_Order_Control.dart';
 import 'package:itex_soft_qualityapp/Models/FinalControl/Quality_Items.dart';
@@ -15,7 +14,8 @@ import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
-import 'ErrorFixing.dart';
+import 'QualityItemsList.dart';
+import 'SewingEmployeeControl.dart';
 
 class FinalControl extends StatefulWidget {
   @override
@@ -139,6 +139,18 @@ class _FinalControlState extends State<FinalControl> {
         }),
         body: ListView(
           children: [
+            Container(
+                height: mediaQuery == Orientation.portrait
+                    ? getScreenHeight() / 15.5
+                    : getScreenWidth() / 4,
+                child: ListTile(
+                  title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+                      color: ArgonColors.header, FontSize: ArgonSize.Header2),
+                  subtitle: Text(
+                      PersonalCase.SelectedDepartment.Start_Date.toString()),
+                  dense: true,
+                  selected: true,
+                )),
             FutureBuilder(
               future: LoadingOpenPage(CaseProvider),
               builder: (context, snapshot) {
@@ -171,7 +183,7 @@ class _FinalControlState extends State<FinalControl> {
                             Expanded(
                               child: ProductTamirQuality(
                                 TamirQualityInfo: new Model_Order_ControlBLL(
-                                    Control_Type: GroupType.SecondQuality,
+                                    Control_Type: GroupType.TamirQuality,
                                     QualityDept_ModelOrder_Tracking_Id:
                                         CaseProvider.QualityTracking.Id),
                               ),
@@ -239,10 +251,13 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
           return BoxMaterialCard(
             Childrens: <Widget>[
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                      flex: 2,
-                      child: Column(children: [
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
                         Text(
                           PersonalCase.GetLable(ResourceKey.RecycleReturn),
                           style: TextStyle(
@@ -262,72 +277,61 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                         ),
                       ])),
                   Expanded(
-                      flex: 4,
                       child: CustomText(
-                        text: PersonalCase.GetLable(
-                            ResourceKey.Quality_FirstQuality),
-                        size:AdaptiveTextSize().getadaptiveTextSize(context, 30),
-                        color: ArgonColors.myGrey,
-                      )),
+                    text:
+                        PersonalCase.GetLable(ResourceKey.Quality_FirstQuality),
+                    size: 30,
+                    color: ArgonColors.myGrey,
+                  )),
                   Expanded(
-                    flex: 1,
-                    child: Container(),
-                  )
+                      child: IconButton(
+                    icon: Icon(Icons.warning_amber_sharp,
+                        color: Colors.redAccent),
+                    onPressed: () {
+                      setState(() async {});
+                    },
+                  )),
                 ],
               ),
-              GestureDetector(
-                onTap: () async {
-                  var UserQuality = new User_QualityTracking_DetailBLL();
-                  UserQuality.Quality_Items_Id = CaseProvider.FirstQuality.Id;
-                  UserQuality.QualityDept_ModelOrder_Tracking_Id =
-                      CaseProvider.QualityTracking.Id;
-                  UserQuality.Amount = 1;
-                  UserQuality.IsRecycle = _switchValue;
-                  int CheckStatus =
-                      await UserQuality.Set_UserQualityFinalControl();
-                  switch (CheckStatus) {
-                    case 0:
-                      setState(() {});
-                      break;
-                    case 1:
-                      AlertPopupDialog(
-                          context,
-                          PersonalCase.GetLable(ResourceKey.WarrningMessage),
-                          PersonalCase.GetLable(
-                              ResourceKey.YouCanotExceedPlanAmount));
-                      break;
-                    case -1:
-                      AlertPopupDialog(
-                          context,
-                          PersonalCase.GetLable(ResourceKey.WarrningMessage),
-                          PersonalCase.GetLable(
-                              ResourceKey.ErrorWhileLoadingData));
-                      break;
-                  }
-                },
-                child: ButtonWithNumber(
-                  text: (widget.FirstQualityInfo.Employee_Matrix_Amount ?? 0)
+              SizedBox(height: 20),
+              CustomButton(
+                  width: 300,
+                  height: 70,
+                  value: (widget.FirstQualityInfo.Employee_Matrix_Amount ?? 0)
                       .toString(),
                   textColor: Colors.white,
-                  buttonWidth: getScreenWidth() / 1.5,
-                  buttonHegiht: 80,
-                  btnBgColor: ArgonColors.myGreen,
-                  textSize: 25,
-                  topRight: CircleShape(text: "10", width: 40, height: 40),
-                  bottomLeft: CircleShape(
-                      text: "10", width: 40, height: 40, color: Colors.red),
-                ),
-              ),
+                  backGroundColor: ArgonColors.myGreen,
+                  textSize: 30,
+                  function: () async {
+                    var UserQuality = new User_QualityTracking_DetailBLL();
+                    UserQuality.Quality_Items_Id = CaseProvider.FirstQuality.Id;
+                    UserQuality.QualityDept_ModelOrder_Tracking_Id =
+                        CaseProvider.QualityTracking.Id;
+                    UserQuality.Amount = 1;
+                    UserQuality.IsRecycle = _switchValue;
+                    int CheckStatus =
+                        await UserQuality.Set_UserQualityFinalControl();
+                    switch (CheckStatus) {
+                      case 0:
+                        setState(() {});
+                        break;
+                      case 1:
+                        AlertPopupDialog(
+                            context,
+                            PersonalCase.GetLable(ResourceKey.WarrningMessage),
+                            PersonalCase.GetLable(
+                                ResourceKey.YouCanotExceedPlanAmount));
+                        break;
+                      case -1:
+                        AlertPopupDialog(
+                            context,
+                            PersonalCase.GetLable(ResourceKey.WarrningMessage),
+                            PersonalCase.GetLable(
+                                ResourceKey.ErrorWhileLoadingData));
+                        break;
+                    }
+                  })
             ],
-            topRight: CircularIconWithNumber(
-              icon: FontAwesomeIcons.exclamation,
-              backGroundColor: Colors.red,
-              iconColor: Colors.white,
-              size: 10,
-              bubbleHeight: 15,
-              bubbleWidth: 15,
-              bubbleText: "2",
-            ),
           );
         } else if (IntiteStatus == 0)
           return Center(child: CircularProgressIndicator());
@@ -386,31 +390,53 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
               Column(children: [
                 CustomText(
                   text: PersonalCase.GetLable(ResourceKey.SecondQuality),
-                  size: AdaptiveTextSize().getadaptiveTextSize(context, 20),
+                  size: 25,
                   color: ArgonColors.myGrey,
                 ),
-                ButtonWithNumber(
-                  text: (widget.SecondQualityInfo.Employee_Matrix_Amount ?? 0)
-                      .toString(),
-                  textColor: Colors.black,
-                  buttonWidth: getScreenWidth() / 1.2,
-                  buttonHegiht: 100,
-                  btnBgColor: ArgonColors.myOrange,
-                  textSize: 25,
-                  padding: 10,
-                  topLeft: CircleShape(
-                      text: "1000", width: 30, height: 30, fontSize: 10),
-                ),
-                ButtonWithNumber(
-                  text: PersonalCase.GetLable(ResourceKey.Sewing_Error),
-                  textColor: Colors.black,
-                  buttonWidth: getScreenWidth() / 1.2,
-                  buttonHegiht: 100,
-                  btnBgColor: ArgonColors.myOrange,
-                  textSize: 15,
-                  image: Image.asset('lib/assets/images/sewing.png',
-                      width: 100, height: 50),
-                ),
+                SizedBox(height: 20),
+                CustomButton(
+                    width: 200,
+                    height: 60,
+                    value:
+                        (widget.SecondQualityInfo.Employee_Matrix_Amount ?? 0)
+                            .toString(),
+                    textColor: Colors.white,
+                    backGroundColor: ArgonColors.myRed,
+                    textSize: 30,
+                    function: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => new QualityItemsList(
+                                GroupType: GroupType.SecondQuality,
+                                HeaderName: PersonalCase.GetLable(
+                                    ResourceKey.SecondQuality),
+                                ParentReCalc: () {
+                                  setState(() {});
+                                })),
+                      );
+                    }),
+                SizedBox(height: 20),
+                CustomButton(
+                    width: 200,
+                    height: 90,
+                    value: PersonalCase.GetLable(ResourceKey.Tamir_Dikim),
+                    textColor: Colors.white,
+                    backGroundColor: ArgonColors.Invalid,
+                    textSize: 30,
+                    function: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => new SewingEmployeeControl(
+                                GroupType: GroupType.SecondQuality,
+                                HeaderName: PersonalCase.GetLable(
+                                    ResourceKey.SecondQuality),
+                                ParentReCalc: () {
+                                  setState(() {});
+                                })),
+                      );
+                    })
               ])
             ],
           );
@@ -471,31 +497,52 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
               Column(children: [
                 CustomText(
                   text: PersonalCase.GetLable(ResourceKey.Quality_TAMIR),
-                  size: AdaptiveTextSize().getadaptiveTextSize(context, 20),
+                  size: 25,
                   color: ArgonColors.myGrey,
                 ),
-                ButtonWithNumber(
-                  text: (widget.TamirQualityInfo.Employee_Matrix_Amount ?? 0)
-                      .toString(),
-                  textColor: Colors.black,
-                  buttonWidth: getScreenWidth() / 1.2,
-                  buttonHegiht: 100,
-                  btnBgColor: ArgonColors.myYellow,
-                  textSize: 25,
-                  padding: 10,
-                  topRight: CircleShape(
-                      text: "1000", width: 30, height: 30, fontSize: 10),
-                ),
-                ButtonWithNumber(
-                  text: PersonalCase.GetLable(ResourceKey.Sewing_Fixing),
-                  textColor: Colors.black,
-                  buttonWidth: getScreenWidth() / 1.2,
-                  buttonHegiht: 100,
-                  btnBgColor: ArgonColors.myYellow,
-                  textSize: 15,
-                  image: Image.asset('lib/assets/images/sewing.png',
-                      width: 100, height: 50),
-                ),
+                SizedBox(height: 20),
+                CustomButton(
+                    width: 200,
+                    height: 60,
+                    value: (widget.TamirQualityInfo.Employee_Matrix_Amount ?? 0)
+                        .toString(),
+                    textColor: Colors.white,
+                    textSize: 30,
+                    backGroundColor: ArgonColors.myYellow,
+                    function: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => new QualityItemsList(
+                                GroupType: GroupType.TamirQuality,
+                                HeaderName: PersonalCase.GetLable(
+                                    ResourceKey.TamirList),
+                                ParentReCalc: () {
+                                  setState(() {});
+                                })),
+                      );
+                    }),
+                SizedBox(height: 20),
+                CustomButton(
+                    width: 200,
+                    height: 90,
+                    value: PersonalCase.GetLable(ResourceKey.Tamir_Dikim),
+                    textColor: Colors.white,
+                    backGroundColor: ArgonColors.myYellow,
+                    textSize: 30,
+                    function: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => new SewingEmployeeControl(
+                                GroupType: GroupType.TamirQuality,
+                                HeaderName: PersonalCase.GetLable(
+                                    ResourceKey.SecondQuality),
+                                ParentReCalc: () {
+                                  setState(() {});
+                                })),
+                      );
+                    }),
               ])
             ],
           );
@@ -538,13 +585,4 @@ AppBar MyAppBar(BuildContext context) {
       ),
     ],
   );
-}
-
-class AdaptiveTextSize {
-  const AdaptiveTextSize();
-
-  getadaptiveTextSize(BuildContext context, dynamic value) {
-    // 720 is medium screen height
-    return (value / 720) * MediaQuery.of(context).size.height;
-  }
 }

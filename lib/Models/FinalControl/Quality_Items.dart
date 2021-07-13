@@ -18,6 +18,7 @@ class Quality_ItemsBLL {
   int LastUpdateBy;
   String Group_Name;
   String Group_Type;
+  int Amount;
 
   //#endregion
 
@@ -39,6 +40,7 @@ class Quality_ItemsBLL {
     this.LastUpdateBy = json['LastUpdateBy'];
     this.Group_Name = json['Group_Name'];
     this.Group_Type = json['Group_Type'];
+    this.Amount = json['Amount'];
 
   }
 
@@ -54,8 +56,8 @@ class Quality_ItemsBLL {
         CreatedBy = json['CreatedBy'],
         LastUpdateBy = json['LastUpdateBy'],
         Group_Name = json['Group_Name'],
-        Group_Type = json['Group_Type'];
-
+        Group_Type = json['Group_Type'],
+         Amount = json['Amount'];
 
   Map<String, dynamic> toJson() => {
     'Id': Id,
@@ -96,6 +98,33 @@ class Quality_ItemsBLL {
   //#endregion
 
   //#region GetWebApiUrl
+
+  static Future<List<Quality_ItemsBLL>> Get_Quality_Items_WithValue(
+      String GroupType,int Employee_Id,int Matrix_Id
+      ) async {
+    List<Quality_ItemsBLL> ItemList;
+    try {
+      var response = await http.get(
+          SharedPref.GetWebApiUrl(WebApiMethod.Get_Quality_Items_WithValue) +
+              "?GroupType=" + GroupType +
+              "&Employee_Id=" + Employee_Id.toString() +
+              "&OrderSizeColorDetail_Id=" + Matrix_Id.toString()
+      );
+
+      print(response.request);
+
+      if (response.statusCode == 200) {
+        ItemList = (json.decode(response.body) as List)
+            .map((i) => Quality_ItemsBLL.fromJson(i))
+            .toList();
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return ItemList;
+  }
+
   static Future<List<Quality_ItemsBLL>> Get_Quality_Items(
       String GroupType
       ) async {
@@ -103,8 +132,8 @@ class Quality_ItemsBLL {
     try {
       var response = await http.get(
           SharedPref.GetWebApiUrl(WebApiMethod.Get_Quality_Items) +
-              "?GroupType=" +
-              GroupType);
+              "?GroupType=" + GroupType
+      );
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

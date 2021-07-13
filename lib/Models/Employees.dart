@@ -200,6 +200,26 @@ class EmployeesBLL {
     return ItemList;
   }
 
+  static Future<List<EmployeesBLL>> Get_EmployeesByOperation(int Operation_Id) async {
+    List<EmployeesBLL> ItemList;
+    try {
+      var response = await http.get(
+          SharedPref.GetWebApiUrl(WebApiMethod.Get_EmployeesByOperation)+
+              "?Operation_Id=" + Operation_Id.toString());
+
+
+      if (response.statusCode == 200) {
+        ItemList = (json.decode(response.body) as List)
+            .map((i) => EmployeesBLL.fromJson(i))
+            .toList();
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return ItemList;
+  }
+
 //#endregion
 
 }
