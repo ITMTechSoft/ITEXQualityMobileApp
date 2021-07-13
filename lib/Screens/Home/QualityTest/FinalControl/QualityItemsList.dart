@@ -158,15 +158,14 @@ class _QualityItemsListState extends State<QualityItemsList> {
                       },
                       child: ButtonWithNumber(
                           text: snapshot.data[index].Item_Name,
-                          number: snapshot.data[index].Amount ?? 0,
                           buttonWidth: getScreenWidth() / 3,
                           buttonHegiht: 120,
                           btnBgColor: selectedList.contains(index)
                               ? ArgonColors.myLightGreen
                               : ArgonColors.myOrange,
-                          circleBgColor: ArgonColors.myBlue2,
+
                           textSize: 15,
-                          anotherBubble: _IsDeletedVal),
+                          ),
                     );
                   }),
                 ),
