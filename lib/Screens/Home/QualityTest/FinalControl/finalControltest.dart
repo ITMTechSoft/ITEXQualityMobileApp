@@ -1,5 +1,3 @@
-Final Control
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -17,7 +15,6 @@ import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
-import 'ErrorFixing.dart';
 
 class FinalControl extends StatefulWidget {
   @override
