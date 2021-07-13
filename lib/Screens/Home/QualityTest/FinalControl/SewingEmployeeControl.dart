@@ -12,13 +12,18 @@ import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 import '../../../../SystemImports.dart';
 import 'FinalControl.dart';
 
-class DikimControl extends StatefulWidget {
+class SewingEmployeeControl extends StatefulWidget {
+  Function ParentReCalc;
+  String GroupType;
+  String HeaderName;
+
+  SewingEmployeeControl({this.ParentReCalc, this.GroupType, this.HeaderName});
   @override
-  State<DikimControl> createState() => _DikimControlState();
+  State<SewingEmployeeControl> createState() => _SewingEmployeeControlState();
   bool _switchValue = false;
 }
 
-class _DikimControlState extends State<DikimControl> {
+class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
   List<EmployeesBLL> OperatorList;
   List<OperationBLL> OperationList;
   int IntiteStatus = 0;

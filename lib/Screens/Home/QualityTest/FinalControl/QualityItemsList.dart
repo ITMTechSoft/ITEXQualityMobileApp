@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:itex_soft_qualityapp/Models/FinalControl/Model_Order_Control.dart';
 import 'package:itex_soft_qualityapp/Models/FinalControl/Quality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/Dikim_InlineProcess.dart';
-import 'package:itex_soft_qualityapp/Screens/Home/QualityTest/FinalControl/FinalControl.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
@@ -13,8 +11,6 @@ import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 class QualityItemsList extends StatefulWidget {
-  int clickedIndex;
-
   Function ParentReCalc;
   String GroupType;
   String HeaderName;
@@ -26,8 +22,7 @@ class QualityItemsList extends StatefulWidget {
 }
 
 class _QualityItemsListState extends State<QualityItemsList> {
-  Color tileColor = ArgonColors.myOrange;
-  Color textColor = Colors.black;
+
   int floatingNumber = 0;
   int IntiteStatus = 0;
   bool _KeepPage = false;

@@ -15,6 +15,7 @@ import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 import 'QualityItemsList.dart';
+import 'SewingEmployeeControl.dart';
 
 class FinalControl extends StatefulWidget {
   @override
@@ -408,7 +409,8 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
                         MaterialPageRoute(
                             builder: (context) => new QualityItemsList(
                                 GroupType: GroupType.SecondQuality,
-                                HeaderName: PersonalCase.GetLable(ResourceKey.SecondQuality),
+                                HeaderName: PersonalCase.GetLable(
+                                    ResourceKey.SecondQuality),
                                 ParentReCalc: () {
                                   setState(() {});
                                 })),
@@ -422,7 +424,19 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
                     textColor: Colors.white,
                     backGroundColor: ArgonColors.Invalid,
                     textSize: 30,
-                    function: () {})
+                    function: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => new SewingEmployeeControl(
+                                GroupType: GroupType.SecondQuality,
+                                HeaderName: PersonalCase.GetLable(
+                                    ResourceKey.SecondQuality),
+                                ParentReCalc: () {
+                                  setState(() {});
+                                })),
+                      );
+                    })
               ])
             ],
           );
@@ -501,7 +515,8 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                         MaterialPageRoute(
                             builder: (context) => new QualityItemsList(
                                 GroupType: GroupType.TamirQuality,
-                                HeaderName: PersonalCase.GetLable(ResourceKey.TamirList),
+                                HeaderName: PersonalCase.GetLable(
+                                    ResourceKey.TamirList),
                                 ParentReCalc: () {
                                   setState(() {});
                                 })),
@@ -515,7 +530,19 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                     textColor: Colors.white,
                     backGroundColor: ArgonColors.myYellow,
                     textSize: 30,
-                    function: () {}),
+                    function: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => new SewingEmployeeControl(
+                                GroupType: GroupType.TamirQuality,
+                                HeaderName: PersonalCase.GetLable(
+                                    ResourceKey.SecondQuality),
+                                ParentReCalc: () {
+                                  setState(() {});
+                                })),
+                      );
+                    }),
               ])
             ],
           );
