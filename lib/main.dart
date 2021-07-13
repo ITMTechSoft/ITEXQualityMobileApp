@@ -7,7 +7,7 @@ import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:provider/provider.dart';
 import 'Preferences/SetupApplications.dart';
 import 'Screens/Home/QualityTest/FinalControl/DikimControl.dart';
-import 'Screens/Home/QualityTest/FinalControl/ErrorFixing.dart';
+import 'Screens/Home/QualityTest/FinalControl/QualityItemsList.dart';
 import 'Screens/Home/QualityTest/FinalControl/FinalControl.dart';
 import 'Screens/Wrapper.dart';
 import 'assets/Themes/SystemTheme.dart';

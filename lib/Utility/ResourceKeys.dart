@@ -1,4 +1,5 @@
 enum ResourceKey{
+  KeepPageOpen,
   RecycleReturn,
   Employee,
   SizeColor,
