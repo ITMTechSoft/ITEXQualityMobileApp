@@ -129,20 +129,26 @@ class _ErrorFixingState extends State<ErrorFixing> {
                       floatingNumber = numberList[index];
                       floatingNumber = floatingNumber + 1;
                       //numberList.insert(index, floatingNumber);
-                     // numberList[index] = floatingNumber;
+                      // numberList[index] = floatingNumber;
                     });
                   },
                   child: ButtonWithNumber(
                       text: errorList[index],
-                      number: numberList[index],
                       buttonWidth: getScreenWidth() / 3,
                       buttonHegiht: 120,
                       btnBgColor: selectedList.contains(index)
                           ? ArgonColors.myLightGreen
                           : ArgonColors.myOrange,
-                      circleBgColor: ArgonColors.myBlue2,
                       textSize: 15,
-                      anotherBubble: widget._activeDeleted),
+
+                      topRight: CircleShape(text: "1000", width: 30, height: 30,fontSize: 10),
+                      bottomLeft: widget._activeDeleted == true
+                          ? IconInsideCircle(
+                        size: 8,
+                              icon: FontAwesomeIcons.minus,
+                              color: Colors.white,
+                              backGroundColor: Colors.red)
+                          : Container(width: 0, height: 0),),
                 );
               }),
             ),

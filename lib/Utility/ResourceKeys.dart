@@ -1325,6 +1325,9 @@ enum ResourceKey{
   QualityLostTime,
   OrderSourceId,
   OrderUniqueId,
+  Sewing_Error,
+  Sewing_Fixing,
+
 }
 extension ParseToString on ResourceKey {
   String toShortString() {

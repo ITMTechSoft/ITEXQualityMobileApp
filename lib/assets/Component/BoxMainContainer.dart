@@ -14,11 +14,9 @@ class BoxMainContainer extends StatelessWidget {
       margin: EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: ArgonColors.Group,
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10)),
+        borderRadius: BorderRadius.all(
+             Radius.circular(10),
+            ),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -38,21 +36,66 @@ class BoxMainContainer extends StatelessWidget {
 
 class BoxMaterialCard extends StatelessWidget {
   var Childrens;
-  BoxMaterialCard({this.Childrens});
+ final Widget topRight;
+ final Widget topLeft ;
+ final Widget bottomRight;
+ final Widget bottomLeft ;
+  BoxMaterialCard({this.Childrens, this.topRight, this.topLeft, this.bottomRight, this.bottomLeft});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shadowColor: ArgonColors.black,
-      elevation: 10,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: Childrens,
+    return Stack(
+      children: [
+        Card(
+          shadowColor: ArgonColors.black,
+          elevation: 10,
+          child: Container(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: Childrens,
+            ),
+          ),
         ),
-      ),
+        topRight != null
+            ? Positioned(
+          child: topRight,
+          top: 5,
+          right: 5,
+        )
+            : Container(
+          width: 5,
+          height: 5,
+        ),
+        topLeft != null
+            ? Positioned(
+          child: topLeft,
+          top:5,
+          left: 5,
+        )
+            : Container(
+          width: 0,
+          height: 0,
+        ),
+        bottomLeft != null
+            ? Positioned(
+          child: bottomLeft,
+          bottom: 5,
+          left: 5,
+        )
+            : Container(width: 0, height: 0),
+        bottomRight != null
+            ? Positioned(
+          child: bottomRight,
+          bottom: 5,
+          right: 5,
+        )
+            : Container(
+          width: 5,
+          height: 5,
+        ),
+      ],
     );
   }
 }
