@@ -158,7 +158,8 @@ class _QualityItemsListState extends State<QualityItemsList> {
                         await OnTapQualityItem(snapshot.data[index],index);
                       },
                       child: ButtonWithNumber(
-                          text: snapshot.data[index].Item_Name,
+
+                        text: snapshot.data[index].Item_Name,
                           buttonWidth: getScreenWidth() / 3,
                           buttonHegiht: 120,
                           btnBgColor: selectedList.contains(index)
@@ -166,7 +167,7 @@ class _QualityItemsListState extends State<QualityItemsList> {
                               : ArgonColors.myOrange,
 
                           textSize: 15,
-                        topRight: CircleShape(text: "1000", width: 30, height: 30,fontSize: 10),
+                        topRight: CircleShape(text:snapshot.data[index].Amount.toString() ?? 0, width: 30, height: 30,fontSize: 10),
                         bottomLeft: _KeepPage == true
                             ? IconInsideCircle(
                             size: 8,
