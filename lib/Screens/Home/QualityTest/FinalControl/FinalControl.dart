@@ -315,7 +315,7 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                   buttonWidth: getScreenWidth() / 2,
                   buttonHegiht: getScreenHeight()/8,
                   btnBgColor: ArgonColors.myGreen,
-                  textSize: 26,
+                  textSize: 27,
                   topLeft: CircleShape(
                       text: (widget.FirstQualityInfo.Matrix_Control_Amount ?? 0)
                           .toString(),
