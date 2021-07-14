@@ -312,10 +312,10 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                   text: (widget.FirstQualityInfo.Employee_Matrix_Amount ?? 0)
                       .toString(),
                   textColor: Colors.white,
-                  buttonWidth: getScreenWidth() / 1.5,
-                  buttonHegiht: 80,
+                  buttonWidth: getScreenWidth() / 2,
+                  buttonHegiht: getScreenHeight()/8,
                   btnBgColor: ArgonColors.myGreen,
-                  textSize: 25,
+                  textSize: 30,
                   topLeft: CircleShape(
                       text: (widget.FirstQualityInfo.Matrix_Control_Amount ?? 0)
                           .toString(),
@@ -414,8 +414,8 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
                     text: (widget.SecondQualityInfo.Employee_Matrix_Amount ?? 0)
                         .toString(),
                     textColor: Colors.black,
-                    buttonWidth: getScreenWidth() / 1.2,
-                    buttonHegiht: 100,
+                    buttonWidth: getScreenWidth() / 2,
+                    buttonHegiht: getScreenHeight()/9,
                     btnBgColor: ArgonColors.myOrange,
                     textSize: 25,
                     padding: 10,
@@ -426,6 +426,7 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
                         width: 30,
                         height: 30,
                         fontSize: 10),
+
                   ),
                 ),
                 GestureDetector(
@@ -445,8 +446,8 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
                   child: ButtonWithNumber(
                     text: PersonalCase.GetLable(ResourceKey.Sewing_Error),
                     textColor: Colors.black,
-                    buttonWidth: getScreenWidth() / 1.2,
-                    buttonHegiht: 100,
+                    buttonWidth: getScreenWidth() / 2,
+                    buttonHegiht: getScreenHeight()/9,
                     btnBgColor: ArgonColors.myOrange,
                     textSize: 15,
                     image: Image.asset('lib/assets/images/sewing.png',
@@ -534,8 +535,8 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                     text: (widget.TamirQualityInfo.Employee_Matrix_Amount ?? 0)
                         .toString(),
                     textColor: Colors.black,
-                    buttonWidth: getScreenWidth() / 1.2,
-                    buttonHegiht: 100,
+                    buttonWidth: getScreenWidth() / 2,
+                    buttonHegiht: getScreenHeight()/9,
                     btnBgColor: ArgonColors.myYellow,
                     textSize: 25,
                     padding: 10,
@@ -569,8 +570,8 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                   child: ButtonWithNumber(
                     text: PersonalCase.GetLable(ResourceKey.Sewing_Fixing),
                     textColor: Colors.black,
-                    buttonWidth: getScreenWidth() / 1.2,
-                    buttonHegiht: 100,
+                    buttonWidth:  getScreenWidth() / 2,
+                    buttonHegiht: getScreenHeight()/9,
                     btnBgColor: ArgonColors.myYellow,
                     textSize: 15,
                     image: Image.asset('lib/assets/images/sewing.png',
