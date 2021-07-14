@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:itex_soft_qualityapp/Models/FinalControl/Quality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/Dikim_InlineProcess.dart';
@@ -157,16 +158,25 @@ class _QualityItemsListState extends State<QualityItemsList> {
                         await OnTapQualityItem(snapshot.data[index],index);
                       },
                       child: ButtonWithNumber(
-                          text: snapshot.data[index].Item_Name,
-                          number: snapshot.data[index].Amount ?? 0,
-                          buttonWidth: getScreenWidth() / 3,
-                          buttonHegiht: 120,
-                          btnBgColor: selectedList.contains(index)
-                              ? ArgonColors.myLightGreen
-                              : ArgonColors.myOrange,
-                          circleBgColor: ArgonColors.myBlue2,
-                          textSize: 15,
-                          anotherBubble: _IsDeletedVal),
+
+                        text: snapshot.data[index].Item_Name,
+                        buttonWidth: getScreenWidth() / 3,
+                        buttonHegiht: 120,
+                        btnBgColor: selectedList.contains(index)
+                            ? ArgonColors.myLightGreen
+                            : ArgonColors.myOrange,
+
+                        textSize: 15,
+                        topRight: CircleShape(text:snapshot.data[index].Amount.toString() ?? 0, width: 30, height: 30,fontSize: 10),
+                        bottomLeft: _IsDeletedVal == true
+                            ? IconInsideCircle(
+                            size: 8,
+                            icon: FontAwesomeIcons.minus,
+                            color: Colors.white,
+                            backGroundColor: Colors.red)
+                            : Container(width: 0, height: 0),),
+
+
                     );
                   }),
                 ),
