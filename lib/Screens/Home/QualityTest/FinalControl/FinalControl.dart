@@ -24,6 +24,7 @@ class FinalControl extends StatefulWidget {
 }
 
 class _FinalControlState extends State<FinalControl> {
+
   int IntiteStatus = 0;
   ModelOrder_MatrixBLL ModelOrder;
 
@@ -312,7 +313,7 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                   text: (widget.FirstQualityInfo.Employee_Matrix_Amount ?? 0)
                       .toString(),
                   textColor: Colors.white,
-                  buttonWidth: getScreenWidth() / 2,
+                  buttonWidth: getScreenWidth() ,
                   buttonHegiht: getScreenHeight()/8,
                   btnBgColor: ArgonColors.myGreen,
                   textSize: 27,
@@ -320,7 +321,8 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                       text: (widget.FirstQualityInfo.Matrix_Control_Amount ?? 0)
                           .toString(),
                       width: 40,
-                      height: 40),
+                      height: 40,
+                  ),
                 ),
               ),
             ],
@@ -393,7 +395,7 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
               Column(children: [
                 CustomText(
                   text: PersonalCase.GetLable(ResourceKey.SecondQuality),
-                  size: AdaptiveTextSize().getadaptiveTextSize(context, 20),
+                  size: AdaptiveTextSize().getadaptiveTextSize(context, 19),
                   color: ArgonColors.myGrey,
                 ),
                 GestureDetector(
@@ -570,8 +572,8 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                   child: ButtonWithNumber(
                     text: PersonalCase.GetLable(ResourceKey.Sewing_Fixing),
                     textColor: Colors.black,
-                    buttonWidth:  getScreenWidth() / 2,
-                    buttonHegiht: getScreenHeight()/10,
+                    buttonWidth: getScreenWidth() / 2,
+                    buttonHegiht: getScreenHeight()/9,
                     btnBgColor: ArgonColors.myYellow,
                     textSize: 15,
                     image: Image.asset('lib/assets/images/sewing.png',
@@ -596,7 +598,10 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
 }
 
 AppBar MyAppBar(BuildContext context) {
-  return AppBar(
+  return AppBar
+
+
+    (
     centerTitle: true,
     title: Text('ITM Tech Soft'),
     leading: GestureDetector(

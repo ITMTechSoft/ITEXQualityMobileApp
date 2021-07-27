@@ -60,8 +60,6 @@ class _Operation_ListState extends State<Operation_List> {
     var FilterListItem = widget.Items.where((r) =>
         r.Operation_Name.toUpperCase().contains(SearchController.text.toUpperCase())).toList();
     return SingleChildScrollView(
-      primary: false,
-      scrollDirection: Axis.vertical,
       child: ListView.builder(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
@@ -83,10 +81,10 @@ class _Operation_ListState extends State<Operation_List> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 450,
       padding: EdgeInsets.all(1),
       margin: EdgeInsets.only(left: 2, top: 0, right: 2, bottom: 0),
-      child: ListView(
+      child: Column(
         children: [
           HeaderLable(
               widget.PersonalCase.GetLable(ResourceKey.Operation),fontSize: 15),
@@ -95,7 +93,10 @@ class _Operation_ListState extends State<Operation_List> {
 
             });
           }),
-          FilterList()
+          Container(
+            height: 350,
+            child: FilterList(),
+          ),
         ],
       ),
     );

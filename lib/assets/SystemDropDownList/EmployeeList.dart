@@ -91,17 +91,18 @@ class _Employee_ListState extends State<Employee_List> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 450,
       padding: EdgeInsets.all(1),
       margin: EdgeInsets.only(left: 2, top: 0, right: 2, bottom: 0),
-      child: ListView(
+      child: Column(
         children: [
           HeaderLable(widget.PersonalCase.GetLable(ResourceKey.EmployeeList),
               fontSize: 15),
           FilterItem((String Text) {
             setState(() {});
           }),
-          FilterList()
+          Container(            height: 350,
+              child: FilterList()),
         ],
       ),
     );
