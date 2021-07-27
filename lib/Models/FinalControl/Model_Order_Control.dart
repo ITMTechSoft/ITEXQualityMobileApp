@@ -3,12 +3,11 @@ import 'package:http/http.dart' as http;
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 
-
-class GroupType{
-   static String KalityItem = "KITM";
-   static String FirstQuality = "FKAL";
-   static String SecondQuality = "SKAL";
-   static String TamirQuality = "TKAL";
+class GroupType {
+  static String KalityItem = "KITM";
+  static String FirstQuality = "FKAL";
+  static String SecondQuality = "SKAL";
+  static String TamirQuality = "TKAL";
 }
 
 class Model_Order_ControlBLL {
@@ -23,9 +22,10 @@ class Model_Order_ControlBLL {
 
   //#endregion
 
-  Model_Order_ControlBLL({this.Control_Type,this.OrderSizeColorDetail_Id,this.QualityDept_ModelOrder_Tracking_Id}) {
-
-  }
+  Model_Order_ControlBLL(
+      {this.Control_Type,
+      this.OrderSizeColorDetail_Id,
+      this.QualityDept_ModelOrder_Tracking_Id}) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -35,45 +35,41 @@ class Model_Order_ControlBLL {
     this.Order_Id = json['Order_Id'];
     this.Matrix_Control_Amount = json['Matrix_Control_Amount'];
     this.Employee_Matrix_Amount = json['Employee_Matrix_Amount'];
-    this.QualityDept_ModelOrder_Tracking_Id = json['QualityDept_ModelOrder_Tracking_Id'];
-
+    this.QualityDept_ModelOrder_Tracking_Id =
+        json['QualityDept_ModelOrder_Tracking_Id'];
   }
 
-  Model_Order_ControlBLL.fromJson(Map<String, dynamic> json):
-        Quality_Items_Id = json['Quality_Items_Id'],
+  Model_Order_ControlBLL.fromJson(Map<String, dynamic> json)
+      : Quality_Items_Id = json['Quality_Items_Id'],
         Control_Type = json['Control_Type'],
         OrderSizeColorDetail_Id = json['OrderSizeColorDetail_Id'],
         Order_Id = json['Order_Id'],
         Matrix_Control_Amount = json['Matrix_Control_Amount'],
         Employee_Matrix_Amount = json['Employee_Matrix_Amount'],
-        QualityDept_ModelOrder_Tracking_Id = json['QualityDept_ModelOrder_Tracking_Id'];
-
+        QualityDept_ModelOrder_Tracking_Id =
+            json['QualityDept_ModelOrder_Tracking_Id'];
 
   Map<String, dynamic> toJson() => {
-    'Quality_Items_Id': Quality_Items_Id,
-    'Control_Type': Control_Type,
-    'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id,
-    'Order_Id': Order_Id,
-    'Matrix_Control_Amount': Matrix_Control_Amount,
-    'Employee_Matrix_Amount': Employee_Matrix_Amount,
-    'QualityDept_ModelOrder_Tracking_Id': QualityDept_ModelOrder_Tracking_Id,
-
-  };
+        'Quality_Items_Id': Quality_Items_Id,
+        'Control_Type': Control_Type,
+        'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id,
+        'Order_Id': Order_Id,
+        'Matrix_Control_Amount': Matrix_Control_Amount,
+        'Employee_Matrix_Amount': Employee_Matrix_Amount,
+        'QualityDept_ModelOrder_Tracking_Id':
+            QualityDept_ModelOrder_Tracking_Id,
+      };
 
   Map<String, String> toPost() => {
-
-
-    'Quality_Items_Id': Quality_Items_Id.toString(),
-    'Control_Type': Control_Type,
-    'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id.toString(),
-    'Order_Id': Order_Id.toString(),
-    'Matrix_Control_Amount': Matrix_Control_Amount.toString(),
-    'Employee_Matrix_Amount': Employee_Matrix_Amount.toString(),
-    'QualityDept_ModelOrder_Tracking_Id': QualityDept_ModelOrder_Tracking_Id.toString(),
-
-  };
-
-
+        'Quality_Items_Id': Quality_Items_Id.toString(),
+        'Control_Type': Control_Type,
+        'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id.toString(),
+        'Order_Id': Order_Id.toString(),
+        'Matrix_Control_Amount': Matrix_Control_Amount.toString(),
+        'Employee_Matrix_Amount': Employee_Matrix_Amount.toString(),
+        'QualityDept_ModelOrder_Tracking_Id':
+            QualityDept_ModelOrder_Tracking_Id.toString(),
+      };
 
   //#endregion
 
@@ -81,8 +77,8 @@ class Model_Order_ControlBLL {
   Future<List<Model_Order_ControlBLL>> Get_Model_Order_Control() async {
     List<Model_Order_ControlBLL> ItemList;
     try {
-      final String url = SharedPref.GetWebApiUrl(
-          WebApiMethod.Get_Model_Order_Control);
+      final String url =
+          SharedPref.GetWebApiUrl(WebApiMethod.Get_Model_Order_Control);
 
       var response = await http.post(url,
           headers: <String, String>{
@@ -104,8 +100,7 @@ class Model_Order_ControlBLL {
     return ItemList;
   }
 
-
-  /*Future<bool> Set_SecondQualityAmount() async {
+/*Future<bool> Set_SecondQualityAmount() async {
     try {
       final String url = SharedPref.GetWebApiUrl(
           WebApiMethod.Set_SecondQualityAmount);
@@ -144,7 +139,4 @@ class Model_Order_ControlBLL {
   } */
 //#endregion
 
-
-
 }
-

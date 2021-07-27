@@ -147,10 +147,11 @@ class _QualityItemsListState extends State<QualityItemsList> {
                   ),
                 ),
                 GridView.count(
-                  crossAxisSpacing: 6,
-                  mainAxisSpacing: 6,
+                  crossAxisSpacing: 2,
+                  mainAxisSpacing: 3,
                   shrinkWrap: true,
                   primary: false,
+                  childAspectRatio: 5 / 3,
                   crossAxisCount: 3,
                   children: List.generate(snapshot.data.length, (index) {
                     return GestureDetector(
@@ -160,21 +161,22 @@ class _QualityItemsListState extends State<QualityItemsList> {
                       child: ButtonWithNumber(
 
                         text: snapshot.data[index].Item_Name,
-                          buttonWidth: getScreenWidth() / 3,
-                          buttonHegiht: 120,
-                          btnBgColor: selectedList.contains(index)
-                              ? ArgonColors.myLightGreen
-                              : ArgonColors.myOrange,
+                        buttonWidth: getScreenWidth() / 3,
+                        buttonHegiht: getScreenWidth()/4,
+                        btnBgColor: selectedList.contains(index)
+                            ? ArgonColors.myLightGreen
+                            : ArgonColors.myOrange,
 
-                          textSize: 15,
-                        topRight: CircleShape(text:snapshot.data[index].Amount.toString() ?? 0, width: 30, height: 30,fontSize: 10),
-                        bottomLeft: _KeepPage == true
+                        textSize: 15,
+                        topRight: CircleShape(text:(snapshot.data[index].Amount ?? 0).toString(), width: 30, height: 30,fontSize: 10),
+                        bottomLeft: _IsDeletedVal == true
                             ? IconInsideCircle(
                             size: 8,
                             icon: FontAwesomeIcons.minus,
                             color: Colors.white,
                             backGroundColor: Colors.red)
-                            : Container(width: 0, height: 0),),
+                            : Container(width: 0, height: 0),
+                    ),
 
 
                     );

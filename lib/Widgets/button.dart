@@ -72,11 +72,11 @@ class StretchableButton extends StatelessWidget {
 }
 
 Widget StandardButton(
-        {String Lable,
-        Color ForColor,
-        Color BakColor,
-        Function OnTap,
-        double FontSize = 14}) =>
+    {String Lable,
+      Color ForColor,
+      Color BakColor,
+      Function OnTap,
+      double FontSize = 14}) =>
     TextButton(
         child: Text(Lable.toUpperCase(), style: TextStyle(fontSize: FontSize)),
         style: ButtonStyle(
@@ -123,6 +123,7 @@ Widget ButtonWithNumber({
   Widget bottomRight,
   Widget bottomLeft,
   Widget image,
+  bool orientation = false,
 }) {
   return Stack(
     children: [
@@ -144,51 +145,51 @@ Widget ButtonWithNumber({
       ),
       topRight != null
           ? Positioned(
-              child: topRight,
-              top: 0,
-              right: 0,
-            )
+        child: topRight,
+        top: 0,
+        right: 0,
+      )
           : Container(
-              width: 0,
-              height: 0,
-            ),
+        width: 0,
+        height: 0,
+      ),
       topLeft != null
           ? Positioned(
-              child: topLeft,
-              top: 0,
-              left: 0,
-            )
+        child: topLeft,
+        top: 0,
+        left: 0,
+      )
           : Container(
-              width: 0,
-              height: 0,
-            ),
+        width: 0,
+        height: 0,
+      ),
       bottomLeft != null
           ? Positioned(
-              child: bottomLeft,
-              bottom: 0,
-              left: 0,
-            )
+        child: bottomLeft,
+        bottom: 0,
+        left: 0,
+      )
           : Container(width: 0, height: 0),
       bottomRight != null
           ? Positioned(
-              child: bottomRight,
-              bottom: 0,
-              right: 0,
-            )
+        child: bottomRight,
+        bottom: 0,
+        right: 0,
+      )
           : Container(
-              width: 0,
-              height: 0,
-            ),
+        width: 0,
+        height: 0,
+      ),
     ],
   );
 }
 
 Widget IconInsideCircle(
     {IconData icon,
-    Color color,
-    double iconSize = 15,
-    Color backGroundColor,
-    double size = 13}) {
+      Color color,
+      double iconSize = 15,
+      Color backGroundColor,
+      double size = 13}) {
   return Container(
     padding: EdgeInsets.all(size),
     margin: EdgeInsets.only(left: 2),
@@ -206,11 +207,11 @@ Widget IconInsideCircle(
 
 Widget CircleShape(
     {String text,
-    Color color = ArgonColors.myBlue2,
-    double width = 80,
-    double height = 70,
-    double fontSize = 18,
-    Color textColor = Colors.white}) {
+      Color color = ArgonColors.myBlue2,
+      double width = 80,
+      double height = 70,
+      double fontSize = 18,
+      Color textColor = Colors.white}) {
   return Container(
     width: width,
     height: height,
@@ -353,14 +354,14 @@ class CircularIconWithNumber extends StatelessWidget {
 
   const CircularIconWithNumber(
       {Key key,
-      this.icon,
-      this.backGroundColor,
-      this.iconColor,
-      this.size = 15,
-      this.bubbleWidth = 25,
-      this.bubbleHeight = 25,
-      this.bubbleText = '',
-      this.bubbleTextSize = 25})
+        this.icon,
+        this.backGroundColor,
+        this.iconColor,
+        this.size = 15,
+        this.bubbleWidth = 25,
+        this.bubbleHeight = 25,
+        this.bubbleText = '',
+        this.bubbleTextSize = 25})
       : super(key: key);
 
   @override
@@ -403,12 +404,12 @@ class ImageButton extends StatelessWidget {
 
   const ImageButton(
       {Key key,
-      this.text,
-      this.function,
-      this.color,
-      this.width = 200,
-      this.height = 80,
-      this.childWidget})
+        this.text,
+        this.function,
+        this.color,
+        this.width = 200,
+        this.height = 80,
+        this.childWidget})
       : super(key: key);
 
   @override

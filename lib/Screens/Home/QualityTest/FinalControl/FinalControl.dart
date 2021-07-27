@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -16,6 +15,8 @@ import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
+import 'QualityItemsList.dart';
+import 'SewingEmployeeControl.dart';
 
 class FinalControl extends StatefulWidget {
   @override
@@ -23,6 +24,7 @@ class FinalControl extends StatefulWidget {
 }
 
 class _FinalControlState extends State<FinalControl> {
+
   int IntiteStatus = 0;
   ModelOrder_MatrixBLL ModelOrder;
 
@@ -31,7 +33,7 @@ class _FinalControlState extends State<FinalControl> {
         CaseProvider.ModelOrderMatrix.Order_Id,
         CaseProvider.ModelOrderMatrix.Id);
     var QualityList =
-    await Quality_ItemsBLL.Get_Quality_Items(GroupType.FirstQuality);
+        await Quality_ItemsBLL.Get_Quality_Items(GroupType.FirstQuality);
     if (ModelOrder != null && QualityList != null) {
       IntiteStatus = 1;
       CaseProvider.FirstQuality = QualityList[0];
@@ -77,46 +79,46 @@ class _FinalControlState extends State<FinalControl> {
                         children: [
                           LabelWithValue(
                               label:
-                              PersonalCase.GetLable(ResourceKey.Customer),
+                                  PersonalCase.GetLable(ResourceKey.Customer),
                               value: ModelOrder.Customer_Name),
                           LabelWithValue(
                               label:
-                              PersonalCase.GetLable(ResourceKey.Employee),
+                                  PersonalCase.GetLable(ResourceKey.Employee),
                               value:
-                              CaseProvider.QualityTracking.Employee_Name),
+                                  CaseProvider.QualityTracking.Employee_Name),
                           LabelWithIntegerVal(
                               label: PersonalCase.GetLable(
                                   ResourceKey.Plan_Quantity),
                               value: ModelOrder.PlanSizeColor_QTY),
                           LabelWithValue(
                               label:
-                              PersonalCase.GetLable(ResourceKey.SizeColor),
+                                  PersonalCase.GetLable(ResourceKey.SizeColor),
                               value:
-                              "${ModelOrder.SizeName}/ ${ModelOrder.ColorName}")
+                                  "${ModelOrder.SizeName}/ ${ModelOrder.ColorName}")
                         ],
                       ),
                     ),
                     Expanded(
                         child: Column(
-                          children: [
-                            LabelWithValue(
-                                label:
+                      children: [
+                        LabelWithValue(
+                            label:
                                 PersonalCase.GetLable(ResourceKey.Order_Number),
-                                value: ModelOrder.Order_Number),
-                            LabelWithValue(
-                                label: PersonalCase.GetLable(ResourceKey.Model_STD),
-                                value: (ModelOrder.Analysis_Model_STD ?? 0)
-                                    .toString()),
-                            LabelWithIntegerVal(
-                                label: PersonalCase.GetLable(
-                                    ResourceKey.OrderSizeColor_QTY),
-                                value: ModelOrder.OrderSizeColor_QTY),
-                            LabelWithIntegerVal(
-                                label:
+                            value: ModelOrder.Order_Number),
+                        LabelWithValue(
+                            label: PersonalCase.GetLable(ResourceKey.Model_STD),
+                            value: (ModelOrder.Analysis_Model_STD ?? 0)
+                                .toString()),
+                        LabelWithIntegerVal(
+                            label: PersonalCase.GetLable(
+                                ResourceKey.OrderSizeColor_QTY),
+                            value: ModelOrder.OrderSizeColor_QTY),
+                        LabelWithIntegerVal(
+                            label:
                                 PersonalCase.GetLable(ResourceKey.SizeColorQTY),
-                                value: ModelOrder.SizeColor_QTY),
-                          ],
-                        )),
+                            value: ModelOrder.SizeColor_QTY),
+                      ],
+                    )),
                   ]),
             ),
           ],
@@ -134,7 +136,7 @@ class _FinalControlState extends State<FinalControl> {
     SizeConfig().init(context);
     return Scaffold(
         appBar:
-        DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+            DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
           Navigator.pop(context);
         }),
         body: ListView(
@@ -152,7 +154,7 @@ class _FinalControlState extends State<FinalControl> {
                           FirstQualityInfo: new Model_Order_ControlBLL(
                               Control_Type: GroupType.FirstQuality,
                               QualityDept_ModelOrder_Tracking_Id:
-                              CaseProvider.QualityTracking.Id),
+                                  CaseProvider.QualityTracking.Id),
                         ),
                       ),
                       Container(
@@ -165,15 +167,15 @@ class _FinalControlState extends State<FinalControl> {
                                 SecondQualityInfo: new Model_Order_ControlBLL(
                                     Control_Type: GroupType.SecondQuality,
                                     QualityDept_ModelOrder_Tracking_Id:
-                                    CaseProvider.QualityTracking.Id),
+                                        CaseProvider.QualityTracking.Id),
                               ),
                             ),
                             Expanded(
                               child: ProductTamirQuality(
                                 TamirQualityInfo: new Model_Order_ControlBLL(
-                                    Control_Type: GroupType.SecondQuality,
+                                    Control_Type: GroupType.TamirQuality,
                                     QualityDept_ModelOrder_Tracking_Id:
-                                    CaseProvider.QualityTracking.Id),
+                                        CaseProvider.QualityTracking.Id),
                               ),
                             ),
                           ],
@@ -210,11 +212,12 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
   bool _switchValue = false;
   Model_Order_ControlBLL Critiera;
   int IntiteStatus = 0;
+  int warning_massage = 0;
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
       List<Model_Order_ControlBLL> ModelList =
-      await widget.FirstQualityInfo.Get_Model_Order_Control();
+          await widget.FirstQualityInfo.Get_Model_Order_Control();
 
       if (widget.FirstQualityInfo != null) {
         IntiteStatus = 1;
@@ -266,7 +269,8 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                       child: CustomText(
                         text: PersonalCase.GetLable(
                             ResourceKey.Quality_FirstQuality),
-                        size:AdaptiveTextSize().getadaptiveTextSize(context, 30),
+                        size:
+                            AdaptiveTextSize().getadaptiveTextSize(context, 30),
                         color: ArgonColors.myGrey,
                       )),
                   Expanded(
@@ -284,7 +288,7 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                   UserQuality.Amount = 1;
                   UserQuality.IsRecycle = _switchValue;
                   int CheckStatus =
-                  await UserQuality.Set_UserQualityFinalControl();
+                      await UserQuality.Set_UserQualityFinalControl();
                   switch (CheckStatus) {
                     case 0:
                       setState(() {});
@@ -309,25 +313,30 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                   text: (widget.FirstQualityInfo.Employee_Matrix_Amount ?? 0)
                       .toString(),
                   textColor: Colors.white,
-                  buttonWidth: getScreenWidth() / 1.5,
-                  buttonHegiht: 80,
+                  buttonWidth: getScreenWidth() ,
+                  buttonHegiht: getScreenHeight()/8,
                   btnBgColor: ArgonColors.myGreen,
-                  textSize: 25,
-                  topRight: CircleShape(text: "10", width: 40, height: 40),
-                  bottomLeft: CircleShape(
-                      text: "10", width: 40, height: 40, color: Colors.red),
+                  textSize: 27,
+                  topLeft: CircleShape(
+                      text: (widget.FirstQualityInfo.Matrix_Control_Amount ?? 0)
+                          .toString(),
+                      width: 40,
+                      height: 40,
+                  ),
                 ),
               ),
             ],
-            topRight: CircularIconWithNumber(
-              icon: FontAwesomeIcons.exclamation,
-              backGroundColor: Colors.red,
-              iconColor: Colors.white,
-              size: 10,
-              bubbleHeight: 15,
-              bubbleWidth: 15,
-              bubbleText: "2",
-            ),
+            topRight: warning_massage != 0
+                ? CircularIconWithNumber(
+                    icon: FontAwesomeIcons.exclamation,
+                    backGroundColor: Colors.red,
+                    iconColor: Colors.white,
+                    size: 10,
+                    bubbleHeight: 15,
+                    bubbleWidth: 15,
+                    bubbleText: warning_massage.toString(),
+                  )
+                : Container(width: 0, height: 0),
           );
         } else if (IntiteStatus == 0)
           return Center(child: CircularProgressIndicator());
@@ -335,9 +344,9 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
           return ErrorPage(
               ActionName: PersonalCase.GetLable(ResourceKey.Loading),
               MessageError:
-              PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
+                  PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
               DetailError:
-              PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
+                  PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
       },
     );
   }
@@ -359,7 +368,7 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
       List<Model_Order_ControlBLL> ModelList =
-      await widget.SecondQualityInfo.Get_Model_Order_Control();
+          await widget.SecondQualityInfo.Get_Model_Order_Control();
 
       if (widget.SecondQualityInfo != null) {
         IntiteStatus = 1;
@@ -386,30 +395,66 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
               Column(children: [
                 CustomText(
                   text: PersonalCase.GetLable(ResourceKey.SecondQuality),
-                  size: AdaptiveTextSize().getadaptiveTextSize(context, 20),
+                  size: AdaptiveTextSize().getadaptiveTextSize(context, 19),
                   color: ArgonColors.myGrey,
                 ),
-                ButtonWithNumber(
-                  text: (widget.SecondQualityInfo.Employee_Matrix_Amount ?? 0)
-                      .toString(),
-                  textColor: Colors.black,
-                  buttonWidth: getScreenWidth() / 1.2,
-                  buttonHegiht: 100,
-                  btnBgColor: ArgonColors.myOrange,
-                  textSize: 25,
-                  padding: 10,
-                  topLeft: CircleShape(
-                      text: "1000", width: 30, height: 30, fontSize: 10),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => new QualityItemsList(
+                              GroupType: GroupType.SecondQuality,
+                              HeaderName: PersonalCase.GetLable(
+                                  ResourceKey.SecondQuality),
+                              ParentReCalc: () {
+                                setState(() {});
+                              })),
+                    );
+                  },
+                  child: ButtonWithNumber(
+                    text: (widget.SecondQualityInfo.Employee_Matrix_Amount ?? 0)
+                        .toString(),
+                    textColor: Colors.black,
+                    buttonWidth: getScreenWidth() / 2,
+                    buttonHegiht: getScreenHeight()/10,
+                    btnBgColor: ArgonColors.myOrange,
+                    textSize: 25,
+                    padding: 10,
+                    topLeft: CircleShape(
+                        text: (widget.SecondQualityInfo.Matrix_Control_Amount ??
+                                0)
+                            .toString(),
+                        width: 30,
+                        height: 30,
+                        fontSize: 10),
+
+                  ),
                 ),
-                ButtonWithNumber(
-                  text: PersonalCase.GetLable(ResourceKey.Sewing_Error),
-                  textColor: Colors.black,
-                  buttonWidth: getScreenWidth() / 1.2,
-                  buttonHegiht: 100,
-                  btnBgColor: ArgonColors.myOrange,
-                  textSize: 15,
-                  image: Image.asset('lib/assets/images/sewing.png',
-                      width: 100, height: 50),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => new SewingEmployeeControl(
+                              GroupType: GroupType.SecondQuality,
+                              HeaderName: PersonalCase.GetLable(
+                                  ResourceKey.SecondQuality),
+                              ParentReCalc: () {
+                                setState(() {});
+                              })),
+                    );
+                  },
+                  child: ButtonWithNumber(
+                    text: PersonalCase.GetLable(ResourceKey.Sewing_Error),
+                    textColor: Colors.black,
+                    buttonWidth: getScreenWidth() / 2,
+                    buttonHegiht: getScreenHeight()/9,
+                    btnBgColor: ArgonColors.myOrange,
+                    textSize: 15,
+                    image: Image.asset('lib/assets/images/sewing.png',
+                        width: 100, height: 50),
+                  ),
                 ),
               ])
             ],
@@ -420,9 +465,9 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
           return ErrorPage(
               ActionName: PersonalCase.GetLable(ResourceKey.Loading),
               MessageError:
-              PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
+                  PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
               DetailError:
-              PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
+                  PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
       },
     );
   }
@@ -444,7 +489,7 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
       List<Model_Order_ControlBLL> ModelList =
-      await widget.TamirQualityInfo.Get_Model_Order_Control();
+          await widget.TamirQualityInfo.Get_Model_Order_Control();
 
       if (widget.TamirQualityInfo != null) {
         IntiteStatus = 1;
@@ -474,27 +519,66 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                   size: AdaptiveTextSize().getadaptiveTextSize(context, 20),
                   color: ArgonColors.myGrey,
                 ),
-                ButtonWithNumber(
-                  text: (widget.TamirQualityInfo.Employee_Matrix_Amount ?? 0)
-                      .toString(),
-                  textColor: Colors.black,
-                  buttonWidth: getScreenWidth() / 1.2,
-                  buttonHegiht: 100,
-                  btnBgColor: ArgonColors.myYellow,
-                  textSize: 25,
-                  padding: 10,
-                  topRight: CircleShape(
-                      text: "1000", width: 30, height: 30, fontSize: 10),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => new QualityItemsList(
+                              GroupType: GroupType.TamirQuality,
+                              HeaderName:
+                                  PersonalCase.GetLable(ResourceKey.TamirList),
+                              ParentReCalc: () {
+                                setState(() {});
+                              })),
+                    );
+                  },
+                  child: ButtonWithNumber(
+                    text: (widget.TamirQualityInfo.Employee_Matrix_Amount ?? 0)
+                        .toString(),
+                    textColor: Colors.black,
+                    buttonWidth: getScreenWidth() / 2,
+                    buttonHegiht: getScreenHeight()/10,
+                    btnBgColor: ArgonColors.myYellow,
+                    textSize: 25,
+                    padding: 10,
+
+                    ///TODO : DO THE NUMBERS IN CIRCLE
+                    topLeft: CircleShape(
+                        text:
+                            (widget.TamirQualityInfo.Matrix_Control_Amount ?? 0)
+                                .toString(),
+                        width: 30,
+                        height: 30,
+                        fontSize: 10),
+                  ),
                 ),
-                ButtonWithNumber(
-                  text: PersonalCase.GetLable(ResourceKey.Sewing_Fixing),
-                  textColor: Colors.black,
-                  buttonWidth: getScreenWidth() / 1.2,
-                  buttonHegiht: 100,
-                  btnBgColor: ArgonColors.myYellow,
-                  textSize: 15,
-                  image: Image.asset('lib/assets/images/sewing.png',
-                      width: 100, height: 50),
+
+////
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => new SewingEmployeeControl(
+                              GroupType: GroupType.TamirQuality,
+                              HeaderName: PersonalCase.GetLable(
+                                  ResourceKey.SecondQuality),
+                              ParentReCalc: () {
+                                setState(() {});
+                              })),
+                    );
+                  },
+                  child: ButtonWithNumber(
+                    text: PersonalCase.GetLable(ResourceKey.Sewing_Fixing),
+                    textColor: Colors.black,
+                    buttonWidth: getScreenWidth() / 2,
+                    buttonHegiht: getScreenHeight()/9,
+                    btnBgColor: ArgonColors.myYellow,
+                    textSize: 15,
+                    image: Image.asset('lib/assets/images/sewing.png',
+                        width: 100, height: 50),
+                  ),
                 ),
               ])
             ],
@@ -505,16 +589,19 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
           return ErrorPage(
               ActionName: PersonalCase.GetLable(ResourceKey.Loading),
               MessageError:
-              PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
+                  PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
               DetailError:
-              PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
+                  PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
       },
     );
   }
 }
 
 AppBar MyAppBar(BuildContext context) {
-  return AppBar(
+  return AppBar
+
+
+    (
     centerTitle: true,
     title: Text('ITM Tech Soft'),
     leading: GestureDetector(

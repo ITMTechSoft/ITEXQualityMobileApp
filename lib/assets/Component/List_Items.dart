@@ -916,9 +916,9 @@ Widget DropDownBox({String ItemName, Function OnTap, bool IsSelected = false}) {
           onTap: OnTap,
           child: Container(
             height: 30,
-            margin: EdgeInsets.all(0),
+            margin: EdgeInsets.all(2),
             color: IsSelected ? ArgonColors.muted : ArgonColors.white,
-            padding: EdgeInsets.all(0),
+            padding: EdgeInsets.only(left: 7),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
