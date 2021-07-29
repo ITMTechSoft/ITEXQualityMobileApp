@@ -44,7 +44,8 @@ enum WebApiMethod{
   Assign_EmployeeControlAmount,
   CloseEmployeeOperationControlRound,
   Get_Version,
-  Get_ModelOrder_Matrix
+  Get_ModelOrder_Matrix,
+  Get_ModelOrderSizes
 }
 
 
