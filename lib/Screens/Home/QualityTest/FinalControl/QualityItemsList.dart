@@ -162,7 +162,7 @@ class _QualityItemsListState extends State<QualityItemsList> {
 
                         text: snapshot.data[index].Item_Name,
                         buttonWidth: getScreenWidth() / 3,
-                        buttonHegiht: getScreenWidth()/4,
+                        buttonHegiht: getScreenWidth()/6,
                         btnBgColor: selectedList.contains(index)
                             ? ArgonColors.myLightGreen
                             : ArgonColors.myOrange,

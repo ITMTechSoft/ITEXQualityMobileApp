@@ -19,8 +19,8 @@ import 'FinalControl.dart';
 
 class SewingEmployeeControl extends StatefulWidget {
   Function ParentReCalc;
-  String GroupType;
-  String HeaderName;
+  String   GroupType;
+  String   HeaderName;
 
   SewingEmployeeControl({this.ParentReCalc, this.GroupType, this.HeaderName});
 
@@ -51,7 +51,7 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
     return false;
   }
 
-  Future<List<OrderSizeColorDetailsBLL>> LoadingOpenPage1(
+  Future<List<OrderSizeColorDetailsBLL>> GetSelectedOperationOperator(
       PersonalProvider PersonalCase) async {
     List<OrderSizeColorDetailsBLL> Critiera =
         await OrderSizeColorDetailsBLL.Get_OrderSizeColorDetails(
@@ -90,7 +90,7 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
             Childrens: [
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -138,9 +138,9 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
                       onTap: () {
                         if (_KeepPage == true) {
                           print('Keep page ');
-                          setState(() {
-                            SelectedEmployee = null ;
-                          });
+                          // setState(() {
+                          //   SelectedEmployee = null ;
+                          // });
                         } else {
                           Navigator.pop(context);
                         }
@@ -152,8 +152,6 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
                         buttonHegiht: 60,
                         btnBgColor: ArgonColors.myGreen,
                         textSize: 20,
-
-
                       ),
                     )
                   : Container(),
@@ -205,7 +203,7 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
                       },
                     )
                   : FutureBuilder(
-                      future: LoadingOpenPage1(PersonalCase),
+                      future: GetSelectedOperationOperator(PersonalCase),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return table(
