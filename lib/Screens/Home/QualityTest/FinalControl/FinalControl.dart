@@ -85,7 +85,7 @@ class _FinalControlState extends State<FinalControl> {
                               label:
                                   PersonalCase.GetLable(ResourceKey.Employee),
                               value:
-                                  CaseProvider.QualityTracking.Employee_Name),
+                                  CaseProvider.QualityTracking.Employee_Name??""),
                           LabelWithIntegerVal(
                               label: PersonalCase.GetLable(
                                   ResourceKey.Plan_Quantity),
@@ -141,6 +141,13 @@ class _FinalControlState extends State<FinalControl> {
         }),
         body: ListView(
           children: [
+            ListTile(
+              title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+                  color: ArgonColors.header, FontSize: ArgonSize.Header2),
+              subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+              dense: true,
+              selected: true,
+            ),
             FutureBuilder(
               future: LoadingOpenPage(CaseProvider),
               builder: (context, snapshot) {
@@ -364,11 +371,14 @@ class ProductSecondQuality extends StatefulWidget {
 class _ProductSecondQualityState extends State<ProductSecondQuality> {
   Model_Order_ControlBLL Critiera;
   int IntiteStatus = 0;
+  Quality_ItemsBLL SecqStitch;
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
       List<Model_Order_ControlBLL> ModelList =
           await widget.SecondQualityInfo.Get_Model_Order_Control();
+
+      SecqStitch = await Quality_ItemsBLL.Get_StitchQuality_Items(GroupType.SecondQuality);
 
       if (widget.SecondQualityInfo != null) {
         IntiteStatus = 1;
@@ -437,7 +447,7 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => new SewingEmployeeControl(
-                              GroupType: GroupType.SecondQuality,
+                              QualityItem: SecqStitch,
                               HeaderName: PersonalCase.GetLable(
                                   ResourceKey.SecondQuality),
                               ParentReCalc: () {
@@ -484,12 +494,18 @@ class ProductTamirQuality extends StatefulWidget {
 
 class _ProductTamirQualityState extends State<ProductTamirQuality> {
   Model_Order_ControlBLL Critiera;
+  Quality_ItemsBLL TamirStitch;
+
+  
   int IntiteStatus = 0;
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
       List<Model_Order_ControlBLL> ModelList =
           await widget.TamirQualityInfo.Get_Model_Order_Control();
+      
+      TamirStitch = await Quality_ItemsBLL.Get_StitchQuality_Items(GroupType.TamirQuality);
+
 
       if (widget.TamirQualityInfo != null) {
         IntiteStatus = 1;
@@ -554,14 +570,13 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                   ),
                 ),
 
-////
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => new SewingEmployeeControl(
-                              GroupType: GroupType.TamirQuality,
+                              QualityItem: TamirStitch,
                               HeaderName: PersonalCase.GetLable(
                                   ResourceKey.SecondQuality),
                               ParentReCalc: () {
@@ -595,36 +610,6 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
       },
     );
   }
-}
-
-AppBar MyAppBar(BuildContext context) {
-  return AppBar
-
-
-    (
-    centerTitle: true,
-    title: Text('ITM Tech Soft'),
-    leading: GestureDetector(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Icon(
-        Icons.arrow_back_ios_outlined, // add custom icons also
-      ),
-    ),
-    actions: <Widget>[
-      Padding(
-        padding: EdgeInsets.only(right: 20.0),
-      ),
-      Padding(
-        padding: EdgeInsets.only(right: 20.0),
-        child: GestureDetector(
-          onTap: () {},
-          child: Icon(Icons.more_vert),
-        ),
-      ),
-    ],
-  );
 }
 
 class AdaptiveTextSize {

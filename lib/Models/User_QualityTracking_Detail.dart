@@ -246,13 +246,15 @@ class User_QualityTracking_DetailBLL {
   //#region GetWebApiUrl
   static Future<List<User_QualityTracking_DetailBLL>>
   Get_User_QualityTracking_Detail(
-      int QualityDept_ModelOrder_Tracking_Id) async {
+      int QualityDept_ModelOrder_Tracking_Id,{int Quality_Items_Id = 0}) async {
     List<User_QualityTracking_DetailBLL> ItemList;
     try {
       var response = await http.get(SharedPref.GetWebApiUrl(
           WebApiMethod.Get_User_QualityTracking_Detail) +
           "?QualityDept_ModelOrder_Tracking_Id=" +
-          QualityDept_ModelOrder_Tracking_Id.toString());
+          QualityDept_ModelOrder_Tracking_Id.toString() +
+          "&Quality_Items_Id=" +
+          Quality_Items_Id.toString());
 
       print(response.request);
       if (response.statusCode == 200) {
@@ -267,17 +269,48 @@ class User_QualityTracking_DetailBLL {
     return ItemList;
   }
 
-  Future Set_User_QualityTracking_Detail() async {
+  Future<bool> Set_User_QualityTracking_Detail() async {
     try {
       final String url =
       SharedPref.GetWebApiUrl(WebApiMethod.Set_User_QualityTracking_Detail);
 
       String val = jsonEncode(this.toPost());
+      print(val);
+      print(url);
       var response = await http.post(url,
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(this.toPost()));
+
+      if (response.statusCode == 200)
+        return true;
+
+      return false;
+
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+  }
+  Future<bool> Set_User_QualityTracking_Dikim() async {
+    try {
+      final String url =
+      SharedPref.GetWebApiUrl(WebApiMethod.Set_User_QualityTracking_Dikim);
+
+      String val = jsonEncode(this.toPost());
+      print(val);
+      print(url);
+      var response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(this.toPost()));
+
+      if (response.statusCode == 200)
+        return true;
+
+      return false;
+
     } catch (Excpetion) {
       print(Excpetion);
     }
@@ -368,6 +401,28 @@ class User_QualityTracking_DetailBLL {
     } catch (e) {}
     return false;
   }
+
+  Future<bool> Delete_User_QualityTracking_Detail() async {
+    try {
+      final String url = SharedPref.GetWebApiUrl(
+          WebApiMethod.Delete_User_QualityTracking_Detail);
+
+      String val = jsonEncode(this.toPost());
+      print(url);
+      print(val);
+
+      var response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(this.toPost()));
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
 
 
   Future<int> Set_UserQualityFinalControl() async {

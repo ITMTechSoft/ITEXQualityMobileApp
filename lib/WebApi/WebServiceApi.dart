@@ -1,4 +1,5 @@
 enum WebApiMethod{
+  Set_User_QualityTracking_Dikim,
   Get_EmployeesByOperation,
   Get_Quality_Items_WithValue,
   Set_UserQualityFinalControl,
@@ -45,7 +46,9 @@ enum WebApiMethod{
   CloseEmployeeOperationControlRound,
   Get_Version,
   Get_ModelOrder_Matrix,
-  Get_ModelOrderSizes
+  Get_ModelOrderSizes,
+  Get_StitchQuality_Items,
+  Delete_User_QualityTracking_Detail
 }
 
 
