@@ -148,6 +148,28 @@ class Quality_ItemsBLL {
   }
 
 
+  static Future<Quality_ItemsBLL> Get_StitchQuality_Items(
+      String GroupType
+      ) async {
+    Quality_ItemsBLL Item = new Quality_ItemsBLL();
+    try {
+      var response = await http.get(
+          SharedPref.GetWebApiUrl(WebApiMethod.Get_StitchQuality_Items) +
+              "?GType=" + GroupType
+      );
+
+      print(response.request);
+
+
+      if (response.statusCode == 200) {
+        Item.LoadFromJson(json.decode(response.body));
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return Item;
+  }
 
 //#endregion
 

@@ -24,6 +24,7 @@ class FinalControl extends StatefulWidget {
 }
 
 class _FinalControlState extends State<FinalControl> {
+
   int IntiteStatus = 0;
   ModelOrder_MatrixBLL ModelOrder;
 
@@ -61,7 +62,7 @@ class _FinalControlState extends State<FinalControl> {
                   SizedBox(
                     height: 10,
                   ),
-                  LableTitle(ModelOrder.Model_Name,FontSize :ArgonSize.Header5)
+                  LableTitle(ModelOrder.Model_Name)
                 ],
               ),
             ),
@@ -79,26 +80,21 @@ class _FinalControlState extends State<FinalControl> {
                           LabelWithValue(
                               label:
                                   PersonalCase.GetLable(ResourceKey.Customer),
-                              value: ModelOrder.Customer_Name,
-                          fontSize:ArgonSize.Header5),
+                              value: ModelOrder.Customer_Name),
                           LabelWithValue(
                               label:
                                   PersonalCase.GetLable(ResourceKey.Employee),
                               value:
-                                  CaseProvider.QualityTracking.Employee_Name ,
-                              fontSize:ArgonSize.Header5),
+                                  CaseProvider.QualityTracking.Employee_Name??""),
                           LabelWithIntegerVal(
                               label: PersonalCase.GetLable(
                                   ResourceKey.Plan_Quantity),
-                              value: ModelOrder.PlanSizeColor_QTY ,
-                              fontSize:ArgonSize.Header5
-                             ),
+                              value: ModelOrder.PlanSizeColor_QTY),
                           LabelWithValue(
                               label:
                                   PersonalCase.GetLable(ResourceKey.SizeColor),
                               value:
-                                  "${ModelOrder.SizeName}/ ${ModelOrder.ColorName}" ,
-                              fontSize:ArgonSize.Header5)
+                                  "${ModelOrder.SizeName}/ ${ModelOrder.ColorName}")
                         ],
                       ),
                     ),
@@ -108,23 +104,19 @@ class _FinalControlState extends State<FinalControl> {
                         LabelWithValue(
                             label:
                                 PersonalCase.GetLable(ResourceKey.Order_Number),
-                            value: ModelOrder.Order_Number ,
-                            fontSize:ArgonSize.Header5),
+                            value: ModelOrder.Order_Number),
                         LabelWithValue(
                             label: PersonalCase.GetLable(ResourceKey.Model_STD),
                             value: (ModelOrder.Analysis_Model_STD ?? 0)
-                                .toString() ,
-                            fontSize:ArgonSize.Header5),
+                                .toString()),
                         LabelWithIntegerVal(
                             label: PersonalCase.GetLable(
                                 ResourceKey.OrderSizeColor_QTY),
-                            value: ModelOrder.OrderSizeColor_QTY ,
-                            fontSize:ArgonSize.Header5),
+                            value: ModelOrder.OrderSizeColor_QTY),
                         LabelWithIntegerVal(
                             label:
                                 PersonalCase.GetLable(ResourceKey.SizeColorQTY),
-                            value: ModelOrder.SizeColor_QTY,
-                            fontSize:ArgonSize.Header5),
+                            value: ModelOrder.SizeColor_QTY),
                       ],
                     )),
                   ]),
@@ -149,6 +141,13 @@ class _FinalControlState extends State<FinalControl> {
         }),
         body: ListView(
           children: [
+            ListTile(
+              title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+                  color: ArgonColors.header, FontSize: ArgonSize.Header2),
+              subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+              dense: true,
+              selected: true,
+            ),
             FutureBuilder(
               future: LoadingOpenPage(CaseProvider),
               builder: (context, snapshot) {
@@ -258,8 +257,7 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                           PersonalCase.GetLable(ResourceKey.RecycleReturn),
                           style: TextStyle(
                               color: ArgonColors.myBlue,
-                              fontWeight: FontWeight.bold,
-                          fontSize:ArgonSize.Header5),
+                              fontWeight: FontWeight.bold),
                         ),
                         Transform.scale(
                           scale: 0.7,
@@ -278,7 +276,8 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                       child: CustomText(
                         text: PersonalCase.GetLable(
                             ResourceKey.Quality_FirstQuality),
-                        size: ArgonSize.Header1,
+                        size:
+                            AdaptiveTextSize().getadaptiveTextSize(context, 30),
                         color: ArgonColors.myGrey,
                       )),
                   Expanded(
@@ -321,16 +320,16 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                   text: (widget.FirstQualityInfo.Employee_Matrix_Amount ?? 0)
                       .toString(),
                   textColor: Colors.white,
-                  buttonWidth: getScreenWidth(),
-                  buttonHegiht: getScreenHeight() / 8,
+                  buttonWidth: getScreenWidth() ,
+                  buttonHegiht: getScreenHeight()/8,
                   btnBgColor: ArgonColors.myGreen,
-                  textSize: ArgonSize.Header1,
+                  textSize: 27,
                   topLeft: CircleShape(
                       text: (widget.FirstQualityInfo.Matrix_Control_Amount ?? 0)
                           .toString(),
-                      width: ArgonSize.Width1,
-                      height: ArgonSize.Height1,
-                      fontSize: ArgonSize.Header4),
+                      width: 40,
+                      height: 40,
+                  ),
                 ),
               ),
             ],
@@ -372,11 +371,14 @@ class ProductSecondQuality extends StatefulWidget {
 class _ProductSecondQualityState extends State<ProductSecondQuality> {
   Model_Order_ControlBLL Critiera;
   int IntiteStatus = 0;
+  Quality_ItemsBLL SecqStitch;
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
       List<Model_Order_ControlBLL> ModelList =
           await widget.SecondQualityInfo.Get_Model_Order_Control();
+
+      SecqStitch = await Quality_ItemsBLL.Get_StitchQuality_Items(GroupType.SecondQuality);
 
       if (widget.SecondQualityInfo != null) {
         IntiteStatus = 1;
@@ -403,7 +405,7 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
               Column(children: [
                 CustomText(
                   text: PersonalCase.GetLable(ResourceKey.SecondQuality),
-                  size: ArgonSize.Header3,
+                  size: AdaptiveTextSize().getadaptiveTextSize(context, 19),
                   color: ArgonColors.myGrey,
                 ),
                 GestureDetector(
@@ -425,16 +427,18 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
                         .toString(),
                     textColor: Colors.black,
                     buttonWidth: getScreenWidth() / 2,
-                    buttonHegiht: getScreenHeight() / 10,
+                    buttonHegiht: getScreenHeight()/10,
                     btnBgColor: ArgonColors.myOrange,
-                    textSize: ArgonSize.Header3,
+                    textSize: 25,
                     padding: 10,
                     topLeft: CircleShape(
-                        text: (widget.SecondQualityInfo.Matrix_Control_Amount ?? 0)
+                        text: (widget.SecondQualityInfo.Matrix_Control_Amount ??
+                                0)
                             .toString(),
-                        width: ArgonSize.Header1,
-                        height: ArgonSize.Header1,
-                        fontSize: ArgonSize.Header5),
+                        width: 30,
+                        height: 30,
+                        fontSize: 10),
+
                   ),
                 ),
                 GestureDetector(
@@ -443,7 +447,7 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => new SewingEmployeeControl(
-                              GroupType: GroupType.SecondQuality,
+                              QualityItem: SecqStitch,
                               HeaderName: PersonalCase.GetLable(
                                   ResourceKey.SecondQuality),
                               ParentReCalc: () {
@@ -455,9 +459,9 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
                     text: PersonalCase.GetLable(ResourceKey.Sewing_Error),
                     textColor: Colors.black,
                     buttonWidth: getScreenWidth() / 2,
-                    buttonHegiht: getScreenHeight() / 9,
+                    buttonHegiht: getScreenHeight()/9,
                     btnBgColor: ArgonColors.myOrange,
-                    textSize: ArgonSize.Header4,
+                    textSize: 15,
                     image: Image.asset('lib/assets/images/sewing.png',
                         width: 100, height: 50),
                   ),
@@ -490,12 +494,18 @@ class ProductTamirQuality extends StatefulWidget {
 
 class _ProductTamirQualityState extends State<ProductTamirQuality> {
   Model_Order_ControlBLL Critiera;
+  Quality_ItemsBLL TamirStitch;
+
+  
   int IntiteStatus = 0;
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
       List<Model_Order_ControlBLL> ModelList =
           await widget.TamirQualityInfo.Get_Model_Order_Control();
+      
+      TamirStitch = await Quality_ItemsBLL.Get_StitchQuality_Items(GroupType.TamirQuality);
+
 
       if (widget.TamirQualityInfo != null) {
         IntiteStatus = 1;
@@ -522,7 +532,7 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
               Column(children: [
                 CustomText(
                   text: PersonalCase.GetLable(ResourceKey.Quality_TAMIR),
-                  size: ArgonSize.Header3,
+                  size: AdaptiveTextSize().getadaptiveTextSize(context, 20),
                   color: ArgonColors.myGrey,
                 ),
                 GestureDetector(
@@ -544,9 +554,9 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                         .toString(),
                     textColor: Colors.black,
                     buttonWidth: getScreenWidth() / 2,
-                    buttonHegiht: getScreenHeight() / 10,
+                    buttonHegiht: getScreenHeight()/10,
                     btnBgColor: ArgonColors.myYellow,
-                    textSize: ArgonSize.Header3,
+                    textSize: 25,
                     padding: 10,
 
                     ///TODO : DO THE NUMBERS IN CIRCLE
@@ -554,20 +564,19 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                         text:
                             (widget.TamirQualityInfo.Matrix_Control_Amount ?? 0)
                                 .toString(),
-                        width: ArgonSize.Header1,
-                        height: ArgonSize.Header1,
-                        fontSize: ArgonSize.Header5),
+                        width: 30,
+                        height: 30,
+                        fontSize: 10),
                   ),
                 ),
 
-////
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => new SewingEmployeeControl(
-                              GroupType: GroupType.TamirQuality,
+                              QualityItem: TamirStitch,
                               HeaderName: PersonalCase.GetLable(
                                   ResourceKey.SecondQuality),
                               ParentReCalc: () {
@@ -579,9 +588,9 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                     text: PersonalCase.GetLable(ResourceKey.Sewing_Fixing),
                     textColor: Colors.black,
                     buttonWidth: getScreenWidth() / 2,
-                    buttonHegiht: getScreenHeight() / 9,
+                    buttonHegiht: getScreenHeight()/9,
                     btnBgColor: ArgonColors.myYellow,
-                    textSize: ArgonSize.Header4,
+                    textSize: 15,
                     image: Image.asset('lib/assets/images/sewing.png',
                         width: 100, height: 50),
                   ),
@@ -603,39 +612,11 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
   }
 }
 
-AppBar MyAppBar(BuildContext context) {
-  return AppBar(
-    centerTitle: true,
-    title: Text('ITM Tech Soft'),
-    leading: GestureDetector(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Icon(
-        Icons.arrow_back_ios_outlined, // add custom icons also
-      ),
-    ),
-    actions: <Widget>[
-      Padding(
-        padding: EdgeInsets.only(right: 20.0),
-      ),
-      Padding(
-        padding: EdgeInsets.only(right: 20.0),
-        child: GestureDetector(
-          onTap: () {},
-          child: Icon(Icons.more_vert),
-        ),
-      ),
-    ],
-  );
-}
-
 class AdaptiveTextSize {
   const AdaptiveTextSize();
 
   getadaptiveTextSize(BuildContext context, dynamic value) {
     // 720 is medium screen height
-
     return (value / 720) * MediaQuery.of(context).size.height;
   }
 }
