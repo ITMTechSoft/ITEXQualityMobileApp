@@ -144,7 +144,8 @@ class _FinalControlState extends State<FinalControl> {
             ListTile(
               title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
                   color: ArgonColors.header, FontSize: ArgonSize.Header2),
-              subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+              subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString() ,
+              style:TextStyle(fontSize:ArgonSize.Header6)),
               dense: true,
               selected: true,
             ),
@@ -156,6 +157,8 @@ class _FinalControlState extends State<FinalControl> {
                     children: [
                       Container(
                           child: ProductDetail(PersonalCase, CaseProvider)),
+                      getScreenHeight()>1500 ?  SizedBox(height:ArgonSize.Header1, )  :  SizedBox(height:0, ),
+
                       Container(
                         child: ProductFirstQuality(
                           FirstQualityInfo: new Model_Order_ControlBLL(
@@ -164,6 +167,8 @@ class _FinalControlState extends State<FinalControl> {
                                   CaseProvider.QualityTracking.Id),
                         ),
                       ),
+                      getScreenHeight()>1500 ?  SizedBox(height:ArgonSize.Header1, )  :  SizedBox(height:0, ),
+
                       Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
