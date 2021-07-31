@@ -7,7 +7,7 @@ import 'package:itex_soft_qualityapp/Widgets/Input.dart';
 import 'package:itex_soft_qualityapp/assets/Resources/StaticLable.dart';
 import '../SystemImports.dart';
 
-class   SetupApplications extends StatefulWidget {
+class SetupApplications extends StatefulWidget {
   @override
   _SetupApplicationsState createState() => _SetupApplicationsState();
 }
@@ -34,6 +34,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
+    SizeConfig().init(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -45,122 +46,164 @@ class _SetupApplicationsState extends State<SetupApplications> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Standard_Input(
-                  suffixIcon: Icon(FontAwesomeIcons.server),
-                  controller: serverIpController,
-                  placeholder: StaticLable.ServerIp,
-                  errorMessage: "Ip can't be empty ",
-                  MaxLength: 15,
-                  hintMessage: '192.158. 1.38',
-                  isIp: true,
-                  Ktype: TextInputType.number,
-                  //  initialValue: serverIpController.text,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Standard_Input(
-                  suffixIcon: Icon(FontAwesomeIcons.passport),
-                  controller: portController,
-                  placeholder: StaticLable.ServerPort,
-                  errorMessage: "Port can't be empty ",
-                  Ktype: TextInputType.number,
-                  MaxLength: 4,
-                  hintMessage: '3968',
-                  //initialValue: portController.text,
-                ),
-                errorMsg == null
-                    ? Container()
-                    : Text(
-                        "${errorMsg}",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontWeight: FontWeight.bold,
+          child: Column(
+            children: [
+
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Standard_Input(
+                      suffixIcon: Icon(FontAwesomeIcons.server),
+                      controller: serverIpController,
+                      placeholder: StaticLable.ServerIp,
+                      errorMessage: "Ip can't be empty ",
+                      MaxLength: 15,
+                      hintMessage: '192.158. 1.38',
+                      isIp: true,
+                      Ktype: TextInputType.text,
+                      //  initialValue: serverIpController.text,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Standard_Input(
+                      suffixIcon: Icon(FontAwesomeIcons.passport),
+                      controller: portController,
+                      placeholder: StaticLable.ServerPort,
+                      errorMessage: "Port can't be empty ",
+                      Ktype: TextInputType.number,
+                      MaxLength: 4,
+                      hintMessage: '3968',
+                      //initialValue: portController.text,
+                    ),
+                    errorMsg == null
+                        ? Container()
+                        : Text(
+                            "${errorMsg}",
+                            style: TextStyle(
+                              color: Colors.redAccent,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                    SizedBox(
+                      height: 20,
+                    ),
+
+                    /// CHOOSE  THE LANGUAGE
+                    Column(
+                      children: [
+                        Text(
+                          "Language",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: ArgonSize.Header4),
                         ),
+                        SizedBox(height: 20),
+                        Container(
+                          margin:
+                              EdgeInsets.symmetric(horizontal: ArgonSize.Header1),
+                          child: DropdownButtonFormField<LanguagesBLL>(
+                            hint: Text("Select item"),
+                            isExpanded: true,
+                            value: CurrentLanguage,
+                            isDense: true,
+                            icon: Icon(Icons.keyboard_arrow_down),
+                            iconSize: 40,
+                            elevation: 40,
+                            onChanged: (LanguagesBLL newValue) {
+                              setState(() {
+                                SharedPref.SelLanguage = CurrentLanguage = newValue;
+                              });
+                              // somehow set here selected 'value' above whith
+                              // newValue
+                              // via setState or reactive.
+                            },
+                            items: languageList.map((LanguagesBLL value) {
+                              return DropdownMenuItem<LanguagesBLL>(
+                                  value: value,
+                                  child: CustomText(
+                                      text: value.CultureName,
+                                      size: ArgonSize.Header6));
+                            }).toList(),
+                          ),
+                        )
+                      ],
+                    ),
+
+                    SizedBox(
+                      height: 30,
+                    ),
+
+                    CustomText(
+                      text: CurrentLanguage.CultureName,
+                      size: ArgonSize.Header5,
+                      color: ArgonColors.myBlue,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: ArgonSize.Header1 * 2),
+                      child: CustomButton(
+                        width: double.infinity,
+                        height: ArgonSize.Header1*1.5,
+                        value: StaticLable.Save,
+                        function: () async {
+                          if (_formKey.currentState.validate()) {
+                            SharedPref.ServerIp = serverIpController.text;
+                            SharedPref.ServerPort = portController.text;
+                            //  SharedPref.SelLanguage = CurrentLanguage;
+
+                            bool status = await PersonalCase.SetupAndLogin();
+
+                            ///
+                            if (status == true) {
+                              Navigator.popAndPushNamed(context, '/login');
+                            } else {
+                              setState(() {
+                                errorMsg = "Server can't be reached ";
+                              });
+                            }
+                          }
+                        },
                       ),
-                SizedBox(
-                  height: 20,
-                ),
-
-                /// CHOOSE  THE LANGUAGE
-                Column(
-                  children: [
-                    Text(
-                    "Language",
-                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 20),
-                    DropdownButtonFormField<LanguagesBLL>(
-                      hint: Text("Select item"),
-                      isExpanded: true,
-                      value: CurrentLanguage,
-                      isDense: true,
-                      icon: Icon(Icons.keyboard_arrow_down),
-                      iconSize: 40,
-                      elevation: 40,
-                      onChanged: (LanguagesBLL newValue) {
-                        setState(() {
-                          SharedPref.SelLanguage = CurrentLanguage = newValue;
-                        });
-                        // somehow set here selected 'value' above whith
-                        // newValue
-                        // via setState or reactive.
-                      },
-                      items: languageList.map((LanguagesBLL value) {
-                        return DropdownMenuItem<LanguagesBLL>(
-                          value: value,
-                          child: Text(value.CultureName),
-                        );
-                      }).toList(),
-                    )
+                    // StretchableButton(
+                    //   buttonColor: ArgonColors.primary,
+                    //   children: [
+                    //     Text(
+                    //       StaticLable.Save,
+                    //       style: TextStyle(color: Colors.white),
+                    //     ),
+                    //   ],
+                    //   onPressed: () async {
+                    //     if (_formKey.currentState.validate()) {
+                    //       SharedPref.ServerIp = serverIpController.text;
+                    //       SharedPref.ServerPort = portController.text;
+                    //     //  SharedPref.SelLanguage = CurrentLanguage;
+                    //
+                    //       bool status = await PersonalCase.SetupAndLogin();
+                    //
+                    //       ///
+                    //       if (status == true) {
+                    //
+                    //         Navigator.popAndPushNamed(context, '/login');
+                    //
+                    //       } else {
+                    //         setState(() {
+                    //           errorMsg = "Server can't be reached ";
+                    //         });
+                    //       }
+                    //     }
+                    //   },
+                    // ),
                   ],
                 ),
-
-                SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  CurrentLanguage.CultureName,
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                StretchableButton(
-                  buttonColor: ArgonColors.primary,
-                  children: [
-                    Text(
-                      StaticLable.Save,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ],
-                  onPressed: () async {
-                    if (_formKey.currentState.validate()) {
-                      SharedPref.ServerIp = serverIpController.text;
-                      SharedPref.ServerPort = portController.text;
-                    //  SharedPref.SelLanguage = CurrentLanguage;
-
-                      bool status = await PersonalCase.SetupAndLogin();
-
-                      ///
-                      if (status == true) {
-
-                        Navigator.popAndPushNamed(context, '/login');
-
-                      } else {
-                        setState(() {
-                          errorMsg = "Server can't be reached ";
-                        });
-                      }
-                    }
-                  },
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

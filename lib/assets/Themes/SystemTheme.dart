@@ -63,13 +63,44 @@ class ArgonColors {
   static const Color UnderCheck = Color.fromRGBO(255, 255, 100, 1.0);
 }
 class ArgonSize{
-  static const double Header = 35;
+  static  double Header = getAdaptiveTextSize(20);
   static const double MainMargin = 10;
   static const double normal = 13;
-  static const double Header1 = 30;
-  static const double Header2 = 25;
-  static const double Header3 = 20;
-  static const double Header4 = 15;
+
+  //TEXT
+  static  double Header1 = getAdaptiveTextSize(30);
+  static  double Header2 = getAdaptiveTextSize(25);
+  static  double Header3 = getAdaptiveTextSize(20);
+  static  double Header4 = getAdaptiveTextSize(15);
+  static  double Header5 = getAdaptiveTextSize(12);
+  static  double Header6 = getAdaptiveTextSize(10);
+  static  double Header7 = getAdaptiveTextSize(9);
+
+
+  static double Width1  = getAdaptiveTextSize(40);
+  static double Height1 = getAdaptiveTextSize(40);
+
+
+  static double WidthVeryBig     = getAdaptiveTextSize(90);
+  static double HeightVeryBig    = getAdaptiveTextSize(90);
+
+  static double WidthBig     = getAdaptiveTextSize(70);
+  static double HeightBig    = getAdaptiveTextSize(70);
+
+  static double WidthMedium  = getAdaptiveTextSize(50);
+  static double HeightMedium = getAdaptiveTextSize(50);
+
+  static double WidthSmall   = getAdaptiveTextSize(30);
+  static double HeightSmall  = getAdaptiveTextSize(30);
+
+
+  //PADDINGS
+  static double Padding1  = getAdaptiveTextSize(20);
+  static double Padding2  = getAdaptiveTextSize(15);
+  static double Padding3  = getAdaptiveTextSize(10);
+  static double Padding4  = getAdaptiveTextSize(5);
+
+
 }
 
 final BlueTheme = ThemeData(
@@ -147,3 +178,9 @@ double getWidgetHeight(double num)
 }
 
 
+double getAdaptiveTextSize(int value) {
+  // 720 is medium screen height
+
+
+  return (value / 720) * getScreenHeight();
+}

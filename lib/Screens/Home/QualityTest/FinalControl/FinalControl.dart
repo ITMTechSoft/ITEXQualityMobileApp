@@ -24,7 +24,6 @@ class FinalControl extends StatefulWidget {
 }
 
 class _FinalControlState extends State<FinalControl> {
-
   int IntiteStatus = 0;
   ModelOrder_MatrixBLL ModelOrder;
 
@@ -62,7 +61,7 @@ class _FinalControlState extends State<FinalControl> {
                   SizedBox(
                     height: 10,
                   ),
-                  LableTitle(ModelOrder.Model_Name)
+                  LableTitle(ModelOrder.Model_Name,FontSize :ArgonSize.Header5)
                 ],
               ),
             ),
@@ -80,21 +79,26 @@ class _FinalControlState extends State<FinalControl> {
                           LabelWithValue(
                               label:
                                   PersonalCase.GetLable(ResourceKey.Customer),
-                              value: ModelOrder.Customer_Name),
+                              value: ModelOrder.Customer_Name,
+                          fontSize:ArgonSize.Header5),
                           LabelWithValue(
                               label:
                                   PersonalCase.GetLable(ResourceKey.Employee),
                               value:
-                                  CaseProvider.QualityTracking.Employee_Name),
+                                  CaseProvider.QualityTracking.Employee_Name ,
+                              fontSize:ArgonSize.Header5),
                           LabelWithIntegerVal(
                               label: PersonalCase.GetLable(
                                   ResourceKey.Plan_Quantity),
-                              value: ModelOrder.PlanSizeColor_QTY),
+                              value: ModelOrder.PlanSizeColor_QTY ,
+                              fontSize:ArgonSize.Header5
+                             ),
                           LabelWithValue(
                               label:
                                   PersonalCase.GetLable(ResourceKey.SizeColor),
                               value:
-                                  "${ModelOrder.SizeName}/ ${ModelOrder.ColorName}")
+                                  "${ModelOrder.SizeName}/ ${ModelOrder.ColorName}" ,
+                              fontSize:ArgonSize.Header5)
                         ],
                       ),
                     ),
@@ -104,19 +108,23 @@ class _FinalControlState extends State<FinalControl> {
                         LabelWithValue(
                             label:
                                 PersonalCase.GetLable(ResourceKey.Order_Number),
-                            value: ModelOrder.Order_Number),
+                            value: ModelOrder.Order_Number ,
+                            fontSize:ArgonSize.Header5),
                         LabelWithValue(
                             label: PersonalCase.GetLable(ResourceKey.Model_STD),
                             value: (ModelOrder.Analysis_Model_STD ?? 0)
-                                .toString()),
+                                .toString() ,
+                            fontSize:ArgonSize.Header5),
                         LabelWithIntegerVal(
                             label: PersonalCase.GetLable(
                                 ResourceKey.OrderSizeColor_QTY),
-                            value: ModelOrder.OrderSizeColor_QTY),
+                            value: ModelOrder.OrderSizeColor_QTY ,
+                            fontSize:ArgonSize.Header5),
                         LabelWithIntegerVal(
                             label:
                                 PersonalCase.GetLable(ResourceKey.SizeColorQTY),
-                            value: ModelOrder.SizeColor_QTY),
+                            value: ModelOrder.SizeColor_QTY,
+                            fontSize:ArgonSize.Header5),
                       ],
                     )),
                   ]),
@@ -250,7 +258,8 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                           PersonalCase.GetLable(ResourceKey.RecycleReturn),
                           style: TextStyle(
                               color: ArgonColors.myBlue,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.bold,
+                          fontSize:ArgonSize.Header5),
                         ),
                         Transform.scale(
                           scale: 0.7,
@@ -269,8 +278,7 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                       child: CustomText(
                         text: PersonalCase.GetLable(
                             ResourceKey.Quality_FirstQuality),
-                        size:
-                            AdaptiveTextSize().getadaptiveTextSize(context, 30),
+                        size: ArgonSize.Header1,
                         color: ArgonColors.myGrey,
                       )),
                   Expanded(
@@ -313,16 +321,16 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                   text: (widget.FirstQualityInfo.Employee_Matrix_Amount ?? 0)
                       .toString(),
                   textColor: Colors.white,
-                  buttonWidth: getScreenWidth() ,
-                  buttonHegiht: getScreenHeight()/8,
+                  buttonWidth: getScreenWidth(),
+                  buttonHegiht: getScreenHeight() / 8,
                   btnBgColor: ArgonColors.myGreen,
-                  textSize: 27,
+                  textSize: ArgonSize.Header1,
                   topLeft: CircleShape(
                       text: (widget.FirstQualityInfo.Matrix_Control_Amount ?? 0)
                           .toString(),
-                      width: 40,
-                      height: 40,
-                  ),
+                      width: ArgonSize.Width1,
+                      height: ArgonSize.Height1,
+                      fontSize: ArgonSize.Header4),
                 ),
               ),
             ],
@@ -395,7 +403,7 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
               Column(children: [
                 CustomText(
                   text: PersonalCase.GetLable(ResourceKey.SecondQuality),
-                  size: AdaptiveTextSize().getadaptiveTextSize(context, 19),
+                  size: ArgonSize.Header3,
                   color: ArgonColors.myGrey,
                 ),
                 GestureDetector(
@@ -417,18 +425,16 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
                         .toString(),
                     textColor: Colors.black,
                     buttonWidth: getScreenWidth() / 2,
-                    buttonHegiht: getScreenHeight()/10,
+                    buttonHegiht: getScreenHeight() / 10,
                     btnBgColor: ArgonColors.myOrange,
-                    textSize: 25,
+                    textSize: ArgonSize.Header3,
                     padding: 10,
                     topLeft: CircleShape(
-                        text: (widget.SecondQualityInfo.Matrix_Control_Amount ??
-                                0)
+                        text: (widget.SecondQualityInfo.Matrix_Control_Amount ?? 0)
                             .toString(),
-                        width: 30,
-                        height: 30,
-                        fontSize: 10),
-
+                        width: ArgonSize.Header1,
+                        height: ArgonSize.Header1,
+                        fontSize: ArgonSize.Header5),
                   ),
                 ),
                 GestureDetector(
@@ -449,9 +455,9 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
                     text: PersonalCase.GetLable(ResourceKey.Sewing_Error),
                     textColor: Colors.black,
                     buttonWidth: getScreenWidth() / 2,
-                    buttonHegiht: getScreenHeight()/9,
+                    buttonHegiht: getScreenHeight() / 9,
                     btnBgColor: ArgonColors.myOrange,
-                    textSize: 15,
+                    textSize: ArgonSize.Header4,
                     image: Image.asset('lib/assets/images/sewing.png',
                         width: 100, height: 50),
                   ),
@@ -516,7 +522,7 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
               Column(children: [
                 CustomText(
                   text: PersonalCase.GetLable(ResourceKey.Quality_TAMIR),
-                  size: AdaptiveTextSize().getadaptiveTextSize(context, 20),
+                  size: ArgonSize.Header3,
                   color: ArgonColors.myGrey,
                 ),
                 GestureDetector(
@@ -538,9 +544,9 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                         .toString(),
                     textColor: Colors.black,
                     buttonWidth: getScreenWidth() / 2,
-                    buttonHegiht: getScreenHeight()/10,
+                    buttonHegiht: getScreenHeight() / 10,
                     btnBgColor: ArgonColors.myYellow,
-                    textSize: 25,
+                    textSize: ArgonSize.Header3,
                     padding: 10,
 
                     ///TODO : DO THE NUMBERS IN CIRCLE
@@ -548,9 +554,9 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                         text:
                             (widget.TamirQualityInfo.Matrix_Control_Amount ?? 0)
                                 .toString(),
-                        width: 30,
-                        height: 30,
-                        fontSize: 10),
+                        width: ArgonSize.Header1,
+                        height: ArgonSize.Header1,
+                        fontSize: ArgonSize.Header5),
                   ),
                 ),
 
@@ -573,9 +579,9 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                     text: PersonalCase.GetLable(ResourceKey.Sewing_Fixing),
                     textColor: Colors.black,
                     buttonWidth: getScreenWidth() / 2,
-                    buttonHegiht: getScreenHeight()/9,
+                    buttonHegiht: getScreenHeight() / 9,
                     btnBgColor: ArgonColors.myYellow,
-                    textSize: 15,
+                    textSize: ArgonSize.Header4,
                     image: Image.asset('lib/assets/images/sewing.png',
                         width: 100, height: 50),
                   ),
@@ -598,10 +604,7 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
 }
 
 AppBar MyAppBar(BuildContext context) {
-  return AppBar
-
-
-    (
+  return AppBar(
     centerTitle: true,
     title: Text('ITM Tech Soft'),
     leading: GestureDetector(
@@ -632,6 +635,7 @@ class AdaptiveTextSize {
 
   getadaptiveTextSize(BuildContext context, dynamic value) {
     // 720 is medium screen height
+
     return (value / 720) * MediaQuery.of(context).size.height;
   }
 }

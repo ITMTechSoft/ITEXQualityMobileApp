@@ -112,9 +112,9 @@ Widget CircleButton(
 
 Widget ButtonWithNumber({
   String text,
-  double buttonWidth,
-  double buttonHegiht,
-  Color btnBgColor,
+  double buttonWidth =500,
+  double buttonHegiht=40,
+  Color btnBgColor = ArgonColors.myLightBlue,
   double textSize = 20,
   Color textColor = Colors.black54,
   double padding = 5,
@@ -192,11 +192,12 @@ Widget IconInsideCircle(
       double size = 13}) {
   return Container(
     padding: EdgeInsets.all(size),
-    margin: EdgeInsets.only(left: 2),
+    margin: EdgeInsets.only(left: 0),
     decoration: BoxDecoration(
       shape: BoxShape.circle,
       color: backGroundColor,
-    ),
+
+  ),
     child: Icon(
       icon,
       size: iconSize,
@@ -218,6 +219,7 @@ Widget CircleShape(
     decoration: BoxDecoration(
       shape: BoxShape.circle,
       color: color,
+
     ),
     child: Center(
       child: Text(

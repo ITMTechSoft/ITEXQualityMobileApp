@@ -13,9 +13,13 @@ class ModelOrderSizesBLL {
   DateTime LastUpdateDate;
   int CreatedBy;
   int LastUpdateBy;
-  String Param_StringVal;
+  String CreateUser_FullName;
+  String UpdateUser_FullName;
+  String SizeParam_StringVal;
+  int SizeEntityOrder;
   int Model_id;
-  String Order_Number;
+  int Sample_Number = 0;
+
 
   //#endregion
 
@@ -32,9 +36,9 @@ class ModelOrderSizesBLL {
     this.LastUpdateDate = json['LastUpdateDate']==null? null: DateTime.parse(json['LastUpdateDate']);
     this.CreatedBy = json['CreatedBy'];
     this.LastUpdateBy = json['LastUpdateBy'];
-    this.Param_StringVal = json['Param_StringVal'];
+    this.SizeParam_StringVal = json['SizeParam_StringVal'];
     this.Model_id = json['Model_id'];
-    this.Order_Number = json['Order_Number'];
+    this.SizeEntityOrder = json['SizeEntityOrder'];
 
   }
 
@@ -46,9 +50,9 @@ class ModelOrderSizesBLL {
         LastUpdateDate = json['LastUpdateDate']==null? null:  DateTime.parse(json['LastUpdateDate']),
         CreatedBy = json['CreatedBy'],
         LastUpdateBy = json['LastUpdateBy'],
-        Param_StringVal = json['Param_StringVal'],
+        SizeParam_StringVal = json['SizeParam_StringVal'],
         Model_id = json['Model_id'],
-        Order_Number = json['Order_Number'];
+        SizeEntityOrder = json['SizeEntityOrder'];
 
 
   Map<String, dynamic> toJson() => {
@@ -59,9 +63,9 @@ class ModelOrderSizesBLL {
     'LastUpdateDate': LastUpdateDate,
     'CreatedBy': CreatedBy,
     'LastUpdateBy': LastUpdateBy,
-    'Param_StringVal': Param_StringVal,
+    'Param_StringVal': SizeParam_StringVal,
     'Model_id': Model_id,
-    'Order_Number': Order_Number,
+    'SizeEntityOrder': SizeEntityOrder,
 
   };
 
@@ -75,9 +79,9 @@ class ModelOrderSizesBLL {
     'LastUpdateDate': LastUpdateDate.toString(),
     'CreatedBy': CreatedBy.toString(),
     'LastUpdateBy': LastUpdateBy.toString(),
-    'Param_StringVal': Param_StringVal,
+    'Param_StringVal': SizeParam_StringVal,
     'Model_id': Model_id.toString(),
-    'Order_Number': Order_Number,
+    'SizeEntityOrder': SizeEntityOrder.toString(),
 
   };
 

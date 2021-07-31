@@ -116,5 +116,21 @@ class QualityDepartment_ModelOrderBLL {
     return ItemList;
   }
 //#endregion
+  Future<String> GetModelOrderImage() async {
+    try {
+      var response = await http.get(
+          SharedPref.GetWebApiUrl(WebApiMethod.Get_ModelOrder_Image) +
+              "?Order_Id=" +
+              this.Order_Id.toString());
 
+      if (response.statusCode == 200) {
+        String Image = json.decode(response.body);
+        return Image;
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return null;
+  }
 }

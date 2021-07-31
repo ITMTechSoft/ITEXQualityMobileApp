@@ -46,11 +46,14 @@ class _Dikim_LastControlState extends State<Dikim_LastControl> {
                   ": " +
                   PersonalCase.SelectedOrder.Order_Number,
               color: ArgonColors.header,
-              FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+              FontSize: ArgonSize.Header3),
+          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString() ,
+              style: TextStyle(fontSize:ArgonSize.Header6)),
           dense: true,
           selected: true,
         ),
+        SizedBox(height:ArgonSize.Padding3),
+
         FutureBuilder(
           future: LoadingOpenPage(PersonalCase),
           builder: (context, snapshot) {

@@ -4,6 +4,8 @@ import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 import 'package:itex_soft_qualityapp/QualityTestImports.dart';
 
+import 'QualityTest/MeasurementControl/OrderSizeMatrix.dart';
+
 
 
 class QualityTestList extends StatefulWidget {
@@ -86,6 +88,10 @@ class _QualityTestListState extends State<QualityTestList> {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Dikim_LastControl()));
         break;
+      case 10:
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => OrderSize_Matrix()));
+        break;
     }
   }
 
@@ -112,14 +118,17 @@ class _QualityTestListState extends State<QualityTestList> {
                       ListTile(
                         title: HeaderTitle(
                             PersonalCase.SelectedOrder.Order_Number,
-                            color: ArgonColors.Title,
-                            FontSize: ArgonSize.Header),
+                            color: ArgonColors.header,
+                            FontSize: ArgonSize.Header1),
                         subtitle: Text(
-                            PersonalCase.SelectedOrder.Model_Name.toString()),
+                            PersonalCase.SelectedOrder.Model_Name.toString(),
+                            style: TextStyle(fontSize:ArgonSize.Header6)),
                         dense: true,
                         selected: true,
                         tileColor: ArgonColors.Title,
                       ),
+                      SizedBox(height:ArgonSize.Padding3),
+
                       ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,

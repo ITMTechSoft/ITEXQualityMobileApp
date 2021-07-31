@@ -43,6 +43,7 @@ class _LoginPagesState extends State<LoginPages> {
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
+    SizeConfig().init(context);
 
     return WillPopScope(
       onWillPop: () {
@@ -123,26 +124,45 @@ class _LoginPagesState extends State<LoginPages> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                          StretchableButton(
-                            buttonColor: ArgonColors.primary,
-                            children: [
-                              Text(
-                                PersonalCase.GetLable(ResourceKey.btn_Logins),
-                                style: TextStyle(color: Colors.white),
-                              )
-                            ],
-                            //  onPressed:
 
-                            onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                                await LoginFunction(PersonalCase);
-                                print('working ');
+                          Padding(
+                            padding:
+                            EdgeInsets.symmetric(horizontal: ArgonSize.Header1 * 2),
+                            child: CustomButton(
+                              width: double.infinity,
+                              height: ArgonSize.Header1*1.5,
+                              value: PersonalCase.GetLable(ResourceKey.btn_Logins),
+                              function: () async {
+                                if (_formKey.currentState.validate()) {
+                                  await LoginFunction(PersonalCase);
+                                  print('working ');
 
-                                //   Navigator.pop(context);
-                              } else
-                                print("Not Working");
-                            },
+                                  //   Navigator.pop(context);
+                                } else
+                                  print("Not Working");
+                              },
+                            ),
                           ),
+                          // StretchableButton(
+                          //   buttonColor: ArgonColors.primary,
+                          //   children: [
+                          //     Text(
+                          //       PersonalCase.GetLable(ResourceKey.btn_Logins),
+                          //       style: TextStyle(color: Colors.white),
+                          //     )
+                          //   ],
+                          //   //  onPressed:
+                          //
+                          //   onPressed: () async {
+                          //     if (_formKey.currentState.validate()) {
+                          //       await LoginFunction(PersonalCase);
+                          //       print('working ');
+                          //
+                          //       //   Navigator.pop(context);
+                          //     } else
+                          //       print("Not Working");
+                          //   },
+                          // ),
                         ],
                       ),
                     ),

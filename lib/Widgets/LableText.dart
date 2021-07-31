@@ -29,7 +29,7 @@ Widget LableTitle(String Title,
         child: Text(
           Title != null ? Title.toUpperCase() : "",
           style: TextStyle(
-            fontSize: FontSize == null ? _LableFontSize : FontSize,
+            fontSize: FontSize == null ? ArgonSize.Header5 : ArgonSize.Header5,
             fontWeight: FontWeight.bold,
             color: color == null ? ArgonColors.Title : color,
           ),
@@ -40,7 +40,7 @@ Widget LableTitle(String Title,
     return Text(
       (Title ?? "").toUpperCase(),
       style: TextStyle(
-        fontSize: FontSize == null ? _LableFontSize : FontSize,
+        fontSize: FontSize == null ? ArgonSize.Header5 : ArgonSize.Header5,
         fontWeight: FontWeight.bold,
         color: color == null ? ArgonColors.Title : color,
       ),
@@ -55,9 +55,10 @@ Widget LableInteger(int Value,
   Widget TextValue(String TextVal) => new Text(
         TextVal,
         style: TextStyle(
-          fontSize: FontSize,
+          fontSize: ArgonSize.Header5,
           fontWeight: FontWeight.bold,
           color: color == null ? ArgonColors.Title : color,
+
         ),
       );
 
@@ -108,7 +109,7 @@ Widget LableDateTime(DateTime TargetDate,
 Widget HeaderLable(String LableText, {double fontSize = 12, int Flex = 1}) {
   return Expanded(
       flex: Flex,
-      child: LableTitle(LableText, FontSize: fontSize, IsCenter: true));
+      child: LableTitle(LableText, FontSize: ArgonSize.Header5, IsCenter: true));
 }
 
 Widget TableLable(String TableText, {int Flex = 1}) {
@@ -168,8 +169,9 @@ class LabelWithValue extends StatelessWidget {
   final String label;
   @required
   final String value;
+  final double fontSize;
 
-  const LabelWithValue({Key key, this.label, this.value}) : super(key: key);
+  const LabelWithValue({Key key, this.label, this.value, this.fontSize}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -184,13 +186,13 @@ class LabelWithValue extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-                color: ArgonColors.myVinous, fontWeight: FontWeight.bold),
+                color: ArgonColors.myVinous, fontWeight: FontWeight.bold,fontSize: fontSize),
           ),
 
           Text(
             value,
             style: TextStyle(
-                color: ArgonColors.myBlue, fontWeight: FontWeight.bold),
+                color: ArgonColors.myBlue, fontWeight: FontWeight.bold,fontSize: fontSize),
           )
         ],
       ),
@@ -202,8 +204,9 @@ class LabelWithIntegerVal extends StatelessWidget {
   final String label;
   @required
   final int value;
+  final double fontSize ;
 
-  const LabelWithIntegerVal({Key key, this.label, this.value}) : super(key: key);
+  const LabelWithIntegerVal({Key key, this.label, this.value, this.fontSize}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -218,13 +221,13 @@ class LabelWithIntegerVal extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-                color: ArgonColors.myVinous, fontWeight: FontWeight.bold),
+                color: ArgonColors.myVinous, fontWeight: FontWeight.bold,fontSize:fontSize),
           ),
 
           Text(
             (value??0).toString(),
             style: TextStyle(
-                color: ArgonColors.myBlue, fontWeight: FontWeight.bold),
+                color: ArgonColors.myBlue, fontWeight: FontWeight.bold,fontSize:fontSize),
           )
         ],
       ),

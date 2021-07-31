@@ -145,13 +145,18 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
                           Navigator.pop(context);
                         }
                       },
-                      child: ButtonWithNumber(
-                        text: PersonalCase.GetLable(ResourceKey.Add),
-                        textColor: Colors.white,
-                        buttonWidth: getScreenWidth() / 2,
-                        buttonHegiht: 60,
-                        btnBgColor: ArgonColors.myGreen,
-                        textSize: 20,
+                      child: GestureDetector(
+                        onTap:(){
+
+    },
+                        child: ButtonWithNumber(
+                          text: PersonalCase.GetLable(ResourceKey.Add),
+                          textColor: Colors.white,
+                          buttonWidth: getScreenWidth() / 2,
+                          buttonHegiht: 60,
+                          btnBgColor: ArgonColors.myGreen,
+                          textSize: 20,
+                        ),
                       ),
                     )
                   : Container(),

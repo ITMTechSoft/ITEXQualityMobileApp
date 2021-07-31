@@ -75,6 +75,8 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         StandardButton(
+
+                          ///TODO : ADD Start Measuring to ResourceKey
                             Lable: PersonalCase.GetLable(
                                 ResourceKey.AddControlEmployee),
                             ForColor: ArgonColors.white,

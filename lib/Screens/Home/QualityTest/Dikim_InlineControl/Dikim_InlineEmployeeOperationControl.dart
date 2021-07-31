@@ -97,6 +97,7 @@ class _Dikim_InlineEmployeeOperationControlState
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
+                flex:2,
                   child: StandardButton(
                       ForColor: ArgonColors.white,
                       BakColor: ArgonColors.inputSuccess,
@@ -110,6 +111,7 @@ class _Dikim_InlineEmployeeOperationControlState
 
                       })),
               Expanded(
+
                 child: Padding(
                   child: SpinBox(
                     value: 1,
@@ -119,9 +121,10 @@ class _Dikim_InlineEmployeeOperationControlState
                   ),
                   padding: const EdgeInsets.all(16),
                 ),
-                flex: 3,
+                flex: 5,
               ),
               Expanded(
+                flex:2,
                   child: StandardButton(
                       ForColor: ArgonColors.white,
                       BakColor: ArgonColors.error,

@@ -60,20 +60,24 @@ class _OrderListState extends State<OrderList> {
                         title: HeaderTitle(
                             PersonalCase.SelectedDepartment.Depart_Name,
                             color: ArgonColors.header,
-                            FontSize: ArgonSize.Header),
+                            FontSize: ArgonSize.Header1),
                         subtitle: Text(PersonalCase
                             .SelectedDepartment.Start_Date
-                            .toString()),
+                            .toString(),
+                            style: TextStyle(fontSize:ArgonSize.Header6)),
+
                         dense: true,
                         selected: true,
                       ),
+                      SizedBox(height:ArgonSize.Padding3),
+
                       FilterItem(context, SearchController, FilterSearch,PersonalCase),
                       ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, int i) {
-                            return OrderCard(snapshot.data[i], () {
+                            return OrderCard(Item:snapshot.data[i], OnTap:() {
                               PersonalCase.SelectedOrder = snapshot.data[i];
                               Navigator.push(
                                   context,

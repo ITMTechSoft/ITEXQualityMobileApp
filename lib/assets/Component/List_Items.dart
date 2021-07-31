@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:itex_soft_qualityapp/Models/DeptModOrderQuality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/Employee_Department.dart';
 import 'package:itex_soft_qualityapp/Models/Employees.dart';
@@ -10,66 +11,98 @@ import 'package:itex_soft_qualityapp/Models/QualityDepartment_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
+import 'package:itex_soft_qualityapp/Widgets/ImageLoader.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 import 'package:intl/intl.dart';
 
 Widget DepartmentCard(Employee_DepartmentBLL Item, Function OnTap) {
-  return Card(
+  return Container(
+    height: ArgonSize.WidthBig,
+    width: ArgonSize.HeightBig,
+    padding: EdgeInsets.symmetric(horizontal: ArgonSize.Padding3),
+    child: Card(
       shadowColor: ArgonColors.black,
       elevation: 10,
-      child: ListTile(
-        onTap: OnTap,
-        title: Text(
-          Item.Depart_Name,
-          style: TextStyle(fontSize: 20, color: ArgonColors.text),
+      child: Center(
+        child: ListTile(
+          onTap: OnTap,
+          title: Text(
+            Item.Depart_Name,
+            style:
+                TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.text),
+          ),
+          subtitle: Text(
+            Item.Depart_Name,
+            style: TextStyle(fontSize: ArgonSize.Header4),
+          ),
         ),
-        subtitle: Text(Item.Depart_Name),
-      ));
+      ),
+    ),
+  );
 }
 
 Widget OneItem({String ItemName, String ItemValue, Function OnTap}) {
-  return Card(
-      shadowColor: ArgonColors.black,
-      elevation: 10,
-      child: ListTile(
-        onTap: OnTap,
-        title: Text(
-          ItemName,
-          style: TextStyle(fontSize: 20, color: ArgonColors.text),
-        ),
-        subtitle: Text(ItemValue),
-      ));
+  return Container(
+    height: ArgonSize.HeightBig,
+    width: ArgonSize.WidthBig,
+    child: Card(
+        shadowColor: ArgonColors.black,
+        elevation: 10,
+        child: Center(
+          child: ListTile(
+            onTap: OnTap,
+            title: Text(
+              ItemName,
+              style: TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.black.withOpacity(0.6)),
+            ),
+            subtitle: Text(ItemValue,style: TextStyle(fontSize: ArgonSize.Header5, color: ArgonColors.black.withOpacity(0.5)),),
+          ),
+        )),
+  );
 }
 
-Widget OrderCard(QualityDepartment_ModelOrderBLL Item, Function OnTap) {
-  return Card(
-    child: ListTile(
-      onTap: OnTap,
-      title: Text(Item.Order_Number ?? ""),
-      subtitle: Text(Item.Model_Name ?? ""),
-      leading: Stack(
-        children: <Widget>[
-          Container(
-            child: Text(
-              Item.Order_Number != null ? Item.Order_Number.toUpperCase() : "",
+class OrderCard extends StatelessWidget {
+  Future<String> GetModelImage() async {
+    return await Item.GetModelOrderImage();
+  }
+
+  final QualityDepartment_ModelOrderBLL Item;
+  final Function OnTap;
+
+  const OrderCard({Key key, this.Item, this.OnTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ArgonSize.HeightBig,
+      width: ArgonSize.WidthBig,
+      padding: EdgeInsets.symmetric(horizontal: ArgonSize.Padding3),
+      child: Card(
+        elevation: 3,
+        child: Center(
+          child: ListTile(
+            onTap: OnTap,
+            title: Padding(
+              padding:  EdgeInsets.only(bottom:ArgonSize.Padding3),
+              child: CustomText(
+                  text: Item.Order_Number ?? "",
+                  size: ArgonSize.Header5,
+                  textAlign: TextAlign.left,
+                  color: ArgonColors.black.withOpacity(0.6)),
             ),
-            width: 40,
-            height: 40,
-            alignment: Alignment(0, 0),
+            subtitle: CustomText(
+                text: Item.Model_Name ?? "",
+                size: ArgonSize.Header6,
+                textAlign: TextAlign.left,
+                color: ArgonColors.black.withOpacity(0.5)),
+            leading: SizedBox(width:ArgonSize.WidthMedium,height:ArgonSize.WidthMedium,child: ImageLoader(LoadingImage: GetModelImage())),
+
+            trailing: Text(''),
           ),
-          ClipOval(
-            child: Image.network(
-              "https://via.placeholder.com/150",
-              height: 40,
-              width: 40,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ],
+        ),
       ),
-      trailing: Text(''),
-    ),
-  );
+    );
+  }
 }
 
 Widget AraControlCard(
@@ -490,7 +523,6 @@ Widget QualityAxisItem(DeptModOrderQuality_ItemsBLL Item,
 
 ///// Table Headers
 
-
 Color NormalColor = ArgonColors.white;
 Color SelectedColor = ArgonColors.muted;
 
@@ -523,7 +555,7 @@ Widget TableColumn(
       elevation: 1,
       color: IsSelectedItem ? SelectedColor : NormalColor,
       child: Container(
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.all(ArgonSize.Padding3),
         margin: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -680,7 +712,9 @@ Widget BoxColorWithText(String Lable, Color SelectedColor,
     {double Width = 50,
     double Height = 50,
     FontColor = ArgonColors.text,
-    FontSize = ArgonSize.Header3}) {
+
+    /// TODO edit this
+    FontSize = ArgonSize.normal}) {
   return Container(
     width: Width,
     height: Height,
@@ -705,6 +739,24 @@ Widget BoxColorWithText(String Lable, Color SelectedColor,
                 fontSize: FontSize,
                 color: FontColor))),
   );
+}
+
+Widget StatusWidget(
+    {IconData icon, String text, Color backGroundColor, Color iconColor}) {
+  return Row(children: [
+    IconInsideCircle(
+        icon: icon,
+        backGroundColor: backGroundColor,
+        color: iconColor,
+        iconSize: 30,
+        size: 10),
+    SizedBox(width: 10),
+    CustomText(
+      text: text,
+      size: 20,
+      fontWeight: FontWeight.normal,
+    )
+  ]);
 }
 
 /// Dikim Inline Round List
@@ -836,9 +888,8 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
                             ),
                             flex: 2),
                         Expanded(
-                            child: LableDateTime(
-                                Item.StartDate ,
-                                Format : "HH:mm",
+                            child: LableDateTime(Item.StartDate,
+                                Format: "HH:mm",
                                 color: ArgonColors.text,
                                 IsCenter: true)),
                         Expanded(
@@ -848,9 +899,8 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
                           flex: 2,
                         ),
                         Expanded(
-                            child: LableDateTime(
-                                Item.EndDate ,
-                                Format : "HH:mm",
+                            child: LableDateTime(Item.EndDate,
+                                Format: "HH:mm",
                                 color: ArgonColors.text,
                                 IsCenter: true)),
                       ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/MainActivity.dart';
+import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 import 'package:provider/provider.dart';
 
 import 'Authenticate/LoginPages.dart';
@@ -25,6 +26,7 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
+
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
     print('Valid user is ${PersonalCase.GetCurrentUser().ValidUser}');

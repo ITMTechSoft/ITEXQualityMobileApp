@@ -38,6 +38,7 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
 
   @override
   Widget build(BuildContext context) {
+
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     Widget RetVal(bool IsSystemConfigValid) {
       Widget TargetItem;

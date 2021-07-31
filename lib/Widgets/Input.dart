@@ -44,72 +44,77 @@ class Standard_Input extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var maskFormatter = new MaskTextInputFormatter(mask: '###.....');
+    SizeConfig().init(context);
 
     return Container(
-      padding: EdgeInsets.all(5),
-      height: 80,
-      child: TextFormField(
-          cursorColor: ArgonColors.muted,
-          onTap: onTap,
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.symmetric(horizontal: ArgonSize.Padding1),
+      child: SizedBox(
+        height: 50,
+        child: TextFormField(
+            cursorColor: ArgonColors.muted,
+            onTap: onTap,
 
-          onChanged: onChanged,
-          controller: controller,
-          keyboardType: Ktype,
-          autofocus: autofocus,
-          minLines: this.MinLines,
-          maxLines: this.MaxLines,
-          maxLength: MaxLength,
-          /// TODO : CHANGE THE INPUT FORMATTER
-          // validator: (value) {
-          //   if (value.isEmpty)
-          //     return errorMessage;
-          //
-          //   return null;
-          // },
-         //inputFormatters: isIp == true ?  [maskFormatter] :  null,
 
-          // validator: (value) {
-          //   if (value.isEmpty) return errorMessage;
-          //
-          //   return null;
-          // },
-          style: TextStyle(
-              height: 0.85, fontSize: 16.0, color: ArgonColors.initial),
-          textAlignVertical: TextAlignVertical(y: 0.6),
-          decoration: InputDecoration(
-            labelText: placeholder,
-            hintText: hintMessage,
-            filled: true,
-            fillColor: ArgonColors.white,
-            hintStyle: TextStyle(
-              color: ArgonColors.black.withOpacity(0.3),
-            ),
-            suffixIcon: suffixIcon,
-            prefixIcon: prefixIcon,
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4.0),
-              borderSide: BorderSide(
-                  color: Colors.redAccent,
-                  width: 1.0,
-                  style: BorderStyle.solid),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4.0),
-              borderSide: BorderSide(
-                  color: Colors.redAccent,
-                  width: 1.0,
-                  style: BorderStyle.solid),
-            ),
-            enabledBorder: OutlineInputBorder(
+            onChanged: onChanged,
+            controller: controller,
+            keyboardType: Ktype,
+            autofocus: autofocus,
+            minLines: this.MinLines,
+            maxLines: this.MaxLines,
+            maxLength: MaxLength,
+            /// TODO : CHANGE THE INPUT FORMATTER
+            // validator: (value) {
+            //   if (value.isEmpty)
+            //     return errorMessage;
+            //
+            //   return null;
+            // },
+           //inputFormatters: isIp == true ?  [maskFormatter] :  null,
+
+            // validator: (value) {
+            //   if (value.isEmpty) return errorMessage;
+            //
+            //   return null;
+            // },
+            style: TextStyle(
+                height: 0.85, fontSize: ArgonSize.Header4, color: ArgonColors.initial),
+            textAlignVertical: TextAlignVertical(y: 0.6),
+            decoration: InputDecoration(
+              labelText: placeholder,
+              hintText: hintMessage,
+              filled: true,
+              fillColor: ArgonColors.white,
+              hintStyle: TextStyle(
+                color: ArgonColors.black.withOpacity(0.3),
+              ),
+              suffixIcon: suffixIcon,
+              prefixIcon: prefixIcon,
+              errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4.0),
                 borderSide: BorderSide(
-                    color: borderColor, width: 1.0, style: BorderStyle.solid)),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4.0),
-              borderSide: BorderSide(
-                  color: borderColor, width: 1.0, style: BorderStyle.solid),
-            ),
-          )),
+                    color: Colors.redAccent,
+                    width: 1.0,
+                    style: BorderStyle.solid),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4.0),
+                borderSide: BorderSide(
+                    color: Colors.redAccent,
+                    width: 1.0,
+                    style: BorderStyle.solid),
+              ),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+                  borderSide: BorderSide(
+                      color: borderColor, width: 1.0, style: BorderStyle.solid)),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4.0),
+                borderSide: BorderSide(
+                    color: borderColor, width: 1.0, style: BorderStyle.solid),
+              ),
+            )),
+      ),
     );
   }
 }

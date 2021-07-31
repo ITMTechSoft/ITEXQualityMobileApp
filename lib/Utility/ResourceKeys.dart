@@ -1328,7 +1328,12 @@ enum ResourceKey{
   OrderUniqueId,
   Sewing_Error,
   Sewing_Fixing,
-
+  Number,
+  StartMeasure,
+  EndMeasure,
+  AddNewSample,
+  Measurement,
+  MeasurementNumbers,
 }
 extension ParseToString on ResourceKey {
   String toShortString() {

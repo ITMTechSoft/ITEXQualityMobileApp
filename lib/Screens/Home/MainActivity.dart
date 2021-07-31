@@ -41,6 +41,7 @@ class _MainActivityState extends State<MainActivity> {
 
   @override
   Widget build(BuildContext context) {
+
     final PersonalCase = Provider.of<PersonalProvider>(context);
     return Scaffold(
         appBar: MainBar(PersonalCase,context),
@@ -55,14 +56,15 @@ class _MainActivityState extends State<MainActivity> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         ListTile(
-                          title: HeaderTitle("Department",
+                          title: HeaderTitle( PersonalCase.GetLable(ResourceKey.Department),
                               color: ArgonColors.header,
-                              FontSize: ArgonSize.Header),
+                              FontSize: ArgonSize.Header2),
 
                           dense: true,
                           selected: true,
                         ),
 
+                        SizedBox(height:ArgonSize.Padding3),
                         ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
