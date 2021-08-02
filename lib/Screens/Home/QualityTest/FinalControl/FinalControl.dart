@@ -33,7 +33,7 @@ class _FinalControlState extends State<FinalControl> {
         CaseProvider.ModelOrderMatrix.Order_Id,
         CaseProvider.ModelOrderMatrix.Id);
     var QualityList =
-        await Quality_ItemsBLL.Get_Quality_Items(GroupType.FirstQuality);
+    await Quality_ItemsBLL.Get_Quality_Items(GroupType.FirstQuality);
     if (ModelOrder != null && QualityList != null) {
       IntiteStatus = 1;
       CaseProvider.FirstQuality = QualityList[0];
@@ -49,8 +49,7 @@ class _FinalControlState extends State<FinalControl> {
   Widget ProductDetail(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) {
     return BoxMaterialCard(
-      paddingVertical:getScreenHeight()>1200?ArgonSize.Header3:ArgonSize.Header4,
-Childrens: <Widget>[
+      Childrens: <Widget>[
         Row(
           children: [
             Expanded(
@@ -63,7 +62,8 @@ Childrens: <Widget>[
                   SizedBox(
                     height: 10,
                   ),
-                  LableTitle(ModelOrder.Model_Name,FontSize :ArgonSize.Header5)                ],
+                  LableTitle(ModelOrder.Model_Name)
+                ],
               ),
             ),
             Expanded(
@@ -79,54 +79,46 @@ Childrens: <Widget>[
                         children: [
                           LabelWithValue(
                               label:
-                                  PersonalCase.GetLable(ResourceKey.Customer),
-                              value: ModelOrder.Customer_Name,
-                              fontSize:ArgonSize.Header5),
+                              PersonalCase.GetLable(ResourceKey.Customer),
+                              value: ModelOrder.Customer_Name),
                           LabelWithValue(
                               label:
-                                  PersonalCase.GetLable(ResourceKey.Employee),
+                              PersonalCase.GetLable(ResourceKey.Employee),
                               value:
-                                  CaseProvider.QualityTracking.Employee_Name??""
-                           ,fontSize:ArgonSize.Header5),
+                              CaseProvider.QualityTracking.Employee_Name??""),
                           LabelWithIntegerVal(
                               label: PersonalCase.GetLable(
                                   ResourceKey.Plan_Quantity),
-                              value: ModelOrder.PlanSizeColor_QTY  ,
-                              fontSize:ArgonSize.Header5),
+                              value: ModelOrder.PlanSizeColor_QTY),
                           LabelWithValue(
                               label:
-                                  PersonalCase.GetLable(ResourceKey.SizeColor),
+                              PersonalCase.GetLable(ResourceKey.SizeColor),
                               value:
-                                  "${ModelOrder.SizeName}/ ${ModelOrder.ColorName}" ,
-                              fontSize:ArgonSize.Header5)
+                              "${ModelOrder.SizeName}/ ${ModelOrder.ColorName}")
                         ],
                       ),
                     ),
                     Expanded(
                         child: Column(
-                      children: [
-                        LabelWithValue(
-                            label:
+                          children: [
+                            LabelWithValue(
+                                label:
                                 PersonalCase.GetLable(ResourceKey.Order_Number),
-                            value: ModelOrder.Order_Number ,
-                            fontSize:ArgonSize.Header5),
-                        LabelWithValue(
-                            label: PersonalCase.GetLable(ResourceKey.Model_STD),
-                            value: (ModelOrder.Analysis_Model_STD ?? 0)
-                                .toString(),
-                            fontSize:ArgonSize.Header5),
-                        LabelWithIntegerVal(
-                            label: PersonalCase.GetLable(
-                                ResourceKey.OrderSizeColor_QTY),
-                            value: ModelOrder.OrderSizeColor_QTY,
-                            fontSize:ArgonSize.Header5),
-                        LabelWithIntegerVal(
-                            label:
+                                value: ModelOrder.Order_Number),
+                            LabelWithValue(
+                                label: PersonalCase.GetLable(ResourceKey.Model_STD),
+                                value: (ModelOrder.Analysis_Model_STD ?? 0)
+                                    .toString()),
+                            LabelWithIntegerVal(
+                                label: PersonalCase.GetLable(
+                                    ResourceKey.OrderSizeColor_QTY),
+                                value: ModelOrder.OrderSizeColor_QTY),
+                            LabelWithIntegerVal(
+                                label:
                                 PersonalCase.GetLable(ResourceKey.SizeColorQTY),
-                            value: ModelOrder.SizeColor_QTY ,
-                            fontSize:ArgonSize.Header5),
-                      ],
-                    )),
+                                value: ModelOrder.SizeColor_QTY),
+                          ],
+                        )),
                   ]),
             ),
           ],
@@ -144,22 +136,18 @@ Childrens: <Widget>[
     SizeConfig().init(context);
     return Scaffold(
         appBar:
-            DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+        DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
           Navigator.pop(context);
-        },
-                context
-            ),
+        },context),
         body: ListView(
           children: [
             ListTile(
-              title: HeaderTitle(getScreenWidth().toString(),
+              title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
                   color: ArgonColors.header, FontSize: ArgonSize.Header2),
-              subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString() ,
-              style:TextStyle(fontSize:ArgonSize.Header6)),
+              subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
               dense: true,
               selected: true,
             ),
-
             FutureBuilder(
               future: LoadingOpenPage(CaseProvider),
               builder: (context, snapshot) {
@@ -168,18 +156,15 @@ Childrens: <Widget>[
                     children: [
                       Container(
                           child: ProductDetail(PersonalCase, CaseProvider)),
-
                       Container(
                         child: ProductFirstQuality(
                           FirstQualityInfo: new Model_Order_ControlBLL(
                               Control_Type: GroupType.FirstQuality,
                               QualityDept_ModelOrder_Tracking_Id:
-                                  CaseProvider.QualityTracking.Id),
+                              CaseProvider.QualityTracking.Id),
                         ),
                       ),
-
                       Container(
-
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
@@ -189,7 +174,7 @@ Childrens: <Widget>[
                                 SecondQualityInfo: new Model_Order_ControlBLL(
                                     Control_Type: GroupType.SecondQuality,
                                     QualityDept_ModelOrder_Tracking_Id:
-                                        CaseProvider.QualityTracking.Id),
+                                    CaseProvider.QualityTracking.Id),
                               ),
                             ),
                             Expanded(
@@ -197,7 +182,7 @@ Childrens: <Widget>[
                                 TamirQualityInfo: new Model_Order_ControlBLL(
                                     Control_Type: GroupType.TamirQuality,
                                     QualityDept_ModelOrder_Tracking_Id:
-                                        CaseProvider.QualityTracking.Id),
+                                    CaseProvider.QualityTracking.Id),
                               ),
                             ),
                           ],
@@ -239,7 +224,7 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
       List<Model_Order_ControlBLL> ModelList =
-          await widget.FirstQualityInfo.Get_Model_Order_Control();
+      await widget.FirstQualityInfo.Get_Model_Order_Control();
 
       if (widget.FirstQualityInfo != null) {
         IntiteStatus = 1;
@@ -262,8 +247,7 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return BoxMaterialCard(
-            paddingVertical:getScreenHeight()>1200?ArgonSize.Header3:ArgonSize.Header4,
-Childrens: <Widget>[
+            Childrens: <Widget>[
               Row(
                 children: [
                   Expanded(
@@ -273,8 +257,7 @@ Childrens: <Widget>[
                           PersonalCase.GetLable(ResourceKey.RecycleReturn),
                           style: TextStyle(
                               color: ArgonColors.myBlue,
-                              fontWeight: FontWeight.bold ,
-                              fontSize:ArgonSize.Header5),
+                              fontWeight: FontWeight.bold),
                         ),
                         Transform.scale(
                           scale: 0.7,
@@ -293,8 +276,8 @@ Childrens: <Widget>[
                       child: CustomText(
                         text: PersonalCase.GetLable(
                             ResourceKey.Quality_FirstQuality),
-
-                        size: ArgonSize.Header1,
+                        size:
+                        AdaptiveTextSize().getadaptiveTextSize(context, 30),
                         color: ArgonColors.myGrey,
                       )),
                   Expanded(
@@ -303,7 +286,6 @@ Childrens: <Widget>[
                   )
                 ],
               ),
-              SizedBox(height:ArgonSize.Padding4),
               GestureDetector(
                 onTap: () async {
                   var UserQuality = new User_QualityTracking_DetailBLL();
@@ -313,7 +295,7 @@ Childrens: <Widget>[
                   UserQuality.Amount = 1;
                   UserQuality.IsRecycle = _switchValue;
                   int CheckStatus =
-                      await UserQuality.Set_UserQualityFinalControl();
+                  await UserQuality.Set_UserQualityFinalControl();
                   switch (CheckStatus) {
                     case 0:
                       setState(() {});
@@ -341,29 +323,26 @@ Childrens: <Widget>[
                   buttonWidth: getScreenWidth() ,
                   buttonHegiht: getScreenHeight()/8,
                   btnBgColor: ArgonColors.myGreen,
-                  textSize: ArgonSize.Header1,
+                  textSize: 27,
                   topLeft: CircleShape(
-                      text: (widget.FirstQualityInfo.Matrix_Control_Amount ?? 0)
-                          .toString(),
-                    width: ArgonSize.Width1,
-                    height: ArgonSize.Height1,
-                      fontSize: ArgonSize.Header4
+                    text: (widget.FirstQualityInfo.Matrix_Control_Amount ?? 0)
+                        .toString(),
+                    width: 40,
+                    height: 40,
                   ),
-
                 ),
               ),
             ],
-            topRight: warning_massage != 1
+            topRight: warning_massage != 0
                 ? CircularIconWithNumber(
-                    icon: FontAwesomeIcons.exclamation,
-                    backGroundColor: Colors.red,
-                    iconColor: Colors.white,
-                    size:  ArgonSize.Header5,
-                    bubbleHeight: ArgonSize.WidthSmall/2,
-                    bubbleWidth: ArgonSize.WidthSmall/2,
-                    bubbleText: warning_massage.toString(),
-                    fontSize :ArgonSize.Header7
-                  )
+              icon: FontAwesomeIcons.exclamation,
+              backGroundColor: Colors.red,
+              iconColor: Colors.white,
+              size: 10,
+              bubbleHeight: 15,
+              bubbleWidth: 15,
+              bubbleText: warning_massage.toString(),
+            )
                 : Container(width: 0, height: 0),
           );
         } else if (IntiteStatus == 0)
@@ -372,9 +351,9 @@ Childrens: <Widget>[
           return ErrorPage(
               ActionName: PersonalCase.GetLable(ResourceKey.Loading),
               MessageError:
-                  PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
+              PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
               DetailError:
-                  PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
+              PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
       },
     );
   }
@@ -397,7 +376,7 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
       List<Model_Order_ControlBLL> ModelList =
-          await widget.SecondQualityInfo.Get_Model_Order_Control();
+      await widget.SecondQualityInfo.Get_Model_Order_Control();
 
       SecqStitch = await Quality_ItemsBLL.Get_StitchQuality_Items(GroupType.SecondQuality);
 
@@ -422,13 +401,11 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return BoxMaterialCard(
-            paddingVertical:getScreenHeight()>1200?ArgonSize.Header3:ArgonSize.Header5,
-Childrens: <Widget>[
+            Childrens: <Widget>[
               Column(children: [
                 CustomText(
                   text: PersonalCase.GetLable(ResourceKey.SecondQuality),
-                  size: ArgonSize.Header3,
-
+                  size: AdaptiveTextSize().getadaptiveTextSize(context, 19),
                   color: ArgonColors.myGrey,
                 ),
                 GestureDetector(
@@ -452,15 +429,15 @@ Childrens: <Widget>[
                     buttonWidth: getScreenWidth() / 2,
                     buttonHegiht: getScreenHeight()/10,
                     btnBgColor: ArgonColors.myOrange,
-                    textSize: ArgonSize.Header3,
+                    textSize: 25,
                     padding: 10,
                     topLeft: CircleShape(
                         text: (widget.SecondQualityInfo.Matrix_Control_Amount ??
-                                0)
+                            0)
                             .toString(),
-                        width: ArgonSize.Header1,
-                        height: ArgonSize.Header1,
-                        fontSize: ArgonSize.Header5),
+                        width: 30,
+                        height: 30,
+                        fontSize: 10),
 
                   ),
                 ),
@@ -484,7 +461,7 @@ Childrens: <Widget>[
                     buttonWidth: getScreenWidth() / 2,
                     buttonHegiht: getScreenHeight()/9,
                     btnBgColor: ArgonColors.myOrange,
-                    textSize: ArgonSize.Header4,
+                    textSize: 15,
                     image: Image.asset('lib/assets/images/sewing.png',
                         width: 100, height: 50),
                   ),
@@ -498,9 +475,9 @@ Childrens: <Widget>[
           return ErrorPage(
               ActionName: PersonalCase.GetLable(ResourceKey.Loading),
               MessageError:
-                  PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
+              PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
               DetailError:
-                  PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
+              PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
       },
     );
   }
@@ -519,14 +496,14 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
   Model_Order_ControlBLL Critiera;
   Quality_ItemsBLL TamirStitch;
 
-  
+
   int IntiteStatus = 0;
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
       List<Model_Order_ControlBLL> ModelList =
-          await widget.TamirQualityInfo.Get_Model_Order_Control();
-      
+      await widget.TamirQualityInfo.Get_Model_Order_Control();
+
       TamirStitch = await Quality_ItemsBLL.Get_StitchQuality_Items(GroupType.TamirQuality);
 
 
@@ -551,12 +528,11 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return BoxMaterialCard(
-            paddingVertical:getScreenHeight()>1200?ArgonSize.Header3:ArgonSize.Header5,
-Childrens: <Widget>[
+            Childrens: <Widget>[
               Column(children: [
                 CustomText(
                   text: PersonalCase.GetLable(ResourceKey.Quality_TAMIR),
-                  size: ArgonSize.Header3,
+                  size: AdaptiveTextSize().getadaptiveTextSize(context, 20),
                   color: ArgonColors.myGrey,
                 ),
                 GestureDetector(
@@ -567,7 +543,7 @@ Childrens: <Widget>[
                           builder: (context) => new QualityItemsList(
                               GroupType: GroupType.TamirQuality,
                               HeaderName:
-                                  PersonalCase.GetLable(ResourceKey.TamirList),
+                              PersonalCase.GetLable(ResourceKey.TamirList),
                               ParentReCalc: () {
                                 setState(() {});
                               })),
@@ -580,17 +556,17 @@ Childrens: <Widget>[
                     buttonWidth: getScreenWidth() / 2,
                     buttonHegiht: getScreenHeight()/10,
                     btnBgColor: ArgonColors.myYellow,
-                    textSize: ArgonSize.Header3,
+                    textSize: 25,
                     padding: 10,
 
                     ///TODO : DO THE NUMBERS IN CIRCLE
                     topLeft: CircleShape(
                         text:
-                            (widget.TamirQualityInfo.Matrix_Control_Amount ?? 0)
-                                .toString(),
-                        width: ArgonSize.Header1,
-                        height: ArgonSize.Header1,
-                        fontSize: ArgonSize.Header5),
+                        (widget.TamirQualityInfo.Matrix_Control_Amount ?? 0)
+                            .toString(),
+                        width: 30,
+                        height: 30,
+                        fontSize: 10),
                   ),
                 ),
 
@@ -614,7 +590,7 @@ Childrens: <Widget>[
                     buttonWidth: getScreenWidth() / 2,
                     buttonHegiht: getScreenHeight()/9,
                     btnBgColor: ArgonColors.myYellow,
-                    textSize: ArgonSize.Header4,
+                    textSize: 15,
                     image: Image.asset('lib/assets/images/sewing.png',
                         width: 100, height: 50),
                   ),
@@ -628,9 +604,9 @@ Childrens: <Widget>[
           return ErrorPage(
               ActionName: PersonalCase.GetLable(ResourceKey.Loading),
               MessageError:
-                  PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
+              PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
               DetailError:
-                  PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
+              PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
       },
     );
   }
@@ -644,3 +620,4 @@ class AdaptiveTextSize {
     return (value / 720) * MediaQuery.of(context).size.height;
   }
 }
+
