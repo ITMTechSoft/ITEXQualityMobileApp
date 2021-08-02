@@ -64,7 +64,9 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
-      }),
+      },
+          context
+      ),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(

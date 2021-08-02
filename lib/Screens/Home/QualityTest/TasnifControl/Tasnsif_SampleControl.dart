@@ -308,7 +308,9 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
-      }),
+      },
+          context
+      ),
       body: FutureBuilder(
         future: LoadingOpenPage(PersonalCase),
         builder: (context, snapshot) {

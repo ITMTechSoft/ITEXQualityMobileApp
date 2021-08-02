@@ -124,7 +124,8 @@ class _Tasnif_AmountState extends State<Tasnif_Amount> {
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
-      }),
+      } ,
+          context),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(

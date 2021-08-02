@@ -221,7 +221,9 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
-      }),
+      },
+          context
+      ),
       body: ListView(
         children: [
           ListTile(
@@ -233,7 +235,8 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
             selected: true,
           ),
           BoxMaterialCard(
-            paddingValue: 0,
+            paddingHorizontal: 0,
+            paddingVertical:  0 ,
             Childrens: [HeaderAction, SizedBox(height: 15), MainPageTitle],
           ),
         ],

@@ -103,7 +103,9 @@ class _QualityTestListState extends State<QualityTestList> {
     return Scaffold(
       appBar: DetailBar(PersonalCase.GetLable(ResourceKey.QualityTests), PersonalCase, () {
         Navigator.pop(context);
-      }),
+      },
+          context
+      ),
       body: FutureBuilder(
         future: LoadEmployeeOrders(PersonalCase),
         builder: (context, snapshot) {

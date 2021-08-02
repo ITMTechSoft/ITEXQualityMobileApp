@@ -117,7 +117,8 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
-      }),
+      } ,
+          context),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(

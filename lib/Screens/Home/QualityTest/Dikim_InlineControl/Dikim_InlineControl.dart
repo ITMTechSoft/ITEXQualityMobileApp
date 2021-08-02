@@ -74,7 +74,9 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
       appBar:
       DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
-      }),
+      },
+          context
+      ),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(

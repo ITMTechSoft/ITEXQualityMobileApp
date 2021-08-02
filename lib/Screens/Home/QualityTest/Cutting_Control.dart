@@ -67,7 +67,8 @@ class _Cutting_ControlState extends State<Cutting_Control> {
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
-      }),
+      } ,
+          context),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(
@@ -245,7 +246,8 @@ class _Matrix_Cutting_KontrolState extends State<Matrix_Cutting_Kontrol> {
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
-      }),
+      } ,
+          context),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(

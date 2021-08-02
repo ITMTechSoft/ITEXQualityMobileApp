@@ -52,7 +52,9 @@ class _Dikim_EmployeeOperationMergeState
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
-      }),
+      } ,
+          context
+      ),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(

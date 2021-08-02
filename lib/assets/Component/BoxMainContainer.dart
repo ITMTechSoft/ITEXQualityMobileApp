@@ -40,8 +40,9 @@ class BoxMaterialCard extends StatelessWidget {
  final Widget topLeft ;
  final Widget bottomRight;
  final Widget bottomLeft ;
- final double paddingValue ;
-  BoxMaterialCard({this.Childrens, this.topRight, this.topLeft, this.bottomRight, this.bottomLeft, this.paddingValue=20});
+ final double paddingHorizontal ;
+ final double paddingVertical ;
+  BoxMaterialCard({this.Childrens, this.topRight, this.topLeft, this.bottomRight, this.bottomLeft, this.paddingHorizontal=20,this.paddingVertical=20});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class BoxMaterialCard extends StatelessWidget {
           shadowColor: ArgonColors.black,
           elevation: 10,
           child: Container(
-            padding: EdgeInsets.all(paddingValue),
+            padding: EdgeInsets.symmetric(horizontal:paddingHorizontal,vertical:paddingVertical),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,

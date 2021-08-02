@@ -80,7 +80,9 @@ class _OrderSize_MatrixState extends State<OrderSize_Matrix> {
       appBar:
       DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
-      }),
+      },
+          context
+      ),
 
       /// TODO :CHANGE PAGE NAME AND HEADER NAME
       body: ListView(children: [

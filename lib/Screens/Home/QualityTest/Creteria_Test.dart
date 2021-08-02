@@ -42,9 +42,10 @@ class _Criteria_TestState extends State<Criteria_Test> {
 
 
     return Scaffold(
-        appBar: DetailBar(PersonalCase.GetLable(ResourceKey.CriteriaTest), PersonalCase, () {
+        appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
           Navigator.pop(context);
-        }),
+        } ,
+            context),
         body: ListView(
           children: [
             ListTile(

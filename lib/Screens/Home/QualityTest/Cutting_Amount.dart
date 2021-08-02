@@ -116,10 +116,10 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
     return Scaffold(
-      appBar: DetailBar(
-          PersonalCase.GetLable(ResourceKey.CuttingAmount), PersonalCase, () {
+      appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
-      }),
+      } ,
+          context),
       body: ListView(
         children: [
           ListTile(

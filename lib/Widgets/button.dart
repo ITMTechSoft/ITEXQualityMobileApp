@@ -124,14 +124,19 @@ Widget ButtonWithNumber({
   Widget bottomLeft,
   Widget image,
   bool orientation = false,
+  bool addHeight =false
 }) {
-  return Stack(
-    children: [
-      Container(
-        width: buttonWidth,
-        height: buttonHegiht,
-        child: Padding(
-          padding: EdgeInsets.all(padding),
+  return Container(
+    color:Colors.green,
+    width: buttonWidth,
+    height: buttonHegiht,
+    child: Stack(
+      children: [
+        Container(
+          width: buttonWidth,
+          height: buttonHegiht,
+          color:Colors.red,
+          padding:EdgeInsets.all(10),
           child: CustomContainer(
             width: buttonWidth,
             height: buttonHegiht,
@@ -142,45 +147,45 @@ Widget ButtonWithNumber({
             image: image,
           ),
         ),
-      ),
-      topRight != null
-          ? Positioned(
-        child: topRight,
-        top: 0,
-        right: 0,
-      )
-          : Container(
-        width: 0,
-        height: 0,
-      ),
-      topLeft != null
-          ? Positioned(
-        child: topLeft,
-        top: 0,
-        left: 0,
-      )
-          : Container(
-        width: 0,
-        height: 0,
-      ),
-      bottomLeft != null
-          ? Positioned(
-        child: bottomLeft,
-        bottom: 0,
-        left: 0,
-      )
-          : Container(width: 0, height: 0),
-      bottomRight != null
-          ? Positioned(
-        child: bottomRight,
-        bottom: 0,
-        right: 0,
-      )
-          : Container(
-        width: 0,
-        height: 0,
-      ),
-    ],
+        topRight != null
+            ? Positioned(
+          child: topRight,
+          top: 0,
+          right: 0,
+        )
+            : Container(
+          width: 0,
+          height: 0,
+        ),
+        topLeft != null
+            ? Positioned(
+          child: topLeft,
+          top: 0,
+          left: 0,
+        )
+            : Container(
+          width: 0,
+          height: 0,
+        ),
+        bottomLeft != null
+            ? Positioned(
+          child: bottomLeft,
+          bottom: 0,
+          left: 0,
+        )
+            : Container(width: 0, height: 0),
+        bottomRight != null
+            ? Positioned(
+          child: bottomRight,
+          bottom: 0,
+          right: 0,
+        )
+            : Container(
+          width: 0,
+          height: 0,
+        ),
+      ],
+    ),
   );
 }
 
@@ -353,6 +358,7 @@ class CircularIconWithNumber extends StatelessWidget {
 
   final String bubbleText;
   final double bubbleTextSize;
+  final double fontSize;
 
   const CircularIconWithNumber(
       {Key key,
@@ -363,7 +369,7 @@ class CircularIconWithNumber extends StatelessWidget {
         this.bubbleWidth = 25,
         this.bubbleHeight = 25,
         this.bubbleText = '',
-        this.bubbleTextSize = 25})
+        this.bubbleTextSize = 25, this.fontSize=15})
       : super(key: key);
 
   @override
@@ -383,7 +389,7 @@ class CircularIconWithNumber extends StatelessWidget {
                     text: bubbleText,
                     width: bubbleWidth,
                     height: bubbleHeight,
-                    fontSize: 10),
+                    fontSize: fontSize),
                 top: 0,
                 right: 0),
           ]),

@@ -49,7 +49,8 @@ class _FinalControlState extends State<FinalControl> {
   Widget ProductDetail(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) {
     return BoxMaterialCard(
-      Childrens: <Widget>[
+      paddingVertical:getScreenHeight()>1200?ArgonSize.Header3:ArgonSize.Header4,
+Childrens: <Widget>[
         Row(
           children: [
             Expanded(
@@ -62,8 +63,7 @@ class _FinalControlState extends State<FinalControl> {
                   SizedBox(
                     height: 10,
                   ),
-                  LableTitle(ModelOrder.Model_Name)
-                ],
+                  LableTitle(ModelOrder.Model_Name,FontSize :ArgonSize.Header5)                ],
               ),
             ),
             Expanded(
@@ -80,21 +80,25 @@ class _FinalControlState extends State<FinalControl> {
                           LabelWithValue(
                               label:
                                   PersonalCase.GetLable(ResourceKey.Customer),
-                              value: ModelOrder.Customer_Name),
+                              value: ModelOrder.Customer_Name,
+                              fontSize:ArgonSize.Header5),
                           LabelWithValue(
                               label:
                                   PersonalCase.GetLable(ResourceKey.Employee),
                               value:
-                                  CaseProvider.QualityTracking.Employee_Name??""),
+                                  CaseProvider.QualityTracking.Employee_Name??""
+                           ,fontSize:ArgonSize.Header5),
                           LabelWithIntegerVal(
                               label: PersonalCase.GetLable(
                                   ResourceKey.Plan_Quantity),
-                              value: ModelOrder.PlanSizeColor_QTY),
+                              value: ModelOrder.PlanSizeColor_QTY  ,
+                              fontSize:ArgonSize.Header5),
                           LabelWithValue(
                               label:
                                   PersonalCase.GetLable(ResourceKey.SizeColor),
                               value:
-                                  "${ModelOrder.SizeName}/ ${ModelOrder.ColorName}")
+                                  "${ModelOrder.SizeName}/ ${ModelOrder.ColorName}" ,
+                              fontSize:ArgonSize.Header5)
                         ],
                       ),
                     ),
@@ -104,19 +108,23 @@ class _FinalControlState extends State<FinalControl> {
                         LabelWithValue(
                             label:
                                 PersonalCase.GetLable(ResourceKey.Order_Number),
-                            value: ModelOrder.Order_Number),
+                            value: ModelOrder.Order_Number ,
+                            fontSize:ArgonSize.Header5),
                         LabelWithValue(
                             label: PersonalCase.GetLable(ResourceKey.Model_STD),
                             value: (ModelOrder.Analysis_Model_STD ?? 0)
-                                .toString()),
+                                .toString(),
+                            fontSize:ArgonSize.Header5),
                         LabelWithIntegerVal(
                             label: PersonalCase.GetLable(
                                 ResourceKey.OrderSizeColor_QTY),
-                            value: ModelOrder.OrderSizeColor_QTY),
+                            value: ModelOrder.OrderSizeColor_QTY,
+                            fontSize:ArgonSize.Header5),
                         LabelWithIntegerVal(
                             label:
                                 PersonalCase.GetLable(ResourceKey.SizeColorQTY),
-                            value: ModelOrder.SizeColor_QTY),
+                            value: ModelOrder.SizeColor_QTY ,
+                            fontSize:ArgonSize.Header5),
                       ],
                     )),
                   ]),
@@ -138,17 +146,20 @@ class _FinalControlState extends State<FinalControl> {
         appBar:
             DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
           Navigator.pop(context);
-        }),
+        },
+                context
+            ),
         body: ListView(
           children: [
             ListTile(
-              title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+              title: HeaderTitle(getScreenWidth().toString(),
                   color: ArgonColors.header, FontSize: ArgonSize.Header2),
               subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString() ,
               style:TextStyle(fontSize:ArgonSize.Header6)),
               dense: true,
               selected: true,
             ),
+
             FutureBuilder(
               future: LoadingOpenPage(CaseProvider),
               builder: (context, snapshot) {
@@ -157,7 +168,6 @@ class _FinalControlState extends State<FinalControl> {
                     children: [
                       Container(
                           child: ProductDetail(PersonalCase, CaseProvider)),
-                      getScreenHeight()>1500 ?  SizedBox(height:ArgonSize.Header1, )  :  SizedBox(height:0, ),
 
                       Container(
                         child: ProductFirstQuality(
@@ -167,9 +177,9 @@ class _FinalControlState extends State<FinalControl> {
                                   CaseProvider.QualityTracking.Id),
                         ),
                       ),
-                      getScreenHeight()>1500 ?  SizedBox(height:ArgonSize.Header1, )  :  SizedBox(height:0, ),
 
                       Container(
+
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
@@ -252,7 +262,8 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return BoxMaterialCard(
-            Childrens: <Widget>[
+            paddingVertical:getScreenHeight()>1200?ArgonSize.Header3:ArgonSize.Header4,
+Childrens: <Widget>[
               Row(
                 children: [
                   Expanded(
@@ -262,7 +273,8 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                           PersonalCase.GetLable(ResourceKey.RecycleReturn),
                           style: TextStyle(
                               color: ArgonColors.myBlue,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.bold ,
+                              fontSize:ArgonSize.Header5),
                         ),
                         Transform.scale(
                           scale: 0.7,
@@ -281,8 +293,8 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                       child: CustomText(
                         text: PersonalCase.GetLable(
                             ResourceKey.Quality_FirstQuality),
-                        size:
-                            AdaptiveTextSize().getadaptiveTextSize(context, 30),
+
+                        size: ArgonSize.Header1,
                         color: ArgonColors.myGrey,
                       )),
                   Expanded(
@@ -291,6 +303,7 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                   )
                 ],
               ),
+              SizedBox(height:ArgonSize.Padding4),
               GestureDetector(
                 onTap: () async {
                   var UserQuality = new User_QualityTracking_DetailBLL();
@@ -328,25 +341,28 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                   buttonWidth: getScreenWidth() ,
                   buttonHegiht: getScreenHeight()/8,
                   btnBgColor: ArgonColors.myGreen,
-                  textSize: 27,
+                  textSize: ArgonSize.Header1,
                   topLeft: CircleShape(
                       text: (widget.FirstQualityInfo.Matrix_Control_Amount ?? 0)
                           .toString(),
-                      width: 40,
-                      height: 40,
+                    width: ArgonSize.Width1,
+                    height: ArgonSize.Height1,
+                      fontSize: ArgonSize.Header4
                   ),
+
                 ),
               ),
             ],
-            topRight: warning_massage != 0
+            topRight: warning_massage != 1
                 ? CircularIconWithNumber(
                     icon: FontAwesomeIcons.exclamation,
                     backGroundColor: Colors.red,
                     iconColor: Colors.white,
-                    size: 10,
-                    bubbleHeight: 15,
-                    bubbleWidth: 15,
+                    size:  ArgonSize.Header5,
+                    bubbleHeight: ArgonSize.WidthSmall/2,
+                    bubbleWidth: ArgonSize.WidthSmall/2,
                     bubbleText: warning_massage.toString(),
+                    fontSize :ArgonSize.Header7
                   )
                 : Container(width: 0, height: 0),
           );
@@ -406,11 +422,13 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return BoxMaterialCard(
-            Childrens: <Widget>[
+            paddingVertical:getScreenHeight()>1200?ArgonSize.Header3:ArgonSize.Header5,
+Childrens: <Widget>[
               Column(children: [
                 CustomText(
                   text: PersonalCase.GetLable(ResourceKey.SecondQuality),
-                  size: AdaptiveTextSize().getadaptiveTextSize(context, 19),
+                  size: ArgonSize.Header3,
+
                   color: ArgonColors.myGrey,
                 ),
                 GestureDetector(
@@ -434,15 +452,15 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
                     buttonWidth: getScreenWidth() / 2,
                     buttonHegiht: getScreenHeight()/10,
                     btnBgColor: ArgonColors.myOrange,
-                    textSize: 25,
+                    textSize: ArgonSize.Header3,
                     padding: 10,
                     topLeft: CircleShape(
                         text: (widget.SecondQualityInfo.Matrix_Control_Amount ??
                                 0)
                             .toString(),
-                        width: 30,
-                        height: 30,
-                        fontSize: 10),
+                        width: ArgonSize.Header1,
+                        height: ArgonSize.Header1,
+                        fontSize: ArgonSize.Header5),
 
                   ),
                 ),
@@ -466,7 +484,7 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
                     buttonWidth: getScreenWidth() / 2,
                     buttonHegiht: getScreenHeight()/9,
                     btnBgColor: ArgonColors.myOrange,
-                    textSize: 15,
+                    textSize: ArgonSize.Header4,
                     image: Image.asset('lib/assets/images/sewing.png',
                         width: 100, height: 50),
                   ),
@@ -533,11 +551,12 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return BoxMaterialCard(
-            Childrens: <Widget>[
+            paddingVertical:getScreenHeight()>1200?ArgonSize.Header3:ArgonSize.Header5,
+Childrens: <Widget>[
               Column(children: [
                 CustomText(
                   text: PersonalCase.GetLable(ResourceKey.Quality_TAMIR),
-                  size: AdaptiveTextSize().getadaptiveTextSize(context, 20),
+                  size: ArgonSize.Header3,
                   color: ArgonColors.myGrey,
                 ),
                 GestureDetector(
@@ -561,7 +580,7 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                     buttonWidth: getScreenWidth() / 2,
                     buttonHegiht: getScreenHeight()/10,
                     btnBgColor: ArgonColors.myYellow,
-                    textSize: 25,
+                    textSize: ArgonSize.Header3,
                     padding: 10,
 
                     ///TODO : DO THE NUMBERS IN CIRCLE
@@ -569,9 +588,9 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                         text:
                             (widget.TamirQualityInfo.Matrix_Control_Amount ?? 0)
                                 .toString(),
-                        width: 30,
-                        height: 30,
-                        fontSize: 10),
+                        width: ArgonSize.Header1,
+                        height: ArgonSize.Header1,
+                        fontSize: ArgonSize.Header5),
                   ),
                 ),
 
@@ -595,7 +614,7 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                     buttonWidth: getScreenWidth() / 2,
                     buttonHegiht: getScreenHeight()/9,
                     btnBgColor: ArgonColors.myYellow,
-                    textSize: 15,
+                    textSize: ArgonSize.Header4,
                     image: Image.asset('lib/assets/images/sewing.png',
                         width: 100, height: 50),
                   ),

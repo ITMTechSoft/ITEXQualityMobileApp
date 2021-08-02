@@ -173,8 +173,9 @@ class _Dikim_InlineEmployeeOperationControlState
 
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
-        OnCloseCurrentWidget(CaseProvider);
-      }),
+        Navigator.pop(context);
+      } ,
+          context),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(

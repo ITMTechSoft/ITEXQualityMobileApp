@@ -97,8 +97,11 @@ class ArgonSize{
   //PADDINGS
   static double Padding1  = getAdaptiveTextSize(20);
   static double Padding2  = getAdaptiveTextSize(15);
-  static double Padding3  = getAdaptiveTextSize(10);
-  static double Padding4  = getAdaptiveTextSize(5);
+  static double Padding3  = getAdaptiveTextSize(15);
+
+  static double Padding4 = getAdaptiveTextSize(14);
+  static double Padding5  = getAdaptiveTextSize(10);
+  static double Padding6  = getAdaptiveTextSize(8);
 
 
 }
@@ -182,5 +185,6 @@ double getAdaptiveTextSize(int value) {
   // 720 is medium screen height
 
 
+  print( 'the screen height is ${ getScreenHeight()}');
   return (value / 720) * getScreenHeight();
 }

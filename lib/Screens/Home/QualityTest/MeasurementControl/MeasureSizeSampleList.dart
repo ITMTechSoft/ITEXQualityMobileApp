@@ -78,7 +78,9 @@ class _MeasureSizeSample_ListState extends State<MeasureSizeSample_List> {
       appBar:
       DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
-      }),
+      },
+          context
+      ),
 
       /// TODO :CHANGE PAGE NAME AND HEADER NAME
       body: ListView(children: [

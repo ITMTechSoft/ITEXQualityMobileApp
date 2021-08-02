@@ -44,9 +44,9 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
-        CaseProvider.ReloadAction();
         Navigator.pop(context);
-      }),
+      } ,
+          context),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(

@@ -174,7 +174,9 @@ class _MeasureItem_ControlState
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         OnCloseCurrentWidget(CaseProvider);
-      }),
+      },
+          context
+      ),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(

@@ -52,7 +52,9 @@ class _Accessory_ControlState extends State<Accessory_Control> {
     return Scaffold(
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         Navigator.pop(context);
-      }),
+      },
+          context
+      ),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(

@@ -48,7 +48,9 @@ class _Measuer_SampleState extends State<Measuer_Sample> {
       appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
         CaseProvider.ReloadAction();
         Navigator.pop(context);
-      }),
+      },
+          context
+      ),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(

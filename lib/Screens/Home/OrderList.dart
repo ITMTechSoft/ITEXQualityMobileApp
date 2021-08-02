@@ -44,7 +44,9 @@ class _OrderListState extends State<OrderList> {
     return Scaffold(
       appBar: DetailBar(PersonalCase.GetLable(ResourceKey.ModelOrderList), PersonalCase, () {
         Navigator.pop(context);
-      }),
+      } ,
+          context
+      ),
       body: FutureBuilder(
         future: LoadEmployeeOrders(PersonalCase),
         builder: (context, snapshot) {
