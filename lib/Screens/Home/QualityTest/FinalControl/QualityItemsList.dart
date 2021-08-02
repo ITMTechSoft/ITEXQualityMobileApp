@@ -151,8 +151,8 @@ class _QualityItemsListState extends State<QualityItemsList> {
                   mainAxisSpacing: 3,
                   shrinkWrap: true,
                   primary: false,
-                  childAspectRatio: 5 / 3,
-                  crossAxisCount: 3,
+                  childAspectRatio: 3 / 1,
+                  crossAxisCount:3,
                   children: List.generate(snapshot.data.length, (index) {
                     return GestureDetector(
                       onTap: () async {
