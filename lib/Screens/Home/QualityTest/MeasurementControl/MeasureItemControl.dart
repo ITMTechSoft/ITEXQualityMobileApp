@@ -172,10 +172,10 @@ class _MeasureItem_ControlState
     final CaseProvider = Provider.of<SubCaseProvider>(context);
 
     return Scaffold(
-      appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
-        OnCloseCurrentWidget(CaseProvider);
+      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+        Navigator.pop(context);
       },
-          context
+          context:  context
       ),
       body: ListView(children: [
         ListTile(

@@ -23,7 +23,7 @@ class _Operation_ListState extends State<Operation_List> {
 
   Widget FilterItem(Function onSearchTextChanged) =>
       new Container(
-        height: 45,
+        height: ArgonSize.WidthMedium,
 
         child: new Card(
           shadowColor: ArgonColors.border,
@@ -32,7 +32,7 @@ class _Operation_ListState extends State<Operation_List> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize:MainAxisSize.max,
             children: <Widget>[
-              Expanded(child: Icon(Icons.search),),
+              Expanded(child: Icon(Icons.search,size:ArgonSize.IconSize),),
               Expanded(child: TextField(
                 textAlign: TextAlign.left,
                 style: TextStyle(color: ArgonColors.Title, fontSize: ArgonSize.Header4,fontWeight:FontWeight.bold),
@@ -44,7 +44,7 @@ class _Operation_ListState extends State<Operation_List> {
                 onChanged: onSearchTextChanged,
               ),flex:3),
               Expanded(child: IconButton(
-                icon: new Icon(Icons.cancel),
+                icon: new Icon(Icons.cancel,size:ArgonSize.IconSize),
                 onPressed: () {
                   SearchController.clear();
                   onSearchTextChanged('');
@@ -81,20 +81,20 @@ class _Operation_ListState extends State<Operation_List> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 450,
+        height:  getScreenHeight()/1.3,
       padding: EdgeInsets.all(1),
       margin: EdgeInsets.only(left: 2, top: 0, right: 2, bottom: 0),
       child: Column(
         children: [
           HeaderLable(
-              widget.PersonalCase.GetLable(ResourceKey.Operation),fontSize: 15),
+              widget.PersonalCase.GetLable(ResourceKey.Operation),fontSize: ArgonSize.Header3),
           FilterItem((String Text) {
             setState(() {
 
             });
           }),
           Container(
-            height: 350,
+            height:  getScreenHeight()/1.3-100,
             child: FilterList(),
           ),
         ],

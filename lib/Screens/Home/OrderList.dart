@@ -42,10 +42,10 @@ class _OrderListState extends State<OrderList> {
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     return Scaffold(
-      appBar: DetailBar(PersonalCase.GetLable(ResourceKey.ModelOrderList), PersonalCase, () {
+      appBar:DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
-      } ,
-          context
+      },
+          context:  context
       ),
       body: FutureBuilder(
         future: LoadEmployeeOrders(PersonalCase),
@@ -74,6 +74,10 @@ class _OrderListState extends State<OrderList> {
                       SizedBox(height:ArgonSize.Padding3),
 
                       FilterItem(context, SearchController, FilterSearch,PersonalCase),
+                      SizedBox(height:ArgonSize.Padding4),
+
+
+                      ///TODO: MAKE LIST SCROLLABLE
                       ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,

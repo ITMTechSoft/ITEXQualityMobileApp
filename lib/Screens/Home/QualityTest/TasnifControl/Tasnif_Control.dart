@@ -62,10 +62,10 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
     return Scaffold(
-      appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
-          context
+          context:  context
       ),
       body: ListView(children: [
         ListTile(

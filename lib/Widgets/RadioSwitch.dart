@@ -9,12 +9,14 @@ class RadioSwitch extends StatefulWidget {
   Color LableColor;
   Function OnTap;
   bool SwitchValue;
+  double fontSize;
 
   RadioSwitch(
       {this.Lable,
       this.LableColor = ArgonColors.myBlue,
       this.OnTap,
-      this.SwitchValue = false});
+      this.SwitchValue = false,
+      this.fontSize = 15});
 
   @override
   _RadioSwitchState createState() => _RadioSwitchState();
@@ -27,9 +29,11 @@ class _RadioSwitchState extends State<RadioSwitch> {
       CustomText(
         text: widget.Lable,
         color: widget.LableColor,
+        size:widget. fontSize,
       ),
+      SizedBox(height:10),
       Transform.scale(
-          scale: .7,
+          scale: ArgonSize.RadioSwitchValue,
           child: InkWell(
             child: CupertinoSwitch(
               trackColor: Colors.black12, // **INACTIVE STATE COLOR**

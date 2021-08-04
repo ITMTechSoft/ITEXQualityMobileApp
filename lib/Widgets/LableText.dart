@@ -99,7 +99,7 @@ Widget LableDateTime(DateTime TargetDate,
     return Text(
       TargetDate != null ? DateFormat(Format).format(TargetDate) : "",
       style: TextStyle(
-        fontSize: FontSize == null ? _LableFontSize : FontSize,
+        fontSize: FontSize == null ? ArgonSize.Header5 :  ArgonSize.Header5,
         fontWeight: FontWeight.bold,
         color: color == null ? ArgonColors.Title : color,
       ),
@@ -138,29 +138,36 @@ Widget ExpandedLableTitle(String Title,
 Widget FilterItem(
         context, controller, Function onSearchTextChanged, PersonalCase) =>
     new Container(
-      color: ArgonColors.inputSuccess,
+      height:ArgonSize.WidthMedium,
+      alignment:Alignment.center,
       child: new Padding(
-        padding: const EdgeInsets.all(1.0),
-        child: new Card(
-          child: new ListTile(
-            leading: new Icon(Icons.search),
-            title: new TextField(
-              controller: controller,
-              decoration: new InputDecoration(
-                  hintText: PersonalCase.GetLable(ResourceKey.Search),
-                  border: InputBorder.none),
-              onChanged: onSearchTextChanged,
-            ),
-            trailing: new IconButton(
-              icon: new Icon(Icons.cancel),
-              onPressed: () {
-                controller.clear();
-                onSearchTextChanged('');
-              },
+          padding:  EdgeInsets.symmetric(horizontal: ArgonSize.Padding3),
+          child: new Card(
+            elevation: 20,
+            child: new ListTile(
+              leading: new Icon(Icons.search,size:ArgonSize.IconSize),
+              title: Padding(
+                padding: const EdgeInsets.all(10),
+                child: new TextField(
+                  controller: controller,
+                  ///TODO:change Hint style
+                  decoration: new InputDecoration(
+                      hintText: PersonalCase.GetLable(ResourceKey.Search),
+                      border: InputBorder.none),
+                  onChanged: onSearchTextChanged,
+                ),
+              ),
+              trailing: new IconButton(
+                icon: new Icon(Icons.cancel,size:ArgonSize.IconSize),
+                onPressed: () {
+                  controller.clear();
+                  onSearchTextChanged('');
+                },
+              ),
             ),
           ),
         ),
-      ),
+
     );
 
 

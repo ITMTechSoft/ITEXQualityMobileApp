@@ -27,7 +27,7 @@ MainBar(PersonalProvider PersonalCase, BuildContext context) => new AppBar(
       ],
     );
 
-DetailBar(String Title, PersonalCase, Function OnTap,BuildContext context) => new AppBar(
+DetailBar({String Title, PersonalCase, Function OnTap,BuildContext context,bool showIcon=true}) => new AppBar(
     toolbarHeight: ArgonSize.WidthMedium,
 
   leading: IconButton(
@@ -41,7 +41,7 @@ DetailBar(String Title, PersonalCase, Function OnTap,BuildContext context) => ne
     maxLines: 1,
   ),
     actions: <Widget>[
-    TextButton.icon(
+showIcon==true  ?TextButton.icon(
     onPressed: OnTap,
     icon: Icon(
       Icons.close,
@@ -51,7 +51,8 @@ DetailBar(String Title, PersonalCase, Function OnTap,BuildContext context) => ne
     label: Text(
       PersonalCase.GetLable(ResourceKey.Close),
       style: TextStyle(color: Colors.white,fontSize: ArgonSize.Header4),
-    )),
+    )) :
+Container(),
 
 ],);// Set this height
 

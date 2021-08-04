@@ -117,75 +117,37 @@ Widget ButtonWithNumber({
   Color btnBgColor = ArgonColors.myLightBlue,
   double textSize = 20,
   Color textColor = Colors.black54,
-  double padding = 5,
+  double padding=10 ,
   Widget topRight,
   Widget topLeft,
   Widget bottomRight,
   Widget bottomLeft,
   Widget image,
   bool orientation = false,
-  bool addHeight =false
+
 }) {
-  return Container(
-    color:Colors.green,
-    width: buttonWidth,
-    height: buttonHegiht,
-    child: Stack(
-      children: [
-        Container(
-          width: buttonWidth,
-          height: buttonHegiht,
-          color:Colors.red,
-          padding:EdgeInsets.all(10),
-          child: CustomContainer(
-            width: buttonWidth,
-            height: buttonHegiht,
-            value: text,
-            textColor: textColor,
-            backGroundColor: btnBgColor,
-            textSize: textSize,
-            image: image,
-          ),
-        ),
-        topRight != null
-            ? Positioned(
-          child: topRight,
-          top: 0,
-          right: 0,
-        )
-            : Container(
-          width: 0,
-          height: 0,
-        ),
-        topLeft != null
-            ? Positioned(
-          child: topLeft,
-          top: 0,
-          left: 0,
-        )
-            : Container(
-          width: 0,
-          height: 0,
-        ),
-        bottomLeft != null
-            ? Positioned(
-          child: bottomLeft,
-          bottom: 0,
-          left: 0,
-        )
-            : Container(width: 0, height: 0),
-        bottomRight != null
-            ? Positioned(
-          child: bottomRight,
-          bottom: 0,
-          right: 0,
-        )
-            : Container(
-          width: 0,
-          height: 0,
-        ),
-      ],
-    ),
+  return Container (
+      width:  buttonWidth,
+      height: buttonHegiht,
+      child:Stack(
+          children:[
+            CustomContainer(
+              width: buttonWidth,
+              height: buttonHegiht,
+              value: text,
+              textColor: textColor,
+              backGroundColor: btnBgColor,
+              textSize: textSize,
+              image: image,
+              topRight:topRight,
+              topLeft:topLeft,
+              bottomRight:bottomRight,
+              bottomLeft:bottomLeft,
+              padding1:padding
+            ),
+
+          ]
+      )
   );
 }
 
@@ -202,7 +164,7 @@ Widget IconInsideCircle(
       shape: BoxShape.circle,
       color: backGroundColor,
 
-  ),
+    ),
     child: Icon(
       icon,
       size: iconSize,
@@ -291,7 +253,7 @@ class CustomContainer extends StatelessWidget {
     this.height,
     this.textColor,
     this.textSize = 20,
-    this.image,
+    this.image, this.topRight, this.topLeft, this.bottomRight, this.bottomLeft, this.padding1=10,
   }) : super(key: key);
 
   final String value;
@@ -305,39 +267,93 @@ class CustomContainer extends StatelessWidget {
   final double height;
   final double textSize;
   final image;
+  final Widget topRight;
+  final Widget topLeft;
+  final Widget bottomRight;
+  final Widget bottomLeft;
+  final double padding1 ;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: backGroundColor, // background
-      ),
-      child: Padding(
-        padding: image != null
-            ? const EdgeInsets.only(bottom: 8.0)
-            : const EdgeInsets.only(bottom: 0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            image != null
-                ? Expanded(flex: 3, child: image)
-                : Container(width: 0, height: 0),
-            Expanded(
-              flex: 1,
-              child: Center(
-                child: CustomText(
-                  text: value,
-                  size: textSize,
-                  color: textColor,
-                  fontWeight: FontWeight.w800,
+      child: Stack(
+        children: [
+          Container(
+            width: width,
+            height: height,
+            padding:EdgeInsets.all( 5),
+            child: Container(
+
+              width: width,
+              height: height,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: backGroundColor, // background
+              ),
+              child: Padding(
+                padding: image != null
+                    ? const EdgeInsets.only(bottom: 8.0)
+                    : const EdgeInsets.only(bottom: 0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    image != null
+                        ? Expanded(flex: 3, child: image)
+                        : Container(width: 0, height: 0),
+                    Expanded(
+                      flex: 1,
+                      child: Center(
+                        child: CustomText(
+                          text: value,
+                          size: textSize,
+                          color: textColor,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+          topRight != null
+              ? Positioned(
+            child: topRight,
+            top: 0,
+            right: 0,
+          )
+              : Container(
+            width: 0,
+            height: 0,
+          ),
+          topLeft != null
+              ? Positioned(
+            child: topLeft,
+            top: 0,
+            left: 0,
+          )
+              : Container(
+            width: 0,
+            height: 0,
+          ),
+          bottomLeft != null
+              ? Positioned(
+            child: bottomLeft,
+            bottom: 0,
+            left: 0,
+          )
+              : Container(width: 0, height: 0),
+          bottomRight != null
+              ? Positioned(
+            child: bottomRight,
+            bottom: 0,
+            right: 0,
+          )
+              : Container(
+            width: 0,
+            height: 0,
+          ),
+        ],
       ),
     );
   }
@@ -358,7 +374,6 @@ class CircularIconWithNumber extends StatelessWidget {
 
   final String bubbleText;
   final double bubbleTextSize;
-  final double fontSize;
 
   const CircularIconWithNumber(
       {Key key,
@@ -369,7 +384,7 @@ class CircularIconWithNumber extends StatelessWidget {
         this.bubbleWidth = 25,
         this.bubbleHeight = 25,
         this.bubbleText = '',
-        this.bubbleTextSize = 25, this.fontSize=15})
+        this.bubbleTextSize = 25})
       : super(key: key);
 
   @override
@@ -389,7 +404,7 @@ class CircularIconWithNumber extends StatelessWidget {
                     text: bubbleText,
                     width: bubbleWidth,
                     height: bubbleHeight,
-                    fontSize: fontSize),
+                    fontSize: 10),
                 top: 0,
                 right: 0),
           ]),

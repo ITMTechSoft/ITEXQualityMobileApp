@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:itex_soft_qualityapp/Preferences/SetupApplications.dart';
 import 'package:itex_soft_qualityapp/Utility/Globalization.dart';
 import 'package:itex_soft_qualityapp/Utility/ResourceKeys.dart';
@@ -16,6 +17,9 @@ class LoginPages extends StatefulWidget {
 class _LoginPagesState extends State<LoginPages> {
   bool _isLoading = false;
   var errorMsg;
+  bool obscure = true;
+  IconData passwordSuffixIcon = Icons.lock;
+  String name ;
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController UserNameController = new TextEditingController();
@@ -53,9 +57,13 @@ class _LoginPagesState extends State<LoginPages> {
       },
       child: Scaffold(
         appBar: AppBar(
+            toolbarHeight: ArgonSize.WidthMedium,
+
             title: Text(
               PersonalCase.GetLable(ResourceKey.btn_Logins),
               textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white,fontSize:ArgonSize.Header4),
+
             ),
             actions: [
               TextButton.icon(
@@ -71,11 +79,12 @@ class _LoginPagesState extends State<LoginPages> {
                   PersonalCase.GetLable(ResourceKey.Setting),
 
 
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.white,fontSize:ArgonSize.Header4),
                 ),
                 icon: Icon(
                   Icons.settings,
                   color: Colors.white,
+                    size:ArgonSize.Header3
                 ),
               )
             ]),
@@ -100,7 +109,7 @@ class _LoginPagesState extends State<LoginPages> {
                       child: Column(
                         children: [
                           Standard_Input(
-                            suffixIcon: Icon(Icons.person),
+                            suffixIcon: Icon(FontAwesomeIcons.user,size: ArgonSize.IconSize),
                             controller: UserNameController,
                             placeholder:
                                 PersonalCase.GetLable(ResourceKey.User_Name),
@@ -108,13 +117,34 @@ class _LoginPagesState extends State<LoginPages> {
                                 ResourceKey.MandatoryFields),
                           ),
                           Standard_Input(
-                            suffixIcon: Icon(Icons.lock),
+                            suffixIcon: IconButton(icon: Icon(passwordSuffixIcon,size: ArgonSize.IconSize) ,onPressed:() =>
+                                setState(() {
+                                  obscure=!obscure;
+                                  obscure==true? passwordSuffixIcon = passwordSuffixIcon = FontAwesomeIcons.eye: passwordSuffixIcon = FontAwesomeIcons.eyeSlash;
+
+                          }),),
+                            onChanged: (name){
+
+                              setState(() {
+                                if(PasswordController.text.length>0)
+                                {
+                                 obscure==true? passwordSuffixIcon = FontAwesomeIcons.eye: passwordSuffixIcon = FontAwesomeIcons.eyeSlash;
+                                }
+                                else{
+                                  passwordSuffixIcon =  FontAwesomeIcons.lock;
+
+                                }
+                              });
+                            },
                             controller: PasswordController,
                             placeholder: PersonalCase.GetLable(
                                 ResourceKey.Employee_Password),
                             errorMessage: PersonalCase.GetLable(
                                 ResourceKey.MandatoryFields),
+                              obscureText:obscure,
                           ),
+                          SizedBox(height: ArgonSize.Padding3),
+
                           errorMsg == null
                               ? Container()
                               : Text(
@@ -122,8 +152,11 @@ class _LoginPagesState extends State<LoginPages> {
                                   style: TextStyle(
                                     color: Colors.redAccent,
                                     fontWeight: FontWeight.bold,
+                                    fontSize: ArgonSize.Header4
                                   ),
                                 ),
+
+                          SizedBox(height: ArgonSize.Padding3),
 
                           Padding(
                             padding:
@@ -132,6 +165,7 @@ class _LoginPagesState extends State<LoginPages> {
                               width: double.infinity,
                               height: ArgonSize.Header1*1.5,
                               value: PersonalCase.GetLable(ResourceKey.btn_Logins),
+                              textSize: ArgonSize.Header3,
                               function: () async {
                                 if (_formKey.currentState.validate()) {
                                   await LoginFunction(PersonalCase);

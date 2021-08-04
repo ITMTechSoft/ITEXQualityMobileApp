@@ -12,6 +12,7 @@ import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/Widgets/ImageLoader.dart';
 import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
+import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
@@ -144,15 +145,15 @@ Childrens: <Widget>[
     SizeConfig().init(context);
     return Scaffold(
         appBar:
-            DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+        DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
           Navigator.pop(context);
         },
-                context
-            ),
+            context:  context
+        ),
         body: ListView(
           children: [
             ListTile(
-              title: HeaderTitle(getScreenWidth().toString(),
+              title: HeaderTitle('${getScreenWidth().toString()} ${getScreenHeight().toString()}',
                   color: ArgonColors.header, FontSize: ArgonSize.Header2),
               subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString() ,
               style:TextStyle(fontSize:ArgonSize.Header6)),
@@ -267,27 +268,19 @@ Childrens: <Widget>[
               Row(
                 children: [
                   Expanded(
-                      flex: 2,
-                      child: Column(children: [
-                        Text(
-                          PersonalCase.GetLable(ResourceKey.RecycleReturn),
-                          style: TextStyle(
-                              color: ArgonColors.myBlue,
-                              fontWeight: FontWeight.bold ,
-                              fontSize:ArgonSize.Header5),
-                        ),
-                        Transform.scale(
-                          scale: 0.7,
-                          child: CupertinoSwitch(
-                            value: _switchValue,
-                            onChanged: (value) {
-                              setState(() {
-                                _switchValue = value;
-                              });
-                            },
-                          ),
-                        ),
-                      ])),
+                    flex: 2,
+                    child: RadioSwitch(
+                      Lable: PersonalCase.GetLable(ResourceKey.RecycleReturn),
+                      fontSize: ArgonSize.Header5,
+                      SwitchValue: _switchValue,
+                      OnTap: (value) {
+                        setState(() {
+                          _switchValue = value;
+                        });
+                      },
+                    ),
+                  ),
+
                   Expanded(
                       flex: 4,
                       child: CustomText(
@@ -338,7 +331,7 @@ Childrens: <Widget>[
                   text: (widget.FirstQualityInfo.Employee_Matrix_Amount ?? 0)
                       .toString(),
                   textColor: Colors.white,
-                  buttonWidth: getScreenWidth() ,
+                  buttonWidth: getScreenWidth() /1,
                   buttonHegiht: getScreenHeight()/8,
                   btnBgColor: ArgonColors.myGreen,
                   textSize: ArgonSize.Header1,
@@ -362,7 +355,7 @@ Childrens: <Widget>[
                     bubbleHeight: ArgonSize.WidthSmall/2,
                     bubbleWidth: ArgonSize.WidthSmall/2,
                     bubbleText: warning_massage.toString(),
-                    fontSize :ArgonSize.Header7
+                    bubbleTextSize :ArgonSize.Header7
                   )
                 : Container(width: 0, height: 0),
           );
@@ -479,6 +472,7 @@ Childrens: <Widget>[
                     );
                   },
                   child: ButtonWithNumber(
+                    padding: 5,
                     text: PersonalCase.GetLable(ResourceKey.Sewing_Error),
                     textColor: Colors.black,
                     buttonWidth: getScreenWidth() / 2,
@@ -609,6 +603,7 @@ Childrens: <Widget>[
                     );
                   },
                   child: ButtonWithNumber(
+                    padding: 5,
                     text: PersonalCase.GetLable(ResourceKey.Sewing_Fixing),
                     textColor: Colors.black,
                     buttonWidth: getScreenWidth() / 2,

@@ -45,11 +45,10 @@ class _Measuer_SampleState extends State<Measuer_Sample> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
-      appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
-        CaseProvider.ReloadAction();
+      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
-          context
+          context:  context
       ),
       body: ListView(children: [
         ListTile(

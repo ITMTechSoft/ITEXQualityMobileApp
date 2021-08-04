@@ -76,6 +76,7 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     final CaseProvider = Provider.of<SubCaseProvider>(context);
 
+
     var GenerateRecordBtn = _IsDeletedVal == false
         ? CustomButton(
       value: PersonalCase.GetLable(ResourceKey.Add),
@@ -83,7 +84,7 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
       width: getScreenWidth() / 2,
       height: 60,
       backGroundColor: ArgonColors.myGreen,
-      textSize: 20,
+      textSize: ArgonSize.Header3,
       function: () async {
         var UserQuality = new User_QualityTracking_DetailBLL();
         UserQuality.Quality_Items_Id = widget.QualityItem.Id;
@@ -120,12 +121,15 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: Operation_List(
-                      PersonalCase: PersonalCase,
-                      Items: OperationList,
-                      OnClickItems: (OperationBLL SelectedItem) {
-                        SelectedOperation = SelectedItem;
-                      },
+                    child: SingleChildScrollView(
+
+                      child: Operation_List(
+                        PersonalCase: PersonalCase,
+                        Items: OperationList,
+                        OnClickItems: (OperationBLL SelectedItem) {
+                          SelectedOperation = SelectedItem;
+                        },
+                      ),
                     ),
                   ),
                   Expanded(
@@ -193,10 +197,14 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
 
     var HeaderAction = Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      child: Row(
+      child:Column(
+        children:[
+        Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          RadioSwitch(
+      children: [
+        Expanded(
+          flex:1,
+          child: RadioSwitch(
             Lable: PersonalCase.GetLable(ResourceKey.KeepPageOpen),
             SwitchValue: _KeepPage,
             OnTap: (value) {
@@ -204,8 +212,11 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
               //IntiteStatus = 0;
             },
           ),
-          GenerateRecordBtn,
-          RadioSwitch(
+        ),
+        getScreenWidth()>=500?  Expanded(flex:1,child: GenerateRecordBtn):Container(),
+        Expanded(
+          flex:1,
+          child: RadioSwitch(
             Lable: PersonalCase.GetLable(ResourceKey.Delete),
             SwitchValue: _IsDeletedVal,
             OnTap: (value) {
@@ -214,15 +225,24 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
                 IntiteStatus = 0;
               });
             },
-          )
-        ],
-      ),
+          ),
+        )
+      ],
+    ),
+        getScreenWidth()<500?  Padding(
+          padding:  EdgeInsets.only(top:ArgonSize.Padding3),
+          child: GenerateRecordBtn,
+        ):Container(),
+
+    ],
+
+      )
     );
     return Scaffold(
-      appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
-          context
+          context:  context
       ),
       body: ListView(
         children: [
@@ -238,7 +258,10 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
             paddingHorizontal: 0,
             paddingVertical:  0 ,
             Childrens: [HeaderAction, SizedBox(height: 15), MainPageTitle],
+
           ),
+
+
         ],
       ),
     );

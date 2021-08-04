@@ -7,6 +7,7 @@ import 'package:itex_soft_qualityapp/ProviderCase/Dikim_InlineProcess.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
+import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
 import 'package:itex_soft_qualityapp/Widgets/button.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
@@ -31,8 +32,8 @@ class _QualityItemsListState extends State<QualityItemsList> {
   Future<List<Quality_ItemsBLL>> LoadingOpenPage(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
     List<Quality_ItemsBLL> Critiera =
-        await Quality_ItemsBLL.Get_Quality_Items_WithValue(widget.GroupType,
-            PersonalCase.GetCurrentUser().Id, CaseProvider.ModelOrderMatrix.Id);
+    await Quality_ItemsBLL.Get_Quality_Items_WithValue(widget.GroupType,
+        PersonalCase.GetCurrentUser().Id, CaseProvider.ModelOrderMatrix.Id);
 
     if (Critiera != null) {
       IntiteStatus = 1;
@@ -87,17 +88,23 @@ class _QualityItemsListState extends State<QualityItemsList> {
     }
 
     return Scaffold(
-      appBar: DetailBar(widget.HeaderName, PersonalCase, () {
+      appBar:
+      DetailBar(Title:widget.HeaderName,PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
-      }, context),
+      },
+          context:  context
+      ),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
               color: ArgonColors.header, FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString(),
+              style:TextStyle(fontSize:ArgonSize.Header6)),
           dense: true,
           selected: true,
         ),
+        SizedBox(height:ArgonSize.Padding3),
+
         FutureBuilder(
           future: LoadingOpenPage(PersonalCase, CaseProvider),
           builder: (context, snapshot) {
@@ -106,51 +113,48 @@ class _QualityItemsListState extends State<QualityItemsList> {
                 Padding(
                   padding: const EdgeInsets.all(5),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Column(children: [
-                        CustomText(
-                          text: PersonalCase.GetLable(ResourceKey.KeepPageOpen),
-                          color: ArgonColors.myBlue,
+
+                      Expanded(
+                      flex:1,
+                        child: RadioSwitch(
+                          Lable: PersonalCase.GetLable(ResourceKey.KeepPageOpen),
+                          fontSize: ArgonSize.Header5,
+                          SwitchValue: _KeepPage,
+                          OnTap: (value) {
+                            setState(() {
+                              _KeepPage = value;
+                            });
+                          },
                         ),
-                        Transform.scale(
-                          scale: 0.7,
-                          child: CupertinoSwitch(
-                            value: _KeepPage,
-                            onChanged: (value) {
-                              setState(() {
-                                _KeepPage = value;
-                              });
-                            },
-                          ),
+                      ),
+
+                      Expanded(
+                        flex:1,
+
+                        child: RadioSwitch(
+                          Lable: PersonalCase.GetLable(ResourceKey.Delete),
+                          fontSize: ArgonSize.Header5,
+                          SwitchValue: _IsDeletedVal,
+                          OnTap: (value) {
+                            setState(() {
+                              _IsDeletedVal = value;
+                            });
+                          },
                         ),
-                      ]),
-                      Column(children: [
-                        CustomText(
-                          text: PersonalCase.GetLable(ResourceKey.Delete),
-                          color: ArgonColors.myBlue,
-                        ),
-                        Transform.scale(
-                          scale: 0.7,
-                          child: CupertinoSwitch(
-                            value: _IsDeletedVal,
-                            onChanged: (value) {
-                              setState(() {
-                                _IsDeletedVal = value;
-                              });
-                            },
-                          ),
-                        ),
-                      ]),
+                      ),
                     ],
                   ),
                 ),
+                SizedBox(height:ArgonSize.Padding4),
+
                 GridView.count(
                   crossAxisSpacing: 2,
                   mainAxisSpacing: 3,
                   shrinkWrap: true,
                   primary: false,
-                  childAspectRatio: 6 / 3,
+                  childAspectRatio:getScreenHeight() >1100?3/ 1.5 :7/ 6,
                   crossAxisCount: 3,
                   children: List.generate(snapshot.data.length, (index) {
                     return GestureDetector(
@@ -158,27 +162,26 @@ class _QualityItemsListState extends State<QualityItemsList> {
                         await OnTapQualityItem(snapshot.data[index], index);
                       },
                       child: ButtonWithNumber(
-                        addHeight: true,
                         text: snapshot.data[index].Item_Name,
-                        buttonWidth: 100,
-                        buttonHegiht: 50,
+                        buttonWidth: getScreenWidth()/2,
+                        buttonHegiht: getScreenHeight()/6,
                         btnBgColor: selectedList.contains(index)
                             ? ArgonColors.myLightGreen
                             : ArgonColors.myOrange,
                         textSize: ArgonSize.Header4,
                         topRight: CircleShape(
                             text: (snapshot.data[index].Amount ?? 0).toString(),
-                             width: ArgonSize.WidthSmall,
-                             height: ArgonSize.WidthSmall,
-                               fontSize: ArgonSize.Header5
+                            width: ArgonSize.WidthSmall,
+                            height: ArgonSize.WidthSmall,
+                            fontSize: ArgonSize.Header5
                         ),
                         bottomLeft: _IsDeletedVal == true
                             ? IconInsideCircle(
-                                iconSize:getScreenWidth()>1100?ArgonSize.Header6:ArgonSize.Header6,
-                                size: getScreenWidth()>1000?ArgonSize.Padding6:ArgonSize.Padding6,
-                                icon: FontAwesomeIcons.minus,
-                                color: Colors.white,
-                                backGroundColor: Colors.red)
+                            iconSize:getScreenWidth()>1100?ArgonSize.Header6:ArgonSize.Header6,
+                            size: getScreenWidth()>1000?ArgonSize.Padding6:ArgonSize.Padding6,
+                            icon: FontAwesomeIcons.minus,
+                            color: Colors.white,
+                            backGroundColor: Colors.red)
                             : Container(width: 0, height: 0),
                       ),
                     );
@@ -191,7 +194,7 @@ class _QualityItemsListState extends State<QualityItemsList> {
               return ErrorPage(
                   ActionName: PersonalCase.GetLable(ResourceKey.Loading),
                   MessageError:
-                      PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
+                  PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
                   DetailError: PersonalCase.GetLable(
                       ResourceKey.InvalidNetWorkConnection));
           },

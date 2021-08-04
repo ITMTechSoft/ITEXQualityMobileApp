@@ -72,10 +72,10 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
       appBar:
-      DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+      DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
-          context
+          context:  context
       ),
       body: ListView(children: [
         ListTile(

@@ -90,9 +90,18 @@ class ArgonSize{
   static double WidthMedium  = getAdaptiveTextSize(50);
   static double HeightMedium = getAdaptiveTextSize(50);
 
+  static double WidthSmall1   = getAdaptiveTextSize(40);
+  static double HeightSmall1  = getAdaptiveTextSize(40);
+
   static double WidthSmall   = getAdaptiveTextSize(30);
   static double HeightSmall  = getAdaptiveTextSize(30);
 
+  static double WidthtooSmall   = getAdaptiveTextSize(20);
+  static double HeighttooSmall  = getAdaptiveTextSize(20);
+
+  static double IconSize    = getAdaptiveTextSize(20);
+
+  ///
 
   //PADDINGS
   static double Padding1  = getAdaptiveTextSize(20);
@@ -103,6 +112,8 @@ class ArgonSize{
   static double Padding5  = getAdaptiveTextSize(10);
   static double Padding6  = getAdaptiveTextSize(8);
 
+
+  static double RadioSwitchValue =  getAdaptiveTextSize(0.8);
 
 }
 
@@ -181,7 +192,7 @@ double getWidgetHeight(double num)
 }
 
 
-double getAdaptiveTextSize(int value) {
+double getAdaptiveTextSize(double value) {
   // 720 is medium screen height
 
 
