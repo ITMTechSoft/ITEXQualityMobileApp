@@ -47,8 +47,8 @@ AlertDialog AlertPopupDialogWithAction(
             actions: <Widget>[
               TextButton(
                 child: Text(FirstActionLable),
-                onPressed: () {
-                  if (OnFirstAction != null) OnFirstAction();
+                onPressed: () async {
+                  if (OnFirstAction != null) await OnFirstAction();
                   Navigator.of(context).pop();
                 },
               ),

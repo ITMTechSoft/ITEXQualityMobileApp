@@ -5,7 +5,7 @@ import 'package:flutter_html/image_render.dart';
 import 'package:itex_soft_qualityapp/Models/Criteria_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
-
+import 'package:timer_button/timer_button.dart';
 
 class Criteria_Test extends StatefulWidget {
   @override
@@ -14,13 +14,19 @@ class Criteria_Test extends StatefulWidget {
 
 class _Criteria_TestState extends State<Criteria_Test> {
   int IntiteStatus = 0;
+  bool IsUserApproved;
+  int WaitSYC = 1;
 
   //PDFViewController _pdfViewController;
 
-  Future<String> LoginFunction(PersonalProvider PersonalCase) async {
+  Future<Criteria_ModelOrderBLL> LoginFunction(
+      PersonalProvider PersonalCase) async {
     var Critiera = await Criteria_ModelOrderBLL.Get_Criteria_ModelOrder(
         PersonalCase.SelectedTest.Id);
-    String data = "";
+
+    IsUserApproved = await PersonalCase.SelectedTest.IsUserApprovedBefore(
+        Employee_Id: PersonalCase.GetCurrentUser().Id);
+    if (Critiera != null) WaitSYC = (Critiera.WaitTimeSNY ?? 0 / 100).toInt();
 
     var Item = new QualityDept_ModelOrder_TrackingBLL();
     Item.Employee_Id = PersonalCase.GetCurrentUser().Id;
@@ -29,100 +35,87 @@ class _Criteria_TestState extends State<Criteria_Test> {
 
     if (Critiera != null) {
       IntiteStatus = 1;
-      data = Critiera;
     } else {
       IntiteStatus = -1;
     }
-    return data;
+    return Critiera;
   }
+
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
-
-
     return Scaffold(
-        appBar:DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
-          Navigator.pop(context);
-        },
-            context:  context
-        ),
-        body: ListView(
-          children: [
-            ListTile(
-              title: HeaderTitle(
-                  PersonalCase.SelectedTest.Test_Name + ": " + PersonalCase.SelectedOrder.Order_Number,
-                  color: ArgonColors.header,
-                  FontSize: ArgonSize.Header),
-              subtitle: Text(PersonalCase
-                  .SelectedDepartment.Start_Date
-                  .toString()),
-              dense: true,
-              selected: true,
-            ),
-            FutureBuilder(
+      appBar:
+
+      DetailBar(Title:PersonalCase.GetLable(ResourceKey.CriteriaTest),PersonalCase: PersonalCase, OnTap:() {
+        Navigator.pop(context);
+      },
+          context:  context
+      ),
+      body: ListView(
+        children: [
+          ListTile(
+            title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+                color: ArgonColors.header, FontSize: ArgonSize.Header),
+            subtitle:
+                Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+            dense: true,
+            selected: true,
+          ),
+          FutureBuilder(
             future: LoginFunction(PersonalCase),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return HTMLViewPage(snapshot.data);
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      !IsUserApproved
+                          ? TimerButton(
+                              label:
+                                  PersonalCase.GetLable(ResourceKey.Validation),
+                              activeTextStyle: TextStyle(
+                                fontSize: ArgonSize.WidthSmall,
+                                color: ArgonColors.initial,
+                              ),
+                              disabledTextStyle: TextStyle(
+                                  fontSize: ArgonSize.WidthSmall,
+                                  color: ArgonColors.Title),
+                              timeOutInSeconds: WaitSYC > 0 ? WaitSYC : 1,
+                              onPressed: () async {
+                                bool IsValidated = await PersonalCase
+                                        .SelectedTest
+                                    .SetValidationAction(
+                                        Employee_Id:
+                                            PersonalCase.GetCurrentUser().Id);
+                                if (IsValidated) Navigator.pop(context);
+                              },
+                              buttonType: ButtonType.FlatButton,
+                              disabledColor: Colors.deepOrange,
+                              color: ArgonColors.success,
+                            )
+                          : Container(),
+                      Html(
+                        data: snapshot.data.HTML_Data ?? "",
+                      ),
+                    ],
+                  ),
+                );
               } else if (IntiteStatus == 0)
                 return Center(child: CircularProgressIndicator());
               else
                 return ErrorPage(
                     ActionName: PersonalCase.GetLable(ResourceKey.Loading),
-                    MessageError: PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
-                    DetailError: PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
+                    MessageError: PersonalCase.GetLable(
+                        ResourceKey.ErrorWhileLoadingData),
+                    DetailError: PersonalCase.GetLable(
+                        ResourceKey.InvalidNetWorkConnection));
             },
-          )],
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: ArgonColors.success,
-          label: Text(PersonalCase.GetLable(ResourceKey.Validation)),
-          onPressed: () async{
-            bool IsValidated  = await PersonalCase.SelectedTest.SetValidationAction(
-                Employee_Id: PersonalCase.GetCurrentUser().Id
-            );
-            if(IsValidated)
-              Navigator.pop(context);
-          },
-        ));
+          )
+        ],
+      ),
+    );
   }
-}
-
-HTMLViewPage(htmlData) {
-  return SingleChildScrollView(
-    child: Html(
-      data: htmlData,
-//Optional parameters:
-      customImageRenders: {
-        networkSourceMatcher(domains: ["flutter.dev"]):
-            (context, attributes, element) {
-          return FlutterLogo(size: 36);
-        },
-        networkSourceMatcher(domains: ["mydomain.com"]): networkImageRender(
-          headers: {"Custom-Header": "some-value"},
-          altWidget: (alt) => Text(alt),
-          loadingWidget: () => Text("Loading..."),
-        ),
-// On relative paths starting with /wiki, prefix with a base url
-        (attr, _) => attr["src"] != null && attr["src"].startsWith("/wiki"):
-            networkImageRender(
-                mapUrl: (url) => "https://upload.wikimedia.org" + url),
-// Custom placeholder image for broken links
-        networkSourceMatcher():
-            networkImageRender(altWidget: (_) => FlutterLogo()),
-      },
-    /*  onLinkTap: (url) {
-        print("Opening $url...");
-      },
-      onImageTap: (src) {
-        print(src);
-      },*/
-      onImageError: (exception, stackTrace) {
-        print(exception);
-      },
-    ),
-  );
 }
 
 /*
