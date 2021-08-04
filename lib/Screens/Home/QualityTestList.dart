@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Models/DepartmentModelOrder_QualityTest.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
+import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 import 'package:itex_soft_qualityapp/QualityTestImports.dart';
 
 import 'QualityTest/MeasurementControl/OrderSizeMatrix.dart';
-
-
 
 class QualityTestList extends StatefulWidget {
   @override
@@ -15,6 +14,7 @@ class QualityTestList extends StatefulWidget {
 
 class _QualityTestListState extends State<QualityTestList> {
   int IntiteStatus = 0;
+  bool IsUserApproved;
 
   Future<List<DepartmentModelOrder_QualityTestBLL>> LoadEmployeeOrders(
       PersonalProvider PersonalCase) async {
@@ -32,26 +32,42 @@ class _QualityTestListState extends State<QualityTestList> {
     } catch (Excption) {}
   }
 
-  Future<void> MappingSelectedQualityTest(PersonalProvider PersonalCase, DataList,Index) async {
+  Future<void> MappingSelectedQualityTest(
+      PersonalProvider PersonalCase, DataList, Index) async {
     var Critiera = (DataList as List<DepartmentModelOrder_QualityTestBLL>)
         .where((el) => el.IsMandatory == true && el.QualityTest_Id == 1)
         .toList();
 
-    if(Critiera.length > 0) {
-      bool IsUserApproved =
-      await Critiera.first.IsUserApprovedBefore(Employee_Id: PersonalCase
-          .GetCurrentUser()
-          .Id);
-      if(IsUserApproved)
-        PersonalCase.SelectedTest = DataList[Index];
-      else
+    if (Critiera.length > 0 && DataList[Index].QualityTest_Id != 1) {
+      IsUserApproved = await Critiera.first
+          .IsUserApprovedBefore(Employee_Id: PersonalCase.GetCurrentUser().Id);
+      if (IsUserApproved)
+       {
+         PersonalCase.SelectedTest = DataList[Index];
+         MandatoryCritieraAction(PersonalCase.SelectedTest);
+       }
+      else {
         PersonalCase.SelectedTest = Critiera.first;
+        AlertPopupDialogWithAction(
+          context,
+          title: PersonalCase.GetLable(ResourceKey.WarrningMessage),
+          Children: [
+            LableTitle(PersonalCase.GetLable(ResourceKey.PleaseCheckCriteria),
+                FontSize: 10),
+          ],
+          FirstActionLable: PersonalCase.GetLable(ResourceKey.Okay),
 
-    }else{
+          SecondActionLable: PersonalCase.GetLable(ResourceKey.Cancel),
+        );
+      }
+    } else {
       PersonalCase.SelectedTest = DataList[Index];
+      MandatoryCritieraAction(PersonalCase.SelectedTest);
     }
+  }
 
-    switch (PersonalCase.SelectedTest.QualityTest_Id) {
+  int MandatoryCritieraAction(DepartmentModelOrder_QualityTestBLL TargetTest) {
+    switch (TargetTest.QualityTest_Id) {
       case 1:
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Criteria_Test()));
@@ -61,8 +77,8 @@ class _QualityTestListState extends State<QualityTestList> {
             context, MaterialPageRoute(builder: (context) => Cutting_Amount()));
         break;
       case 3:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Cutting_Control()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Cutting_Control()));
         break;
       case 4:
         Navigator.push(
@@ -77,31 +93,30 @@ class _QualityTestListState extends State<QualityTestList> {
             context, MaterialPageRoute(builder: (context) => Tasnif_Amount()));
         break;
       case 7:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Accessory_Control()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Accessory_Control()));
         break;
       case 8:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Dikim_InlineControl()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Dikim_InlineControl()));
         break;
       case 9:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Dikim_LastControl()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Dikim_LastControl()));
         break;
       case 10:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => OrderSize_Matrix()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => OrderSize_Matrix()));
         break;
     }
   }
-
-  int MandatoryCritieraAction(DataList) {}
 
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     return Scaffold(
-      appBar: DetailBar(PersonalCase.GetLable(ResourceKey.QualityTests), PersonalCase, () {
+      appBar: DetailBar(
+          PersonalCase.GetLable(ResourceKey.QualityTests), PersonalCase, () {
         Navigator.pop(context);
       }),
       body: FutureBuilder(
@@ -122,13 +137,12 @@ class _QualityTestListState extends State<QualityTestList> {
                             FontSize: ArgonSize.Header1),
                         subtitle: Text(
                             PersonalCase.SelectedOrder.Model_Name.toString(),
-                            style: TextStyle(fontSize:ArgonSize.Header6)),
+                            style: TextStyle(fontSize: ArgonSize.Header6)),
                         dense: true,
                         selected: true,
                         tileColor: ArgonColors.Title,
                       ),
-                      SizedBox(height:ArgonSize.Padding3),
-
+                      SizedBox(height: ArgonSize.Padding3),
                       ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
@@ -139,9 +153,9 @@ class _QualityTestListState extends State<QualityTestList> {
                                 ItemValue: snapshot.data[i].StartDate != null
                                     ? snapshot.data[i].StartDate.toString()
                                     : "Not Started Yet",
-                                OnTap: () async{
+                                OnTap: () async {
                                   await MappingSelectedQualityTest(
-                                      PersonalCase, snapshot.data,i);
+                                      PersonalCase, snapshot.data, i);
                                 });
                           }),
                     ],
@@ -152,8 +166,10 @@ class _QualityTestListState extends State<QualityTestList> {
           else
             return ErrorPage(
                 ActionName: PersonalCase.GetLable(ResourceKey.Loading),
-                MessageError: PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
-                DetailError: PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
+                MessageError:
+                    PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
+                DetailError: PersonalCase.GetLable(
+                    ResourceKey.InvalidNetWorkConnection));
         },
       ),
     );

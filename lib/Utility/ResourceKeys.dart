@@ -1,4 +1,5 @@
 enum ResourceKey{
+  PleaseCheckCriteria,
   KeepPageOpen,
   RecycleReturn,
   Employee,
