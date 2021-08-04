@@ -84,10 +84,10 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
 
 
     return Scaffold(
-      appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+      appBar:DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
-          context
+          context:  context
       ),
       body: ListView(children: [
         ListTile(

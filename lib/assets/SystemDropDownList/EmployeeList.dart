@@ -22,7 +22,7 @@ class _Employee_ListState extends State<Employee_List> {
 
   Widget FilterItem(Function onSearchTextChanged) {
     return Container(
-      height: 45,
+      height: ArgonSize.WidthMedium,
       child: new Card(
         shadowColor: ArgonColors.border,
         elevation: 20,
@@ -31,7 +31,7 @@ class _Employee_ListState extends State<Employee_List> {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Expanded(
-              child: Icon(Icons.search),
+              child: Icon(Icons.search,size:ArgonSize.IconSize),
             ),
             Expanded(
                 child: TextField(
@@ -50,7 +50,7 @@ class _Employee_ListState extends State<Employee_List> {
                 flex: 3),
             Expanded(
               child: IconButton(
-                icon: new Icon(Icons.cancel),
+                icon: new Icon(Icons.cancel,size:ArgonSize.IconSize),
                 onPressed: () {
                   SearchController.clear();
                   onSearchTextChanged('');
@@ -91,7 +91,8 @@ class _Employee_ListState extends State<Employee_List> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 450,
+      color:Colors.green,
+      height: getScreenHeight() / 1.3,
       padding: EdgeInsets.all(1),
       margin: EdgeInsets.only(left: 2, top: 0, right: 2, bottom: 0),
       child: Column(
@@ -101,8 +102,7 @@ class _Employee_ListState extends State<Employee_List> {
           FilterItem((String Text) {
             setState(() {});
           }),
-          Container(            height: 350,
-              child: FilterList()),
+          Container(height: getScreenHeight() / 1.3 - 100, child: FilterList()),
         ],
       ),
     );

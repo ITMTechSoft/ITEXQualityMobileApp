@@ -63,20 +63,18 @@ class _EmployeeOperationListState extends State<EmployeeOperationList> {
                         LableDateTime(widget.Items[i].Create_Date),
              
 
-                        Expanded(
-                            child:Container(
-                            child: Center(
-                              child: ButtonWithNumber(
-                                text: PersonalCase.GetLable(ResourceKey.Delete),
-                                textColor: Colors.white,
-                                buttonWidth: 100,
-                                buttonHegiht: 60,
-                                btnBgColor: ArgonColors.myRed,
-                                textSize: 20,
-                              )
-
-                              ),
-                            ))
+                        Container(
+                        child: Center(
+                          child: ButtonWithNumber(
+                            text: PersonalCase.GetLable(ResourceKey.Delete),
+                            textColor: Colors.white,
+                            buttonWidth: ArgonSize.WidthMedium,
+                            buttonHegiht: ArgonSize.WidthMedium-10,
+                            btnBgColor: ArgonColors.myRed,
+                            textSize: 20,
+                          )
+                          ),
+                        )
 
                         /*
                         )*/

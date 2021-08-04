@@ -23,7 +23,6 @@ class QualityItemsList extends StatefulWidget {
 }
 
 class _QualityItemsListState extends State<QualityItemsList> {
-
   int floatingNumber = 0;
   int IntiteStatus = 0;
   bool _KeepPage = false;
@@ -32,8 +31,8 @@ class _QualityItemsListState extends State<QualityItemsList> {
   Future<List<Quality_ItemsBLL>> LoadingOpenPage(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
     List<Quality_ItemsBLL> Critiera =
-    await Quality_ItemsBLL.Get_Quality_Items_WithValue(widget.GroupType,
-        PersonalCase.GetCurrentUser().Id, CaseProvider.ModelOrderMatrix.Id);
+        await Quality_ItemsBLL.Get_Quality_Items_WithValue(widget.GroupType,
+            PersonalCase.GetCurrentUser().Id, CaseProvider.ModelOrderMatrix.Id);
 
     if (Critiera != null) {
       IntiteStatus = 1;
@@ -50,7 +49,7 @@ class _QualityItemsListState extends State<QualityItemsList> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     final CaseProvider = Provider.of<SubCaseProvider>(context);
 
-    Future OnTapQualityItem(Quality_ItemsBLL item,index) async {
+    Future OnTapQualityItem(Quality_ItemsBLL item, index) async {
       var UserQuality = new User_QualityTracking_DetailBLL();
       UserQuality.Quality_Items_Id = item.Id;
       UserQuality.QualityDept_ModelOrder_Tracking_Id =
@@ -88,9 +87,11 @@ class _QualityItemsListState extends State<QualityItemsList> {
     }
 
     return Scaffold(
-      appBar: DetailBar(widget.HeaderName, PersonalCase, () {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
-      },context),
+      },
+          context:  context
+      ),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
@@ -146,39 +147,43 @@ class _QualityItemsListState extends State<QualityItemsList> {
                     ],
                   ),
                 ),
+                SizedBox(height:ArgonSize.Padding4),
+
                 GridView.count(
                   crossAxisSpacing: 2,
                   mainAxisSpacing: 3,
                   shrinkWrap: true,
                   primary: false,
-                  childAspectRatio: 3 / 1,
-                  crossAxisCount:3,
+                  childAspectRatio:getScreenHeight() >1100?3/ 1.5 :7/ 6,
+                  crossAxisCount: 3,
                   children: List.generate(snapshot.data.length, (index) {
                     return GestureDetector(
                       onTap: () async {
-                        await OnTapQualityItem(snapshot.data[index],index);
+                        await OnTapQualityItem(snapshot.data[index], index);
                       },
                       child: ButtonWithNumber(
-
                         text: snapshot.data[index].Item_Name,
-                        buttonWidth: getScreenWidth() / 3,
-                        buttonHegiht: getScreenWidth()/6,
+                        buttonWidth: getScreenWidth()/2,
+                        buttonHegiht: getScreenHeight()/6,
                         btnBgColor: selectedList.contains(index)
                             ? ArgonColors.myLightGreen
                             : ArgonColors.myOrange,
-
-                        textSize: 15,
-                        topRight: CircleShape(text:(snapshot.data[index].Amount ?? 0).toString(), width: 30, height: 30,fontSize: 10),
+                        textSize: ArgonSize.Header4,
+                        topRight: CircleShape(
+                            text: (snapshot.data[index].Amount ?? 0).toString(),
+                            width: ArgonSize.WidthSmall,
+                            height: ArgonSize.WidthSmall,
+                            fontSize: ArgonSize.Header5
+                        ),
                         bottomLeft: _IsDeletedVal == true
                             ? IconInsideCircle(
-                            size: 8,
+                            iconSize:getScreenWidth()>1100?ArgonSize.Header6:ArgonSize.Header6,
+                            size: getScreenWidth()>1000?ArgonSize.Padding6:ArgonSize.Padding6,
                             icon: FontAwesomeIcons.minus,
                             color: Colors.white,
                             backGroundColor: Colors.red)
                             : Container(width: 0, height: 0),
                       ),
-
-
                     );
                   }),
                 ),
@@ -189,7 +194,7 @@ class _QualityItemsListState extends State<QualityItemsList> {
               return ErrorPage(
                   ActionName: PersonalCase.GetLable(ResourceKey.Loading),
                   MessageError:
-                  PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
+                      PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
                   DetailError: PersonalCase.GetLable(
                       ResourceKey.InvalidNetWorkConnection));
           },
@@ -198,6 +203,3 @@ class _QualityItemsListState extends State<QualityItemsList> {
     );
   }
 }
-
-
-//QualityItemsList old

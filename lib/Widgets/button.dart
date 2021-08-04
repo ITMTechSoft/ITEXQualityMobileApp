@@ -124,31 +124,30 @@ Widget ButtonWithNumber({
   Widget bottomLeft,
   Widget image,
   bool orientation = false,
+
 }) {
   return Container (
       width:  buttonWidth,
       height: buttonHegiht,
-    child:Stack(
-      children:[
-        Padding(
-          padding: EdgeInsets.all(padding),
-          child: CustomContainer(
-            width: buttonWidth,
-            height: 100,
-            value: text,
-            textColor: textColor,
-            backGroundColor: btnBgColor,
-            textSize: textSize,
-            image: image,
-            topRight:topRight,
-            topLeft:topLeft,
-            bottomRight:bottomRight,
-            bottomLeft:bottomLeft,
-          ),
-        ),
+      child:Stack(
+          children:[
+            CustomContainer(
+              width: buttonWidth,
+              height: buttonHegiht,
+              value: text,
+              textColor: textColor,
+              backGroundColor: btnBgColor,
+              textSize: textSize,
+              image: image,
+              topRight:topRight,
+              topLeft:topLeft,
+              bottomRight:bottomRight,
+              bottomLeft:bottomLeft,
+              padding1:padding
+            ),
 
-      ]
-    )
+          ]
+      )
   );
 }
 
@@ -165,7 +164,7 @@ Widget IconInsideCircle(
       shape: BoxShape.circle,
       color: backGroundColor,
 
-    ),
+  ),
     child: Icon(
       icon,
       size: iconSize,
@@ -254,7 +253,7 @@ class CustomContainer extends StatelessWidget {
     this.height,
     this.textColor,
     this.textSize = 20,
-    this.image, this.topRight, this.topLeft, this.bottomRight, this.bottomLeft,
+    this.image, this.topRight, this.topLeft, this.bottomRight, this.bottomLeft, this.padding1=10,
   }) : super(key: key);
 
   final String value;
@@ -272,6 +271,7 @@ class CustomContainer extends StatelessWidget {
   final Widget topLeft;
   final Widget bottomRight;
   final Widget bottomLeft;
+  final double padding1 ;
 
   @override
   Widget build(BuildContext context) {
@@ -281,11 +281,11 @@ class CustomContainer extends StatelessWidget {
           Container(
             width: width,
             height: height,
-        padding:EdgeInsets.all( 8.0),
+            padding:EdgeInsets.all( 5),
             child: Container(
 
-              width: width-40,
-              height: height-40,
+              width: width,
+              height: height,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 color: backGroundColor, // background
@@ -374,6 +374,7 @@ class CircularIconWithNumber extends StatelessWidget {
 
   final String bubbleText;
   final double bubbleTextSize;
+  final double fontSize;
 
   const CircularIconWithNumber(
       {Key key,
@@ -384,7 +385,7 @@ class CircularIconWithNumber extends StatelessWidget {
         this.bubbleWidth = 25,
         this.bubbleHeight = 25,
         this.bubbleText = '',
-        this.bubbleTextSize = 25})
+        this.bubbleTextSize = 25, this.fontSize=15})
       : super(key: key);
 
   @override
@@ -404,7 +405,7 @@ class CircularIconWithNumber extends StatelessWidget {
                     text: bubbleText,
                     width: bubbleWidth,
                     height: bubbleHeight,
-                    fontSize: 10),
+                    fontSize: fontSize),
                 top: 0,
                 right: 0),
           ]),

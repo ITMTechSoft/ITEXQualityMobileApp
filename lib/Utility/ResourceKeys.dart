@@ -1334,6 +1334,8 @@ enum ResourceKey{
   AddNewSample,
   Measurement,
   MeasurementNumbers,
+  Saglim,
+  Error,
 }
 extension ParseToString on ResourceKey {
   String toShortString() {

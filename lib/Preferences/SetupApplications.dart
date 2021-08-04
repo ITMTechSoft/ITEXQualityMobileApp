@@ -37,12 +37,17 @@ class _SetupApplicationsState extends State<SetupApplications> {
     SizeConfig().init(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: new Text(
-          GlobalizationBLL.Get_GlobalItem(ResourceKey.Configuration),
-        ),
-        actions: <Widget>[],
-      ),
+      appBar:
+
+
+
+      DetailBar(Title:GlobalizationBLL.Get_GlobalItem(ResourceKey.Configuration),PersonalCase: PersonalCase, OnTap:() {
+        Navigator.pop(context);
+      },
+          context:  context ,
+    showIcon: false
+
+    ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -54,11 +59,11 @@ class _SetupApplicationsState extends State<SetupApplications> {
                 child: Column(
                   children: [
                     Standard_Input(
-                      suffixIcon: Icon(FontAwesomeIcons.server),
+                      suffixIcon: Icon(FontAwesomeIcons.server,size: ArgonSize.IconSize),
                       controller: serverIpController,
                       placeholder: StaticLable.ServerIp,
                       errorMessage: "Ip can't be empty ",
-                      MaxLength: 15,
+                      MaxLength: 25,
                       hintMessage: '192.158. 1.38',
                       isIp: true,
                       Ktype: TextInputType.text,
@@ -68,7 +73,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                       height: 10,
                     ),
                     Standard_Input(
-                      suffixIcon: Icon(FontAwesomeIcons.passport),
+                      suffixIcon: Icon(FontAwesomeIcons.passport,size: ArgonSize.IconSize),
                       controller: portController,
                       placeholder: StaticLable.ServerPort,
                       errorMessage: "Port can't be empty ",
@@ -84,6 +89,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                             style: TextStyle(
                               color: Colors.redAccent,
                               fontWeight: FontWeight.bold,
+                              fontSize:ArgonSize.Header4
                             ),
                           ),
                     SizedBox(
@@ -151,6 +157,8 @@ class _SetupApplicationsState extends State<SetupApplications> {
                         width: double.infinity,
                         height: ArgonSize.Header1*1.5,
                         value: StaticLable.Save,
+                        textSize: ArgonSize.Header3,
+
                         function: () async {
                           if (_formKey.currentState.validate()) {
                             SharedPref.ServerIp = serverIpController.text;

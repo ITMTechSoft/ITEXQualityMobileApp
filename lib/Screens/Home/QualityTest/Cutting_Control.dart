@@ -65,10 +65,11 @@ class _Cutting_ControlState extends State<Cutting_Control> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
     return Scaffold(
-      appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
-      } ,
-          context),
+      },
+          context:  context
+      ),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(
@@ -244,10 +245,11 @@ class _Matrix_Cutting_KontrolState extends State<Matrix_Cutting_Kontrol> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
     return Scaffold(
-      appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+      appBar:DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
-      } ,
-          context),
+      },
+          context:  context
+      ),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(
@@ -256,7 +258,7 @@ class _Matrix_Cutting_KontrolState extends State<Matrix_Cutting_Kontrol> {
                   PersonalCase.SelectedOrder.Order_Number,
               color: ArgonColors.header,
               FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString(),style:TextStyle(fontSize:ArgonSize.Header6)),
           dense: true,
           selected: true,
         ),

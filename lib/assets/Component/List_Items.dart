@@ -95,7 +95,7 @@ class OrderCard extends StatelessWidget {
                 size: ArgonSize.Header6,
                 textAlign: TextAlign.left,
                 color: ArgonColors.black.withOpacity(0.5)),
-            leading: SizedBox(width:ArgonSize.WidthMedium,height:ArgonSize.WidthMedium,child: ImageLoader(LoadingImage: GetModelImage())),
+            leading: SizedBox(width:ArgonSize.WidthSmall,height:ArgonSize.WidthMedium,child: ImageLoader(LoadingImage: GetModelImage())),
 
             trailing: Text(''),
           ),
@@ -135,6 +135,7 @@ Widget AraControlCard(
                       PersonalCase.GetLable(ResourceKey.ControlError)))
             ],
           ),
+          SizedBox(height:ArgonSize.Padding6),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
@@ -158,31 +159,47 @@ Widget AraControlCard(
                   ))
             ],
           ),
+          SizedBox(height:ArgonSize.Padding4),
+
           Row(
             children: [
               Expanded(
-                child: StandardButton(
-                    Lable: "Sağlim",
-                    ForColor: ArgonColors.white,
-                    BakColor: ArgonColors.primary,
-                    OnTap: () async {
+                flex:2,
+                child: CustomButton(
+                    value:  PersonalCase.GetLable(ResourceKey.Saglim),
+                    backGroundColor: ArgonColors.primary,
+                    width:getScreenWidth()/2,
+                    height:ArgonSize.WidthSmall1,
+                    function: () async {
                       int DelValue = int.tryParse(InputVal.text) ?? 1;
                       var NewItem = await Item.CorrectSpecificAmount(DelValue);
                       if (NewItem != null) Item = NewItem;
                       Execute();
+
                     }),
               ),
+              SizedBox(width:20),
+
               Expanded(
+                  flex:2,
+
                   child: Input_Form(
+                    InputHeight:ArgonSize.WidthSmall1,
                 controller: InputVal,
                 KType: TextInputType.number,
               )),
+              SizedBox(width:20),
+
               Expanded(
-                child: StandardButton(
-                    Lable: "Hata",
-                    ForColor: ArgonColors.white,
-                    BakColor: ArgonColors.warning,
-                    OnTap: () async {
+                flex:2,
+
+                child: CustomButton(
+                    value:  PersonalCase.GetLable(ResourceKey.Error),
+                    backGroundColor: ArgonColors.myRed,
+                    width:getScreenWidth()/2,
+                    height:ArgonSize.WidthSmall1,
+
+                    function: () async {
                       int DelValue = int.tryParse(InputVal.text) ?? 1;
                       var NewItem = await Item.ErrorSpecificAmount(DelValue);
                       if (NewItem != null) Item = NewItem;
@@ -397,7 +414,7 @@ Widget CuttingModelOrderMatrix(
 
   return Card(
     shadowColor: ArgonColors.black,
-    elevation: 1,
+    elevation: 20,
     color: SelectedColor,
     child: InkWell(
       onTap: OnTap,
@@ -550,12 +567,14 @@ Widget HeaderColumn({List<Widget> children = const <Widget>[]}) {
 
 Widget TableColumn(
     {List<Widget> children = const <Widget>[], bool IsSelectedItem = false}) {
-  return Card(
+  return
+    Card(
       shadowColor: ArgonColors.black,
       elevation: 1,
       color: IsSelectedItem ? SelectedColor : NormalColor,
       child: Container(
-        padding: EdgeInsets.all(ArgonSize.Padding3),
+        padding: EdgeInsets.all(5),
+
         margin: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -965,16 +984,16 @@ Widget DropDownBox({String ItemName, Function OnTap, bool IsSelected = false}) {
       child: InkWell(
           onTap: OnTap,
           child: Container(
-            height: 30,
+            height: ArgonSize.WidthSmall,
             margin: EdgeInsets.all(2),
+            padding:EdgeInsets.only(top:5,bottom:5,left:5),
             color: IsSelected ? ArgonColors.muted : ArgonColors.white,
-            padding: EdgeInsets.only(left: 7),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 ItemName,
                 style: TextStyle(
-                    fontSize: ArgonSize.normal, color: ArgonColors.text),
+                    fontSize: ArgonSize.Header4, color: ArgonColors.text ),
               ),
             ),
           )));

@@ -116,10 +116,11 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
     return Scaffold(
-      appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
-      } ,
-          context),
+      },
+          context:  context
+      ),
       body: ListView(
         children: [
           ListTile(
@@ -130,7 +131,7 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
                 color: ArgonColors.header,
                 FontSize: ArgonSize.Header2),
             subtitle:
-                Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+                Text(PersonalCase.SelectedDepartment.Start_Date.toString(),style:TextStyle(fontSize:ArgonSize.Header6)),
             dense: true,
             selected: true,
           ),

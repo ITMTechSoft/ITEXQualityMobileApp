@@ -101,10 +101,10 @@ class _QualityTestListState extends State<QualityTestList> {
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     return Scaffold(
-      appBar: DetailBar(PersonalCase.GetLable(ResourceKey.QualityTests), PersonalCase, () {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
-          context
+          context:  context
       ),
       body: FutureBuilder(
         future: LoadEmployeeOrders(PersonalCase),

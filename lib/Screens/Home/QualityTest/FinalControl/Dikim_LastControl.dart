@@ -36,10 +36,10 @@ class _Dikim_LastControlState extends State<Dikim_LastControl> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
-      appBar: DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
-          context
+          context:  context
       ),
       body: ListView(children: [
         ListTile(

@@ -76,10 +76,10 @@ class _MeasureSizeSample_ListState extends State<MeasureSizeSample_List> {
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
       appBar:
-      DetailBar(PersonalCase.SelectedTest.Test_Name, PersonalCase, () {
+      DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
-          context
+          context:  context
       ),
 
       /// TODO :CHANGE PAGE NAME AND HEADER NAME
