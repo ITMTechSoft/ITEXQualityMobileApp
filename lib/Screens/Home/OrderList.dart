@@ -42,7 +42,7 @@ class _OrderListState extends State<OrderList> {
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     return Scaffold(
-      appBar:DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+      appBar:DetailBar(Title:PersonalCase.GetLable(ResourceKey.ModelOrderList),PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
           context:  context
