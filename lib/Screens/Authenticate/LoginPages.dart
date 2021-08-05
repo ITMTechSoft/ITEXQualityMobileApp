@@ -42,12 +42,35 @@ class _LoginPagesState extends State<LoginPages> {
       Navigator.popAndPushNamed(context, '/main');
     }
   }
-
+  // void initState() {
+  //   super.initState();
+  //   if ( ResourceKey.btn_Logins == PersonalCase.GetLable(ResourceKey.btn_Logins))
+  //   {
+  //     print('${ResourceKey.btn_Logins}' '${PersonalCase.GetLable(ResourceKey.btn_Logins)}');
+  //     print('Loaded');
+  //   }
+  //   else{
+  //     print('${ResourceKey.btn_Logins} ' '${PersonalCase.GetLable(ResourceKey.btn_Logins)}');
+  //
+  //     print('Loadded ');
+  //   }
+  // }
 ////
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     SizeConfig().init(context);
+
+    if ( ResourceKey.btn_Logins == PersonalCase.GetLable(ResourceKey.btn_Logins))
+        {
+          print('${ResourceKey.btn_Logins}' '${PersonalCase.GetLable(ResourceKey.btn_Logins)}');
+          print('not loaded');
+        }
+        else{
+          print('${ResourceKey.btn_Logins} ' '${PersonalCase.GetLable(ResourceKey.btn_Logins)}');
+
+          print('Loadded ');
+        }
 
     return WillPopScope(
       onWillPop: () {
@@ -89,9 +112,7 @@ class _LoginPagesState extends State<LoginPages> {
               )
             ]),
         body: SingleChildScrollView(
-          child: _isLoading
-              ? CircularProgressIndicator()
-              : Column(
+          child:  Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CircleAvatar(
@@ -116,7 +137,7 @@ class _LoginPagesState extends State<LoginPages> {
                             errorMessage: PersonalCase.GetLable(
                                 ResourceKey.MandatoryFields),
                           ),
-                          Standard_Input(
+                         Standard_Input(
                             suffixIcon: IconButton(icon: Icon(passwordSuffixIcon,size: ArgonSize.IconSize) ,onPressed:() =>
                                 setState(() {
                                   obscure=!obscure;
@@ -144,6 +165,7 @@ class _LoginPagesState extends State<LoginPages> {
                               obscureText:obscure,
                           ),
                           SizedBox(height: ArgonSize.Padding3),
+                          _isLoading==true?  CircularProgressIndicator():Container(),
 
                           errorMsg == null
                               ? Container()
@@ -170,10 +192,15 @@ class _LoginPagesState extends State<LoginPages> {
                                 if (_formKey.currentState.validate()) {
                                   await LoginFunction(PersonalCase);
                                   print('working ');
-
+                                  setState(() {
+                                    _isLoading=true;
+                                  });
                                   //   Navigator.pop(context);
                                 } else
                                   print("Not Working");
+                                setState(() {
+                                  _isLoading=false;
+                                });
                               },
                             ),
                           ),

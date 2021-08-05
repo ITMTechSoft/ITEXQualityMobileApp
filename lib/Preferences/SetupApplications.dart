@@ -14,6 +14,7 @@ class SetupApplications extends StatefulWidget {
 
 class _SetupApplicationsState extends State<SetupApplications> {
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   /// CONTROLLERS
   TextEditingController serverIpController =
@@ -82,6 +83,8 @@ class _SetupApplicationsState extends State<SetupApplications> {
                       hintMessage: '3968',
                       //initialValue: portController.text,
                     ),
+                    _isLoading==true?  CircularProgressIndicator():Container(),
+
                     errorMsg == null
                         ? Container()
                         : Text(
@@ -160,6 +163,9 @@ class _SetupApplicationsState extends State<SetupApplications> {
                         textSize: ArgonSize.Header3,
 
                         function: () async {
+                          setState(() {
+                            _isLoading=true;
+                          });
                           if (_formKey.currentState.validate()) {
                             SharedPref.ServerIp = serverIpController.text;
                             SharedPref.ServerPort = portController.text;
@@ -173,6 +179,9 @@ class _SetupApplicationsState extends State<SetupApplications> {
                             } else {
                               setState(() {
                                 errorMsg = "Server can't be reached ";
+
+                                  _isLoading=false;
+
                               });
                             }
                           }
