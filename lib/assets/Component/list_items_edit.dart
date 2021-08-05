@@ -29,7 +29,7 @@ Widget DepartmentCard(Employee_DepartmentBLL Item, Function OnTap) {
           title: Text(
             Item.Depart_Name,
             style:
-                TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.text),
+            TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.text),
           ),
           subtitle: Text(
             Item.Depart_Name,
@@ -185,9 +185,9 @@ Widget AraControlCard(
 
                   child: Input_Form(
                     InputHeight:ArgonSize.WidthSmall1,
-                controller: InputVal,
-                KType: TextInputType.number,
-              )),
+                    controller: InputVal,
+                    KType: TextInputType.number,
+                  )),
               SizedBox(width:20),
 
               Expanded(
@@ -314,77 +314,79 @@ Widget TansifControlList(PersonalProvider PersonalCase,
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-              flex:2,
-
-              child: LableTitle(
-                PersonalCase.GetLable(ResourceKey.ColorName),
-              )),
-
+              child: LableTitle(PersonalCase.GetLable(ResourceKey.SampleNo))),
           Expanded(
-              flex:2,
-
-              child: LableTitle(
-                PersonalCase.GetLable(ResourceKey.SizeName),
-              )),
-
-          Expanded(
-              flex:1,
-              child: LableTitle(Item.ColorName.toString(),
+              child: LableTitle((Item.SampleNo ?? 0).toString(),
                   color: ArgonColors.text, IsCenter: true)),
-          Expanded(
-              flex:1,
-              child: LableTitle(Item.SizeName,
-                  color: ArgonColors.text, IsCenter: true)),
-
-
-        ],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Expanded(
-            flex:2,
-              child: LableTitle(
-                PersonalCase.GetLable(ResourceKey.OrderSizeColor_QTY),
-              )),
-
-          Expanded(
-              flex:2,
-
-              child: LableTitle(
-                PersonalCase.GetLable(ResourceKey.SizeColor_QTY),
-              )),
-
-          Expanded(
-              flex:1,
-              child: LableTitle((Item.OrderSizeColor_QTY ?? 0).toString(),
-                  color: ArgonColors.text, IsCenter: true)),
-          Expanded(
-              flex:1,
-              child: LableTitle((Item.SizeColor_QTY ?? 0).toString(),
-                  color: ArgonColors.text, IsCenter: true)),
-
-        ],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Expanded(
-              child: LableTitle(
-                PersonalCase.GetLable(ResourceKey.OrderSizeColor_QTY),
-              )),
-
           Expanded(
               child: LableTitle(
                 PersonalCase.GetLable(ResourceKey.Sample_Amount),
               )),
-
+          Expanded(
+              child: LableTitle((Item.Sample_Amount ?? 0).toString(),
+                  color: ArgonColors.text, IsCenter: true)),
+          Expanded(
+              child: LableTitle(
+                PersonalCase.GetLable(ResourceKey.Error_Amount),
+              )),
+          Expanded(
+              child: LableTitle((Item.Error_Amount ?? 0).toString(),
+                  color: ArgonColors.text, IsCenter: true)),
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(
+              child: LableTitle(
+                PersonalCase.GetLable(ResourceKey.SizeName),
+              )),
+          Expanded(
+              child: LableTitle(Item.SizeName,
+                  color: ArgonColors.text, IsCenter: true)),
+          Expanded(
+              child: LableTitle(
+                PersonalCase.GetLable(ResourceKey.SizeColor_QTY),
+              )),
+          Expanded(
+              child: LableTitle((Item.SizeColor_QTY ?? 0).toString(),
+                  color: ArgonColors.text, IsCenter: true)),
+          Expanded(
+              child: LableTitle(
+                PersonalCase.GetLable(ResourceKey.OrderSizeColor_QTY),
+              )),
           Expanded(
               child: LableTitle((Item.OrderSizeColor_QTY ?? 0).toString(),
                   color: ArgonColors.text, IsCenter: true)),
-
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(
+              child: LableTitle(
+                PersonalCase.GetLable(ResourceKey.ColorName),
+              )),
+          Expanded(
+              child: LableTitle(Item.ColorName.toString(),
+                  color: ArgonColors.text, IsCenter: true)),
+          Expanded(
+              child: LableTitle(
+                PersonalCase.GetLable(ResourceKey.Employee_Creator),
+              )),
+          Expanded(
+              child: LableTitle((Item.Employee_Name ?? 0).toString(),
+                  color: ArgonColors.text, IsCenter: true)),
+          Expanded(
+              child: LableTitle(
+                PersonalCase.GetLable(ResourceKey.Sample_Status),
+              )),
+          Expanded(
+              child: Item.Status == ControlStatus.TansifControlCloseStatus
+                  ? FinishStatus
+                  : PendingStatus),
         ],
       )
     ],
@@ -429,24 +431,24 @@ Widget CuttingModelOrderMatrix(
               children: [
                 Expanded(
                     child: Center(
-                  child: LableTitle(Item.SizeParam_StringVal,
-                      color: ArgonColors.text),
-                )),
+                      child: LableTitle(Item.SizeParam_StringVal,
+                          color: ArgonColors.text),
+                    )),
                 Expanded(
                     child: Center(
-                  child: LableTitle(Item.ColorParam_StringVal,
-                      color: ArgonColors.text),
-                )),
+                      child: LableTitle(Item.ColorParam_StringVal,
+                          color: ArgonColors.text),
+                    )),
                 Expanded(
                     child: Center(
-                  child: LableTitle((Item.PlanSizeColor_QTY ?? 0).toString(),
-                      color: ArgonColors.text),
-                )),
+                      child: LableTitle((Item.PlanSizeColor_QTY ?? 0).toString(),
+                          color: ArgonColors.text),
+                    )),
                 Expanded(
                     child: Center(
-                  child: LableTitle((Item.SizeColor_QTY ?? 0).toString(),
-                      color: ArgonColors.text),
-                ))
+                      child: LableTitle((Item.SizeColor_QTY ?? 0).toString(),
+                          color: ArgonColors.text),
+                    ))
               ],
             ),
           ],
@@ -482,24 +484,24 @@ Widget TasnifModelOrderMatrix(
               children: [
                 Expanded(
                     child: Center(
-                  child: LableTitle(Item.SizeParam_StringVal,
-                      color: ArgonColors.text),
-                )),
+                      child: LableTitle(Item.SizeParam_StringVal,
+                          color: ArgonColors.text),
+                    )),
                 Expanded(
                     child: Center(
-                  child: LableTitle(Item.ColorParam_StringVal,
-                      color: ArgonColors.text),
-                )),
+                      child: LableTitle(Item.ColorParam_StringVal,
+                          color: ArgonColors.text),
+                    )),
                 Expanded(
                     child: Center(
-                  child: LableTitle((Item.SizeColor_QTY ?? 0).toString(),
-                      color: ArgonColors.text),
-                )),
+                      child: LableTitle((Item.SizeColor_QTY ?? 0).toString(),
+                          color: ArgonColors.text),
+                    )),
                 Expanded(
                     child: Center(
-                  child: LableTitle((Item.OrderSizeColor_QTY ?? 0).toString(),
-                      color: ArgonColors.text),
-                ))
+                      child: LableTitle((Item.OrderSizeColor_QTY ?? 0).toString(),
+                          color: ArgonColors.text),
+                    ))
               ],
             ),
           ],
@@ -567,25 +569,25 @@ Widget TableColumn(
     {List<Widget> children = const <Widget>[], bool IsSelectedItem = false}) {
   return
     Card(
-      shadowColor: ArgonColors.black,
-      elevation: 1,
-      color: IsSelectedItem ? SelectedColor : NormalColor,
-      child: Container(
-        padding: EdgeInsets.all(5),
+        shadowColor: ArgonColors.black,
+        elevation: 1,
+        color: IsSelectedItem ? SelectedColor : NormalColor,
+        child: Container(
+          padding: EdgeInsets.all(5),
 
-        margin: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: children,
-            ),
-          ],
-        ),
-      ));
+          margin: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: children,
+              ),
+            ],
+          ),
+        ));
 }
 
 //// New Design for Header and Table Information
@@ -714,7 +716,7 @@ class _Tb_InlineDikimListState extends State<Tb_InlineDikimList> {
                         TableLable(
                             widget.Items[i].EndDate != null
                                 ? DateFormat('HH:mm')
-                                    .format(widget.Items[i].EndDate)
+                                .format(widget.Items[i].EndDate)
                                 : "",
                             Flex: 3),
                         Expanded(child: GetStatusIcon(widget.Items[i].Status)),
@@ -727,11 +729,11 @@ class _Tb_InlineDikimListState extends State<Tb_InlineDikimList> {
 
 Widget BoxColorWithText(String Lable, Color SelectedColor,
     {double Width = 50,
-    double Height = 50,
-    FontColor = ArgonColors.text,
+      double Height = 50,
+      FontColor = ArgonColors.text,
 
-    /// TODO edit this
-    FontSize = ArgonSize.normal}) {
+      /// TODO edit this
+      FontSize = ArgonSize.normal}) {
   return Container(
     width: Width,
     height: Height,
@@ -784,8 +786,8 @@ class Tb_InlineRoundList extends StatefulWidget {
 
   Tb_InlineRoundList(
       {@required this.PersonalCase,
-      @required this.Items,
-      @required this.OnClickItems});
+        @required this.Items,
+        @required this.OnClickItems});
 
   @override
   _Tb_InlineRoundListState createState() => _Tb_InlineRoundListState();
@@ -832,115 +834,115 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
       PersonalProvider PersonalCase, User_QualityTracking_DetailBLL Item) {
     return Flexible(
         child: Card(
-      shadowColor: ArgonColors.black,
-      elevation: 10,
-      child: Container(
-        margin: EdgeInsets.all(5),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Row(
+          shadowColor: ArgonColors.black,
+          elevation: 10,
+          child: Container(
+            margin: EdgeInsets.all(5),
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Expanded(
-                            child: LableTitle(
-                                PersonalCase.GetLable(ResourceKey.Operator)),
-                            flex: 2),
-                        Expanded(
-                            child: LableTitle(
-                                (Item.Inline_Employee_Name ?? 0).toString(),
-                                color: ArgonColors.text,
-                                IsCenter: true),
-                            flex: 2),
-                        Expanded(
-                            child: LableTitle(
-                              PersonalCase.GetLable(ResourceKey.Sample_Amount),
-                            ),
-                            flex: 2),
-                        Expanded(
-                            child: LableTitle((Item.Amount ?? 0).toString(),
-                                color: ArgonColors.text, IsCenter: true)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                            child: LableTitle(
-                              PersonalCase.GetLable(ResourceKey.Operation),
-                            ),
-                            flex: 2),
-                        Expanded(
-                            child: LableTitle(Item.Operation_Name,
-                                color: ArgonColors.text, IsCenter: true),
-                            flex: 2),
-                        Expanded(
-                            child: LableTitle(
-                              PersonalCase.GetLable(ResourceKey.Error_Amount),
-                            ),
-                            flex: 2),
-                        Expanded(
-                            child: LableTitle(
-                                (Item.Error_Amount ?? 0).toString(),
-                                color: ArgonColors.text,
-                                IsCenter: true)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                            child: LableTitle(
-                              PersonalCase.GetLable(ResourceKey.Start_Time),
-                            ),
-                            flex: 2),
-                        Expanded(
-                            child: LableDateTime(Item.StartDate,
-                                Format: "HH:mm",
-                                color: ArgonColors.text,
-                                IsCenter: true)),
-                        Expanded(
-                          child: LableTitle(
-                            PersonalCase.GetLable(ResourceKey.End_Time),
-                          ),
-                          flex: 2,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                                child: LableTitle(
+                                    PersonalCase.GetLable(ResourceKey.Operator)),
+                                flex: 2),
+                            Expanded(
+                                child: LableTitle(
+                                    (Item.Inline_Employee_Name ?? 0).toString(),
+                                    color: ArgonColors.text,
+                                    IsCenter: true),
+                                flex: 2),
+                            Expanded(
+                                child: LableTitle(
+                                  PersonalCase.GetLable(ResourceKey.Sample_Amount),
+                                ),
+                                flex: 2),
+                            Expanded(
+                                child: LableTitle((Item.Amount ?? 0).toString(),
+                                    color: ArgonColors.text, IsCenter: true)),
+                          ],
                         ),
-                        Expanded(
-                            child: LableDateTime(Item.EndDate,
-                                Format: "HH:mm",
-                                color: ArgonColors.text,
-                                IsCenter: true)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Container(
-                          child: GetBoxInfo(Item.CheckStatus),
-                          padding: EdgeInsets.all(5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                                child: LableTitle(
+                                  PersonalCase.GetLable(ResourceKey.Operation),
+                                ),
+                                flex: 2),
+                            Expanded(
+                                child: LableTitle(Item.Operation_Name,
+                                    color: ArgonColors.text, IsCenter: true),
+                                flex: 2),
+                            Expanded(
+                                child: LableTitle(
+                                  PersonalCase.GetLable(ResourceKey.Error_Amount),
+                                ),
+                                flex: 2),
+                            Expanded(
+                                child: LableTitle(
+                                    (Item.Error_Amount ?? 0).toString(),
+                                    color: ArgonColors.text,
+                                    IsCenter: true)),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                                child: LableTitle(
+                                  PersonalCase.GetLable(ResourceKey.Start_Time),
+                                ),
+                                flex: 2),
+                            Expanded(
+                                child: LableDateTime(Item.StartDate,
+                                    Format: "HH:mm",
+                                    color: ArgonColors.text,
+                                    IsCenter: true)),
+                            Expanded(
+                              child: LableTitle(
+                                PersonalCase.GetLable(ResourceKey.End_Time),
+                              ),
+                              flex: 2,
+                            ),
+                            Expanded(
+                                child: LableDateTime(Item.EndDate,
+                                    Format: "HH:mm",
+                                    color: ArgonColors.text,
+                                    IsCenter: true)),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Container(
+                              child: GetBoxInfo(Item.CheckStatus),
+                              padding: EdgeInsets.all(5),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
-                ),
-                flex: 4,
+                    ),
+                    flex: 4,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    ));
+        ));
   }
 
   @override

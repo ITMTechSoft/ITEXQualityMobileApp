@@ -70,15 +70,17 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(
-              PersonalCase.SelectedTest.Test_Name +
-                  ": " +
+
                   PersonalCase.SelectedOrder.Order_Number,
               color: ArgonColors.header,
               FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString(),
+              style:TextStyle(fontSize:ArgonSize.Header6)),
           dense: true,
           selected: true,
         ),
+        SizedBox(height:ArgonSize.Padding4),
+
         FutureBuilder(
           future: LoadingOpenPage(PersonalCase),
           builder: (context, snapshot) {
@@ -87,23 +89,48 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  StandardButton(
-                      Lable:
-                          PersonalCase.GetLable(ResourceKey.CreateTasnifSample),
-                      ForColor: ArgonColors.white,
-                      BakColor: ArgonColors.primary,
-                      OnTap: () async {
-                        PersonalCase.SelectedMatrix = null;
-                        var value = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Tasnif_NewSample(
-                                    DeptModelOrder_QualityTest_Id:
-                                        PersonalCase.SelectedTest.Id)));
-                        setState(() {
-                          print(value);
-                        });
-                      }),
+                  Row(
+                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex:1,
+                        child: StandardButton(
+              FontSize:ArgonSize.Header4,
+                            Lable:
+                                PersonalCase.GetLable(ResourceKey.CreateTasnifSample),
+                            ForColor: ArgonColors.white,
+                            BakColor: ArgonColors.myGreen,
+                            OnTap: () async {
+                              PersonalCase.SelectedMatrix = null;
+                              var value = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Tasnif_NewSample(
+                                          DeptModelOrder_QualityTest_Id:
+                                              PersonalCase.SelectedTest.Id)));
+                              setState(() {
+                                print(value);
+                              });
+                            }),
+                      ),
+
+                      Expanded(
+                        flex:1,
+                        child: StandardButton(
+                            FontSize:ArgonSize.Header4,
+
+                            Lable:
+                            PersonalCase.GetLable(ResourceKey.Correction),
+                            ForColor: ArgonColors.white,
+                            BakColor: ArgonColors.primary,
+                            OnTap: () async {
+
+                            }),
+                      )
+                    ],
+                  ),
+                  SizedBox(height:ArgonSize.Padding4),
+
                   GetTansifControlList(context,PersonalCase, snapshot)
                 ],
               );
