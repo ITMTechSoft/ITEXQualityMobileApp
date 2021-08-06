@@ -41,6 +41,7 @@ class _Criteria_TestState extends State<Criteria_Test> {
     return Critiera;
   }
 
+
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
@@ -95,9 +96,15 @@ class _Criteria_TestState extends State<Criteria_Test> {
                               color: ArgonColors.success,
                             )
                           : Container(),
-                      Html(
-                        data: snapshot.data.HTML_Data ?? "",
-                      ),
+                      new Container(
+                          child: new Column(
+                            children: <Widget>[
+                              Html(
+                                data: snapshot.data.HTML_Data ?? "",
+                              ),
+                            ],
+                          )),
+
                     ],
                   ),
                 );
@@ -117,123 +124,3 @@ class _Criteria_TestState extends State<Criteria_Test> {
     );
   }
 }
-
-/*
-class MyPDFViewr extends StatefulWidget {
-  Uint8List data;
-
-  MyPDFViewr({this.data});
-
-  @override
-  _MyPDFViewrState createState() => _MyPDFViewrState();
-}
-
-class _MyPDFViewrState extends State<MyPDFViewr> {
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-        home: new Scaffold(
-            appBar: new AppBar(
-              title: const Text('Pdf_render example app'),
-            ),
-            backgroundColor: Colors.grey,
-            // You can use either PdfViewer.openFile, PdfViewer.openAsset, or PdfViewer.openData
-            body: PdfViewer.openFile(
-              "http://www.orimi.com/pdf-test.pdf",
-              params: PdfViewerParams(pageNumber: 0), // show the page
-            )));
-  }
-}
-*/
-/*
-
-class MyPDFViewr extends StatefulWidget {
-  Uint8List data;
-
-  MyPDFViewr({this.data});
-
-  @override
-  _MyPDFViewrState createState() => _MyPDFViewrState();
-}
-
-
-class _MyPDFViewrState extends State<MyPDFViewr> {
-  int IntiteStatus = 0;
-  int _totalPages = 0;
-  int _currentPage = 0;
-  bool pdfReady = false;
-  PDFViewController _pdfViewController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:
-      new AppBar(
-        title: new Text('View PDF'),
-        actions: <Widget>[
-          TextButton.icon(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(
-                Icons.close,
-                color: Colors.white,
-              ),
-              label: Text(
-                'Close',
-                style: TextStyle(color: Colors.white),
-              ))
-        ],
-      ),
-
-
-      body: PDFView(
-        pdfData: widget.data,
-        //   autoSpacing: true,
-        enableSwipe: true,
-        pageSnap: true,
-        swipeHorizontal: true,
-        onError: (e) {
-          print(e);
-        },
-        onRender: (_pages) {
-          setState(() {
-            _totalPages = _pages;
-            pdfReady = true;
-          });
-        },
-        onViewCreated: (PDFViewController vc) {
-          _pdfViewController = vc;
-        },
-        onPageChanged: (int page, int total) {
-          setState(() {});
-        },
-        onPageError: (page, e) {},
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          _currentPage > 0
-              ? FloatingActionButton.extended(
-                  backgroundColor: ArgonColors.warning,
-                  onPressed: () {
-                    _currentPage -= 1;
-                    _pdfViewController.setPage(_currentPage);
-                  },
-                  label: Text("Go To ${_currentPage - 1}"))
-              : Offstage(),
-          _currentPage < _totalPages
-              ? FloatingActionButton.extended(
-                  backgroundColor: ArgonColors.success,
-                  onPressed: () {
-                    _currentPage += 1;
-                    _pdfViewController.setPage(_currentPage);
-                  },
-                  label: Text("Go To ${_currentPage + 1}"))
-              : Offstage()
-        ],
-      ),
-    );
-  }
-}
-*/
