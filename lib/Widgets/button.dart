@@ -156,19 +156,23 @@ Widget IconInsideCircle(
       Color color,
       double iconSize = 15,
       Color backGroundColor,
-      double size = 13}) {
-  return Container(
-    padding: EdgeInsets.all(size),
-    margin: EdgeInsets.only(left: 0),
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      color: backGroundColor,
+      double size = 13,
+    Function function}) {
+  return GestureDetector(
+    onTap :function,
+    child: Container(
+      padding: EdgeInsets.all(size),
+      margin: EdgeInsets.only(left: 0),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: backGroundColor,
 
-  ),
-    child: Icon(
-      icon,
-      size: iconSize,
-      color: color,
+    ),
+      child: Icon(
+        icon,
+        size: iconSize,
+        color: color,
+      ),
     ),
   );
 }

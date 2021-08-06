@@ -94,44 +94,54 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
                     children: [
                       Expanded(
                         flex:1,
-                        child: StandardButton(
-              FontSize:ArgonSize.Header4,
-                            Lable:
-                                PersonalCase.GetLable(ResourceKey.CreateTasnifSample),
-                            ForColor: ArgonColors.white,
-                            BakColor: ArgonColors.myGreen,
-                            OnTap: () async {
-                              PersonalCase.SelectedMatrix = null;
-                              var value = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Tasnif_NewSample(
-                                          DeptModelOrder_QualityTest_Id:
-                                              PersonalCase.SelectedTest.Id)));
-                              setState(() {
-                                print(value);
-                              });
-                            }),
+                        child: Padding(
+                          padding:  EdgeInsets.only(left: ArgonSize.Padding3,right:ArgonSize.Padding4),
+                          child: StandardButton(
+              FontSize:ArgonSize.Header5,
+                              Lable:
+                                  PersonalCase.GetLable(ResourceKey.CreateTasnifSample),
+                              ForColor: ArgonColors.white,
+                              BakColor: ArgonColors.primary,
+                              OnTap: () async {
+                                PersonalCase.SelectedMatrix = null;
+                                var value = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Tasnif_NewSample(
+                                            DeptModelOrder_QualityTest_Id:
+                                                PersonalCase.SelectedTest.Id)));
+                                setState(() {
+                                  print(value);
+                                });
+                              }),
+                        ),
                       ),
 
                       Expanded(
                         flex:1,
-                        child: StandardButton(
-                            FontSize:ArgonSize.Header4,
+                        child: Padding(
+                          padding:  EdgeInsets.only(right: ArgonSize.Padding3,left:ArgonSize.Padding4),
+                          child: StandardButton(
+                              FontSize:ArgonSize.Header5,
 
-                            Lable:
-                            PersonalCase.GetLable(ResourceKey.Correction),
-                            ForColor: ArgonColors.white,
-                            BakColor: ArgonColors.primary,
-                            OnTap: () async {
+                              Lable:
+                              PersonalCase.GetLable(ResourceKey.Correction),
+                              ForColor: ArgonColors.white,
+                              BakColor: ArgonColors.myGreen,
+                              OnTap: () async {
 
-                            }),
+                              }),
+                        ),
                       )
                     ],
                   ),
                   SizedBox(height:ArgonSize.Padding4),
 
-                  GetTansifControlList(context,PersonalCase, snapshot)
+                  Padding(
+                    padding:  EdgeInsets.symmetric(horizontal: ArgonSize.Padding3),
+
+                    child: GetTansifControlList(context,PersonalCase, snapshot),
+                  )
                 ],
               );
             } else if (IntiteStatus == 0)

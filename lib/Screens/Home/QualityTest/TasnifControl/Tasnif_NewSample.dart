@@ -43,11 +43,11 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
   }
 
   Widget ModelOrderList(PersonalProvider PersonalCase, snapshot) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
+    return Container(
+
       child: ListView.builder(
           scrollDirection: Axis.vertical,
-          primary: false,
+          primary: true,
           shrinkWrap: true,
           itemCount: snapshot.data.length,
           itemBuilder: (context, int i) {
@@ -64,8 +64,8 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
   Future<List<OrderSizeColorDetailsBLL>> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<OrderSizeColorDetailsBLL> Criteria =
-    await OrderSizeColorDetailsBLL.Get_OrderSizeColorDetails(
-        PersonalCase.SelectedOrder.Order_Id);
+        await OrderSizeColorDetailsBLL.Get_OrderSizeColorDetails(
+            PersonalCase.SelectedOrder.Order_Id);
 
     if (Criteria != null) {
       IntiteStatus = 1;
@@ -75,21 +75,20 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
     }
     return null;
   }
+
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
-
-
-
-
     return Scaffold(
-      appBar:DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
-        Navigator.pop(context);
-      },
-          context:  context
-      ),
-      body: ListView(children: [
+      appBar: DetailBar(
+          Title: PersonalCase.SelectedTest.Test_Name,
+          PersonalCase: PersonalCase,
+          OnTap: () {
+            Navigator.pop(context);
+          },
+          context: context),
+      body: Column(children: [
         ListTile(
           title: HeaderTitle(
               PersonalCase.GetLable(ResourceKey.CreateTasnifSample),
@@ -97,6 +96,54 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
               FontSize: ArgonSize.Header2),
           dense: true,
           selected: true,
+        ),
+        SizedBox(height: ArgonSize.Padding3),
+        Center(
+          child: GestureDetector(
+            onTap: () async {
+              int CheckItem = 0;
+              if (PersonalCase.SelectedMatrix == null) CheckItem = 1;
+              var Sample = int.tryParse(SampleAmountController.text);
+              if (Sample == 0) CheckItem = 2;
+
+              if (CheckItem == 0) {
+                var Item = QualityDept_ModelOrder_TrackingBLL();
+                Item.Employee_Id = PersonalCase.GetCurrentUser().Id;
+                Item.DeptModelOrder_QualityTest_Id = PersonalCase.SelectedTest.Id;
+                Item.OrderSizeColorDetail_Id = PersonalCase.SelectedMatrix.Id;
+                Item.StartDate = DateTime.now();
+                Item.Sample_Amount = int.tryParse(SampleAmountController.text);
+                if (SelectedItem != null)
+                  Item.QualityItem_Group_Id = SelectedItem.Groups_id;
+
+                Item.Fabric_TopNo = KumnasNoController.text;
+                Item.Status = ControlStatus.TansifControlOpenStatus;
+                PersonalCase.SelectedTracking =
+                    await Item.Create_QualityDept_ModelOrder_Tracking();
+                if (PersonalCase.SelectedTracking.Id > 0)
+                  Navigator.pop(context, "Okay");
+                else
+                  AlertPopupDialog(
+                      context,
+                      PersonalCase.GetLable(ResourceKey.SaveMessage),
+                      PersonalCase.GetLable(ResourceKey.SaveErrorMessage),
+                      ActionLable: PersonalCase.GetLable(ResourceKey.Okay));
+              } else {
+                AlertPopupDialog(
+                    context,
+                    PersonalCase.GetLable(ResourceKey.SaveErrorMessage),
+                    PersonalCase.GetLable(ResourceKey.MandatoryFields),
+                    ActionLable: PersonalCase.GetLable(ResourceKey.Okay));
+              }
+            },
+            child: ButtonWithNumber(
+                buttonHegiht: ArgonSize.HeightMedium,
+                buttonWidth: getScreenWidth() / 2.5,
+                textSize: ArgonSize.Header4,
+                text: PersonalCase.GetLable(ResourceKey.NewSample),
+                btnBgColor: ArgonColors.primary,
+                textColor: Colors.white),
+          ),
         ),
         FutureBuilder(
           future: LoadingOpenPage(PersonalCase),
@@ -118,10 +165,15 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                                 ResourceKey.Sample_Amount))),
                         Expanded(
                           flex: 2,
-                          child: Standard_Input(
-                            prefixIcon: Icon(Icons.countertops),
-                            controller: SampleAmountController,
-                            Ktype: TextInputType.number,
+                          child: SizedBox(
+                            height: ArgonSize.HeightMedium,
+                            width: ArgonSize.HeightMedium,
+                            child: Standard_Input(
+                              suffixIcon: Icon(Icons.countertops,
+                                  size: ArgonSize.IconSize),
+                              controller: SampleAmountController,
+                              Ktype: TextInputType.number,
+                            ),
                           ),
                         )
                       ],
@@ -135,22 +187,28 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                                 PersonalCase.GetLable(ResourceKey.ErrorGroup))),
                         Expanded(
                             flex: 2,
-                            child: DropDowndList<GroupsBLL>(
-                                CurrentItem: SelectedItem,
-                                Items:
-                                    widget.TansifGroup.map((GroupsBLL value) {
-                                  return DropdownMenuItem<GroupsBLL>(
-                                    value: value,
-                                    child: Text(value.Group_Name),
-                                  );
-                                }).toList(),
-                                Lable: PersonalCase.GetLable(
-                                    ResourceKey.SelectItems),
-                                OnChange: (GroupsBLL NewValue) {
-                                  setState(() {
-                                    SelectedItem = NewValue;
-                                  });
-                                }))
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: ArgonSize.Padding1),
+                              width: ArgonSize.HeightMedium,
+                              height: ArgonSize.HeightSmall,
+                              child: DropDowndList<GroupsBLL>(
+                                  CurrentItem: SelectedItem,
+                                  Items:
+                                      widget.TansifGroup.map((GroupsBLL value) {
+                                    return DropdownMenuItem<GroupsBLL>(
+                                      value: value,
+                                      child: Text(value.Group_Name),
+                                    );
+                                  }).toList(),
+                                  Lable: PersonalCase.GetLable(
+                                      ResourceKey.SelectItems),
+                                  OnChange: (GroupsBLL NewValue) {
+                                    setState(() {
+                                      SelectedItem = NewValue;
+                                    });
+                                  }),
+                            ))
                       ],
                     ),
                     Row(
@@ -162,68 +220,24 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                                 ResourceKey.Fabric_TopNo))),
                         Expanded(
                           flex: 2,
-                          child: Standard_Input(
-                            prefixIcon: Icon(Icons.text_fields),
-                            controller: KumnasNoController,
-                            Ktype: TextInputType.text,
+                          child: SizedBox(
+                            height: ArgonSize.HeightMedium,
+                            width: ArgonSize.HeightMedium,
+                            child: Standard_Input(
+                              suffixIcon: Icon(Icons.text_fields,
+                                  size: ArgonSize.IconSize),
+                              controller: KumnasNoController,
+                              Ktype: TextInputType.text,
+                            ),
                           ),
                         )
                       ],
                     ),
                     ModelOrderMatrixHeader(PersonalCase),
-                    ModelOrderList(PersonalCase, snapshot),
-                    StandardButton(
-                        Lable: PersonalCase.GetLable(ResourceKey.NewSample),
-                        ForColor: ArgonColors.white,
-                        BakColor: ArgonColors.primary,
-                        OnTap: () async {
-                          int CheckItem = 0;
-                          if (PersonalCase.SelectedMatrix == null)
-                            CheckItem = 1;
-                          var Sample =
-                              int.tryParse(SampleAmountController.text);
-                          if (Sample == 0) CheckItem = 2;
 
-                          if (CheckItem == 0) {
-                            var Item = QualityDept_ModelOrder_TrackingBLL();
-                            Item.Employee_Id = PersonalCase.GetCurrentUser().Id;
-                            Item.DeptModelOrder_QualityTest_Id =
-                                PersonalCase.SelectedTest.Id;
-                            Item.OrderSizeColorDetail_Id =
-                                PersonalCase.SelectedMatrix.Id;
-                            Item.StartDate = DateTime.now();
-                            Item.Sample_Amount =
-                                int.tryParse(SampleAmountController.text);
-                            if (SelectedItem != null)
-                              Item.QualityItem_Group_Id =
-                                  SelectedItem.Groups_id;
-
-                            Item.Fabric_TopNo = KumnasNoController.text;
-                            Item.Status = ControlStatus.TansifControlOpenStatus;
-                            PersonalCase.SelectedTracking = await Item
-                                .Create_QualityDept_ModelOrder_Tracking();
-                            if (PersonalCase.SelectedTracking.Id > 0)
-                              Navigator.pop(context, "Okay");
-                            else
-                              AlertPopupDialog(
-                                  context,
-                                  PersonalCase.GetLable(
-                                      ResourceKey.SaveMessage),
-                                  PersonalCase.GetLable(
-                                      ResourceKey.SaveErrorMessage),
-                                  ActionLable:
-                                      PersonalCase.GetLable(ResourceKey.Okay));
-                          } else {
-                            AlertPopupDialog(
-                                context,
-                                PersonalCase.GetLable(
-                                    ResourceKey.SaveErrorMessage),
-                                PersonalCase.GetLable(
-                                    ResourceKey.MandatoryFields),
-                                ActionLable:
-                                    PersonalCase.GetLable(ResourceKey.Okay));
-                          }
-                        }),
+                    Container(
+                      height: getScreenHeight()/2.2,
+                        child: ModelOrderList(PersonalCase, snapshot)),
                   ],
                 ),
               );
