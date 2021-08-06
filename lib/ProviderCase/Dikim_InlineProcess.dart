@@ -8,10 +8,13 @@ class SubCaseProvider with ChangeNotifier {
   OrderSizeColorDetailsBLL ModelOrderMatrix;
   QualityDept_ModelOrder_TrackingBLL QualityTracking;
 
+
   Quality_ItemsBLL FirstQuality;
   SubCaseProvider(){}
   ReloadAction(){
     notifyListeners();
   }
+
+
 
 }

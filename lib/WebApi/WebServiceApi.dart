@@ -1,4 +1,7 @@
 enum WebApiMethod{
+  DeletePastal_Cutting_Parti,
+  Get_Pastal_Cutting_Parti,
+  Set_CreatePastal_Cutting_Parti,
   Set_User_QualityTracking_Dikim,
   Get_EmployeesByOperation,
   Get_Quality_Items_WithValue,
