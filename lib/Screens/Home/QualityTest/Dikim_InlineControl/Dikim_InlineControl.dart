@@ -80,8 +80,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(
-              PersonalCase.SelectedTest.Test_Name +
-                  ": " +
+
                   PersonalCase.SelectedOrder.Order_Number,
               color: ArgonColors.header,
               FontSize: ArgonSize.Header3),
@@ -101,19 +100,25 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    StandardButton(
-                        Lable:
-                        PersonalCase.GetLable(ResourceKey.ControlValid),
-                        ForColor: ArgonColors.white,
-                        BakColor: ArgonColors.primary,
-                        OnTap: () async {
-                          await GenerateNewRound(PersonalCase);
+                    Row(
+                      mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                      children:[
+                        StandardButton(
+                            Lable:
+                            PersonalCase.GetLable(ResourceKey.ControlValid),
+                            ForColor: ArgonColors.white,
+                            BakColor: ArgonColors.primary,
+                            OnTap: () async {
+                              await GenerateNewRound(PersonalCase);
+                            }),
+                        DateTimePicker(SelectedDate: (DateTime SelectedTime) {
+                          setState(() {
+                            SelectedDate = SelectedTime;
+                          });
                         }),
-                    DateTimePicker(SelectedDate: (DateTime SelectedTime) {
-                      setState(() {
-                        SelectedDate = SelectedTime;
-                      });
-                    }),
+                      ]
+                    ),
+                    SizedBox(height:ArgonSize.Padding3),
                     Tb_InlineDikimList(
                       OnClickItems: (int Index) {
                         if (snapshot.data[Index].Status ==

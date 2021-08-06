@@ -43,11 +43,11 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
   }
 
   Widget ModelOrderList(PersonalProvider PersonalCase, snapshot) {
-    return Container(
-
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
       child: ListView.builder(
           scrollDirection: Axis.vertical,
-          primary: true,
+          primary: false,
           shrinkWrap: true,
           itemCount: snapshot.data.length,
           itemBuilder: (context, int i) {
@@ -88,7 +88,7 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
             Navigator.pop(context);
           },
           context: context),
-      body: Column(children: [
+      body: ListView(children: [
         ListTile(
           title: HeaderTitle(
               PersonalCase.GetLable(ResourceKey.CreateTasnifSample),
@@ -234,10 +234,7 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                       ],
                     ),
                     ModelOrderMatrixHeader(PersonalCase),
-
-                    Container(
-                      height: getScreenHeight()/2.2,
-                        child: ModelOrderList(PersonalCase, snapshot)),
+                    ModelOrderList(PersonalCase, snapshot),
                   ],
                 ),
               );

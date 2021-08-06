@@ -838,32 +838,35 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.Pending),
             ArgonColors.Pending,
-            Width: 100,
-            Height: 50);
+            Width: getScreenWidth()/3,
+            Height: ArgonSize.WidthMedium,
+            FontSize:ArgonSize.Header4
+        );
       case 1:
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.Success),
             ArgonColors.Success,
-            Width: 100,
-            Height: 50,
+            Width: getScreenWidth()/3,
+            Height: ArgonSize.WidthMedium,
             FontColor: ArgonColors.white);
       case 2:
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.UnderCheck),
             ArgonColors.UnderCheck,
-            Width: 100,
-            Height: 50);
+            Width: getScreenWidth()/3,
+            Height: ArgonSize.WidthMedium);
       case 3:
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.Invalid),
             ArgonColors.Invalid,
-            Width: 100,
-            Height: 50,
+            Width: getScreenWidth()/3,
+            Height: ArgonSize.WidthMedium,
             FontColor: ArgonColors.white);
     }
     return BoxColorWithText(
         widget.PersonalCase.GetLable(ResourceKey.Pending), ArgonColors.Pending,
-        Width: 100, Height: 50);
+        Width: getScreenWidth()/3,
+        Height: ArgonSize.WidthMedium);
   }
 
   Widget RoundControl(
@@ -908,6 +911,7 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
                                     color: ArgonColors.text, IsCenter: true)),
                           ],
                         ),
+                        SizedBox(height:ArgonSize.Padding5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
@@ -933,6 +937,8 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
                                     IsCenter: true)),
                           ],
                         ),
+                        SizedBox(height:ArgonSize.Padding5),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
@@ -960,6 +966,8 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
                                     IsCenter: true)),
                           ],
                         ),
+                        SizedBox(height:ArgonSize.Padding5),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,

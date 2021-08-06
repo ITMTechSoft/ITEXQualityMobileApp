@@ -43,19 +43,17 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
-      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
-        Navigator.pop(context);
-      },
-          context:  context
-      ),
+      appBar: DetailBar(
+          Title: PersonalCase.SelectedTest.Test_Name,
+          PersonalCase: PersonalCase,
+          OnTap: () {
+            Navigator.pop(context);
+          },
+          context: context),
       body: ListView(children: [
         ListTile(
-          title: HeaderTitle(
-              PersonalCase.SelectedTest.Test_Name +
-                  ": " +
-                  PersonalCase.SelectedOrder.Order_Number,
-              color: ArgonColors.header,
-              FontSize: ArgonSize.Header2),
+          title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+              color: ArgonColors.header, FontSize: ArgonSize.Header2),
           subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
           dense: true,
           selected: true,
@@ -75,14 +73,15 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        StandardButton(
-
-                          ///TODO : ADD Start Measuring to ResourceKey
-                            Lable: PersonalCase.GetLable(
+                        CustomButton(
+                            width: getScreenWidth() / 2.5,
+                            height: ArgonSize.WidthSmall1,
+                  textSize:ArgonSize.Header4,
+                            ///TODO : ADD Start Measuring to ResourceKey
+                            value: PersonalCase.GetLable(
                                 ResourceKey.AddControlEmployee),
-                            ForColor: ArgonColors.white,
-                            BakColor: ArgonColors.primary,
-                            OnTap: () async {
+                            backGroundColor: ArgonColors.primary,
+                            function: () async {
                               CaseProvider.ReloadAction();
                               Navigator.push(
                                   context,
@@ -92,12 +91,18 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                                             RoundItem: widget.RoundItem,
                                           )));
                             }),
-                        SizedBox(width: 50,),
-                        StandardButton(
-                            Lable: PersonalCase.GetLable(ResourceKey.CloseControl),
-                            ForColor: ArgonColors.white,
-                            BakColor: ArgonColors.warning,
-                            OnTap: () {
+                        SizedBox(
+                          width: 50,
+                        ),
+                        CustomButton(
+                            width: getScreenWidth() / 2.5,
+                            height: ArgonSize.WidthSmall1,
+                            textSize:ArgonSize.Header4,
+
+                            value:
+                                PersonalCase.GetLable(ResourceKey.CloseControl),
+                            backGroundColor: ArgonColors.warning,
+                            function: () {
                               AlertPopupDialogWithAction(context,
                                   title: PersonalCase.GetLable(
                                       ResourceKey.WarrningMessage),
@@ -106,21 +111,17 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                                         ResourceKey.ConfirmationCloseControl))
                                   ],
                                   FirstActionLable:
-                                  PersonalCase.GetLable(ResourceKey.Okay),
+                                      PersonalCase.GetLable(ResourceKey.Okay),
                                   SecondActionLable:
-                                  PersonalCase.GetLable(ResourceKey.Cancel),
+                                      PersonalCase.GetLable(ResourceKey.Cancel),
                                   OnFirstAction: () async {
-                                    await widget.RoundItem.CloseDikimInlineTur();
-                                    CaseProvider.ReloadAction();
-                                    Navigator.pop(context);
-                                  });
-
-
+                                await widget.RoundItem.CloseDikimInlineTur();
+                                CaseProvider.ReloadAction();
+                                Navigator.pop(context);
+                              });
                             }),
                       ],
-
                     ),
-
                     Tb_InlineRoundList(
                       Items: snapshot.data,
                       PersonalCase: PersonalCase,
@@ -130,10 +131,11 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      Dikim_InlineEmployeeOperationControl(
-                                          EmployeeOperation:
-                                              snapshot.data[Index]),));
+                                builder: (context) =>
+                                    Dikim_InlineEmployeeOperationControl(
+                                        EmployeeOperation:
+                                            snapshot.data[Index]),
+                              ));
                       },
                     ),
                   ],

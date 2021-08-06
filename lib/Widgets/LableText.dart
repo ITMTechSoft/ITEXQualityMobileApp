@@ -88,7 +88,7 @@ Widget LableDateTime(DateTime TargetDate,
         child: Text(
           TargetDate != null ? DateFormat(Format).format(TargetDate) : "",
           style: TextStyle(
-            fontSize: FontSize == null ? _LableFontSize : FontSize,
+            fontSize: FontSize == null ? ArgonSize.Header5: ArgonSize.Header5,
             fontWeight: FontWeight.bold,
             color: color == null ? ArgonColors.Title : color,
           ),
