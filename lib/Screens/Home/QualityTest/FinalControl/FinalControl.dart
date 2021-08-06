@@ -6,7 +6,7 @@ import 'package:itex_soft_qualityapp/Models/FinalControl/ModelOrder_Matrix.dart'
 import 'package:itex_soft_qualityapp/Models/FinalControl/Model_Order_Control.dart';
 import 'package:itex_soft_qualityapp/Models/FinalControl/Quality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
-import 'package:itex_soft_qualityapp/ProviderCase/Dikim_InlineProcess.dart';
+import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';

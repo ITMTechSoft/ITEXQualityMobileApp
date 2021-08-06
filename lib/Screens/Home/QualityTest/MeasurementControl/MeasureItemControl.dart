@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
-import 'package:itex_soft_qualityapp/ProviderCase/Dikim_InlineProcess.dart';
+import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';

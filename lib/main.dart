@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:itex_soft_qualityapp/ProviderCase/Dikim_InlineProcess.dart';
+import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/Screens/Authenticate/LoginPages.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/MainActivity.dart';
