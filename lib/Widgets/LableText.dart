@@ -20,7 +20,7 @@ Text HeaderTitle(String Title, {Color color, double FontSize}) {
 }
 
 Widget LableTitle(String Title,
-    {Color color, double FontSize, bool IsCenter = false}) {
+    {Color color  , double FontSize, bool IsCenter = false}) {
   if (IsCenter)
     return Container(
       padding: EdgeInsets.all(2),
@@ -31,7 +31,7 @@ Widget LableTitle(String Title,
           style: TextStyle(
             fontSize: FontSize == null ? ArgonSize.Header5 : ArgonSize.Header5,
             fontWeight: FontWeight.bold,
-            color: color == null ? ArgonColors.Title : color,
+            color: color == null ? color : color,
           ),
         ),
       ),

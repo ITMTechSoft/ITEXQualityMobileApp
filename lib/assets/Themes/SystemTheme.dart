@@ -100,6 +100,9 @@ class ArgonSize{
   static double HeighttooSmall  = getAdaptiveTextSize(20);
 
   static double IconSize    = getAdaptiveTextSize(20);
+  static double IconSizeMedium    = getAdaptiveTextSize(30);
+  static double IconSizeBig    = getAdaptiveTextSize(40);
+
 
   ///
 
