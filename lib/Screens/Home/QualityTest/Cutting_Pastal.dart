@@ -123,15 +123,16 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(
-              PersonalCase.SelectedTest.Test_Name +
-                  ": " +
+
                   PersonalCase.SelectedOrder.Order_Number,
               color: ArgonColors.header,
               FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString(),style:TextStyle(fontSize:ArgonSize.Header6)),
           dense: true,
           selected: true,
         ),
+
+        SizedBox(height:ArgonSize.Padding4),
         FutureBuilder(
           future: LoadingOpenPage(PersonalCase),
           builder: (context, snapshot) {

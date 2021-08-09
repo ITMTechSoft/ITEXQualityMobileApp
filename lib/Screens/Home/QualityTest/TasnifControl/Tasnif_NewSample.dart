@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:itex_soft_qualityapp/Models/Groups.dart';
 import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
@@ -21,7 +22,7 @@ class Tasnif_NewSample extends StatefulWidget {
 
 class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
   int IntiteStatus = 0;
-
+  int AssignAmount = 1;
   final TextEditingController SampleAmountController =
       new TextEditingController();
   final TextEditingController KumnasNoController = new TextEditingController();
@@ -103,7 +104,8 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
             onTap: () async {
               int CheckItem = 0;
               if (PersonalCase.SelectedMatrix == null) CheckItem = 1;
-              var Sample = int.tryParse(SampleAmountController.text);
+            //  var Sample = int.tryParse(SampleAmountController.text);
+              var Sample = AssignAmount;
               if (Sample == 0) CheckItem = 2;
 
               if (CheckItem == 0) {
@@ -112,7 +114,8 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                 Item.DeptModelOrder_QualityTest_Id = PersonalCase.SelectedTest.Id;
                 Item.OrderSizeColorDetail_Id = PersonalCase.SelectedMatrix.Id;
                 Item.StartDate = DateTime.now();
-                Item.Sample_Amount = int.tryParse(SampleAmountController.text);
+               // Item.Sample_Amount = int.tryParse(SampleAmountController.text);
+                Item.Sample_Amount =AssignAmount;
                 if (SelectedItem != null)
                   Item.QualityItem_Group_Id = SelectedItem.Groups_id;
 
@@ -166,18 +169,32 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                         Expanded(
                           flex: 2,
                           child: SizedBox(
-                            height: ArgonSize.HeightMedium,
-                            width: ArgonSize.HeightMedium,
-                            child: Standard_Input(
-                              suffixIcon: Icon(Icons.countertops,
-                                  size: ArgonSize.IconSize),
-                              controller: SampleAmountController,
-                              Ktype: TextInputType.number,
+
+                            child:
+                            // Standard_Input(
+                            //   suffixIcon: Icon(Icons.countertops,
+                            //       size: ArgonSize.IconSize),
+                            // controller: SampleAmountController,
+                            //   Ktype: TextInputType.number,
+                            // ),
+
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: ArgonSize.Padding1),
+                              child: SpinBox(
+                                max: 100000,
+                                textStyle:TextStyle(fontSize:ArgonSize.Header3),
+                                value: 1,
+                                onChanged: (value) {
+                                  AssignAmount = value.toInt();
+                                },
+                              ),
                             ),
                           ),
                         )
                       ],
                     ),
+                    SizedBox(height:ArgonSize.Padding4),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
@@ -211,6 +228,8 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                             ))
                       ],
                     ),
+                    SizedBox(height:ArgonSize.Padding4),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
@@ -221,7 +240,6 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                         Expanded(
                           flex: 2,
                           child: SizedBox(
-                            height: ArgonSize.HeightMedium,
                             width: ArgonSize.HeightMedium,
                             child: Standard_Input(
                               suffixIcon: Icon(Icons.text_fields,

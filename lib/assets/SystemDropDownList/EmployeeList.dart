@@ -67,8 +67,9 @@ class _Employee_ListState extends State<Employee_List> {
     var FilterListItem = widget.Items.where((r) => r.Employee_Name.toUpperCase()
         .contains(SearchController.text.toUpperCase())).toList();
     return SingleChildScrollView(
-      primary: false,
+      primary: true,
       scrollDirection: Axis.vertical,
+
       child: ListView.builder(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
@@ -91,7 +92,6 @@ class _Employee_ListState extends State<Employee_List> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color:Colors.green,
       height: getScreenHeight() / 1.3,
       padding: EdgeInsets.all(1),
       margin: EdgeInsets.only(left: 2, top: 0, right: 2, bottom: 0),

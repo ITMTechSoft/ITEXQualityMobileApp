@@ -114,6 +114,8 @@ class _MeasureItem_ControlState
 
                 child: Padding(
                   child: SpinBox(
+                    max: 100000,
+
                     value: 1,
                     onChanged: (value) {
                       AssignAmount = value.toInt();

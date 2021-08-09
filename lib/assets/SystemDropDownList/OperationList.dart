@@ -64,6 +64,7 @@ class _Operation_ListState extends State<Operation_List> {
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           primary: false,
+
           itemCount: FilterListItem.length,
           itemBuilder: (context, int i) {
             return DropDownBox(ItemName: FilterListItem[i].Operation_Name,

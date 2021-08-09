@@ -61,32 +61,29 @@ class _Dikim_InlineEmployeeOperationControlState
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                HeaderLable(PersonalCase.GetLable(ResourceKey.Order_Number)),
-                TableLable(PersonalCase.SelectedOrder.Order_Number),
-                HeaderLable(PersonalCase.GetLable(ResourceKey.Operation_Name)),
-                TableLable(widget.EmployeeOperation.Operation_Name.toString()),
+                HeaderLable('${PersonalCase.GetLable(ResourceKey.Order_Number)} / ' '${PersonalCase.GetLable(ResourceKey.Operation_Name)}' ,Flex:3 ),
+                TableLable(PersonalCase.SelectedOrder.Order_Number,Flex:2),
+                TableLable(widget.EmployeeOperation.Operation_Name.toString(),Flex:2),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                HeaderLable(PersonalCase.GetLable(ResourceKey.Employee_Name)),
-                TableLable(widget.EmployeeOperation.Inline_Employee_Name),
-                HeaderLable(PersonalCase.GetLable(ResourceKey.Sample_Amount)),
-                TableLable((widget.EmployeeOperation.Amount ?? 0).toString()),
+                HeaderLable('${PersonalCase.GetLable(ResourceKey.Employee_Name)} / ' '${PersonalCase.GetLable(ResourceKey.Sample_Amount)}' , Flex:3),
+                TableLable(widget.EmployeeOperation.Inline_Employee_Name,Flex:2),
+                TableLable((widget.EmployeeOperation.Amount ?? 0).toString(),Flex:2),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                HeaderLable(PersonalCase.GetLable(ResourceKey.Error_Amount)),
+                HeaderLable('${PersonalCase.GetLable(ResourceKey.Error_Amount)} / ' '${PersonalCase.GetLable(ResourceKey.Correct_Amount)}' , Flex:3),
                 TableLable(
-                    (widget.EmployeeOperation.Error_Amount ?? 0).toString()),
-                HeaderLable(PersonalCase.GetLable(ResourceKey.Correct_Amount)),
+                    (widget.EmployeeOperation.Error_Amount ?? 0).toString(), Flex:2),
                 TableLable(
-                    (widget.EmployeeOperation.Correct_Amount ?? 0).toString()),
+                    (widget.EmployeeOperation.Correct_Amount ?? 0).toString(), Flex:2),
               ],
             ),
           ],
@@ -97,13 +94,13 @@ class _Dikim_InlineEmployeeOperationControlState
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                flex:2,
-                  child: StandardButton(
-                      ForColor: ArgonColors.white,
-                      BakColor: ArgonColors.inputSuccess,
-                      FontSize: 12,
-                      Lable: PersonalCase.GetLable(ResourceKey.Correct_Amount),
-                      OnTap: () async {
+                flex:3,
+                  child: CustomButton(
+                      backGroundColor: ArgonColors.inputSuccess,
+                      textSize: ArgonSize.Header5,
+                      height: ArgonSize.HeightSmall1,
+                      value: PersonalCase.GetLable(ResourceKey.Correct_Amount),
+                      function: () async {
                         bool Check = await widget.EmployeeOperation
                             .Assign_EmployeeControlAmount(AssignAmount, "C");
 
@@ -114,6 +111,9 @@ class _Dikim_InlineEmployeeOperationControlState
 
                 child: Padding(
                   child: SpinBox(
+                    max: 100000,
+
+                    textStyle:TextStyle(fontSize:ArgonSize.Header3),
                     value: 1,
                     onChanged: (value) {
                       AssignAmount = value.toInt();
@@ -124,13 +124,14 @@ class _Dikim_InlineEmployeeOperationControlState
                 flex: 5,
               ),
               Expanded(
-                flex:2,
-                  child: StandardButton(
-                      ForColor: ArgonColors.white,
-                      BakColor: ArgonColors.error,
-                      FontSize: 12,
-                      Lable: PersonalCase.GetLable(ResourceKey.Error_Amount),
-                      OnTap: () async {
+                flex:3,
+
+                  child: CustomButton(
+                      backGroundColor: ArgonColors.error,
+                      textSize: ArgonSize.Header5,
+                      height: ArgonSize.HeightSmall1,
+                      value: PersonalCase.GetLable(ResourceKey.Error_Amount),
+                      function: () async {
                         bool Check = await widget.EmployeeOperation
                             .Assign_EmployeeControlAmount(AssignAmount, "E");
                         if (Check) setState(() {});
@@ -138,13 +139,17 @@ class _Dikim_InlineEmployeeOperationControlState
             ],
           ),
           SizedBox(
-            height: 20,
+            height: ArgonSize.Padding2,
           ),
-          StandardButton(
-              Lable: PersonalCase.GetLable(ResourceKey.CloseControl),
-              ForColor: ArgonColors.white,
-              BakColor: ArgonColors.primary,
-              OnTap: () async {
+          CustomButton(
+            width: getScreenWidth()/3,
+
+              height: ArgonSize.HeightMedium,
+              textSize: ArgonSize.Header4,
+
+              value: PersonalCase.GetLable(ResourceKey.CloseControl),
+              backGroundColor: ArgonColors.primary,
+              function: () async {
                 widget.EmployeeOperation.Order_Id =
                     PersonalCase.SelectedOrder.Order_Id;
                 var Check = await widget.EmployeeOperation
@@ -180,12 +185,11 @@ class _Dikim_InlineEmployeeOperationControlState
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(
-              PersonalCase.SelectedTest.Test_Name +
-                  ": " +
+
                   PersonalCase.SelectedOrder.Order_Number,
               color: ArgonColors.header,
               FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString(),style:TextStyle(fontSize:ArgonSize.Header6)),
           dense: true,
           selected: true,
         ),

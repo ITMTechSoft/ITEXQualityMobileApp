@@ -71,7 +71,7 @@ class _Tasnif_AmountState extends State<Tasnif_Amount> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Standard_Input(
-                    prefixIcon: Icon(Icons.cut),
+                    suffixIcon: Icon(Icons.cut),
                     controller: TasnifAmountController,
                     Ktype: TextInputType.number,
                   ),

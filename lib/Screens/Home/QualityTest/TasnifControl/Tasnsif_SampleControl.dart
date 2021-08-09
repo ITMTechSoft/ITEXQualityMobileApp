@@ -374,6 +374,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 
               child: Padding(
                 child: SpinBox(
+                  max: 100000,
                   textStyle:TextStyle(fontSize:ArgonSize.Header3),
                   value: 1,
                   onChanged: (value) {
@@ -400,14 +401,16 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 
           ],
         ),
+        SizedBox(height:ArgonSize.Padding6),
         StandardButton(
             ForColor: ArgonColors.white,
             BakColor: ArgonColors.myGreen,
             FontSize: ArgonSize.Header3,
             Lable: PersonalCase.GetLable(ResourceKey.CloseSample),
             OnTap: () async {
-              await PersonalCase.SelectedTracking.CloseTanifSample();
-              Navigator.pop(context, "Okay");
+              // await PersonalCase.SelectedTracking.CloseTanifSample();
+              // Navigator.pop(context, "Okay");
+              showAlertDialog(context,PersonalCase);
             })
       ],
     ),
@@ -451,4 +454,43 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
       ),
     );
   }
+}
+showAlertDialog(BuildContext context,PersonalProvider PersonalCase) {
+
+  // set up the buttons
+  Widget remindButton = TextButton(
+    child: Text(PersonalCase.GetLable(ResourceKey.Okay),style:TextStyle(fontSize:ArgonSize.Header4)),
+    onPressed:  () {
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+
+    },
+  );
+  Widget cancelButton = TextButton(
+    child: Text(PersonalCase.GetLable(ResourceKey.Cancel),style:TextStyle(fontSize:ArgonSize.Header4)),
+    onPressed:  () {
+      Navigator.of(context).pop();
+    },
+  );
+
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    contentPadding: EdgeInsets.all(ArgonSize.HeightMedium),
+
+    title: Text(PersonalCase.GetLable(ResourceKey.Notice),style:TextStyle(fontSize:ArgonSize.Header3)),
+    content: Text(PersonalCase.GetLable(ResourceKey.ClosePageConfirmation),style:TextStyle(fontSize:ArgonSize.Header4)),
+    actions: [
+      remindButton,
+      cancelButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

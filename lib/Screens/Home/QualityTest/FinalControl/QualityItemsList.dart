@@ -7,6 +7,7 @@ import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
+import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
 import 'package:itex_soft_qualityapp/Widgets/button.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
@@ -110,40 +111,32 @@ class _QualityItemsListState extends State<QualityItemsList> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(children: [
-                        CustomText(
-                          text: PersonalCase.GetLable(ResourceKey.KeepPageOpen),
-                          color: ArgonColors.myBlue,
+                      Expanded(
+                        flex: 2,
+                        child: RadioSwitch(
+                          Lable: PersonalCase.GetLable(ResourceKey.KeepPageOpen),
+                          fontSize: ArgonSize.Header5,
+                          SwitchValue: _KeepPage,
+                          OnTap: (value) {
+                            setState(() {
+                              _KeepPage = value;
+                            });
+                          },
                         ),
-                        Transform.scale(
-                          scale: 0.7,
-                          child: CupertinoSwitch(
-                            value: _KeepPage,
-                            onChanged: (value) {
-                              setState(() {
-                                _KeepPage = value;
-                              });
-                            },
-                          ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: RadioSwitch(
+                          Lable: PersonalCase.GetLable(ResourceKey.Delete),
+                          fontSize: ArgonSize.Header5,
+                          SwitchValue: _IsDeletedVal,
+                          OnTap: (value) {
+                            setState(() {
+                              _IsDeletedVal = value;
+                            });
+                          },
                         ),
-                      ]),
-                      Column(children: [
-                        CustomText(
-                          text: PersonalCase.GetLable(ResourceKey.Delete),
-                          color: ArgonColors.myBlue,
-                        ),
-                        Transform.scale(
-                          scale: 0.7,
-                          child: CupertinoSwitch(
-                            value: _IsDeletedVal,
-                            onChanged: (value) {
-                              setState(() {
-                                _IsDeletedVal = value;
-                              });
-                            },
-                          ),
-                        ),
-                      ]),
+                      ),
                     ],
                   ),
                 ),

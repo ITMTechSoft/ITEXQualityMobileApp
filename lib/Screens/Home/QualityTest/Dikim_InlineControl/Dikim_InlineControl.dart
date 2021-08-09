@@ -101,14 +101,16 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Row(
-                      mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment:MainAxisAlignment.spaceAround,
                       children:[
-                        StandardButton(
-                            Lable:
+                        CustomButton(
+                             width:getScreenWidth()/2.3,
+                            height: ArgonSize.HeightSmall,
+                  textSize:ArgonSize.Header4,
+                            value:
                             PersonalCase.GetLable(ResourceKey.ControlValid),
-                            ForColor: ArgonColors.white,
-                            BakColor: ArgonColors.primary,
-                            OnTap: () async {
+                            backGroundColor: ArgonColors.primary,
+                            function: () async {
                               await GenerateNewRound(PersonalCase);
                             }),
                         DateTimePicker(SelectedDate: (DateTime SelectedTime) {

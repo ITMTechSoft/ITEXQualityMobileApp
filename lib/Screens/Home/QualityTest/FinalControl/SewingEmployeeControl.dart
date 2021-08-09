@@ -121,18 +121,18 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: SingleChildScrollView(
-
-                      child: Operation_List(
-                        PersonalCase: PersonalCase,
-                        Items: OperationList,
-                        OnClickItems: (OperationBLL SelectedItem) {
-                          SelectedOperation = SelectedItem;
-                        },
-                      ),
+                    flex:1,
+                    child: Operation_List(
+                      PersonalCase: PersonalCase,
+                      Items: OperationList,
+                      OnClickItems: (OperationBLL SelectedItem) {
+                        SelectedOperation = SelectedItem;
+                      },
                     ),
                   ),
                   Expanded(
+                    flex:1,
+
                     child: Employee_List(
                       PersonalCase: PersonalCase,
                       Items: OperatorList,
@@ -244,26 +244,36 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
       },
           context:  context
       ),
-      body: ListView(
-        children: [
-          ListTile(
-            title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
-                color: ArgonColors.header, FontSize: ArgonSize.Header2),
-            subtitle:
-            Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
-            dense: true,
-            selected: true,
+      body:
+        Container(
+          height:getScreenHeight(),
+          child: ListView(
+
+              children:[
+              ListTile(
+                title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+                    color: ArgonColors.header, FontSize: ArgonSize.Header2),
+                subtitle:
+                Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+                dense: true,
+                selected: true,
+              ),
+              BoxMaterialCard(
+                paddingHorizontal: 0,
+                paddingVertical:  0 ,
+                Childrens: [HeaderAction, SizedBox(height: 15), MainPageTitle],
+
+              ),
+
+               //  Expanded(flex:1,child: HeaderAction),
+               //  //SizedBox(height: 15),
+               // Expanded(flex:3,child: MainPageTitle)
+            ]
           ),
-          BoxMaterialCard(
-            paddingHorizontal: 0,
-            paddingVertical:  0 ,
-            Childrens: [HeaderAction, SizedBox(height: 15), MainPageTitle],
-
-          ),
+        )
 
 
-        ],
-      ),
+
     );
   }
 }

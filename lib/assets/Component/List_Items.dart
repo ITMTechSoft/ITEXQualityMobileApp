@@ -29,7 +29,7 @@ Widget DepartmentCard(Employee_DepartmentBLL Item, Function OnTap) {
           title: Text(
             Item.Depart_Name,
             style:
-            TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.text),
+                TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.text),
           ),
           subtitle: Text(
             Item.Depart_Name,
@@ -53,9 +53,16 @@ Widget OneItem({String ItemName, String ItemValue, Function OnTap}) {
             onTap: OnTap,
             title: Text(
               ItemName,
-              style: TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.black.withOpacity(0.6)),
+              style: TextStyle(
+                  fontSize: ArgonSize.Header3,
+                  color: ArgonColors.black.withOpacity(0.6)),
             ),
-            subtitle: Text(ItemValue,style: TextStyle(fontSize: ArgonSize.Header5, color: ArgonColors.black.withOpacity(0.5)),),
+            subtitle: Text(
+              ItemValue,
+              style: TextStyle(
+                  fontSize: ArgonSize.Header5,
+                  color: ArgonColors.black.withOpacity(0.5)),
+            ),
           ),
         )),
   );
@@ -83,7 +90,7 @@ class OrderCard extends StatelessWidget {
           child: ListTile(
             onTap: OnTap,
             title: Padding(
-              padding:  EdgeInsets.only(bottom:ArgonSize.Padding3),
+              padding: EdgeInsets.only(bottom: ArgonSize.Padding3),
               child: CustomText(
                   text: Item.Order_Number ?? "",
                   size: ArgonSize.Header5,
@@ -95,8 +102,10 @@ class OrderCard extends StatelessWidget {
                 size: ArgonSize.Header6,
                 textAlign: TextAlign.left,
                 color: ArgonColors.black.withOpacity(0.5)),
-            leading: SizedBox(width:ArgonSize.WidthSmall,height:ArgonSize.WidthMedium,child: ImageLoader(LoadingImage: GetModelImage())),
-
+            leading: SizedBox(
+                width: ArgonSize.WidthSmall,
+                height: ArgonSize.WidthMedium,
+                child: ImageLoader(LoadingImage: GetModelImage())),
             trailing: Text(''),
           ),
         ),
@@ -135,7 +144,7 @@ Widget AraControlCard(
                       PersonalCase.GetLable(ResourceKey.ControlError)))
             ],
           ),
-          SizedBox(height:ArgonSize.Padding6),
+          SizedBox(height: ArgonSize.Padding6),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
@@ -159,46 +168,39 @@ Widget AraControlCard(
                   ))
             ],
           ),
-          SizedBox(height:ArgonSize.Padding4),
-
+          SizedBox(height: ArgonSize.Padding4),
           Row(
             children: [
               Expanded(
-                flex:2,
+                flex: 2,
                 child: CustomButton(
-                    value:  PersonalCase.GetLable(ResourceKey.Saglim),
+                    value: PersonalCase.GetLable(ResourceKey.Saglim),
                     backGroundColor: ArgonColors.primary,
-                    width:getScreenWidth()/2,
-                    height:ArgonSize.WidthSmall1,
+                    width: getScreenWidth() / 2,
+                    height: ArgonSize.WidthSmall1,
                     function: () async {
                       int DelValue = int.tryParse(InputVal.text) ?? 1;
                       var NewItem = await Item.CorrectSpecificAmount(DelValue);
                       if (NewItem != null) Item = NewItem;
                       Execute();
-
                     }),
               ),
-              SizedBox(width:20),
-
+              SizedBox(width: 20),
               Expanded(
-                  flex:2,
-
+                  flex: 2,
                   child: Input_Form(
-                    InputHeight:ArgonSize.WidthSmall1,
+                    InputHeight: ArgonSize.WidthSmall1,
                     controller: InputVal,
                     KType: TextInputType.number,
                   )),
-              SizedBox(width:20),
-
+              SizedBox(width: 20),
               Expanded(
-                flex:2,
-
+                flex: 2,
                 child: CustomButton(
-                    value:  PersonalCase.GetLable(ResourceKey.Error),
+                    value: PersonalCase.GetLable(ResourceKey.Error),
                     backGroundColor: ArgonColors.myRed,
-                    width:getScreenWidth()/2,
-                    height:ArgonSize.WidthSmall1,
-
+                    width: getScreenWidth() / 2,
+                    height: ArgonSize.WidthSmall1,
                     function: () async {
                       int DelValue = int.tryParse(InputVal.text) ?? 1;
                       var NewItem = await Item.ErrorSpecificAmount(DelValue);
@@ -217,22 +219,35 @@ Widget AraControlCard(
 Widget CuttingPastalControl(PersonalCase, DeptModOrderQuality_ItemsBLL Item,
     Function Approve, Function Reject, Function ReOpenAction) {
   Widget ActionControl = Row(
+    mainAxisAlignment:MainAxisAlignment.spaceEvenly,
     children: [
       Expanded(
-        child: StandardButton(
-            Lable: PersonalCase.GetLable(ResourceKey.ControlValid),
-            ForColor: ArgonColors.white,
-            BakColor: ArgonColors.primary,
-            OnTap: Approve),
+        flex:4,
+        child: CustomButton(
+            value: PersonalCase.GetLable(ResourceKey.ControlValid),
+            textSize:ArgonSize.Header5,
+            backGroundColor: ArgonColors.primary,
+            function: Approve,
+            height: ArgonSize.HeightSmall1,
+          width :getScreenWidth()>500?getScreenWidth()/3:getScreenWidth()/2
+        ),
       ),
+      Expanded(flex:1,child: Container()),
       Expanded(
-          child: StandardButton(
-              Lable: PersonalCase.GetLable(ResourceKey.ControlInvalid),
-              ForColor: ArgonColors.white,
-              BakColor: ArgonColors.warning,
-              OnTap: Reject)),
+        flex:4,
+        child: CustomButton(
+            textSize:ArgonSize.Header5,
+
+            value:  PersonalCase.GetLable(ResourceKey.ControlInvalid),
+        backGroundColor: ArgonColors.warning,
+        height: ArgonSize.HeightSmall1,
+        width :getScreenWidth()>500?getScreenWidth()/3:getScreenWidth()/2,
+
+        function: Reject),
+      ),
     ],
   );
+
   if (Item.CheckStatus == 1)
     ActionControl = InkWell(
       child: Row(
@@ -241,10 +256,13 @@ Widget CuttingPastalControl(PersonalCase, DeptModOrderQuality_ItemsBLL Item,
             child: Icon(
               Icons.check_circle_rounded,
               color: ArgonColors.success,
+              size:ArgonSize.IconSize
             ),
           ),
+          SizedBox(width : ArgonSize.Padding5),
+
           Expanded(
-            child: Text(PersonalCase.GetLable(ResourceKey.Approved)),
+            child: Text(PersonalCase.GetLable(ResourceKey.Approved),style:TextStyle(fontSize:ArgonSize.Header4)),
           )
         ],
       ),
@@ -258,12 +276,16 @@ Widget CuttingPastalControl(PersonalCase, DeptModOrderQuality_ItemsBLL Item,
             child: Icon(
               Icons.cancel_outlined,
               color: ArgonColors.warning,
+                size:ArgonSize.IconSize
+
             ),
           ),
+          SizedBox(width : ArgonSize.Padding5),
           Expanded(
             child: Text(PersonalCase.GetLable(ResourceKey.Rejected) +
                 ': ' +
-                Item.Reject_Note),
+                Item.Reject_Note ,
+                style:TextStyle(fontSize:ArgonSize.Header4)),
           )
         ],
       ),
@@ -274,8 +296,13 @@ Widget CuttingPastalControl(PersonalCase, DeptModOrderQuality_ItemsBLL Item,
     mainAxisAlignment: MainAxisAlignment.center,
     mainAxisSize: MainAxisSize.max,
     children: [
+      SizedBox(height:ArgonSize.Padding6),
+
       LableTitle(Item.Item_Name, color: ArgonColors.text),
+      SizedBox(height:ArgonSize.Padding3),
       ActionControl,
+      SizedBox(height:ArgonSize.Padding6),
+
     ],
   );
 
@@ -314,66 +341,51 @@ Widget TansifControlList(PersonalProvider PersonalCase,
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-              flex:3,
-
+              flex: 3,
               child: LableTitle(
-                '${PersonalCase.GetLable(ResourceKey.ColorName)} / '   '${PersonalCase.GetLable(ResourceKey.SizeName)}',
+                '${PersonalCase.GetLable(ResourceKey.ColorName)} / '
+                '${PersonalCase.GetLable(ResourceKey.SizeName)}',
               )),
-
-
-
           Expanded(
-              flex:2,
+              flex: 2,
               child: LableTitle(Item.ColorName.toString(),
                   color: ArgonColors.text, IsCenter: true)),
           Expanded(
-              flex:2,
+              flex: 2,
               child: LableTitle(Item.SizeName,
                   color: ArgonColors.text, IsCenter: true)),
-
-
         ],
       ),
-      SizedBox(height:8),
+      SizedBox(height: 8),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-              flex:3,
+              flex: 3,
               child: LableTitle(
                   '${PersonalCase.GetLable(ResourceKey.OrderSizeColor_QTY)} / '
-
-                      '${PersonalCase.GetLable(ResourceKey.SizeColor_QTY)}'
-              )),
-
-
+                  '${PersonalCase.GetLable(ResourceKey.SizeColor_QTY)}')),
           Expanded(
-              flex:2,
+              flex: 2,
               child: LableTitle((Item.OrderSizeColor_QTY ?? 0).toString(),
                   color: ArgonColors.text, IsCenter: true)),
           Expanded(
-              flex:2,
+              flex: 2,
               child: LableTitle((Item.SizeColor_QTY ?? 0).toString(),
                   color: ArgonColors.text, IsCenter: true)),
-
         ],
       ),
-      SizedBox(height:8),
-
+      SizedBox(height: 8),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-              flex:3,
+              flex: 3,
               child: LableTitle(
                   '${PersonalCase.GetLable(ResourceKey.OrderSizeColor_QTY)} / '
-
-                      '${PersonalCase.GetLable(ResourceKey.Sample_Amount)}'
-
-              )),
-
+                  '${PersonalCase.GetLable(ResourceKey.Sample_Amount)}')),
 
           // Expanded(
           //     flex:2,
@@ -381,45 +393,32 @@ Widget TansifControlList(PersonalProvider PersonalCase,
           //       PersonalCase.GetLable(ResourceKey.Sample_Amount),
           //     )),
           Expanded(
-              flex:2,
+              flex: 2,
               child: LableTitle((Item.OrderSizeColor_QTY ?? 0).toString(),
                   color: ArgonColors.text, IsCenter: true)),
           Expanded(
-              flex:2,
+              flex: 2,
               child: LableTitle((Item.Sample_Amount ?? 0).toString(),
                   color: ArgonColors.text, IsCenter: true)),
-
         ],
       ),
-      SizedBox(height:8),
-
-      Row(
-          children:[
-            Expanded(
-                flex:3,
-                child: LableTitle(
-                    '${PersonalCase.GetLable(ResourceKey.Error_Amount)} / '
-                        '${PersonalCase.GetLable(ResourceKey.Sample_Status)}'
-                )),
-
-
-            Expanded(
-                flex:2,
-
-                child: LableTitle(
-                    (Item.Error_Amount ?? 0).toString(),
-                    color: ArgonColors.text,
-                    IsCenter: true)),
-            Expanded(
-                flex:2,
-
-                child: Item.Status == ControlStatus.TansifControlCloseStatus
-                    ? FinishStatus
-                    : PendingStatus),
-          ]
-      )
-
-
+      SizedBox(height: 8),
+      Row(children: [
+        Expanded(
+            flex: 3,
+            child: LableTitle(
+                '${PersonalCase.GetLable(ResourceKey.Error_Amount)} / '
+                '${PersonalCase.GetLable(ResourceKey.Sample_Status)}')),
+        Expanded(
+            flex: 2,
+            child: LableTitle((Item.Error_Amount ?? 0).toString(),
+                color: ArgonColors.text, IsCenter: true)),
+        Expanded(
+            flex: 2,
+            child: Item.Status == ControlStatus.TansifControlCloseStatus
+                ? FinishStatus
+                : PendingStatus),
+      ])
     ],
   );
 
@@ -445,7 +444,7 @@ Widget CuttingModelOrderMatrix(
 
   return Card(
     shadowColor: ArgonColors.black,
-    elevation: 20,
+    elevation: 10,
     color: SelectedColor,
     child: InkWell(
       onTap: OnTap,
@@ -462,24 +461,24 @@ Widget CuttingModelOrderMatrix(
               children: [
                 Expanded(
                     child: Center(
-                      child: LableTitle(Item.SizeParam_StringVal,
-                          color: ArgonColors.text),
-                    )),
+                  child: LableTitle(Item.SizeParam_StringVal,
+                      color: ArgonColors.text),
+                )),
                 Expanded(
                     child: Center(
-                      child: LableTitle(Item.ColorParam_StringVal,
-                          color: ArgonColors.text),
-                    )),
+                  child: LableTitle(Item.ColorParam_StringVal,
+                      color: ArgonColors.text),
+                )),
                 Expanded(
                     child: Center(
-                      child: LableTitle((Item.PlanSizeColor_QTY ?? 0).toString(),
-                          color: ArgonColors.text),
-                    )),
+                  child: LableTitle((Item.PlanSizeColor_QTY ?? 0).toString(),
+                      color: ArgonColors.text),
+                )),
                 Expanded(
                     child: Center(
-                      child: LableTitle((Item.SizeColor_QTY ?? 0).toString(),
-                          color: ArgonColors.text),
-                    ))
+                  child: LableTitle((Item.SizeColor_QTY ?? 0).toString(),
+                      color: ArgonColors.text),
+                ))
               ],
             ),
           ],
@@ -515,24 +514,24 @@ Widget TasnifModelOrderMatrix(
               children: [
                 Expanded(
                     child: Center(
-                      child: LableTitle(Item.SizeParam_StringVal,
-                          color: ArgonColors.text),
-                    )),
+                  child: LableTitle(Item.SizeParam_StringVal,
+                      color: ArgonColors.text),
+                )),
                 Expanded(
                     child: Center(
-                      child: LableTitle(Item.ColorParam_StringVal,
-                          color: ArgonColors.text),
-                    )),
+                  child: LableTitle(Item.ColorParam_StringVal,
+                      color: ArgonColors.text),
+                )),
                 Expanded(
                     child: Center(
-                      child: LableTitle((Item.SizeColor_QTY ?? 0).toString(),
-                          color: ArgonColors.text),
-                    )),
+                  child: LableTitle((Item.SizeColor_QTY ?? 0).toString(),
+                      color: ArgonColors.text),
+                )),
                 Expanded(
                     child: Center(
-                      child: LableTitle((Item.OrderSizeColor_QTY ?? 0).toString(),
-                          color: ArgonColors.text),
-                    ))
+                  child: LableTitle((Item.OrderSizeColor_QTY ?? 0).toString(),
+                      color: ArgonColors.text),
+                ))
               ],
             ),
           ],
@@ -550,11 +549,9 @@ Widget QualityAxisItem(DeptModOrderQuality_ItemsBLL Item,
   if (IsSeleted) {
     SelectedColor = ArgonColors.primary;
     SelectedTextColor = ArgonColors.white;
-  }
-  else {
+  } else {
     SelectedColor = ArgonColors.white;
     SelectedTextColor = ArgonColors.Title;
-
   }
   return Card(
     shadowColor: ArgonColors.black,
@@ -568,7 +565,7 @@ Widget QualityAxisItem(DeptModOrderQuality_ItemsBLL Item,
         color: SelectedColor,
         padding: EdgeInsets.all(5),
         margin: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
-        child: LableTitle(Item.Item_Name,color:SelectedTextColor),
+        child: LableTitle(Item.Item_Name, color: SelectedTextColor),
       ),
     ),
   );
@@ -603,27 +600,25 @@ Widget HeaderColumn({List<Widget> children = const <Widget>[]}) {
 
 Widget TableColumn(
     {List<Widget> children = const <Widget>[], bool IsSelectedItem = false}) {
-  return
-    Card(
-        shadowColor: ArgonColors.black,
-        elevation: 1,
-        color: IsSelectedItem ? SelectedColor : NormalColor,
-        child: Container(
-          padding: EdgeInsets.all(5),
-
-          margin: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: children,
-              ),
-            ],
-          ),
-        ));
+  return Card(
+      shadowColor: ArgonColors.black,
+      elevation: 1,
+      color: IsSelectedItem ? SelectedColor : NormalColor,
+      child: Container(
+        padding: EdgeInsets.all(5),
+        margin: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: children,
+            ),
+          ],
+        ),
+      ));
 }
 
 //// New Design for Header and Table Information
@@ -752,7 +747,7 @@ class _Tb_InlineDikimListState extends State<Tb_InlineDikimList> {
                         TableLable(
                             widget.Items[i].EndDate != null
                                 ? DateFormat('HH:mm')
-                                .format(widget.Items[i].EndDate)
+                                    .format(widget.Items[i].EndDate)
                                 : "",
                             Flex: 3),
                         Expanded(child: GetStatusIcon(widget.Items[i].Status)),
@@ -765,11 +760,11 @@ class _Tb_InlineDikimListState extends State<Tb_InlineDikimList> {
 
 Widget BoxColorWithText(String Lable, Color SelectedColor,
     {double Width = 50,
-      double Height = 50,
-      FontColor = ArgonColors.text,
+    double Height = 50,
+    FontColor = ArgonColors.text,
 
-      /// TODO edit this
-      FontSize = ArgonSize.normal}) {
+    /// TODO edit this
+    FontSize = ArgonSize.normal}) {
   return Container(
     width: Width,
     height: Height,
@@ -822,8 +817,8 @@ class Tb_InlineRoundList extends StatefulWidget {
 
   Tb_InlineRoundList(
       {@required this.PersonalCase,
-        @required this.Items,
-        @required this.OnClickItems});
+      @required this.Items,
+      @required this.OnClickItems});
 
   @override
   _Tb_InlineRoundListState createState() => _Tb_InlineRoundListState();
@@ -838,155 +833,138 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.Pending),
             ArgonColors.Pending,
-            Width: getScreenWidth()/3,
-            Height: ArgonSize.WidthMedium,
-            FontSize:ArgonSize.Header4
-        );
+            Width: getScreenWidth() / 3,
+            Height: ArgonSize.WidthSmall,
+            FontSize: ArgonSize.Header4);
       case 1:
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.Success),
             ArgonColors.Success,
-            Width: getScreenWidth()/3,
+            Width: getScreenWidth() / 3,
             Height: ArgonSize.WidthMedium,
             FontColor: ArgonColors.white);
       case 2:
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.UnderCheck),
             ArgonColors.UnderCheck,
-            Width: getScreenWidth()/3,
+            Width: getScreenWidth() / 3,
             Height: ArgonSize.WidthMedium);
       case 3:
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.Invalid),
             ArgonColors.Invalid,
-            Width: getScreenWidth()/3,
+            Width: getScreenWidth() / 3,
             Height: ArgonSize.WidthMedium,
             FontColor: ArgonColors.white);
     }
     return BoxColorWithText(
         widget.PersonalCase.GetLable(ResourceKey.Pending), ArgonColors.Pending,
-        Width: getScreenWidth()/3,
-        Height: ArgonSize.WidthMedium);
+        Width: getScreenWidth() / 3, Height: ArgonSize.WidthMedium);
   }
 
   Widget RoundControl(
       PersonalProvider PersonalCase, User_QualityTracking_DetailBLL Item) {
     return Flexible(
         child: Card(
-          shadowColor: ArgonColors.black,
-          elevation: 10,
-          child: Container(
-            margin: EdgeInsets.all(5),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Column(
+      shadowColor: ArgonColors.black,
+      elevation: 10,
+      child: Container(
+        padding: EdgeInsets.all(ArgonSize.Padding6),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                                child: LableTitle(
-                                    PersonalCase.GetLable(ResourceKey.Operator)),
-                                flex: 2),
-                            Expanded(
-                                child: LableTitle(
-                                    (Item.Inline_Employee_Name ?? 0).toString(),
-                                    color: ArgonColors.text,
-                                    IsCenter: true),
-                                flex: 2),
-                            Expanded(
-                                child: LableTitle(
-                                  PersonalCase.GetLable(ResourceKey.Sample_Amount),
-                                ),
-                                flex: 2),
-                            Expanded(
-                                child: LableTitle((Item.Amount ?? 0).toString(),
-                                    color: ArgonColors.text, IsCenter: true)),
-                          ],
-                        ),
-                        SizedBox(height:ArgonSize.Padding5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                                child: LableTitle(
-                                  PersonalCase.GetLable(ResourceKey.Operation),
-                                ),
-                                flex: 2),
-                            Expanded(
-                                child: LableTitle(Item.Operation_Name,
-                                    color: ArgonColors.text, IsCenter: true),
-                                flex: 2),
-                            Expanded(
-                                child: LableTitle(
-                                  PersonalCase.GetLable(ResourceKey.Error_Amount),
-                                ),
-                                flex: 2),
-                            Expanded(
-                                child: LableTitle(
-                                    (Item.Error_Amount ?? 0).toString(),
-                                    color: ArgonColors.text,
-                                    IsCenter: true)),
-                          ],
-                        ),
-                        SizedBox(height:ArgonSize.Padding5),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                                child: LableTitle(
-                                  PersonalCase.GetLable(ResourceKey.Start_Time),
-                                ),
-                                flex: 2),
-                            Expanded(
-                                child: LableDateTime(Item.StartDate,
-                                    Format: "HH:mm",
-                                    color: ArgonColors.text,
-                                    IsCenter: true)),
-                            Expanded(
-                              child: LableTitle(
-                                PersonalCase.GetLable(ResourceKey.End_Time),
-                              ),
-                              flex: 2,
-                            ),
-                            Expanded(
-                                child: LableDateTime(Item.EndDate,
-                                    Format: "HH:mm",
-                                    color: ArgonColors.text,
-                                    IsCenter: true)),
-                          ],
-                        ),
-                        SizedBox(height:ArgonSize.Padding5),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              child: GetBoxInfo(Item.CheckStatus),
-                              padding: EdgeInsets.all(5),
-                            )
-                          ],
-                        )
+                        Expanded(
+                            child: LableTitle(
+                                '${PersonalCase.GetLable(ResourceKey.Operator)} / '
+                                '${PersonalCase.GetLable(ResourceKey.Sample_Amount)}'),
+                            flex: 3),
+                        Expanded(
+                            child: LableTitle(
+                                (Item.Inline_Employee_Name ?? 0).toString(),
+                                color: ArgonColors.text,
+                                IsCenter: true),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle((Item.Amount ?? 0).toString(),
+                                color: ArgonColors.text, IsCenter: true)),
                       ],
                     ),
-                    flex: 4,
-                  ),
-                ],
+                    SizedBox(height: ArgonSize.Padding5),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                            child: LableTitle(
+                                '${PersonalCase.GetLable(ResourceKey.Operation)} / '
+                                '${PersonalCase.GetLable(ResourceKey.Error_Amount)}'),
+                            flex: 3),
+                        Expanded(
+                            child: LableTitle(Item.Operation_Name,
+                                color: ArgonColors.text, IsCenter: true),
+                            flex: 2),
+                        Expanded(
+                            child: LableTitle(
+                                (Item.Error_Amount ?? 0).toString(),
+                                color: ArgonColors.text,
+                                IsCenter: true)),
+                      ],
+                    ),
+                    SizedBox(height: ArgonSize.Padding5),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                            child: LableTitle(
+                              '${PersonalCase.GetLable(ResourceKey.Start_Time)} / '
+                              '${PersonalCase.GetLable(ResourceKey.End_Time)}',
+                            ),
+                            flex: 3),
+                        Expanded(
+                            child: LableDateTime(Item.StartDate,
+                                Format: "HH:mm",
+                                color: ArgonColors.text,
+                                IsCenter: true),
+                            flex: 2),
+                        Expanded(
+                            child: LableDateTime(Item.EndDate,
+                                Format: "HH:mm",
+                                color: ArgonColors.text,
+                                IsCenter: true)),
+                      ],
+                    ),
+                    SizedBox(height: ArgonSize.Padding5),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          child: GetBoxInfo(Item.CheckStatus),
+                          padding: EdgeInsets.all(5),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+                flex: 4,
               ),
-            ),
+            ],
           ),
-        ));
+        ),
+      ),
+    ));
   }
 
   @override
@@ -1030,14 +1008,14 @@ Widget DropDownBox({String ItemName, Function OnTap, bool IsSelected = false}) {
           child: Container(
             height: ArgonSize.WidthSmall,
             margin: EdgeInsets.all(2),
-            padding:EdgeInsets.only(top:5,bottom:5,left:5),
+            padding: EdgeInsets.only(top: 5, bottom: 5, left: 5),
             color: IsSelected ? ArgonColors.muted : ArgonColors.white,
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 ItemName,
                 style: TextStyle(
-                    fontSize: ArgonSize.Header4, color: ArgonColors.text ),
+                    fontSize: ArgonSize.Header4, color: ArgonColors.text),
               ),
             ),
           )));

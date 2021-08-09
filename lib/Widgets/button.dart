@@ -409,7 +409,7 @@ class CircularIconWithNumber extends StatelessWidget {
                     text: bubbleText,
                     width: bubbleWidth,
                     height: bubbleHeight,
-                    fontSize: fontSize),
+                    fontSize: bubbleTextSize),
                 top: 0,
                 right: 0),
           ]),

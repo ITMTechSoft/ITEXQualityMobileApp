@@ -43,10 +43,10 @@ class _DateTimePickerState extends State<DateTimePicker> {
       children: <Widget>[
         Text(
           DateFormat("yyyy/MM/dd").format(SelectedTime).toString(),
-          style: TextStyle(fontSize: 20, color: ArgonColors.text),
+          style: TextStyle(fontSize: ArgonSize.Header4, color: ArgonColors.text),
         ),
         IconButton(
-            icon: Icon(Icons.calendar_today),
+            icon: Icon(Icons.calendar_today,size:ArgonSize.IconSize),
             onPressed: () async {
               await _openDatePicker(context);
             })

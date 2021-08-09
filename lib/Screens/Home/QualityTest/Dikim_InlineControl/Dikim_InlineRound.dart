@@ -75,7 +75,7 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                       children: [
                         CustomButton(
                             width: getScreenWidth() / 2.5,
-                            height: ArgonSize.WidthSmall1,
+                            height: ArgonSize.WidthSmall,
                   textSize:ArgonSize.Header4,
                             ///TODO : ADD Start Measuring to ResourceKey
                             value: PersonalCase.GetLable(
@@ -96,7 +96,7 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                         ),
                         CustomButton(
                             width: getScreenWidth() / 2.5,
-                            height: ArgonSize.WidthSmall1,
+                            height: ArgonSize.WidthSmall,
                             textSize:ArgonSize.Header4,
 
                             value:
