@@ -64,6 +64,7 @@ class _OrderSize_MatrixState extends State<OrderSize_Matrix> {
             Tracking.Status = DikimInlineStatus.Open.index;
             Tracking.StartDate = DateTime.now();
             await Tracking.Generate_DikimInline_Tracking();
+            Navigator.pop(context);
             Navigator.push(
                 context,
                 MaterialPageRoute(

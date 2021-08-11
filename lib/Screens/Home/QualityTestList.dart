@@ -59,6 +59,10 @@ class _QualityTestListState extends State<QualityTestList> {
           FirstActionLable: PersonalCase.GetLable(ResourceKey.Okay),
 
           SecondActionLable: PersonalCase.GetLable(ResourceKey.Cancel),
+            OnFirstAction:(){
+            Navigator.pop(context);
+            MandatoryCritieraAction(PersonalCase.SelectedTest);
+            }
         );
       }
     } else {
