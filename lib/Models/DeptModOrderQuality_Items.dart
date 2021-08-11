@@ -22,7 +22,7 @@ class DeptModOrderQuality_ItemsBLL {
   int Correct_Amount;
   int Error_Amount;
   int Employee_Id;
-  int OrderSizeColorDetail_Id;
+  int ModelOrderSizes_Id;
   int QualityDept_ModelOrder_Tracking_Id;
   int CheckStatus;
   String Reject_Note;
@@ -47,7 +47,7 @@ class DeptModOrderQuality_ItemsBLL {
     this.Correct_Amount = json['Correct_Amount'];
     this.Error_Amount = json['Error_Amount'];
     this.Employee_Id = json['Employee_Id'];
-    this.OrderSizeColorDetail_Id = json['OrderSizeColorDetail_Id'];
+    this.ModelOrderSizes_Id = json['ModelOrderSizes_Id'];
     this.QualityDept_ModelOrder_Tracking_Id =
     json['QualityDept_ModelOrder_Tracking_Id'];
     this.CheckStatus = json['CheckStatus'];
@@ -69,7 +69,7 @@ class DeptModOrderQuality_ItemsBLL {
         Correct_Amount = json['Correct_Amount'],
         Error_Amount = json['Error_Amount'],
         Employee_Id = json['Employee_Id'],
-        OrderSizeColorDetail_Id = json['OrderSizeColorDetail_Id'],
+        ModelOrderSizes_Id = json['ModelOrderSizes_Id'],
         QualityDept_ModelOrder_Tracking_Id =
         json["QualityDept_ModelOrder_Tracking_Id"],
         CheckStatus = json['CheckStatus'],
@@ -91,7 +91,7 @@ class DeptModOrderQuality_ItemsBLL {
         'Correct_Amount': Correct_Amount,
         'Error_Amount': Error_Amount,
         'Employee_Id': Employee_Id,
-        'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id,
+        'ModelOrderSizes_Id': ModelOrderSizes_Id,
         'QualityDept_ModelOrder_Tracking_Id':
         QualityDept_ModelOrder_Tracking_Id,
         'CheckStatus': CheckStatus,
@@ -115,7 +115,7 @@ class DeptModOrderQuality_ItemsBLL {
         'Correct_Amount': Correct_Amount.toString(),
         'Error_Amount': Error_Amount.toString(),
         'Employee_Id': Employee_Id.toString(),
-        'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id.toString(),
+        'ModelOrderSizes_Id': ModelOrderSizes_Id.toString(),
         'QualityDept_ModelOrder_Tracking_Id':
         QualityDept_ModelOrder_Tracking_Id.toString(),
         'CheckStatus': CheckStatus.toString(),
@@ -128,7 +128,8 @@ class DeptModOrderQuality_ItemsBLL {
   static Future<List<DeptModOrderQuality_ItemsBLL>>
   Get_DeptModOrderQuality_Items(int Employee_Id,
       int DeptModelOrder_QualityTest_Id,
-      int OrderSizeColorDetail_Id) async {
+      int ModelOrderSizes_Id,
+      int Pastal_Cutting_Parti_Id) async {
     List<DeptModOrderQuality_ItemsBLL> ItemList;
     try {
       var response = await http.get(
@@ -137,8 +138,10 @@ class DeptModOrderQuality_ItemsBLL {
               Employee_Id.toString() +
               "&DeptModelOrder_QualityTest_Id=" +
               DeptModelOrder_QualityTest_Id.toString() +
-              "&OrderSizeColorDetail_Id=" +
-              OrderSizeColorDetail_Id.toString());
+              "&ModelOrderSizes_Id=" +
+              ModelOrderSizes_Id.toString()
+              + "&Pastal_Cutting_Parti_Id=" +
+              Pastal_Cutting_Parti_Id.toString());
 
       //  print(response.request);
 

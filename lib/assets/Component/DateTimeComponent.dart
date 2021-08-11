@@ -7,11 +7,16 @@ import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 class DateTimePicker extends StatefulWidget {
   Function SelectedDate;
 
+  String DateFormat;
+
   int FirstDate;
   int LastDate;
 
   DateTimePicker(
-      {this.SelectedDate, this.FirstDate = 2020, this.LastDate = 2090});
+      {this.SelectedDate,
+      this.FirstDate = 2020,
+      this.LastDate = 2090,
+      this.DateFormat = "yyyy/MM/dd HH:mm"});
 
   @override
   _DateTimePickerState createState() => _DateTimePickerState();
@@ -22,10 +27,11 @@ class _DateTimePickerState extends State<DateTimePicker> {
 
   Future<Void> _openDatePicker(BuildContext context) async {
     SelectedTime = await showDatePicker(
-        context: context,
-        initialDate: SelectedTime,
-        firstDate: new DateTime(SelectedTime.year),
-        lastDate: new DateTime(widget.LastDate));
+      context: context,
+      initialDate: SelectedTime,
+      firstDate: new DateTime(SelectedTime.year),
+      lastDate: new DateTime(widget.LastDate),
+    );
 
     if (SelectedTime != null)
       setState(() {
@@ -42,11 +48,11 @@ class _DateTimePickerState extends State<DateTimePicker> {
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Text(
-          DateFormat("yyyy/MM/dd").format(SelectedTime).toString(),
-          style: TextStyle(fontSize: ArgonSize.Header4, color: ArgonColors.text),
+          DateFormat(widget.DateFormat).format(SelectedTime).toString(),
+          style: TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.text),
         ),
         IconButton(
-            icon: Icon(Icons.calendar_today,size:ArgonSize.IconSize),
+            icon: Icon(Icons.calendar_today),
             onPressed: () async {
               await _openDatePicker(context);
             })

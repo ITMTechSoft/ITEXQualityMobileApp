@@ -1,4 +1,9 @@
 enum ResourceKey{
+  Pastel_Laying,
+  CuttingDate,
+  GenerateNewParti,
+  FabricRestingTime,
+  Fabric_Type,
   PleaseCheckCriteria,
   KeepPageOpen,
   RecycleReturn,

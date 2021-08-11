@@ -49,7 +49,6 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
             Item.Create_Date = DateTime.now();
             await QualityDept_ModelOrder_TrackingBLL
                 .CuttingPastal_ApproveRejectItem(Item);
-
             setState(() {});
           }, () async {
             CuttingAmountController.text = "";
@@ -139,11 +138,13 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
     return Scaffold(
-      appBar:DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
-        Navigator.pop(context);
-      },
-          context:  context
-      ),
+      appBar: DetailBar(
+          Title: PersonalCase.SelectedTest.Test_Name,
+          PersonalCase: PersonalCase,
+          OnTap: () {
+            Navigator.pop(context);
+          },
+          context: context),
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(

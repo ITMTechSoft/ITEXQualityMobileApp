@@ -48,7 +48,7 @@ class ArgonColors {
 
   static const Color inputError = Color.fromRGBO(252, 179, 164, 1.0);
 
-  static const Color muted = Color.fromRGBO(231, 238, 139, 1.0);
+  static const Color muted = Color.fromRGBO(238, 238, 212, 1.0);
 
   static const Color text = Color.fromRGBO(50, 50, 93, 1.0);
 
@@ -61,6 +61,9 @@ class ArgonColors {
   static const Color Success = Color.fromRGBO(0, 110, 50, 1.0);
   static const Color Invalid = Color.fromRGBO(252, 50, 50, 1.0);
   static const Color UnderCheck = Color.fromRGBO(255, 255, 100, 1.0);
+
+  static Color NormalColor = ArgonColors.white;
+  static Color SelectedColor = ArgonColors.muted;
 }
 class ArgonSize{
   static  double Header = getAdaptiveTextSize(20);

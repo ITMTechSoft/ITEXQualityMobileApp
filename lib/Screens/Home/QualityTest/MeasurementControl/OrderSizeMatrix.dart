@@ -108,8 +108,6 @@ class _OrderSize_MatrixState extends State<OrderSize_Matrix> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-
-
                     Tb_InlineDikimList1(
                       OnClickItems: (int Index) {
                         if (snapshot.data[Index].Status ==

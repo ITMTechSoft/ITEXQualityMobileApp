@@ -136,7 +136,6 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
                     ],
                   ),
                   SizedBox(height:ArgonSize.Padding4),
-
                   Padding(
                     padding:  EdgeInsets.symmetric(horizontal: ArgonSize.Padding3),
 
