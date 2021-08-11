@@ -4,7 +4,6 @@ import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 import 'User_QualityTracking_Detail.dart';
 
-
 class QualityDept_ModelOrder_TrackingBLL {
   //#region Properties
   int Id;
@@ -24,6 +23,8 @@ class QualityDept_ModelOrder_TrackingBLL {
   String Fabric_TopNo;
   int Status;
   int SampleNo;
+  int ModelOrderSizes_Id;
+  int Pastal_Cutting_Parti_Id;
   String Employee_Name;
   int QualityTest_Id;
   int QualityDept_ModelOrder_Id;
@@ -71,6 +72,8 @@ class QualityDept_ModelOrder_TrackingBLL {
     this.Fabric_TopNo = json['Fabric_TopNo'];
     this.Status = json['Status'];
     this.SampleNo = json['SampleNo'];
+    this.ModelOrderSizes_Id = json['ModelOrderSizes_Id'];
+    this.Pastal_Cutting_Parti_Id = json['Pastal_Cutting_Parti_Id'];
     this.Employee_Name = json['Employee_Name'];
     this.QualityTest_Id = json['QualityTest_Id'];
     this.QualityDept_ModelOrder_Id = json['QualityDept_ModelOrder_Id'];
@@ -113,6 +116,8 @@ class QualityDept_ModelOrder_TrackingBLL {
         Fabric_TopNo = json['Fabric_TopNo'],
         Status = json['Status'],
         SampleNo = json['SampleNo'],
+        ModelOrderSizes_Id = json['ModelOrderSizes_Id'],
+        Pastal_Cutting_Parti_Id = json['Pastal_Cutting_Parti_Id'],
         Employee_Name = json['Employee_Name'],
         QualityTest_Id = json['QualityTest_Id'],
         QualityDept_ModelOrder_Id = json['QualityDept_ModelOrder_Id'],
@@ -148,6 +153,8 @@ class QualityDept_ModelOrder_TrackingBLL {
         'Fabric_TopNo': Fabric_TopNo,
         'Status': Status,
         'SampleNo': SampleNo,
+        'ModelOrderSizes_Id': ModelOrderSizes_Id,
+        'Pastal_Cutting_Parti_Id': Pastal_Cutting_Parti_Id,
         'Employee_Name': Employee_Name,
         'QualityTest_Id': QualityTest_Id,
         'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id,
@@ -185,6 +192,8 @@ class QualityDept_ModelOrder_TrackingBLL {
         'Fabric_TopNo': Fabric_TopNo,
         'Status': Status.toString(),
         'SampleNo': SampleNo.toString(),
+        'ModelOrderSizes_Id': ModelOrderSizes_Id.toString(),
+        'Pastal_Cutting_Parti_Id': Pastal_Cutting_Parti_Id.toString(),
         'Employee_Name': Employee_Name,
         'QualityTest_Id': QualityTest_Id.toString(),
         'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),
@@ -218,7 +227,7 @@ class QualityDept_ModelOrder_TrackingBLL {
           "&DeptModelOrder_QualityTest_Id=" +
           DeptModelOrder_QualityTest_Id.toString());
 
-     // print(response.request);
+      // print(response.request);
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
             .map((i) => QualityDept_ModelOrder_TrackingBLL.fromJson(i))
@@ -232,8 +241,10 @@ class QualityDept_ModelOrder_TrackingBLL {
   }
 
   static Future<List<QualityDept_ModelOrder_TrackingBLL>>
-  GetInlineDikim_QualityDept_ModelOrder_Tracking(
-      {int Employee_Id, int DeptModelOrder_QualityTest_Id,DateTime SelectDate}) async {
+      GetInlineDikim_QualityDept_ModelOrder_Tracking(
+          {int Employee_Id,
+          int DeptModelOrder_QualityTest_Id,
+          DateTime SelectDate}) async {
     List<QualityDept_ModelOrder_TrackingBLL> ItemList;
     try {
       var Tracking = new QualityDept_ModelOrder_TrackingBLL();
@@ -315,10 +326,10 @@ class QualityDept_ModelOrder_TrackingBLL {
 
   Future<bool> RegisterTasnifAmount() async {
     try {
-      final String url = SharedPref.GetWebApiUrl(
-          WebApiMethod.Set_TasnifOrderSizeColorDetails);
+      final String url =
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_TasnifOrderSizeColorDetails);
 
-      String Url= url.toString();
+      String Url = url.toString();
       String val = jsonEncode(toPost());
       print(Url);
       print(val);
@@ -338,10 +349,10 @@ class QualityDept_ModelOrder_TrackingBLL {
 
   Future<bool> RegisterAccessoryAmount() async {
     try {
-      final String url = SharedPref.GetWebApiUrl(
-          WebApiMethod.Set_RegisterCheckAmount);
+      final String url =
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_RegisterCheckAmount);
 
-      String Url= url.toString();
+      String Url = url.toString();
       String val = jsonEncode(toPost());
       print(Url);
       print(val);
@@ -362,11 +373,13 @@ class QualityDept_ModelOrder_TrackingBLL {
   static Future<QualityDept_ModelOrder_TrackingBLL>
       GetOrCreate_QualityDept_ModelOrder_Tracking(
           int Employee_Id, int DeptModelOrder_QualityTest_Id,
-          {int OrderSizeColorDetail_Id = 0}) async {
+          {int OrderSizeColorDetail_Id = 0, int ModelOrderSizes_Id = 0,int Pastal_Cutting_Parti_Id = 0}) async {
     var Item = new QualityDept_ModelOrder_TrackingBLL();
     Item.Employee_Id = Employee_Id;
     Item.DeptModelOrder_QualityTest_Id = DeptModelOrder_QualityTest_Id;
     Item.OrderSizeColorDetail_Id = OrderSizeColorDetail_Id;
+    Item.ModelOrderSizes_Id = ModelOrderSizes_Id;
+    Item.Pastal_Cutting_Parti_Id = Pastal_Cutting_Parti_Id;
 
     try {
       final String url = SharedPref.GetWebApiUrl(
@@ -378,8 +391,8 @@ class QualityDept_ModelOrder_TrackingBLL {
           },
           body: jsonEncode(Item.toPost()));
 
-  //    String Val = jsonEncode(Item.toPost());
-    //  print(Val);
+      //    String Val = jsonEncode(Item.toPost());
+      //  print(Val);
 
       if (response.statusCode == 200) {
         Item.LoadFromJson(json.decode(response.body));
@@ -388,8 +401,6 @@ class QualityDept_ModelOrder_TrackingBLL {
     } catch (e) {}
     return null;
   }
-
-
 
   Future<QualityDept_ModelOrder_TrackingBLL>
       Create_QualityDept_ModelOrder_Tracking() async {
@@ -415,10 +426,10 @@ class QualityDept_ModelOrder_TrackingBLL {
   }
 
   Future<QualityDept_ModelOrder_TrackingBLL>
-  Generate_DikimInline_Tracking() async {
+      Generate_DikimInline_Tracking() async {
     try {
-      final String url = SharedPref.GetWebApiUrl(
-          WebApiMethod.Generate_DikimInline_Tracking);
+      final String url =
+          SharedPref.GetWebApiUrl(WebApiMethod.Generate_DikimInline_Tracking);
 
       String Val = jsonEncode(toPost());
       print(Val);
@@ -429,8 +440,6 @@ class QualityDept_ModelOrder_TrackingBLL {
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(toPost()));
-
-
 
       if (response.statusCode == 200) {
         LoadFromJson(json.decode(response.body));
@@ -532,16 +541,11 @@ class ControlStatus {
   static int TansifControlCloseStatus = 2;
 }
 
-enum DikimInlineStatus{
-  Open ,
-  Closed
-}
+enum DikimInlineStatus { Open, Closed }
 
 class InlineOperatorStatus {
   static int Pending = 0;
   static int Success = 1;
   static int UnderCheck = 2;
   static int Invalid = 3;
-
 }
-

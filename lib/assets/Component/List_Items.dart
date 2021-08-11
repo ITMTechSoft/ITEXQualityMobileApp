@@ -105,114 +105,7 @@ class OrderCard extends StatelessWidget {
   }
 }
 
-Widget AraControlCard(
-    DeptModOrderQuality_ItemsBLL Item, Function Execute, PersonalCase) {
-  TextEditingController InputVal = new TextEditingController();
-  return Card(
-    shadowColor: ArgonColors.black,
-    elevation: 10,
-    child: Container(
-      padding: EdgeInsets.all(10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                  flex: 3,
-                  child: LableTitle(
-                      PersonalCase.GetLable(ResourceKey.ControlAxaisName))),
-              Expanded(
-                  flex: 2,
-                  child: LableTitle(
-                      PersonalCase.GetLable(ResourceKey.ControlAmount))),
-              Expanded(
-                  flex: 2,
-                  child: LableTitle(
-                      PersonalCase.GetLable(ResourceKey.ControlError)))
-            ],
-          ),
-          SizedBox(height:ArgonSize.Padding6),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                  flex: 3,
-                  child: Center(
-                    child: LableTitle(Item.Item_Name, color: ArgonColors.text),
-                  )),
-              Expanded(
-                  flex: 2,
-                  child: Center(
-                    child: LableTitle((Item.Amount ?? 0).toString(),
-                        color: ArgonColors.text),
-                  )),
-              Expanded(
-                  flex: 2,
-                  child: Center(
-                    child: LableTitle((Item.Error_Amount ?? 0).toString(),
-                        color: ArgonColors.text),
-                  ))
-            ],
-          ),
-          SizedBox(height:ArgonSize.Padding4),
 
-          Row(
-            children: [
-              Expanded(
-                flex:2,
-                child: CustomButton(
-                    value:  PersonalCase.GetLable(ResourceKey.Saglim),
-                    backGroundColor: ArgonColors.primary,
-                    width:getScreenWidth()/2,
-                    height:ArgonSize.WidthSmall1,
-                    function: () async {
-                      int DelValue = int.tryParse(InputVal.text) ?? 1;
-                      var NewItem = await Item.CorrectSpecificAmount(DelValue);
-                      if (NewItem != null) Item = NewItem;
-                      Execute();
-
-                    }),
-              ),
-              SizedBox(width:20),
-
-              Expanded(
-                  flex:2,
-
-                  child: Input_Form(
-                    InputHeight:ArgonSize.WidthSmall1,
-                    controller: InputVal,
-                    KType: TextInputType.number,
-                  )),
-              SizedBox(width:20),
-
-              Expanded(
-                flex:2,
-
-                child: CustomButton(
-                    value:  PersonalCase.GetLable(ResourceKey.Error),
-                    backGroundColor: ArgonColors.myRed,
-                    width:getScreenWidth()/2,
-                    height:ArgonSize.WidthSmall1,
-
-                    function: () async {
-                      int DelValue = int.tryParse(InputVal.text) ?? 1;
-                      var NewItem = await Item.ErrorSpecificAmount(DelValue);
-                      if (NewItem != null) Item = NewItem;
-                      Execute();
-                    }),
-              ),
-            ],
-          )
-        ],
-      ),
-    ),
-  );
-}
 
 Widget CuttingPastalControl(PersonalCase, DeptModOrderQuality_ItemsBLL Item,
     Function Approve, Function Reject, Function ReOpenAction) {
@@ -576,8 +469,7 @@ Widget QualityAxisItem(DeptModOrderQuality_ItemsBLL Item,
 
 ///// Table Headers
 
-Color NormalColor = ArgonColors.white;
-Color SelectedColor = ArgonColors.muted;
+
 
 Widget HeaderColumn({List<Widget> children = const <Widget>[]}) {
   return Card(
@@ -607,7 +499,7 @@ Widget TableColumn(
     Card(
         shadowColor: ArgonColors.black,
         elevation: 1,
-        color: IsSelectedItem ? SelectedColor : NormalColor,
+        color: IsSelectedItem ? ArgonColors.SelectedColor : ArgonColors.NormalColor,
         child: Container(
           padding: EdgeInsets.all(5),
 
@@ -622,6 +514,25 @@ Widget TableColumn(
                 children: children,
               ),
             ],
+          ),
+        ));
+}
+
+Widget RowColumn(
+    {List<Widget> children = const <Widget>[], bool IsSelectedItem = false}) {
+  return
+    Card(
+        shadowColor: ArgonColors.black,
+        elevation: 1,
+        color: IsSelectedItem ? ArgonColors.SelectedColor : ArgonColors.NormalColor,
+        child: Container(
+          padding: EdgeInsets.all(5),
+
+          margin: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: children,
           ),
         ));
 }

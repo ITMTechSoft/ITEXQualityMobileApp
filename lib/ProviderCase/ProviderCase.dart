@@ -5,6 +5,7 @@ import 'package:itex_soft_qualityapp/Models/Employee_Department.dart';
 import 'package:itex_soft_qualityapp/Models/Employees.dart';
 import 'package:itex_soft_qualityapp/Models/Language_ResourcesKey.dart';
 import 'package:itex_soft_qualityapp/Models/Languages.dart';
+import 'package:itex_soft_qualityapp/Models/ModelOrderSizes.dart';
 import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDepartment_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
@@ -23,6 +24,8 @@ class PersonalProvider with ChangeNotifier {
   bool IsLoading = false;
 
   Accessory_ModelOrderBLL SelectedAccessoryModel;
+
+  ModelOrderSizesBLL SelectedSize;
 
   PersonalProvider() {
     _CurrentUser = new EmployeesBLL();

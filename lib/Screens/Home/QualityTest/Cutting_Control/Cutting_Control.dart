@@ -4,9 +4,13 @@ import 'package:itex_soft_qualityapp/Models/DeptModOrderQuality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
 import 'package:itex_soft_qualityapp/Models/Pastal_Cutting_Parti.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
+import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/Standard_List/Standard_Headers.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
+import 'package:itex_soft_qualityapp/assets/SystemResuableList/Pastal_Cutting_Parti_List.dart';
+
+import 'Size_Matrix_Control.dart';
 
 class Cutting_Control extends StatefulWidget {
   @override
@@ -34,6 +38,7 @@ class _Cutting_ControlState extends State<Cutting_Control> {
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
+    final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
       appBar: DetailBar(
           Title: PersonalCase.SelectedTest.Test_Name,
@@ -54,16 +59,14 @@ class _Cutting_ControlState extends State<Cutting_Control> {
           future: LoadingCutttingControl(PersonalCase),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Container(
-                margin: EdgeInsets.all(2),
-                padding: EdgeInsets.all(2),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-
-                  ],
-                ),
+              return Pastal_Cutting_Parti_List(
+                Items: snapshot.data,
+                OnClickItems: (Pastal_Cutting_PartiBLL Item) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Size_Matrix_Control()));
+                },
               );
             } else if (IntiteStatus == 0)
               return Center(child: CircularProgressIndicator());

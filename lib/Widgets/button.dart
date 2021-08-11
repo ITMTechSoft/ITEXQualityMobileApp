@@ -76,11 +76,11 @@ Widget StandardButton(
       Color ForColor,
       Color BakColor,
       Function OnTap,
-      double FontSize = 14}) =>
+      double FontSize}) =>
     TextButton(
-        child: Text(Lable.toUpperCase(), style: TextStyle(fontSize: FontSize)),
+        child: Text(Lable.toUpperCase(), style: TextStyle(fontSize: FontSize ?? ArgonSize.Header4)),
         style: ButtonStyle(
-            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(13)),
+            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(ArgonSize.Padding4)),
             foregroundColor: MaterialStateProperty.all<Color>(ForColor),
             backgroundColor: MaterialStateProperty.all<Color>(BakColor),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(

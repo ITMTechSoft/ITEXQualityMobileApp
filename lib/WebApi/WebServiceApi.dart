@@ -1,4 +1,5 @@
 enum WebApiMethod{
+  Get_ModelOrderSizes_CuttingControl,
   DeletePastal_Cutting_Parti,
   Get_Pastal_Cutting_Parti,
   Set_CreatePastal_Cutting_Parti,

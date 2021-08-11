@@ -3,16 +3,18 @@ import 'package:intl/intl.dart';
 import 'package:itex_soft_qualityapp/Utility/ResourceKeys.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
+/*
 const double _kActiveFontSize = 14.0;
 const double _LableFontSize = 12.0;
 const double _kBottomMargin = 10.0;
 const double _HeaderFontSize = 20.0;
+*/
 
 Text HeaderTitle(String Title, {Color color, double FontSize}) {
   return Text(
     Title,
     style: TextStyle(
-      fontSize: FontSize == null ? _HeaderFontSize : FontSize,
+      fontSize: FontSize == null ? ArgonSize.Header3 : FontSize,
       fontWeight: FontWeight.bold,
       color: color == null ? Colors.indigo : color,
     ),
@@ -29,7 +31,7 @@ Widget LableTitle(String Title,
         child: Text(
           Title != null ? Title.toUpperCase() : "",
           style: TextStyle(
-            fontSize: FontSize == null ? ArgonSize.Header5 : ArgonSize.Header5,
+            fontSize: FontSize == null ? ArgonSize.Header5 : FontSize,
             fontWeight: FontWeight.bold,
             color: color == null ? color : color,
           ),
@@ -49,13 +51,13 @@ Widget LableTitle(String Title,
 
 Widget LableInteger(int Value,
     {Color color,
-    double FontSize = _LableFontSize,
+    double FontSize,
     bool IsCenter = false,
     int Flex = 1}) {
   Widget TextValue(String TextVal) => new Text(
         TextVal,
         style: TextStyle(
-          fontSize: ArgonSize.Header5,
+          fontSize: FontSize ?? ArgonSize.Header5,
           fontWeight: FontWeight.bold,
           color: color == null ? ArgonColors.Title : color,
 
@@ -88,7 +90,7 @@ Widget LableDateTime(DateTime TargetDate,
         child: Text(
           TargetDate != null ? DateFormat(Format).format(TargetDate) : "",
           style: TextStyle(
-            fontSize: FontSize == null ? _LableFontSize : FontSize,
+            fontSize: FontSize ?? ArgonSize.Header5,
             fontWeight: FontWeight.bold,
             color: color == null ? ArgonColors.Title : color,
           ),
@@ -127,7 +129,7 @@ Widget ExpandedLableTitle(String Title,
       child: Text(
         (Title ?? "").toUpperCase(),
         style: TextStyle(
-          fontSize: FontSize == null ? _LableFontSize : FontSize,
+          fontSize: FontSize ?? ArgonSize.Header5 ,
           fontWeight: FontWeight.bold,
           color: color == null ? ArgonColors.Title : color,
         ),

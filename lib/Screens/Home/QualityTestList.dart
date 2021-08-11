@@ -5,6 +5,7 @@ import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 import 'package:itex_soft_qualityapp/QualityTestImports.dart';
 
+import 'QualityTest/Cutting_Control/Cutting_Control.dart';
 import 'QualityTest/MeasurementControl/OrderSizeMatrix.dart';
 
 class QualityTestList extends StatefulWidget {

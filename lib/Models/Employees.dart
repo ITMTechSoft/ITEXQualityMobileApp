@@ -142,7 +142,7 @@ class EmployeesBLL {
       final String url = SharedPref.GetWebApiUrl(WebApiMethod.Get_Version,
           WebApiDomain: "api/MaksitusTable");
       print(url.toString());
-      var response = await http.get(url).timeout(const Duration(seconds: 3),
+      var response = await http.get(url).timeout(const Duration(seconds: 70),
           onTimeout: () {
         LoginMessage = "SERVER CAN'T BE REACHED";
 
