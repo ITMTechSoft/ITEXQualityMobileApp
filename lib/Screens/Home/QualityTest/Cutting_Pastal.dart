@@ -82,22 +82,46 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
   Widget _buildPopupDialog(PersonalCase, BuildContext context, Item) {
     return new AlertDialog(
       title: Text(PersonalCase.GetLable(ResourceKey.RejectNot)),
-      content: new Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Standard_Input(
-            prefixIcon: Icon(Icons.event_note),
-            controller: CuttingAmountController,
-            Ktype: TextInputType.multiline,
-            MinLines: 2,
-            MaxLines: 5,
-          ),
-        ],
+      content:
+      Container(
+        width: getScreenWidth()*0.7,
+        height:getScreenHeight()*0.3,
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.black54)
+        ),
+        child:
+        // Standard_Input(
+        //   prefixIcon: Icon(Icons.event_note),
+        //   controller: CuttingAmountController,
+        //   Ktype: TextInputType.multiline,
+        //   MinLines: 2,
+        //   MaxLines: 10,
+        // ),
+
+        TextFormField(
+
+    controller: CuttingAmountController,
+          keyboardType: TextInputType.multiline,
+
+          decoration: new InputDecoration(
+              prefixIcon: Padding(
+                padding:  EdgeInsets.fromLTRB(0, 10, 0, 100),
+                child: Icon(Icons.event_note),
+              ),
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+            contentPadding: EdgeInsets.all(10.0),
+             ),
+          minLines: 1,
+          maxLines: 10,
+        ),
       ),
       actions: <Widget>[
         TextButton(
-          child: Text(PersonalCase.GetLable(ResourceKey.Save)),
+          child: Text(PersonalCase.GetLable(ResourceKey.Save),style:TextStyle(fontSize:ArgonSize.Header3)),
           onPressed: () async {
             Item.Reject_Note = CuttingAmountController.text;
             await QualityDept_ModelOrder_TrackingBLL

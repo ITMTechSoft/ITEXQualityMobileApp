@@ -182,7 +182,7 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: ArgonSize.Padding1),
                               child: SpinBox(
-                                max: 100000,
+                                max: 999999,
                                 textStyle:TextStyle(fontSize:ArgonSize.Header3),
                                 value: 1,
                                 onChanged: (value) {

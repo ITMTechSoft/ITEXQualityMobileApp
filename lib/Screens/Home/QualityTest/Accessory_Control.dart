@@ -15,11 +15,12 @@ class Accessory_Control extends StatefulWidget {
 class _Accessory_ControlState extends State<Accessory_Control> {
   int IntiteStatus = 0;
   int AssignAmount = 1;
+
   Future<List<Accessory_ModelOrderBLL>> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<Accessory_ModelOrderBLL> Criteria =
-    await Accessory_ModelOrderBLL.Get_Accessory_ModelOrder(
-        DeptModelOrder_QualityTest_Id: PersonalCase.SelectedTest.Id);
+        await Accessory_ModelOrderBLL.Get_Accessory_ModelOrder(
+            DeptModelOrder_QualityTest_Id: PersonalCase.SelectedTest.Id);
 
     if (Criteria != null) {
       IntiteStatus = 1;
@@ -34,7 +35,7 @@ class _Accessory_ControlState extends State<Accessory_Control> {
       PersonalCase, Accessory_ModelOrderBLL Item, int Employee_Id) async {}
 
   final TextEditingController AccessoryAmountController =
-  new TextEditingController();
+      new TextEditingController();
 
   String ActionMessage = "";
 
@@ -83,85 +84,89 @@ class _Accessory_ControlState extends State<Accessory_Control> {
                     showDialog(
                         context: context,
                         builder: (cntx) => Container(
-                          child: AlertDialog(
-                            contentPadding: EdgeInsets.all(0.0),
+                              child: AlertDialog(
+                                contentPadding: EdgeInsets.all(0.0),
+                                title: Text(
+                                  PersonalCase.GetLable(
+                                      ResourceKey.RegisterTasnifAmount),
+                                  style: TextStyle(fontSize: ArgonSize.Header3),
+                                ),
+                                content: Container(
 
-                            title: Text(
-                              PersonalCase.GetLable(
-                                  ResourceKey.RegisterTasnifAmount),
-                              style: TextStyle(fontSize: ArgonSize.Header3),
-                            ),
-                            content: Container(
-                              width:getScreenWidth()/2,
-                              padding: EdgeInsets.all(ArgonSize.Padding1),
-                              child: new Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  SpinBox(
-                                    max: 100000,
-
-                                    textStyle:TextStyle(fontSize:ArgonSize.Header2),
-                                    value: 1,
-                                    onChanged: (value) {
-                                      AssignAmount = value.toInt();
+                                  width: getScreenWidth() *0.7,
+                                  padding: EdgeInsets.all(ArgonSize.Padding1),
+                                  child: new Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      SpinBox(
+                                        max: 999999,
+                                        textStyle: TextStyle(
+                                            fontSize: ArgonSize.Header2),
+                                        value: 1,
+                                        onChanged: (value) {
+                                          AssignAmount = value.toInt();
+                                        },
+                                      ),
+                                      ActionMessage.isNotEmpty
+                                          ? Text(ActionMessage)
+                                          : SizedBox(
+                                              height: 1,
+                                            ),
+                                    ],
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text(
+                                        PersonalCase.GetLable(
+                                            ResourceKey.Cancel),
+                                        style: TextStyle(
+                                            fontSize: ArgonSize.Header4)),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
                                     },
                                   ),
-                                  ActionMessage.isNotEmpty
-                                      ? Text(ActionMessage)
-                                      : SizedBox(
-                                    height: 1,
+                                  TextButton(
+                                    child: Text(
+                                        PersonalCase.GetLable(ResourceKey.Save),
+                                        style: TextStyle(
+                                            fontSize: ArgonSize.Header4)),
+                                    onPressed: () async {
+                                      var Item = snapshot.data[Index];
+                                      int Employee_Id =
+                                          PersonalCase.GetCurrentUser().Id;
+                                      var Tracking =
+                                          new QualityDept_ModelOrder_TrackingBLL();
+                                      // Tracking.Sample_Amount = int.tryParse(
+                                      //     AccessoryAmountController.text);
+
+                                      Tracking.Sample_Amount = AssignAmount;
+                                      Tracking.Employee_Id = Employee_Id;
+                                      Tracking.Accessory_ModelOrder_Id =
+                                          Item.Id;
+                                      Tracking.DeptModelOrder_QualityTest_Id =
+                                          Item.DeptModelOrder_QualityTest_Id;
+                                      Tracking.ApprovalDate = DateTime.now();
+
+                                      bool Status = await Tracking
+                                          .RegisterAccessoryAmount();
+                                      if (!Status)
+                                        ActionMessage = PersonalCase.GetLable(
+                                            ResourceKey.InvalidAction);
+                                      else {
+                                        //  AccessoryAmountController.text = "";
+                                        AssignAmount = 1;
+                                        //Item.Checks_Quantity += Tracking.Sample_Amount;
+                                        Navigator.of(context).pop();
+                                        RefeshCurrent();
+                                      }
+                                    },
                                   ),
                                 ],
                               ),
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text(
-                                    PersonalCase.GetLable(
-                                        ResourceKey.Cancel),
-                                    style: TextStyle(
-                                        fontSize: ArgonSize.Header4)),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              TextButton(
-                                child: Text(
-                                    PersonalCase.GetLable(ResourceKey.Save),
-                                    style: TextStyle(
-                                        fontSize: ArgonSize.Header4)),
-                                onPressed: () async {
-                                  var Item = snapshot.data[Index];
-                                  int Employee_Id =
-                                      PersonalCase.GetCurrentUser().Id;
-                                  var Tracking =
-                                  new QualityDept_ModelOrder_TrackingBLL();
-                                  Tracking.Sample_Amount = int.tryParse(
-                                      AccessoryAmountController.text);
-                                  Tracking.Employee_Id = Employee_Id;
-                                  Tracking.Accessory_ModelOrder_Id =
-                                      Item.Id;
-                                  Tracking.DeptModelOrder_QualityTest_Id =
-                                      Item.DeptModelOrder_QualityTest_Id;
-                                  Tracking.ApprovalDate = DateTime.now();
-
-                                  bool Status = await Tracking
-                                      .RegisterAccessoryAmount();
-                                  if (!Status)
-                                    ActionMessage = PersonalCase.GetLable(
-                                        ResourceKey.InvalidAction);
-                                  else {
-                                    AccessoryAmountController.text = "";
-                                    //Item.Checks_Quantity += Tracking.Sample_Amount;
-                                    Navigator.of(context).pop();
-                                    RefeshCurrent();
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
-                        ));
+                            ));
                   });
             } else if (IntiteStatus == 0)
               return Center(child: CircularProgressIndicator());
@@ -169,7 +174,7 @@ class _Accessory_ControlState extends State<Accessory_Control> {
               return ErrorPage(
                   ActionName: PersonalCase.GetLable(ResourceKey.Loading),
                   MessageError:
-                  PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
+                      PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
                   DetailError: PersonalCase.GetLable(
                       ResourceKey.InvalidNetWorkConnection));
           },

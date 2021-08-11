@@ -22,8 +22,10 @@ class Standard_Input extends StatelessWidget {
 
   final String hintMessage;
   final String errorMessage;
-  bool isIp;
 
+  final verticalPadding;
+  final horizontalPadding;
+  bool isIp;
   Standard_Input(
       {this.placeholder,
       this.suffixIcon,
@@ -42,6 +44,10 @@ class Standard_Input extends StatelessWidget {
       this.hintMessage,
       this.isIp,
       this.obscureText = false,
+        this.verticalPadding ,
+        this.horizontalPadding ,
+
+
      });
 
   @override
@@ -84,7 +90,8 @@ class Standard_Input extends StatelessWidget {
               height: 0.85, fontSize: ArgonSize.Header4, color: ArgonColors.initial),
           textAlignVertical: TextAlignVertical(y: 0.6),
           decoration: InputDecoration(
-            contentPadding:  EdgeInsets.symmetric(vertical: ArgonSize.WidthtooSmall, horizontal: ArgonSize.WidthtooSmall),
+            isDense: true,                      // Added this
+            contentPadding:  EdgeInsets.symmetric(vertical: verticalPadding==null?ArgonSize.WidthtooSmall:verticalPadding ,horizontal: horizontalPadding==null?ArgonSize.HeighttooSmall:verticalPadding),
             labelText: placeholder,
             hintText: hintMessage,
             filled: true,

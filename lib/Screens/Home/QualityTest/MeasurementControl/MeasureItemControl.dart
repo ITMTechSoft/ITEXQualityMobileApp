@@ -114,7 +114,7 @@ class _MeasureItem_ControlState
 
                 child: Padding(
                   child: SpinBox(
-                    max: 100000,
+                    max: 999999,
 
                     value: 1,
                     onChanged: (value) {

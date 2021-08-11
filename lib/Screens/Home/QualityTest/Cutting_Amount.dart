@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/Standard_List/Standard_Headers.dart';
@@ -12,7 +13,7 @@ class Cutting_Amount extends StatefulWidget {
 
 class _Cutting_AmountState extends State<Cutting_Amount> {
   int IntiteStatus = 0;
-
+  int AssignAmount = 1;
   final TextEditingController CuttingAmountController =
       new TextEditingController();
 
@@ -37,64 +38,79 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
       OrderSizeColorDetailsBLL Item, Function Refersh) {
     showDialog(
         context: cntx,
-        builder: (cntx) => AlertDialog(
+        builder: (cntx) => Container(
+          child: AlertDialog(
 
-              title: Text(
-                  PersonalCase.GetLable(ResourceKey.RegisterCuttingAmount)
-              ,style:TextStyle( fontSize:ArgonSize.Header3,)),
-              content: Container(
-                width:getScreenWidth()/2,
-                child: new Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Standard_Input(
-                      prefixIcon: Icon(Icons.cut,size:ArgonSize.IconSize),
-                      controller: CuttingAmountController,
-                      Ktype: TextInputType.number,
-                    ),
-                    ActionMessage.isNotEmpty
-                        ? Text(ActionMessage)
-                        : SizedBox(
-                            height: 1,
-                          ),
-                  ],
+                title: Text(
+                    PersonalCase.GetLable(ResourceKey.RegisterCuttingAmount)
+                ,style:TextStyle( fontSize:ArgonSize.Header3,)),
+                content: Container(
+                  width:getScreenWidth()*0.7,
+                  child: new Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      // Standard_Input(
+                      //   prefixIcon: Icon(Icons.cut,size:ArgonSize.IconSize),
+                      //   controller: CuttingAmountController,
+                      //   Ktype: TextInputType.number,
+                      // ),
+
+                      SpinBox(
+                        max: 999999,
+                        textStyle: TextStyle(
+                            fontSize: ArgonSize.Header2),
+                        value: 1,
+                        onChanged: (value) {
+                          AssignAmount = value.toInt();
+                        },
+                      ),
+                      ActionMessage.isNotEmpty
+                          ? Text(ActionMessage)
+                          : SizedBox(
+                              height: 1,
+                            ),
+                    ],
+                  ),
                 ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: Text(PersonalCase.GetLable(ResourceKey.Cancel),style:TextStyle( fontSize:ArgonSize.Header4,)),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: Text(PersonalCase.GetLable(ResourceKey.Save),style:TextStyle( fontSize:ArgonSize.Header4,)),
-                  onPressed: () async {
-                    var Cutting = new QualityDept_ModelOrder_TrackingBLL();
-                    Cutting.Id = 0;
-                    Cutting.Sample_Amount =
-                        int.tryParse(CuttingAmountController.text);
-                    Cutting.Employee_Id = PersonalCase.GetCurrentUser().Id;
-                    Cutting.OrderSizeColorDetail_Id = Item.Id;
-                    Cutting.DeptModelOrder_QualityTest_Id =
-                        PersonalCase.SelectedTest.Id;
-                    Cutting.ApprovalDate = DateTime.now();
-                    bool Status = await Cutting.RegisterCuttingAmount();
-                    if (!Status)
-                      ActionMessage =
-                          PersonalCase.GetLable(ResourceKey.InvalidAction);
-                    else {
-                      CuttingAmountController.text = "";
+                actions: <Widget>[
+                  TextButton(
+                    child: Text(PersonalCase.GetLable(ResourceKey.Cancel),style:TextStyle( fontSize:ArgonSize.Header4,)),
+                    onPressed: () {
                       Navigator.of(context).pop();
-                    }
-                    Item.SizeColor_QTY =
-                        (Item.SizeColor_QTY ?? 0) + Cutting.Sample_Amount;
-                    Refersh();
-                  },
-                ),
-              ],
-            ));
+                    },
+                  ),
+                  TextButton(
+                    child: Text(PersonalCase.GetLable(ResourceKey.Save),style:TextStyle( fontSize:ArgonSize.Header4,)),
+                    onPressed: () async {
+                      var Cutting = new QualityDept_ModelOrder_TrackingBLL();
+                      Cutting.Id = 0;
+                      // Cutting.Sample_Amount =
+                      //     int.tryParse(CuttingAmountController.text);
+
+                      Cutting.Sample_Amount =  AssignAmount;
+                      Cutting.Employee_Id = PersonalCase.GetCurrentUser().Id;
+                      Cutting.OrderSizeColorDetail_Id = Item.Id;
+                      Cutting.DeptModelOrder_QualityTest_Id =
+                          PersonalCase.SelectedTest.Id;
+                      Cutting.ApprovalDate = DateTime.now();
+                      bool Status = await Cutting.RegisterCuttingAmount();
+                      if (!Status)
+                        ActionMessage =
+                            PersonalCase.GetLable(ResourceKey.InvalidAction);
+                      else {
+                        //CuttingAmountController.text = "";
+                        AssignAmount = 1 ;
+                        Navigator.of(context).pop();
+                      }
+                      Item.SizeColor_QTY =
+                          (Item.SizeColor_QTY ?? 0) + Cutting.Sample_Amount;
+                      Refersh();
+                    },
+                  ),
+                ],
+              ),
+        ));
   }
 
   Widget ModelOrderList(
@@ -193,7 +209,7 @@ class _CuttingMatrixDataTableState extends State<CuttingMatrixDataTable> {
   bool sort;
 
   String ActionMessage = "";
-
+  int AssignAmount = 1 ;
   @override
   void initState() {
     sort = false;
@@ -224,10 +240,21 @@ class _CuttingMatrixDataTableState extends State<CuttingMatrixDataTable> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Standard_Input(
-            prefixIcon: Icon(Icons.cut),
-            controller: CuttingAmountController,
-            Ktype: TextInputType.number,
+          // Standard_Input(
+          //   prefixIcon: Icon(Icons.cut),
+          //   controller: CuttingAmountController,
+          //   Ktype: TextInputType.number,
+          // ),
+          // ),
+
+          SpinBox(
+            max: 999999,
+            textStyle: TextStyle(
+                fontSize: ArgonSize.Header2),
+            value: 1,
+            onChanged: (value) {
+              AssignAmount = value.toInt();
+            },
           ),
           ActionMessage.isNotEmpty
               ? Text(ActionMessage)
@@ -248,7 +275,8 @@ class _CuttingMatrixDataTableState extends State<CuttingMatrixDataTable> {
           onPressed: () async {
             var Cutting = new QualityDept_ModelOrder_TrackingBLL();
             Cutting.Id = 0;
-            Cutting.Sample_Amount = int.tryParse(CuttingAmountController.text);
+         //   Cutting.Sample_Amount = int.tryParse(CuttingAmountController.text);
+            Cutting.Sample_Amount =    AssignAmount;
             Cutting.Employee_Id = PersonalCase.GetCurrentUser().Id;
             Cutting.OrderSizeColorDetail_Id = Item.Id;
             Cutting.DeptModelOrder_QualityTest_Id =
@@ -258,7 +286,8 @@ class _CuttingMatrixDataTableState extends State<CuttingMatrixDataTable> {
             if (!Status)
               ActionMessage = PersonalCase.GetLable(ResourceKey.InvalidAction);
             else {
-              CuttingAmountController.text = "";
+             // CuttingAmountController.text = "";
+              AssignAmount = 1 ;
               Navigator.of(context).pop();
             }
             Item.SizeColor_QTY =

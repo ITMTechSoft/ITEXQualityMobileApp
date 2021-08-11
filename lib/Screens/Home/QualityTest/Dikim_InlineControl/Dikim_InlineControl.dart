@@ -58,6 +58,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
         Tracking.Status = DikimInlineStatus.Open.index;
         Tracking.StartDate = DateTime.now();
         await Tracking.Generate_DikimInline_Tracking();
+        Navigator.pop(context);
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -65,6 +66,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
       } catch (e) {}
     });
   }
+
 
   @override
   Widget build(BuildContext context) {

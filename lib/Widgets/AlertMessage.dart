@@ -49,7 +49,7 @@ AlertDialog AlertPopupDialogWithAction(
                 child: Text(FirstActionLable),
                 onPressed: () async {
                   if (OnFirstAction != null) await OnFirstAction();
-                  Navigator.of(context).pop();
+                //  Navigator.of(context).pop();
                 },
               ),
               TextButton(

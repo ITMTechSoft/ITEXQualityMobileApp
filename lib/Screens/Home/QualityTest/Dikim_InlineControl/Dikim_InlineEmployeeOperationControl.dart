@@ -111,7 +111,7 @@ class _Dikim_InlineEmployeeOperationControlState
 
                 child: Padding(
                   child: SpinBox(
-                    max: 100000,
+                    max: 999999,
 
                     textStyle:TextStyle(fontSize:ArgonSize.Header3),
                     value: 1,

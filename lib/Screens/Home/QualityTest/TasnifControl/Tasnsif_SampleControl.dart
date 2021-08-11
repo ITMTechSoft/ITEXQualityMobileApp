@@ -26,8 +26,6 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 
   DeptModOrderQuality_ItemsBLL YAxias = new DeptModOrderQuality_ItemsBLL();
 
-  final TextEditingController SampleAmountController =
-      new TextEditingController();
 
   List<DeptModOrderQuality_ItemsBLL> XAxsiasItems;
   List<DeptModOrderQuality_ItemsBLL> YAxsiasItems;
@@ -60,7 +58,6 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
       YAxsiasItems =
           Criteria.where((element) => element.Item_Level == ItemLevel.YAxis)
               .toList();
-      SampleAmountController.text = "1";
       return Criteria;
     } else {
       IntiteStatus = -1;
@@ -74,7 +71,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 
     if (YAxias.Id == null) ActionStatus = 2;
 
-    int SampleAmount = int.tryParse(SampleAmountController.text);
+    int SampleAmount = AssignAmount;
     if (SampleAmount == 0) ActionStatus = 3;
 
     if (ActionStatus == 0) {
@@ -86,9 +83,9 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
       UsrQualityTrac.Yaxis_QualityItem_Id = YAxias.Id;
       if (IsCorrect)
         UsrQualityTrac.Correct_Amount =
-            int.tryParse(SampleAmountController.text);
+            AssignAmount;
       else
-        UsrQualityTrac.Error_Amount = int.tryParse(SampleAmountController.text);
+        UsrQualityTrac.Error_Amount = AssignAmount;
 
       await UsrQualityTrac.Set_User_QualityTracking_Detail();
     } else {
@@ -290,66 +287,6 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
         ],
       );
 
-  Widget ActionInputItems(PersonalProvider PersonalCase) => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            margin: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: IconInsideCircle(
-                      icon: FontAwesomeIcons.plus,
-                      backGroundColor: ArgonColors.primary,
-                      color: Colors.white,
-                      iconSize: ArgonSize.IconSize,
-                      size: ArgonSize.IconSize,
-                      function: () async {
-                        await RegisterSampeAmount(PersonalCase, true);
-                      }),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    margin: EdgeInsets.all(20),
-                    child: Standard_Input(
-                      prefixIcon: Icon(
-                        Icons.countertops,
-                        color: ArgonColors.Title,
-                      ),
-                      controller: SampleAmountController,
-                      Ktype: TextInputType.number,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: IconInsideCircle(
-                      icon: FontAwesomeIcons.minus,
-                      backGroundColor: Colors.red,
-                      color: Colors.white,
-                      iconSize: ArgonSize.IconSize,
-                      size: ArgonSize.IconSize,
-                      function: () async {
-                        await RegisterSampeAmount(PersonalCase, true);
-                      }),
-                )
-              ],
-            ),
-          ),
-          StandardButton(
-              ForColor: ArgonColors.white,
-              BakColor: ArgonColors.myGreen,
-              FontSize: ArgonSize.Header3,
-              Lable: PersonalCase.GetLable(ResourceKey.CloseSample),
-              OnTap: () async {
-                await PersonalCase.SelectedTracking.CloseTanifSample();
-                Navigator.pop(context, "Okay");
-              })
-        ],
-      );
 
   Widget inputWidget (PersonalProvider PersonalCase) =>    BoxMainContainer(Childrens: <Widget>[
     Column(
@@ -360,25 +297,30 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
           children: [
             Expanded(
               flex:2,
-              child: IconInsideCircle(
+              child:
+              IconInsideCircle(
                   icon: FontAwesomeIcons.plus,
                   backGroundColor: ArgonColors.primary,
                   color: Colors.white,
                   iconSize: ArgonSize.IconSize,
                   size: ArgonSize.IconSize,
-                  function: () async {
+                  function:
+                  () async {
                     await RegisterSampeAmount(PersonalCase, true);
                   }),
+
+              //BlinkAnimation()
             ),
             Expanded(
 
               child: Padding(
                 child: SpinBox(
-                  max: 100000,
+                  max: 999999,
                   textStyle:TextStyle(fontSize:ArgonSize.Header3),
                   value: 1,
                   onChanged: (value) {
                     AssignAmount = value.toInt();
+                    print('${AssignAmount}');
                   },
                 ),
                 padding: const EdgeInsets.all(16),
@@ -438,7 +380,6 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
               MainInformationBox(PersonalCase),
               GroupLevel(PersonalCase),
               AxisItem(PersonalCase),
-              //ActionInputItems(PersonalCase),
               inputWidget (PersonalCase)
             ]);
           } else if (IntiteStatus == 0)

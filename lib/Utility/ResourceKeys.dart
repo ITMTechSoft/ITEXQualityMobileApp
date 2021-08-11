@@ -1341,7 +1341,9 @@ enum ResourceKey{
   Yes,
   No,
   Notice,
-  ClosePageConfirmation
+  ClosePageConfirmation ,
+  Edit,
+
 
 }
 extension ParseToString on ResourceKey {

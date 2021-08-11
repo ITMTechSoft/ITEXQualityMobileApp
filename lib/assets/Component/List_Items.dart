@@ -250,46 +250,81 @@ Widget CuttingPastalControl(PersonalCase, DeptModOrderQuality_ItemsBLL Item,
 
   if (Item.CheckStatus == 1)
     ActionControl = InkWell(
-      child: Row(
+      child: Column(
         children: [
-          ClipOval(
-            child: Icon(
-              Icons.check_circle_rounded,
-              color: ArgonColors.success,
-              size:ArgonSize.IconSize
-            ),
-          ),
-          SizedBox(width : ArgonSize.Padding5),
+          Row(
+            children: [
+              ClipOval(
+                child: Icon(
+                  Icons.check_circle_rounded,
+                  color: ArgonColors.success,
+                  size:ArgonSize.IconSizeMedium
+                ),
+              ),
+              SizedBox(width : ArgonSize.Padding5),
 
-          Expanded(
-            child: Text(PersonalCase.GetLable(ResourceKey.Approved),style:TextStyle(fontSize:ArgonSize.Header4)),
-          )
+              Expanded(
+                child: Text(PersonalCase.GetLable(ResourceKey.Approved),style:TextStyle(fontSize:ArgonSize.Header4)),
+              )
+            ],
+          ),
+          SizedBox(height:ArgonSize.Padding3),
+          Align(
+            alignment:Alignment.centerRight,
+            child: CustomButton(
+                textSize:ArgonSize.Header5,
+
+                value:  PersonalCase.GetLable(ResourceKey.Edit),
+                backGroundColor: ArgonColors.myGreen,
+                height: ArgonSize.HeightSmall1,
+                width :getScreenWidth()>500?getScreenWidth()/7:getScreenWidth()/4,
+
+                function: ReOpenAction),
+          ),
         ],
       ),
-      onTap: ReOpenAction,
+    //  onTap: ReOpenAction,
     );
   else if (Item.CheckStatus == 0)
     ActionControl = InkWell(
-      child: Row(
+      child: Column(
         children: [
-          ClipOval(
-            child: Icon(
-              Icons.cancel_outlined,
-              color: ArgonColors.warning,
-                size:ArgonSize.IconSize
+          Row(
+            children: [
+              ClipOval(
+                child: Icon(
+                  Icons.cancel_outlined,
+                  color: ArgonColors.warning,
+                    size:ArgonSize.IconSizeMedium
 
-            ),
+                ),
+              ),
+              SizedBox(width : ArgonSize.Padding5),
+              Expanded(
+                child: Text(PersonalCase.GetLable(ResourceKey.Rejected) +
+                    ': ' +
+                    Item.Reject_Note ,
+                    style:TextStyle(fontSize:ArgonSize.Header4)),
+              )
+            ],
           ),
-          SizedBox(width : ArgonSize.Padding5),
-          Expanded(
-            child: Text(PersonalCase.GetLable(ResourceKey.Rejected) +
-                ': ' +
-                Item.Reject_Note ,
-                style:TextStyle(fontSize:ArgonSize.Header4)),
-          )
+
+          SizedBox(height:ArgonSize.Padding3),
+          Align(
+            alignment:Alignment.centerRight,
+            child: CustomButton(
+                textSize:ArgonSize.Header5,
+
+                value:  PersonalCase.GetLable(ResourceKey.Edit),
+                backGroundColor: ArgonColors.myGreen,
+                height: ArgonSize.HeightSmall1,
+                width :getScreenWidth()>500?getScreenWidth()/7:getScreenWidth()/4,
+
+                function: ReOpenAction),
+          ),
         ],
       ),
-      onTap: ReOpenAction,
+     // onTap: ReOpenAction,
     );
 
   Widget MainRow = Column(
@@ -835,27 +870,32 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
             ArgonColors.Pending,
             Width: getScreenWidth() / 3,
             Height: ArgonSize.WidthSmall,
-            FontSize: ArgonSize.Header4);
+            FontSize: ArgonSize.Header4,
+            FontColor: ArgonColors.black);
       case 1:
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.Success),
             ArgonColors.Success,
             Width: getScreenWidth() / 3,
             Height: ArgonSize.WidthMedium,
-            FontColor: ArgonColors.white);
+            FontColor: ArgonColors.white,
+            FontSize: ArgonSize.Header4);
       case 2:
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.UnderCheck),
             ArgonColors.UnderCheck,
             Width: getScreenWidth() / 3,
-            Height: ArgonSize.WidthMedium);
+            Height: ArgonSize.WidthMedium,
+            FontColor: ArgonColors.black,
+            FontSize: ArgonSize.Header4);
       case 3:
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.Invalid),
             ArgonColors.Invalid,
             Width: getScreenWidth() / 3,
             Height: ArgonSize.WidthMedium,
-            FontColor: ArgonColors.white);
+            FontColor: ArgonColors.white,
+            FontSize: ArgonSize.Header4);
     }
     return BoxColorWithText(
         widget.PersonalCase.GetLable(ResourceKey.Pending), ArgonColors.Pending,
