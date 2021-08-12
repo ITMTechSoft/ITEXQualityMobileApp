@@ -1348,6 +1348,8 @@ enum ResourceKey{
   Notice,
   ClosePageConfirmation ,
   Edit,
+  ChooseTheDate,
+  ChooseTheTime
 
 
 }

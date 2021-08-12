@@ -239,12 +239,18 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                                       ResourceKey.CuttingDate))),
                               Expanded(
                                 flex: 2,
-                                child: DateTimePicker(
-                                    SelectedDate: (DateTime SelectedTime) {
-                                  setState(() {
-                                    Card_Item.CuttingDate = SelectedTime;
-                                  });
-                                }),
+                                child:
+
+                                // DateTimePicker(
+                                //     SelectedDate: (DateTime SelectedTime) {
+                                //   setState(() {
+                                //     Card_Item.CuttingDate = SelectedTime;
+                                //   });
+                                // }),
+
+                                DateTimePicker(
+                                    dateChoices:2,
+                                    ),
                               )
                             ],
                           ),
@@ -259,11 +265,7 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                               Expanded(
                                 flex: 2,
                                 child: DateTimePicker(
-                                    SelectedDate: (DateTime SelectedTime) {
-                                  setState(() {
-                                    Card_Item.Pastel_Laying = SelectedTime;
-                                  });
-                                }),
+                                    ),
                               )
                             ],
                           ),
