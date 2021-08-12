@@ -34,16 +34,20 @@ class _Pastal_Cutting_Parti_ListState extends State<Pastal_Cutting_Parti_List> {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          StandardButton(
-              Lable: PersonalCase.GetLable(ResourceKey.GenerateNewParti),
-              ForColor: ArgonColors.white,
-              BakColor: ArgonColors.primary,
-              OnTap: () {
+          CustomButton(
+    textSize:ArgonSize.Header4,
+            width: getScreenWidth()*0.5,
+              height:ArgonSize.HeightSmall1,
+              value: PersonalCase.GetLable(ResourceKey.GenerateNewParti),
+              backGroundColor: ArgonColors.primary,
+              function: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => Pastal_NewSample()));
               }),
+
+          SizedBox(height:ArgonSize.Padding4),
           SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: ListView.builder(

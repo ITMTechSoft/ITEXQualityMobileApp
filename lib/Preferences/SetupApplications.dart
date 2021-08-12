@@ -60,6 +60,8 @@ class _SetupApplicationsState extends State<SetupApplications> {
                 child: Column(
                   children: [
                     Standard_Input(
+                      activeValidation : true,
+
                       suffixIcon: Icon(FontAwesomeIcons.server,size: ArgonSize.IconSize),
                       controller: serverIpController,
                       placeholder: StaticLable.ServerIp,
@@ -74,6 +76,8 @@ class _SetupApplicationsState extends State<SetupApplications> {
                       height: 10,
                     ),
                     Standard_Input(
+                      activeValidation : true,
+
                       suffixIcon: Icon(FontAwesomeIcons.passport,size: ArgonSize.IconSize),
                       controller: portController,
                       placeholder: StaticLable.ServerPort,
@@ -163,10 +167,11 @@ class _SetupApplicationsState extends State<SetupApplications> {
                         textSize: ArgonSize.Header3,
 
                         function: () async {
-                          setState(() {
-                            _isLoading=true;
-                          });
+
                           if (_formKey.currentState.validate()) {
+                            setState(() {
+                              _isLoading=true;
+                            });
                             SharedPref.ServerIp = serverIpController.text;
                             SharedPref.ServerPort = portController.text;
                             //  SharedPref.SelLanguage = CurrentLanguage;

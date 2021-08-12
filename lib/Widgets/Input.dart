@@ -17,11 +17,14 @@ class Standard_Input extends StatelessWidget {
   final int MinLines;
   final int MaxLines;
   final int MaxLength;
+  final int MinLength ;
   final bool obscureText;
+  final bool activeValidation ;
 
 
   final String hintMessage;
-  final String errorMessage;
+  final String errorMessage ;
+  final String lengthErrorMessage;
 
   final verticalPadding;
   final horizontalPadding;
@@ -45,7 +48,9 @@ class Standard_Input extends StatelessWidget {
       this.isIp,
       this.obscureText = false,
         this.verticalPadding ,
-        this.horizontalPadding ,
+        this.horizontalPadding,
+        this.activeValidation = false ,
+        this.MinLength = 2, this.lengthErrorMessage ,
 
 
      });
@@ -73,19 +78,21 @@ class Standard_Input extends StatelessWidget {
           obscureText:obscureText,
 
           /// TODO : CHANGE THE INPUT FORMATTER
-          // validator: (value) {
-          //   if (value.isEmpty)
-          //     return errorMessage;
-          //
-          //   return null;
-          // },
+          validator: (value) {
+            if (activeValidation)
+           {
+             if (value.isEmpty)
+               return errorMessage;
+             if (value.length<MinLength)
+               return lengthErrorMessage;
+           }
+
+
+            return null;
+          },
          //inputFormatters: isIp == true ?  [maskFormatter] :  null,
 
-          // validator: (value) {
-          //   if (value.isEmpty) return errorMessage;
-          //
-          //   return null;
-          // },
+
           style: TextStyle(
               height: 0.85, fontSize: ArgonSize.Header4, color: ArgonColors.initial),
           textAlignVertical: TextAlignVertical(y: 0.6),

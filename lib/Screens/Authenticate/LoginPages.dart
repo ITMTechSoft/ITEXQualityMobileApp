@@ -130,15 +130,20 @@ class _LoginPagesState extends State<LoginPages> {
                       child: Column(
                         children: [
                           Standard_Input(
+                      activeValidation : true,
                             suffixIcon: Icon(FontAwesomeIcons.user,size: ArgonSize.IconSize),
                             controller: UserNameController,
                             placeholder:
                                 PersonalCase.GetLable(ResourceKey.User_Name),
                             errorMessage: PersonalCase.GetLable(
                                 ResourceKey.MandatoryFields),
+                            lengthErrorMessage:PersonalCase.GetLable(
+                                ResourceKey.lengthErrorMessage),
                           ),
                          Standard_Input(
-                            suffixIcon: IconButton(icon: Icon(passwordSuffixIcon,size: ArgonSize.IconSize) ,onPressed:() =>
+                           activeValidation : true,
+
+                           suffixIcon: IconButton(icon: Icon(passwordSuffixIcon,size: ArgonSize.IconSize) ,onPressed:() =>
                                 setState(() {
                                   obscure=!obscure;
                                   obscure==true? passwordSuffixIcon = passwordSuffixIcon = FontAwesomeIcons.eye: passwordSuffixIcon = FontAwesomeIcons.eyeSlash;
@@ -163,6 +168,8 @@ class _LoginPagesState extends State<LoginPages> {
                             errorMessage: PersonalCase.GetLable(
                                 ResourceKey.MandatoryFields),
                               obscureText:obscure,
+                           lengthErrorMessage:PersonalCase.GetLable(
+                               ResourceKey.lengthErrorMessage),
                           ),
                           SizedBox(height: ArgonSize.Padding3),
                           _isLoading==true?  CircularProgressIndicator():Container(),

@@ -1349,7 +1349,10 @@ enum ResourceKey{
   ClosePageConfirmation ,
   Edit,
   ChooseTheDate,
-  ChooseTheTime
+  ChooseTheTime,
+  DeleteItemConfirmation ,
+  lengthErrorMessage,
+
 
 
 }

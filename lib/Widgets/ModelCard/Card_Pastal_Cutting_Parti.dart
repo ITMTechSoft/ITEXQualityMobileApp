@@ -93,6 +93,56 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
                             color: ArgonColors.text, IsCenter: true)),
                   ],
                 ),
+
+                SizedBox(height:ArgonSize.Padding1),
+                Row(
+                  children:[
+                    Expanded(
+                      flex:2,
+                      child:
+                      CustomButton(
+                          textSize:ArgonSize.Header4,
+                          width: getScreenWidth()*0.5,
+                          height:ArgonSize.HeightSmall1,
+                          value: PersonalCase.GetLable(ResourceKey.Edit),
+                          backGroundColor: ArgonColors.myGreen,
+                          function: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Pastal_NewSample()));
+                          }),
+                    ),
+                    SizedBox(width:ArgonSize.Padding3),
+                    Expanded(
+                      flex:2,
+                      child:
+                      CustomButton(
+                          textSize:ArgonSize.Header4,
+                          width: getScreenWidth()*0.5,
+                          height:ArgonSize.HeightSmall1,
+                          value: PersonalCase.GetLable(ResourceKey.Delete),
+                          backGroundColor: ArgonColors.myRed,
+                          function: () {
+                            AlertPopupDialogWithAction(context,
+                                textButton1Color: Colors.red,
+                                title: PersonalCase.GetLable(
+                                    ResourceKey.WarrningMessage),
+                                Children: <Widget>[
+                                  LableTitle(PersonalCase.GetLable(
+                                      ResourceKey.DeleteItemConfirmation),FontSize: ArgonSize.Header4)
+                                ],
+                                FirstActionLable:
+                                PersonalCase.GetLable(ResourceKey.Delete),
+                                SecondActionLable:
+                                PersonalCase.GetLable(ResourceKey.Cancel),
+                                OnFirstAction: () async {
+
+                                });
+                          }),
+                    )
+                  ]
+                )
               ]),
         ),
       ),
@@ -142,8 +192,15 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
               ),
               SizedBox(height: ArgonSize.Padding3),
               Center(
-                child: GestureDetector(
-                  onTap: () async {
+                child:
+
+                    CustomButton(
+                  textSize: ArgonSize.Header4,
+                  width: getScreenWidth() * 0.5,
+                  height: ArgonSize.HeightSmall1,
+                  value: PersonalCase.GetLable(ResourceKey.AddNew),
+                  backGroundColor: ArgonColors.primary,
+                  function: () async {
                     if (_formKey.currentState.validate()) {
                       Card_Item.Fabric_Type = Fabric_Type.text;
                       Card_Item.FabricRestingTime = FabricRestingTime.text;
@@ -172,13 +229,6 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                       _isLoading = false;
                     });
                   },
-                  child: ButtonWithNumber(
-                      buttonHegiht: ArgonSize.HeightMedium,
-                      buttonWidth: getScreenWidth() / 2.5,
-                      textSize: ArgonSize.Header4,
-                      text: PersonalCase.GetLable(ResourceKey.AddNew),
-                      btnBgColor: ArgonColors.primary,
-                      textColor: Colors.white),
                 ),
               ),
               Container(
@@ -198,15 +248,19 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                             children: [
                               Expanded(
                                   child: LableTitle(PersonalCase.GetLable(
-                                      ResourceKey.Fabric_Type))),
+                                      ResourceKey.Fabric_Type),
+                                      FontSize :ArgonSize.Header5)),
                               Expanded(
                                 flex: 2,
                                 child: Standard_Input(
+                                  activeValidation : true,
                                   controller: Fabric_Type,
                                   placeholder: PersonalCase.GetLable(
                                       ResourceKey.Fabric_Type),
                                   errorMessage: PersonalCase.GetLable(
                                       ResourceKey.MandatoryFields),
+                                    lengthErrorMessage:PersonalCase.GetLable(
+                                        ResourceKey.lengthErrorMessage),
                                 ),
                               )
                             ],
@@ -217,10 +271,13 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                             children: [
                               Expanded(
                                   child: LableTitle(PersonalCase.GetLable(
-                                      ResourceKey.FabricRestingTime))),
+                                      ResourceKey.FabricRestingTime),
+                                      FontSize :ArgonSize.Header5)),
                               Expanded(
                                 flex: 2,
                                 child: Standard_Input(
+                                  activeValidation : true,
+
                                   controller: FabricRestingTime,
                                   placeholder: PersonalCase.GetLable(
                                       ResourceKey.FabricRestingTime),
@@ -236,23 +293,17 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                             children: [
                               Expanded(
                                   child: LableTitle(PersonalCase.GetLable(
-                                      ResourceKey.CuttingDate))),
+                                      ResourceKey.CuttingDate),
+                                      FontSize :ArgonSize.Header5)),
                               Expanded(
                                 flex: 2,
-                                child:
-
-
-                                    DateTimePicker(
-                                        SelectedDateFunction:
-                                            (DateTime SelectedTime) {
-                                          // print('${SelectedTime.year}/'
-                                          //     '${SelectedTime.month}/'
-                                          //     '${SelectedTime.day}'
-                                          //     ' ${SelectedTime.hour}'
-                                          //     ':${SelectedTime.minute}');
-                                        },
-                                        dateMode: DateMode.cupertino,
-                                        dateChoices: DateChoices.dateAndTime),
+                                child: DateTimePicker(
+                                    SelectedDateFunction:
+                                        (DateTime SelectedTime) {
+                                      Card_Item.CuttingDate = SelectedTime;
+                                    },
+                                    dateMode: DateMode.cupertino,
+                                    dateChoices: DateChoices.dateAndTime),
                               )
                             ],
                           ),
@@ -263,10 +314,15 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                             children: [
                               Expanded(
                                   child: LableTitle(PersonalCase.GetLable(
-                                      ResourceKey.Pastel_Laying))),
+                                      ResourceKey.Pastel_Laying),
+                                      FontSize :ArgonSize.Header5)),
                               Expanded(
                                 flex: 2,
                                 child: DateTimePicker(
+                                    SelectedDateFunction:
+                                        (DateTime SelectedTime) {
+                                      Card_Item.Pastel_Laying = SelectedTime;
+                                    },
                                     dateMode: DateMode.normal,
                                     dateChoices: DateChoices.dateAndTime),
                               )
