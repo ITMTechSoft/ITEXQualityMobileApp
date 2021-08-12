@@ -116,6 +116,7 @@ Widget CuttingPastalControl(PersonalCase, DeptModOrderQuality_ItemsBLL Item,
             Lable: PersonalCase.GetLable(ResourceKey.ControlValid),
             ForColor: ArgonColors.white,
             BakColor: ArgonColors.primary,
+            FontSize:ArgonSize.Header5,
             OnTap: Approve),
       ),
       Expanded(
@@ -123,6 +124,8 @@ Widget CuttingPastalControl(PersonalCase, DeptModOrderQuality_ItemsBLL Item,
               Lable: PersonalCase.GetLable(ResourceKey.ControlInvalid),
               ForColor: ArgonColors.white,
               BakColor: ArgonColors.warning,
+              FontSize:ArgonSize.Header5,
+
               OnTap: Reject)),
     ],
   );

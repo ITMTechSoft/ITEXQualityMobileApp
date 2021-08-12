@@ -1,216 +1,274 @@
 import 'dart:ffi';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
-import '../../SystemImports.dart';
-
 class DateTimePicker extends StatefulWidget {
   Function SelectedDate;
-  Function SelecteTimeFunction;
 
   String DateFormat;
-  int dateChoices;
-  /// 1 : DATE ONLY
-  /// 2 : TIME ONLY
-  /// 3 : DATE AND TIME
-
 
   int FirstDate;
   int LastDate;
 
+  DateMode dateMode       =   DateMode.normal;
+  DateChoices dateChoices = DateChoices.date ;
 
-  DateTimePicker(
-      {
-        this.dateChoices= 1 ,
-        this.SelectedDate,
-        this.SelecteTimeFunction,
-        this.FirstDate = 2020,
-        this.LastDate = 2090,
-        this.DateFormat = "yyyy/MM/dd HH:mm"});
+
+
+
+
+  DateTimePicker({this.SelectedDate,
+    this.FirstDate = 2020,
+    this.LastDate = 2090,
+    this.DateFormat = "yyyy/MM/dd HH:mm",
+    this.dateMode = DateMode.normal ,
+    this.dateChoices = DateChoices.date});
 
   @override
   _DateTimePickerState createState() => _DateTimePickerState();
 }
 
 class _DateTimePickerState extends State<DateTimePicker> {
-  DateTime SelectedDate1 = DateTime.now();
-  TimeOfDay SelectedTime = TimeOfDay(hour: 9, minute: 0);
-  DateTime dateTime=  DateTime.now();
-  int year  = 2000;
-  int month  = 1;
-  int day = 1 ;
-  int hour = 10 ;
-  int minute = 30;
-
-  /// SELECT DATE
-  Future<Void> _openDatePicker(
-      BuildContext context, PersonalProvider PersonalCase) async {
-    SelectedDate1 = await showDatePicker(
-      context: context,
-      initialDate: SelectedDate1,
-      firstDate: new DateTime(SelectedDate1.year),
-      lastDate: new DateTime(widget.LastDate),
-      helpText: PersonalCase.GetLable(ResourceKey.ChooseTheDate),
-      cancelText: PersonalCase.GetLable(ResourceKey.Close),
-      confirmText: PersonalCase.GetLable(ResourceKey.Okay),
-    );
-
-  }
-
-  /// SELECT TIME
-  Future<Void> _openTimePicker(
-      BuildContext context, PersonalProvider PersonalCase) async {
-    SelectedTime = await showTimePicker(
-      context: context,
-        initialTime:  TimeOfDay(hour: 9, minute: 0),
-      helpText: PersonalCase.GetLable(ResourceKey.ChooseTheTime),
-      // Can be used as title
-      cancelText: PersonalCase.GetLable(ResourceKey.Close),
-      confirmText: PersonalCase.GetLable(ResourceKey.Okay),
-    );
+  DateTime SelectedDate = DateTime.now();
+  TimeOfDay SelectedTime = TimeOfDay(hour: 10, minute: 30);
 
 
-  }
+  getDate() async {
 
-  @override
-  Widget build(BuildContext context) {
-    final PersonalCase = Provider.of<PersonalProvider>(context);
+    // switch(widget.dateMode)
+    // {
+    //   /// CHOOSE NORMAL DATE
+    //   case 0 : {
+    //     switch (widget.dateChoices) {
+    //       case 0 :
+    //         {
+    //           await _openDatePicker(context);
+    //           widget.DateFormat = "yyyy/MM/dd";
+    //         }
+    //         break;
+    //       case 1 :
+    //         {
+    //           await _openTimePicker(context);
+    //           widget.DateFormat = "HH:mm";
+    //         }
+    //         break;
+    //       case 2 :
+    //         {
+    //           await _openDatePicker(context);
+    //           await _openTimePicker(context);
+    //           widget.DateFormat = "yyyy/MM/dd HH:mm";
+    //         }
+    //         break;
+    //     }
+    //   }
+    //   break ;
+    // /// CHOOSE CUPERTINO DATE
+    //   case 1 :{
+    //     switch (widget.dateChoices) {
+    //       case 0 :
+    //         {
+    //           _openCupertinoDate(context);
+    //           widget.DateFormat = "yyyy/MM/dd";
+    //         }
+    //         break;
+    //       case 1 :
+    //         {
+    //           _openCupertinoTime(context);
+    //           widget.DateFormat = "HH:mm";
+    //         }
+    //         break;
+    //       case 2 :
+    //         {
+    //
+    //           _openCupertinoTime(context);
+    //
+    //           _openCupertinoDate(context);
+    //           widget.DateFormat = "yyyy/MM/dd HH:mm";
+    //         }
+    //         break;
+    //     }
+    //   }
+    //   break ;
+    // }
 
-    return InkWell(
-      onTap: () async {
-        await _openDatePicker(context, PersonalCase);
-
-        await _openTimePicker(context, PersonalCase);
-
-
-
-        switch(widget.dateChoices )
-        {
-          case   1:
-         {
-           await _openDatePicker(context, PersonalCase);
-         }
-         break;
-
-          case   2:
-           {
-             await _openTimePicker(context, PersonalCase);
-           }
-           break;
-          case   3:
+    switch(widget.dateMode)
+    {
+    /// CHOOSE NORMAL DATE
+      case DateMode.normal : {
+        switch (widget.dateChoices) {
+          case DateChoices.date :
             {
-              await _openDatePicker(context, PersonalCase);
-
-              await _openTimePicker(context, PersonalCase);
+              await _openDatePicker(context);
+              widget.DateFormat = "yyyy/MM/dd";
             }
             break;
-          default: {
-            //statements;
-          }
+          case DateChoices.time :
+            {
+              await _openTimePicker(context);
+              widget.DateFormat = "HH:mm";
+            }
+            break;
+          case DateChoices.dateAndTime :
+            {
+              await _openDatePicker(context);
+              await _openTimePicker(context);
+              widget.DateFormat = "yyyy/MM/dd HH:mm";
+            }
+            break;
         }
+      }
+      break ;
+    /// CHOOSE CUPERTINO DATE
+      case DateMode.cupertino :{
+        switch (widget.dateChoices) {
+          case DateChoices.date :
+            {
+              _openCupertinoDate(context);
+              widget.DateFormat = "yyyy/MM/dd";
+            }
+            break;
+          case DateChoices.time :
+            {
+              _openCupertinoTime(context);
+              widget.DateFormat = "HH:mm";
+            }
+            break;
+          case DateChoices.dateAndTime :
+            {
+
+              _openCupertinoTime(context);
+
+              _openCupertinoDate(context);
+              widget.DateFormat = "yyyy/MM/dd HH:mm";
+            }
+            break;
+        }
+      }
+      break ;
+    }
 
 
-        setState(() {
-
-          year  = SelectedDate1.year;
-          month = SelectedDate1.month;
-          day   = SelectedDate1.day;
-          hour  = SelectedTime.hour;
-          minute   = SelectedTime.minute;
-
-        });
-        // if (SelectedDate != null && SelectedTime !=null)
-        //   setState(() {
-        //     widget.SelectedDateFunction(SelectedDate,SelectedTime);
-        //   });
-        // else
-        //   SelectedDate = DateTime.now();
-        //
-        //
-        // if (SelectedTime != null)
-        //   setState(() {
-        //     widget.SelecteTimeFunction(SelectedTime);
-        //   });
-        // else
-        //   SelectedTime = DateTime.now();
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Text(
-           // DateFormat(widget.DateFormat).format(SelectedDate).toString(),
-      '${  year.toString() } / ' '${  month.toString() } / ' '${  day.toString() } -' '${  hour.toString() } : ' '${  minute.toString() }  ',
-        style:
-            TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.text),
-          ),
-          IconButton(
-              icon: Icon(Icons.calendar_today),
-              onPressed: () async {
-                //await _openDatePicker(context);
-              })
-        ],
-      ),
-    );
   }
-}
 
-class DateAndTimePicker extends StatefulWidget {
-  Function SelectedDate;
 
-  String DateFormat;
 
-  int FirstDate;
-  int LastDate;
-  int Hour;
-  int Minute;
-
-  DateAndTimePicker(
-      {this.SelectedDate,
-        this.FirstDate = 2020,
-        this.LastDate = 2090,
-        this.DateFormat = "yyyy/MM/dd HH:mm"});
-
-  @override
-  _DateAndTimePickerState createState() => _DateAndTimePickerState();
-}
-
-class _DateAndTimePickerState extends State<DateAndTimePicker> {
-  DateTime SelectedDate = DateTime.now();
-  TimeOfDay SelectedTime;
-
-  Future<Void> _openDateAndTimePicker(
-      BuildContext context, PersonalProvider PersonalCase) async {
+  /// CHOOSE DATE
+  Future<Void> _openDatePicker(BuildContext context) async {
     SelectedDate = await showDatePicker(
       context: context,
       initialDate: SelectedDate,
       firstDate: new DateTime(SelectedDate.year),
       lastDate: new DateTime(widget.LastDate),
-      helpText: PersonalCase.GetLable(ResourceKey.ChooseTheDate),
-      // Can be used as title
-      cancelText: PersonalCase.GetLable(ResourceKey.Close),
-      confirmText: PersonalCase.GetLable(ResourceKey.Okay),
     );
-    SelectedTime = await showTimePicker(
-        context: context, initialTime: TimeOfDay(hour: 10, minute: 30));
-    if (SelectedTime != null)
+
+    if (SelectedDate != null)
       setState(() {
-        widget.SelectedDate(SelectedDate);
-        print('${SelectedTime.hour}' '${SelectedTime.minute}');
+        //  widget.SelectedDate(SelectedTime);
+
       });
     else
       SelectedDate = DateTime.now();
   }
 
+  /// CHOOSE TIME
+  Future<Void> _openTimePicker(BuildContext context) async {
+    SelectedTime = await showTimePicker(
+        context: context,
+        initialTime: SelectedTime
+    );
+
+
+    if (SelectedTime != null)
+      setState(() {
+        //  widget.SelectedDate(SelectedTime);
+        SelectedDate = DateTime(
+            SelectedDate.year, SelectedDate.month, SelectedDate.day,
+            SelectedTime.hour, SelectedTime.minute);
+      });
+    else
+      SelectedTime = SelectedTime;
+  }
+
+  /// CHOOSE DATE
+
+  void _openCupertinoDate(ctx) {
+    // showCupertinoModalPopup is a built-in function of the cupertino library
+    showCupertinoModalPopup(
+        context: ctx,
+        builder: (_) => Container(
+          height: 500,
+          color: Color.fromARGB(255, 255, 255, 255),
+          child: Column(
+            children: [
+              Container(
+                height: 400,
+                child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.date,
+
+                    initialDateTime: DateTime.now(),
+                    onDateTimeChanged: (val) {
+                      setState(() {
+                        SelectedDate = val;
+                      });
+                    }),
+              ),
+
+              // Close the modal
+              CupertinoButton(
+                child: Text('OK'),
+                onPressed: () => Navigator.of(ctx).pop(),
+              )
+            ],
+          ),
+        ));
+  }
+
+  /// CHOOSE TIME
+
+  void _openCupertinoTime(ctx) {
+    // showCupertinoModalPopup is a built-in function of the cupertino library
+    showCupertinoModalPopup(
+        context: ctx,
+        builder: (_) => Container(
+          height: 500,
+          color: Color.fromARGB(255, 255, 255, 255),
+          child: Column(
+            children: [
+              Container(
+                height: 400,
+                child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.time,
+
+                    initialDateTime: DateTime.now(),
+                    onDateTimeChanged: (val) {
+                      setState(() {
+                        SelectedDate = val;
+                            // DateTime(
+                            // val.year, val.month, val.day,
+                            // val.hour, val.minute);
+                      });
+                    }),
+              ),
+
+              // Close the modal
+              CupertinoButton(
+                child: Text('OK'),
+                onPressed: () => Navigator.of(ctx).pop(),
+              )
+            ],
+          ),
+        ));
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    final PersonalCase = Provider.of<PersonalProvider>(context);
-
     return InkWell(
       onTap: () async {
-        await _openDateAndTimePicker(context, PersonalCase);
+        getDate();
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -218,17 +276,24 @@ class _DateAndTimePickerState extends State<DateAndTimePicker> {
         children: <Widget>[
           Text(
             DateFormat(widget.DateFormat).format(SelectedDate).toString(),
-            style:
-            TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.text),
+            // '${SelectedDate.year}/'   '${SelectedDate.month}/'   '${SelectedDate.day}/ - '   '${SelectedTime.hour}:' '${SelectedTime.minute}/',
+            style: TextStyle(
+                fontSize: ArgonSize.Header3, color: ArgonColors.text),
           ),
           IconButton(
-              icon: Icon(Icons.calendar_today),
-              onPressed: () async {
-                //await _openDatePicker(context);
-              })
+            icon: Icon(Icons.calendar_today),
+          )
         ],
       ),
     );
   }
 }
-enum  DateChoices{date,time , dateAndTime }
+
+
+enum DateMode {
+  normal , cupertino
+}
+
+enum DateChoices {
+ date , time , dateAndTime
+}

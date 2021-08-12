@@ -49,7 +49,7 @@ class _Cutting_ControlState extends State<Cutting_Control> {
           context: context),
       body: ListView(children: [
         ListTile(
-          title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+          title: HeaderTitle('PersonalCase.SelectedOrder.Order_Number',
               color: ArgonColors.header, FontSize: ArgonSize.Header2),
           subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
           dense: true,

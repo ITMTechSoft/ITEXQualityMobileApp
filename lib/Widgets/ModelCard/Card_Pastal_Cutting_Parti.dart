@@ -240,7 +240,7 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                               Expanded(
                                 flex: 2,
                                 child:
-
+                                //
                                 // DateTimePicker(
                                 //     SelectedDate: (DateTime SelectedTime) {
                                 //   setState(() {
@@ -249,7 +249,9 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                                 // }),
 
                                 DateTimePicker(
-                                    dateChoices:2,
+
+                                  dateMode: DateMode.normal,
+                                  dateChoices :DateChoices.date
                                     ),
                               )
                             ],
