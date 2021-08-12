@@ -120,7 +120,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                         ),
                         Expanded(
                         flex:4,
-                          child: DateTimePicker(SelectedDate: (DateTime SelectedTime) {
+                          child: DateTimePicker(SelectedDateFunction: (DateTime SelectedTime) {
                             setState(() {
                               SelectedDate = SelectedTime;
                             });
@@ -132,7 +132,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                         mainAxisAlignment:MainAxisAlignment.spaceAround,
                         children:[
 
-                          DateTimePicker(SelectedDate: (DateTime SelectedTime) {
+                          DateTimePicker(SelectedDateFunction: (DateTime SelectedTime) {
                             setState(() {
                               SelectedDate = SelectedTime;
                             });

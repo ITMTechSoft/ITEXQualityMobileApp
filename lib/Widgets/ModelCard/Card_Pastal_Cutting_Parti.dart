@@ -240,19 +240,19 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                               Expanded(
                                 flex: 2,
                                 child:
-                                //
-                                // DateTimePicker(
-                                //     SelectedDate: (DateTime SelectedTime) {
-                                //   setState(() {
-                                //     Card_Item.CuttingDate = SelectedTime;
-                                //   });
-                                // }),
 
-                                DateTimePicker(
 
-                                  dateMode: DateMode.normal,
-                                  dateChoices :DateChoices.dateAndTime
-                                    ),
+                                    DateTimePicker(
+                                        SelectedDateFunction:
+                                            (DateTime SelectedTime) {
+                                          // print('${SelectedTime.year}/'
+                                          //     '${SelectedTime.month}/'
+                                          //     '${SelectedTime.day}'
+                                          //     ' ${SelectedTime.hour}'
+                                          //     ':${SelectedTime.minute}');
+                                        },
+                                        dateMode: DateMode.cupertino,
+                                        dateChoices: DateChoices.dateAndTime),
                               )
                             ],
                           ),
@@ -267,10 +267,8 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                               Expanded(
                                 flex: 2,
                                 child: DateTimePicker(
-
                                     dateMode: DateMode.normal,
-                                    dateChoices :DateChoices.dateAndTime
-                                ),
+                                    dateChoices: DateChoices.dateAndTime),
                               )
                             ],
                           ),
