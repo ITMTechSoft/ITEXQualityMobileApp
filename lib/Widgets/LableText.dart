@@ -42,7 +42,7 @@ Widget LableTitle(String Title,
     return Text(
       (Title ?? "").toUpperCase(),
       style: TextStyle(
-        fontSize: FontSize == null ? ArgonSize.Header5 : ArgonSize.Header5,
+        fontSize: FontSize == null ? ArgonSize.Header5 : FontSize,
         fontWeight: FontWeight.bold,
         color: color == null ? ArgonColors.Title : color,
       ),

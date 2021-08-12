@@ -107,71 +107,132 @@ class OrderCard extends StatelessWidget {
 
 
 
+
 Widget CuttingPastalControl(PersonalCase, DeptModOrderQuality_ItemsBLL Item,
     Function Approve, Function Reject, Function ReOpenAction) {
+
+
+  /// EDIT BUTTON
+  Widget editButton =   Row(
+     children:[
+
+       Expanded(flex:1,child:Container()),
+       Expanded(flex:4,child:Container()) ,
+       Expanded(
+           flex:4,
+
+           child:
+           CustomButton(
+               textSize:ArgonSize.Header5,
+
+               value:  PersonalCase.GetLable(ResourceKey.Edit),
+               backGroundColor: ArgonColors.myGreen,
+               height: ArgonSize.HeightSmall1,
+               width :getScreenWidth()>500?getScreenWidth()/3:getScreenWidth()/2.4,
+
+               function: ReOpenAction)
+       ),
+      ]
+
+   );
   Widget ActionControl = Row(
+    mainAxisAlignment:MainAxisAlignment.spaceEvenly,
     children: [
       Expanded(
-        child: StandardButton(
-            Lable: PersonalCase.GetLable(ResourceKey.ControlValid),
-            ForColor: ArgonColors.white,
-            BakColor: ArgonColors.primary,
-            FontSize:ArgonSize.Header5,
-            OnTap: Approve),
+        flex:4,
+        child: CustomButton(
+            value: PersonalCase.GetLable(ResourceKey.ControlValid),
+            textSize:ArgonSize.Header5,
+            backGroundColor: ArgonColors.primary,
+            function: Approve,
+            height: ArgonSize.HeightSmall1,
+            width :getScreenWidth()>500?getScreenWidth()/3:getScreenWidth()/2
+        ),
       ),
+      Expanded(flex:1,child: Container()),
       Expanded(
-          child: StandardButton(
-              Lable: PersonalCase.GetLable(ResourceKey.ControlInvalid),
-              ForColor: ArgonColors.white,
-              BakColor: ArgonColors.warning,
-              FontSize:ArgonSize.Header5,
+        flex:4,
+        child: CustomButton(
+            textSize:ArgonSize.Header5,
 
-              OnTap: Reject)),
+            value:  PersonalCase.GetLable(ResourceKey.ControlInvalid),
+            backGroundColor: ArgonColors.warning,
+            height: ArgonSize.HeightSmall1,
+            width :getScreenWidth()>500?getScreenWidth()/3:getScreenWidth()/2,
+
+            function: Reject),
+      ),
     ],
   );
+
   if (Item.CheckStatus == 1)
     ActionControl = InkWell(
-      child: Row(
+      child: Column(
         children: [
-          ClipOval(
-            child: Icon(
-              Icons.check_circle_rounded,
-              color: ArgonColors.success,
-            ),
+          Row(
+            children: [
+              ClipOval(
+                child: Icon(
+                    Icons.check_circle_rounded,
+                    color: ArgonColors.success,
+                    size:ArgonSize.IconSizeMedium
+                ),
+              ),
+              SizedBox(width : ArgonSize.Padding5),
+
+              Expanded(
+                child: Text(PersonalCase.GetLable(ResourceKey.Approved),style:TextStyle(fontSize:ArgonSize.Header4)),
+              )
+            ],
           ),
-          Expanded(
-            child: Text(PersonalCase.GetLable(ResourceKey.Approved)),
-          )
+          SizedBox(height:ArgonSize.Padding3),
+          editButton
         ],
       ),
-      onTap: ReOpenAction,
+      //  onTap: ReOpenAction,
     );
   else if (Item.CheckStatus == 0)
     ActionControl = InkWell(
-      child: Row(
+      child: Column(
         children: [
-          ClipOval(
-            child: Icon(
-              Icons.cancel_outlined,
-              color: ArgonColors.warning,
-            ),
+          Row(
+            children: [
+              ClipOval(
+                child: Icon(
+                    Icons.cancel_outlined,
+                    color: ArgonColors.warning,
+                    size:ArgonSize.IconSizeMedium
+
+                ),
+              ),
+              SizedBox(width : ArgonSize.Padding5),
+              Expanded(
+                child: Text(PersonalCase.GetLable(ResourceKey.Rejected) +
+                    ': ' +
+                    Item.Reject_Note ,
+                    style:TextStyle(fontSize:ArgonSize.Header4)),
+              )
+            ],
           ),
-          Expanded(
-            child: Text(PersonalCase.GetLable(ResourceKey.Rejected) +
-                ': ' +
-                Item.Reject_Note),
-          )
+
+          SizedBox(height:ArgonSize.Padding3),
+          editButton
         ],
       ),
-      onTap: ReOpenAction,
+      // onTap: ReOpenAction,
     );
 
   Widget MainRow = Column(
     mainAxisAlignment: MainAxisAlignment.center,
     mainAxisSize: MainAxisSize.max,
     children: [
-      LableTitle(Item.Item_Name, color: ArgonColors.text),
+      SizedBox(height:ArgonSize.Padding6),
+
+      LableTitle(Item.Item_Name, color: ArgonColors.text,FontSize: ArgonSize.Header4),
+      SizedBox(height:ArgonSize.Padding3),
       ActionControl,
+      SizedBox(height:ArgonSize.Padding6),
+
     ],
   );
 

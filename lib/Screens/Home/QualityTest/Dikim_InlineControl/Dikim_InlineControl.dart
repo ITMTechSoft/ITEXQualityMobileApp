@@ -72,6 +72,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     final CaseProvider = Provider.of<SubCaseProvider>(context);
+
     return Scaffold(
       appBar:
       DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
@@ -102,25 +103,50 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Row(
+                    getScreenWidth()>400 ?    Row(
                       mainAxisAlignment:MainAxisAlignment.spaceAround,
                       children:[
-                        CustomButton(
-                             width:getScreenWidth()/2.3,
-                            height: ArgonSize.HeightSmall,
+                        Expanded(
+                          flex:3,
+                          child: CustomButton(
+                              height: ArgonSize.HeightSmall,
                   textSize:ArgonSize.Header4,
-                            value:
-                            PersonalCase.GetLable(ResourceKey.ControlValid),
-                            backGroundColor: ArgonColors.primary,
-                            function: () async {
-                              await GenerateNewRound(PersonalCase);
-                            }),
-                        DateTimePicker(SelectedDate: (DateTime SelectedTime) {
-                          setState(() {
-                            SelectedDate = SelectedTime;
-                          });
-                        }),
+                              value:
+                              PersonalCase.GetLable(ResourceKey.ControlValid),
+                              backGroundColor: ArgonColors.primary,
+                              function: () async {
+                                await GenerateNewRound(PersonalCase);
+                              }),
+                        ),
+                        Expanded(
+                        flex:4,
+                          child: DateTimePicker(SelectedDate: (DateTime SelectedTime) {
+                            setState(() {
+                              SelectedDate = SelectedTime;
+                            });
+                          }),
+                        ),
                       ]
+                    ):
+                    Column(
+                        mainAxisAlignment:MainAxisAlignment.spaceAround,
+                        children:[
+
+                          DateTimePicker(SelectedDate: (DateTime SelectedTime) {
+                            setState(() {
+                              SelectedDate = SelectedTime;
+                            });
+                          }),
+                          CustomButton(
+                              height: ArgonSize.HeightSmall,
+                              textSize:ArgonSize.Header4,
+                              value:
+                              PersonalCase.GetLable(ResourceKey.ControlValid),
+                              backGroundColor: ArgonColors.primary,
+                              function: () async {
+                                await GenerateNewRound(PersonalCase);
+                              }),
+                        ]
                     ),
                     SizedBox(height:ArgonSize.Padding3),
                     Tb_InlineDikimList(
