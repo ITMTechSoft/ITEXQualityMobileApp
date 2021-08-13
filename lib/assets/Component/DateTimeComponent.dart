@@ -10,6 +10,7 @@ class DateTimePicker extends StatefulWidget {
   String DateFormat;
   int FirstDate;
   int LastDate;
+  DateTime  SelectedDate ;
 
   /// TYPE OF DATE PICKER , CUPERTINO OR NORMAL
   DateMode dateMode = DateMode.normal;
@@ -18,18 +19,19 @@ class DateTimePicker extends StatefulWidget {
 
   DateTimePicker(
       {this.SelectedDateFunction,
-      this.FirstDate = 2020,
-      this.LastDate = 2090,
-      this.DateFormat,
-      this.dateMode = DateMode.normal,
-      this.dateChoices = DateChoices.date});
+        this.FirstDate = 2020,
+        this.LastDate = 2090,
+        this.DateFormat,
+        this.dateMode = DateMode.normal,
+        this.dateChoices = DateChoices.date ,
+        this.SelectedDate});
 
   @override
   _DateTimePickerState createState() => _DateTimePickerState();
 }
 
 class _DateTimePickerState extends State<DateTimePicker> {
-  DateTime  SelectedDate = DateTime.now();
+  //DateTime  SelectedDate = DateTime.now();
   TimeOfDay SelectedTime = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
 
 
@@ -58,7 +60,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
   getDate() async {
     switch (widget.dateMode) {
 
-      /// CHOOSE NORMAL DATE
+    /// CHOOSE NORMAL DATE
       case DateMode.normal:
         {
           switch (widget.dateChoices) {
@@ -85,7 +87,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
         }
         break;
 
-      /// CHOOSE CUPERTINO DATE
+    /// CHOOSE CUPERTINO DATE
       case DateMode.cupertino:
         {
           switch (widget.dateChoices) {
@@ -118,19 +120,19 @@ class _DateTimePickerState extends State<DateTimePicker> {
 
   /// CHOOSE DATE
   Future<Void> _openDatePicker(BuildContext context) async {
-    SelectedDate = await showDatePicker(
+    widget.SelectedDate = await showDatePicker(
       context: context,
-      initialDate: SelectedDate ?? DateTime.now(),
-      firstDate: new DateTime(SelectedDate.year),
+      initialDate: widget.SelectedDate ?? DateTime.now(),
+      firstDate: new DateTime(widget.SelectedDate.year),
       lastDate:  new DateTime(widget.LastDate),
     );
 
-    if (SelectedDate != null)
+    if (widget.SelectedDate != null)
       setState(() {
-        widget.SelectedDateFunction(SelectedDate);
+        widget.SelectedDateFunction(widget.SelectedDate);
       });
     else
-      SelectedDate = DateTime.now();
+      widget.SelectedDate = DateTime.now();
   }
 
   /// CHOOSE TIME
@@ -144,9 +146,9 @@ class _DateTimePickerState extends State<DateTimePicker> {
     if (SelectedTime != null)
       setState(() {
         //  widget.SelectedDate(SelectedTime);
-        SelectedDate = DateTime(SelectedDate.year, SelectedDate.month,
-            SelectedDate.day, SelectedTime.hour, SelectedTime.minute);
-        widget.SelectedDateFunction(SelectedDate);
+        widget.SelectedDate = DateTime(widget.SelectedDate.year, widget.SelectedDate.month,
+            widget.SelectedDate.day, SelectedTime.hour, SelectedTime.minute);
+        widget.SelectedDateFunction(widget.SelectedDate);
       });
     else
       SelectedTime =  TimeOfDay(
@@ -162,37 +164,37 @@ class _DateTimePickerState extends State<DateTimePicker> {
     showCupertinoModalPopup(
         context: ctx,
         builder: (_) => Container(
-              height: getScreenHeight()*0.6,
-              color: Color.fromARGB(255, 255, 255, 255),
-              child: Column(
-                children: [
-                  Container(
-                    height: getScreenHeight()*0.5,
-                    child: CupertinoDatePicker(
-                        mode: CupertinoDatePickerMode.date,
-                        initialDateTime: DateTime.now(),
-                        onDateTimeChanged: (val) {
-                          setState(() {
-                            SelectedDate = DateTime(
-                                val.year,
-                                val.month,
-                                val.day,
-                                SelectedTime.hour,
-                                SelectedTime.minute);
+          height: getScreenHeight()*0.6,
+          color: Color.fromARGB(255, 255, 255, 255),
+          child: Column(
+            children: [
+              Container(
+                height: getScreenHeight()*0.5,
+                child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.date,
+                    initialDateTime: DateTime.now(),
+                    onDateTimeChanged: (val) {
+                      setState(() {
+                        widget.SelectedDate = DateTime(
+                            val.year,
+                            val.month,
+                            val.day,
+                            SelectedTime.hour,
+                            SelectedTime.minute);
 
-                            widget.SelectedDateFunction(SelectedDate);
-                          });
-                        }),
-                  ),
-
-                  // Close the modal
-                  CupertinoButton(
-                    child: Text('OK'),
-                    onPressed: () => Navigator.of(ctx).pop(),
-                  )
-                ],
+                        widget.SelectedDateFunction(widget.SelectedDate);
+                      });
+                    }),
               ),
-            ));
+
+              // Close the modal
+              CupertinoButton(
+                child: Text('OK'),
+                onPressed: () => Navigator.of(ctx).pop(),
+              )
+            ],
+          ),
+        ));
   }
 
   /// CHOOSE TIME
@@ -203,36 +205,36 @@ class _DateTimePickerState extends State<DateTimePicker> {
         context: ctx,
         builder: (_) => Container(
           height: getScreenHeight()*0.6,
-              color: Color.fromARGB(255, 255, 255, 255),
-              child: Column(
-                children: [
-                  Container(
-                    height: getScreenHeight()*0.5,
-                    child: CupertinoDatePicker(
-                        mode: CupertinoDatePickerMode.time,
-                        initialDateTime: DateTime.now(),
-                        onDateTimeChanged: (val) {
-                          setState(() {
-                            SelectedDate = DateTime(
-                                SelectedDate.year,
-                                SelectedDate.month,
-                                SelectedDate.day,
-                                val.hour,
-                                val.minute);
+          color: Color.fromARGB(255, 255, 255, 255),
+          child: Column(
+            children: [
+              Container(
+                height: getScreenHeight()*0.5,
+                child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.time,
+                    initialDateTime: DateTime.now(),
+                    onDateTimeChanged: (val) {
+                      setState(() {
+                        widget.SelectedDate = DateTime(
+                            widget.SelectedDate.year,
+                            widget.SelectedDate.month,
+                            widget. SelectedDate.day,
+                            val.hour,
+                            val.minute);
 
-                            widget.SelectedDateFunction(SelectedDate);
-                          });
-                        }),
-                  ),
-
-                  // Close the modal
-                  CupertinoButton(
-                    child: Text('OK'),
-                    onPressed: () => Navigator.of(ctx).pop(),
-                  )
-                ],
+                        widget.SelectedDateFunction(widget.SelectedDate);
+                      });
+                    }),
               ),
-            ));
+
+              // Close the modal
+              CupertinoButton(
+                child: Text('OK'),
+                onPressed: () => Navigator.of(ctx).pop(),
+              )
+            ],
+          ),
+        ));
   }
 
   @override
@@ -244,7 +246,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
   @override
   Widget build(BuildContext context) {
     getInitialFormat(dateChoices: widget.dateChoices);
-
+    widget.SelectedDate??DateTime.now();
     return InkWell(
       onTap: () async {
         getDate();
@@ -254,10 +256,10 @@ class _DateTimePickerState extends State<DateTimePicker> {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Text(
-            DateFormat(widget.DateFormat).format(SelectedDate).toString(),
+            DateFormat(widget.DateFormat).format(widget.SelectedDate).toString(),
             // '${SelectedDate.year}/'   '${SelectedDate.month}/'   '${SelectedDate.day}/ - '   '${SelectedTime.hour}:' '${SelectedTime.minute}/',
             style:
-                TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.text),
+            TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.text),
           ),
           IconButton(
             icon: Icon(Icons.calendar_today),

@@ -25,7 +25,6 @@ class Standard_Input extends StatelessWidget {
   final String hintMessage;
   final String errorMessage ;
   final String lengthErrorMessage;
-
   final verticalPadding;
   final horizontalPadding;
   bool isIp;
@@ -66,7 +65,6 @@ class Standard_Input extends StatelessWidget {
       child:  TextFormField(
           cursorColor: ArgonColors.muted,
           onTap: onTap,
-
 
           onChanged: onChanged,
           controller: controller,

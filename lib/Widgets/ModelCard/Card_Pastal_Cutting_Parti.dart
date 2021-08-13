@@ -21,6 +21,20 @@ class Card_Pastal_Cutting_Parti extends StatefulWidget {
 class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
   TextEditingController Fabric_Type = new TextEditingController();
 
+  /// DELETE ITEM FUNCTION
+  Future<bool> DeleteItem() async {
+    bool Criteria = await widget.Card_Item.DeleteEntity();
+
+    print(widget.Card_Item.Id);
+    if (Criteria != null) {
+      // IntiteStatus = 1;
+      return Criteria;
+    } else {
+      // IntiteStatus = -1;
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
@@ -33,7 +47,7 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
       shadowColor: ArgonColors.black,
       elevation: 10,
       color:
-          IsSelectedItem ? ArgonColors.SelectedColor : ArgonColors.NormalColor,
+      IsSelectedItem ? ArgonColors.SelectedColor : ArgonColors.NormalColor,
       child: Container(
         padding: EdgeInsets.all(10),
         margin: EdgeInsets.all(10),
@@ -51,98 +65,132 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
                   children: [
                     Expanded(
                         child: LableTitle(
-                            '${PersonalCase.GetLable(ResourceKey.Fabric_Type)}')),
+                            '${PersonalCase.GetLable(ResourceKey.Fabric_Type)}',
+                            FontSize: ArgonSize.Header4)),
                     Expanded(
                         child: LableTitle(widget.Card_Item.Fabric_Type,
-                            color: ArgonColors.text, IsCenter: true)),
+                            color: ArgonColors.text,
+                            IsCenter: true,
+                            FontSize: ArgonSize.Header4)),
                   ],
                 ),
+                SizedBox(height: ArgonSize.Padding6),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
                         child: LableTitle(
-                            '${PersonalCase.GetLable(ResourceKey.Pastel_Laying)}')),
-                    Expanded(
-                        child: LableDateTime(widget.Card_Item.Pastel_Laying,
-                            color: ArgonColors.text, IsCenter: true)),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                        child: LableTitle(
-                            '${PersonalCase.GetLable(ResourceKey.CuttingDate)}')),
-                    Expanded(
-                        child: LableDateTime(widget.Card_Item.CuttingDate,
-                            color: ArgonColors.text, IsCenter: true)),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                        child: LableTitle(
-                            '${PersonalCase.GetLable(ResourceKey.FabricRestingTime)}')),
+                            '${PersonalCase.GetLable(ResourceKey.FabricRestingTime)}',
+                            FontSize: ArgonSize.Header4)),
                     Expanded(
                         child: LableTitle(widget.Card_Item.FabricRestingTime,
-                            color: ArgonColors.text, IsCenter: true)),
+                            color: ArgonColors.text,
+                            IsCenter: true,
+                            FontSize: ArgonSize.Header4)),
+                  ],
+                ),
+                SizedBox(height: ArgonSize.Padding6),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: LableTitle(
+                          '${PersonalCase.GetLable(ResourceKey.Pastel_Laying)}',
+                          FontSize: ArgonSize.Header4),
+                    ),
+                    Expanded(
+                        child: LableDateTime(widget.Card_Item.Pastel_Laying,
+                            color: ArgonColors.text,
+                            IsCenter: true,
+                            FontSize: ArgonSize.Header4)),
+                  ],
+                ),
+                SizedBox(height: ArgonSize.Padding6),
+
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                        child: LableTitle(
+                            '${PersonalCase.GetLable(ResourceKey.CuttingDate)}',
+                            FontSize: ArgonSize.Header4)),
+                    Expanded(
+                        child: LableDateTime(widget.Card_Item.CuttingDate,
+                            color: ArgonColors.text,
+                            IsCenter: true,
+                            FontSize: ArgonSize.Header4)),
                   ],
                 ),
 
-                SizedBox(height:ArgonSize.Padding1),
-                Row(
-                  children:[
-                    Expanded(
-                      flex:2,
-                      child:
-                      CustomButton(
-                          textSize:ArgonSize.Header4,
-                          width: getScreenWidth()*0.5,
-                          height:ArgonSize.HeightSmall1,
-                          value: PersonalCase.GetLable(ResourceKey.Edit),
-                          backGroundColor: ArgonColors.myGreen,
-                          function: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Pastal_NewSample()));
-                          }),
-                    ),
-                    SizedBox(width:ArgonSize.Padding3),
-                    Expanded(
-                      flex:2,
-                      child:
-                      CustomButton(
-                          textSize:ArgonSize.Header4,
-                          width: getScreenWidth()*0.5,
-                          height:ArgonSize.HeightSmall1,
-                          value: PersonalCase.GetLable(ResourceKey.Delete),
-                          backGroundColor: ArgonColors.myRed,
-                          function: () {
-                            AlertPopupDialogWithAction(context,
-                                textButton1Color: Colors.red,
-                                title: PersonalCase.GetLable(
-                                    ResourceKey.WarrningMessage),
-                                Children: <Widget>[
-                                  LableTitle(PersonalCase.GetLable(
-                                      ResourceKey.DeleteItemConfirmation),FontSize: ArgonSize.Header4)
-                                ],
-                                FirstActionLable:
-                                PersonalCase.GetLable(ResourceKey.Delete),
-                                SecondActionLable:
-                                PersonalCase.GetLable(ResourceKey.Cancel),
-                                OnFirstAction: () async {
+                SizedBox(height: ArgonSize.Padding1),
+                Row(children: [
+                  Expanded(flex: 1, child: Container()),
+                  Expanded(
+                    flex: 2,
+                    child: CustomButton(
+                        textSize: ArgonSize.Header4,
+                        width: getScreenWidth() * 0.5,
+                        height: ArgonSize.HeightSmall1,
+                        value: PersonalCase.GetLable(ResourceKey.Edit),
+                        backGroundColor: ArgonColors.myGreen,
+                        function: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Pastal_NewSample(
+                                      Card_Item: widget.Card_Item)));
+                        }),
+                  ),
+                  SizedBox(width: ArgonSize.Padding3),
+                  Expanded(
+                    flex: 2,
+                    child: CustomButton(
+                        textSize: ArgonSize.Header4,
+                        width: getScreenWidth() * 0.5,
+                        height: ArgonSize.HeightSmall1,
+                        value: PersonalCase.GetLable(ResourceKey.Delete),
+                        backGroundColor: ArgonColors.myRed,
+                        function: () {
+                          AlertPopupDialogWithAction(context,
+                              textButton1Color: Colors.red,
+                              title: PersonalCase.GetLable(
+                                  ResourceKey.WarrningMessage),
+                              Children: <Widget>[
+                                LableTitle(
+                                    PersonalCase.GetLable(
+                                        ResourceKey.DeleteItemConfirmation),
+                                    FontSize: ArgonSize.Header4)
+                              ],
+                              FirstActionLable:
+                              PersonalCase.GetLable(ResourceKey.Delete),
+                              SecondActionLable:
+                              PersonalCase.GetLable(ResourceKey.Cancel),
+                              OnFirstAction: () async {
+                                bool result = await DeleteItem();
+                                if (result != null) Navigator.of(context).pop();
+                                if (result == true) {
+                                  final snackBar = SnackBar(
+                                      content: Text("Deleted Successfuly"));
 
-                                });
-                          }),
-                    )
-                  ]
-                )
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                } else {
+                                  final snackBar =
+                                  SnackBar(content: Text("SomeThing wrong"));
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                }
+                              });
+                        }),
+                  ),
+                  Expanded(flex: 1, child: Container()),
+                ])
               ]),
         ),
       ),
@@ -151,6 +199,10 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
 }
 
 class Pastal_NewSample extends StatefulWidget {
+  Pastal_Cutting_PartiBLL Card_Item ;
+
+  Pastal_NewSample({Key key, this.Card_Item}) : super(key: key);
+
   @override
   _Pastal_NewSampleState createState() => _Pastal_NewSampleState();
 }
@@ -158,10 +210,8 @@ class Pastal_NewSample extends StatefulWidget {
 class _Pastal_NewSampleState extends State<Pastal_NewSample> {
   int IntiteStatus = 0;
 
-  Pastal_Cutting_PartiBLL Card_Item = new Pastal_Cutting_PartiBLL();
+  // Pastal_Cutting_PartiBLL Card_Item = new Pastal_Cutting_PartiBLL();
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController Fabric_Type = new TextEditingController();
-  final TextEditingController FabricRestingTime = new TextEditingController();
 
   String ErrorMesage;
   bool _isLoading;
@@ -170,7 +220,13 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     final CaseProvider = Provider.of<SubCaseProvider>(context);
+    widget.Card_Item =widget.Card_Item ==null? new   Pastal_Cutting_PartiBLL() :widget.Card_Item ;
 
+    final TextEditingController Fabric_Type = new TextEditingController(
+        text: widget.Card_Item != null ? widget.Card_Item.Fabric_Type : '');
+    final TextEditingController FabricRestingTime = new TextEditingController(
+        text:
+        widget.Card_Item != null ? widget.Card_Item.FabricRestingTime : '');
     return Scaffold(
         appBar: DetailBar(
             Title: PersonalCase.SelectedTest.Test_Name,
@@ -192,22 +248,25 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
               ),
               SizedBox(height: ArgonSize.Padding3),
               Center(
-                child:
-
-                    CustomButton(
+                child: CustomButton(
                   textSize: ArgonSize.Header4,
                   width: getScreenWidth() * 0.5,
                   height: ArgonSize.HeightSmall1,
-                  value: PersonalCase.GetLable(ResourceKey.AddNew),
+                  value: PersonalCase.GetLable(widget.Card_Item.CuttingDate!= null
+                      ? ResourceKey.Edit
+                      : ResourceKey.AddNew),
                   backGroundColor: ArgonColors.primary,
                   function: () async {
                     if (_formKey.currentState.validate()) {
-                      Card_Item.Fabric_Type = Fabric_Type.text;
-                      Card_Item.FabricRestingTime = FabricRestingTime.text;
-                      Card_Item.Order_id = PersonalCase.SelectedOrder.Order_Id;
-                      Card_Item.Create_Employee_Id =
+                      widget.Card_Item.Fabric_Type = Fabric_Type.text;
+                      widget.Card_Item.FabricRestingTime = FabricRestingTime.text;
+                      widget. Card_Item.Order_id = PersonalCase.SelectedOrder.Order_Id;
+                      widget.Card_Item.Create_Employee_Id =
                           PersonalCase.GetCurrentUser().Id;
-                      bool CheckItem = await Card_Item.SaveEntity();
+                      widget. Card_Item.CuttingDate=   widget. Card_Item.CuttingDate!=null? widget.Card_Item.CuttingDate:DateTime.now();
+
+                      widget.  Card_Item.Pastel_Laying= widget.Card_Item.Pastel_Laying!=null? widget.Card_Item.Pastel_Laying:DateTime.now();
+                      bool CheckItem = await widget.Card_Item.SaveEntity();
                       if (CheckItem) {
                         CaseProvider.ReloadAction();
                         Navigator.pop(context, "Okay");
@@ -217,7 +276,7 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                             PersonalCase.GetLable(ResourceKey.SaveMessage),
                             PersonalCase.GetLable(ResourceKey.SaveErrorMessage),
                             ActionLable:
-                                PersonalCase.GetLable(ResourceKey.Okay));
+                            PersonalCase.GetLable(ResourceKey.Okay));
                       print('working ');
                       setState(() {
                         _isLoading = true;
@@ -247,20 +306,21 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
-                                  child: LableTitle(PersonalCase.GetLable(
-                                      ResourceKey.Fabric_Type),
-                                      FontSize :ArgonSize.Header5)),
+                                  child: LableTitle(
+                                      PersonalCase.GetLable(
+                                          ResourceKey.Fabric_Type),
+                                      FontSize: ArgonSize.Header5)),
                               Expanded(
                                 flex: 2,
                                 child: Standard_Input(
-                                  activeValidation : true,
+                                  activeValidation: true,
                                   controller: Fabric_Type,
                                   placeholder: PersonalCase.GetLable(
                                       ResourceKey.Fabric_Type),
                                   errorMessage: PersonalCase.GetLable(
                                       ResourceKey.MandatoryFields),
-                                    lengthErrorMessage:PersonalCase.GetLable(
-                                        ResourceKey.lengthErrorMessage),
+                                  lengthErrorMessage: PersonalCase.GetLable(
+                                      ResourceKey.lengthErrorMessage),
                                 ),
                               )
                             ],
@@ -270,14 +330,14 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
-                                  child: LableTitle(PersonalCase.GetLable(
-                                      ResourceKey.FabricRestingTime),
-                                      FontSize :ArgonSize.Header5)),
+                                  child: LableTitle(
+                                      PersonalCase.GetLable(
+                                          ResourceKey.FabricRestingTime),
+                                      FontSize: ArgonSize.Header5)),
                               Expanded(
                                 flex: 2,
                                 child: Standard_Input(
-                                  activeValidation : true,
-
+                                  activeValidation: true,
                                   controller: FabricRestingTime,
                                   placeholder: PersonalCase.GetLable(
                                       ResourceKey.FabricRestingTime),
@@ -292,17 +352,23 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
-                                  child: LableTitle(PersonalCase.GetLable(
-                                      ResourceKey.CuttingDate),
-                                      FontSize :ArgonSize.Header5)),
+                                  child: LableTitle(
+                                      PersonalCase.GetLable(
+                                          ResourceKey.Pastel_Laying),
+                                      FontSize: ArgonSize.Header5)),
                               Expanded(
                                 flex: 2,
                                 child: DateTimePicker(
+                                    SelectedDate: widget.Card_Item.Pastel_Laying != null
+                                        ? widget.Card_Item.Pastel_Laying
+                                        : DateTime.now(),
+
+                                //  SelectedDate:  DateTime.now(),
                                     SelectedDateFunction:
                                         (DateTime SelectedTime) {
-                                      Card_Item.CuttingDate = SelectedTime;
+                                    widget.Card_Item.Pastel_Laying = SelectedTime;
                                     },
-                                    dateMode: DateMode.cupertino,
+                                    dateMode: DateMode.normal,
                                     dateChoices: DateChoices.dateAndTime),
                               )
                             ],
@@ -313,15 +379,22 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
-                                  child: LableTitle(PersonalCase.GetLable(
-                                      ResourceKey.Pastel_Laying),
-                                      FontSize :ArgonSize.Header5)),
+                                  child: LableTitle(
+                                      PersonalCase.GetLable(
+                                          ResourceKey.CuttingDate),
+                                      FontSize: ArgonSize.Header5)),
                               Expanded(
                                 flex: 2,
                                 child: DateTimePicker(
+                                    SelectedDate: widget.Card_Item.CuttingDate!= null
+                                        ? widget.Card_Item.CuttingDate
+                                        : DateTime.now(),
+                                  // SelectedDate:  DateTime.now(),
+
                                     SelectedDateFunction:
                                         (DateTime SelectedTime) {
-                                      Card_Item.Pastel_Laying = SelectedTime;
+                                   widget.Card_Item.CuttingDate = SelectedTime ;
+
                                     },
                                     dateMode: DateMode.normal,
                                     dateChoices: DateChoices.dateAndTime),
@@ -335,12 +408,12 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                           ErrorMesage == null
                               ? Container()
                               : Text(
-                                  "${ErrorMesage}",
-                                  style: TextStyle(
-                                      color: Colors.redAccent,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: ArgonSize.Header4),
-                                ),
+                            "${ErrorMesage}",
+                            style: TextStyle(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: ArgonSize.Header4),
+                          ),
                         ],
                       ),
                     ),

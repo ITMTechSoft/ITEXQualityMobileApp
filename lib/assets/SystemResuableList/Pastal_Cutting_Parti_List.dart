@@ -26,6 +26,8 @@ class _Pastal_Cutting_Parti_ListState extends State<Pastal_Cutting_Parti_List> {
 
   Widget MainAction;
 
+
+
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
@@ -41,6 +43,7 @@ class _Pastal_Cutting_Parti_ListState extends State<Pastal_Cutting_Parti_List> {
               value: PersonalCase.GetLable(ResourceKey.GenerateNewParti),
               backGroundColor: ArgonColors.primary,
               function: () {
+
                 Navigator.push(
                     context,
                     MaterialPageRoute(
