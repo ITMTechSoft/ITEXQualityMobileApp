@@ -19,6 +19,9 @@ class Tasnsif_SampleControl extends StatefulWidget {
 class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
   int IntiteStatus = 0;
   int AssignAmount = 1;
+  int addedNumber  = 0 ;
+  int deleteNumber = 0 ;
+
 
   bool showSmall = true;
   IconData arrowIcon = Icons.arrow_downward;
@@ -88,13 +91,27 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
         UsrQualityTrac.Error_Amount = AssignAmount;
 
       await UsrQualityTrac.Set_User_QualityTracking_Detail();
+      setState(() {
+        if (IsCorrect)
 
 
-      final snackBar = SnackBar(
-          content: Text(IsCorrect?PersonalCase.GetLable(ResourceKey.Add):PersonalCase.GetLable(ResourceKey.Delete)));
+        setState(() {
+          addedNumber = addedNumber +AssignAmount;
 
-      ScaffoldMessenger.of(context)
-          .showSnackBar(snackBar);
+        });
+        else
+          setState(() {
+            deleteNumber=deleteNumber +AssignAmount
+            ;
+
+          });
+      });
+
+      // final snackBar = SnackBar(
+      //     content: Text(IsCorrect?PersonalCase.GetLable(ResourceKey.Add):PersonalCase.GetLable(ResourceKey.Delete)));
+      //
+      // ScaffoldMessenger.of(context)
+      //     .showSnackBar(snackBar);
     } else {
       AlertPopupDialog(
           context,
@@ -306,17 +323,33 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
             Expanded(
               flex:2,
               child:
-              IconInsideCircle(
+              // IconInsideCircle(
+              //     icon: FontAwesomeIcons.plus,
+              //     backGroundColor: ArgonColors.primary,
+              //     color: Colors.white,
+              //     iconSize: ArgonSize.IconSize,
+              //     size: ArgonSize.IconSize,
+              //     function:
+              //     () async {
+              //       await RegisterSampeAmount(PersonalCase, true);
+              //
+              //     }),
+
+              CircularIconWithNumber(
                   icon: FontAwesomeIcons.plus,
                   backGroundColor: ArgonColors.primary,
-                  color: Colors.white,
-                  iconSize: ArgonSize.IconSize,
-                  size: ArgonSize.IconSize,
-                  function:
-                  () async {
+                  iconColor: Colors.white,
+                  size:   ArgonSize.IconSize,
+                  bubbleHeight: ArgonSize.WidthSmall/1.5,
+                  bubbleWidth: ArgonSize.WidthSmall/1.5,
+                  bubbleText: addedNumber.toString(),
+                  bubbleTextSize :ArgonSize.Header7 ,
+                  bubbleBgColor:Colors.blue,
+                  function: () async {
                     await RegisterSampeAmount(PersonalCase, true);
 
-                  }),
+                  },
+              )
 
               //BlinkAnimation()
             ),
@@ -338,16 +371,33 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
             ),
             Expanded(
               flex:2,
-              child: IconInsideCircle(
-                  icon: FontAwesomeIcons.minus,
-                  backGroundColor: Colors.red,
-                  color: Colors.white,
-                  iconSize: ArgonSize.IconSize,
-                  size: ArgonSize.IconSize,
-                  function: () async {
-                    await RegisterSampeAmount(PersonalCase, false);
+              child:
+              // IconInsideCircle(
+              //     icon: FontAwesomeIcons.minus,
+              //     backGroundColor: Colors.red,
+              //     color: Colors.white,
+              //     iconSize: ArgonSize.IconSize,
+              //     size: ArgonSize.IconSize,
+              //     function: () async {
+              //       await RegisterSampeAmount(PersonalCase, false);
+              //
+              //     }),
 
-                  }),
+              CircularIconWithNumber(
+                icon: FontAwesomeIcons.minus,
+                backGroundColor:ArgonColors.error,
+                iconColor: Colors.white,
+                size:   ArgonSize.IconSize,
+                bubbleHeight: ArgonSize.WidthSmall/1.5,
+                bubbleWidth: ArgonSize.WidthSmall/1.5,
+                bubbleText: deleteNumber.toString(),
+                bubbleTextSize :ArgonSize.Header7 ,
+                bubbleBgColor:Colors.red[900],
+                function: () async {
+            await RegisterSampeAmount(PersonalCase, false);
+
+                },
+              )
             ),
 
 
