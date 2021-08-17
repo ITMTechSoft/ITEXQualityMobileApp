@@ -74,8 +74,6 @@ class SharedPref {
 
   static String GetWebApiUrl(WebApiMethod MethodName,
       {WebApiDomain = "api/Quality"}) {
-
-
     return "http://$ServerIp:$ServerPort/$WebApiDomain/${MethodName.toString().split('.').last}";
   }
 

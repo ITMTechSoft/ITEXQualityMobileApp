@@ -8,19 +8,22 @@ import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 
 class Accessory_ModelOrderBLL {
   //#region Properties
-  int Id;
-  int DeptModelOrder_QualityTest_Id;
-  int Accessory_Id;
-  int Quantity;
-  int Checks_Quantity;
-  bool IsSupplierAutoEmail;
-  int Entity_Order;
-  int QualityDept_ModelOrder_Id;
-  String Accessory;
-  String Group_Name;
+  int Id =0;
+  int? DeptModelOrder_QualityTest_Id;
+  int Accessory_Id =0;
+  int Quantity =0;
+  int? Checks_Quantity;
+  bool? IsSupplierAutoEmail;
+  int? Entity_Order;
+  int? QualityDept_ModelOrder_Id;
+  String? Accessory;
+  String? Group_Name;
   //#endregion
 
   Accessory_ModelOrderBLL() {
+    this.Id = 0;
+    this.Accessory_Id = 0;
+    this.Quantity = 0;
 
   }
 
@@ -89,10 +92,13 @@ class Accessory_ModelOrderBLL {
   static Future<List<Accessory_ModelOrderBLL>> Get_Accessory_ModelOrder({int DeptModelOrder_QualityTest_Id = 0}) async {
     List<Accessory_ModelOrderBLL> ItemList;
     try {
+
+      Map<String, String> qParams = {
+        'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id.toString(),
+      };
+
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_Accessory_ModelOrder) +
-              "?DeptModelOrder_QualityTest_Id=" +
-              DeptModelOrder_QualityTest_Id.toString());
+          SharedPref.GetWebApiUri(WebApiMethod.Get_Accessory_ModelOrder,qParams) );
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

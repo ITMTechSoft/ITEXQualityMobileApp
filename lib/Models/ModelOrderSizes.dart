@@ -123,14 +123,15 @@ class ModelOrderSizesBLL {
 
   static Future<List<ModelOrderSizesBLL>> Get_ModelOrderSizes_CuttingControl(
       int Order_Id, int DeptModelOrder_QualityTest_Id) async {
-    List<ModelOrderSizesBLL> ItemList;
+    List<ModelOrderSizesBLL> ItemList = null;
     try {
-      var response = await http.get(SharedPref.GetWebApiUrl(
-              WebApiMethod.Get_ModelOrderSizes_CuttingControl) +
-          "?Order_Id=" +
-          Order_Id.toString() +
-          "&DeptModelOrder_QualityTest_Id=" +
-          DeptModelOrder_QualityTest_Id.toString());
+      Map<String, String> qParams = {
+        'Order_Id': Order_Id.toString(),
+        'DeptModelOrder_QualityTest_Id':
+            DeptModelOrder_QualityTest_Id.toString(),
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_ModelOrderSizes_CuttingControl, qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
