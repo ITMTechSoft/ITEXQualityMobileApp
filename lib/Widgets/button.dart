@@ -378,7 +378,9 @@ class CircularIconWithNumber extends StatelessWidget {
 
   final String bubbleText;
   final double bubbleTextSize;
+  final Color  bubbleBgColor;
   final double fontSize;
+  final Function function ;
 
   const CircularIconWithNumber(
       {Key key,
@@ -389,30 +391,34 @@ class CircularIconWithNumber extends StatelessWidget {
         this.bubbleWidth = 25,
         this.bubbleHeight = 25,
         this.bubbleText = '',
-        this.bubbleTextSize = 25, this.fontSize=15})
+        this.bubbleTextSize = 25, this.fontSize=15, this.function, this.bubbleBgColor})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          child: Stack(children: [
-            IconInsideCircle(
-                icon: FontAwesomeIcons.exclamation,
-                backGroundColor: Colors.red,
-                color: Colors.white,
-                iconSize: 25,
-                size: size),
-            Positioned(
-                child: CircleShape(
-                    text: bubbleText,
-                    width: bubbleWidth,
-                    height: bubbleHeight,
-                    fontSize: bubbleTextSize),
-                top: 0,
-                right: 0),
-          ]),
+        GestureDetector(
+          onTap:function,
+          child: Container(
+            child: Stack(children: [
+              IconInsideCircle(
+                  icon: icon,
+                  backGroundColor: backGroundColor,
+                  color: Colors.white,
+                  iconSize: 25,
+                  size: size),
+              Positioned(
+                  child: CircleShape(
+                      color :bubbleBgColor,
+                      text: bubbleText,
+                      width: bubbleWidth,
+                      height: bubbleHeight,
+                      fontSize: bubbleTextSize),
+                  top: 0,
+                  right: 0),
+            ]),
+          ),
         ),
       ],
     );

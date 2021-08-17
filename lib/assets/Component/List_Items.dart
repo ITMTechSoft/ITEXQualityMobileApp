@@ -432,43 +432,45 @@ Widget TasnifCorrectionList(BuildContext context, PersonalProvider PersonalCase,
           height: ArgonSize.WidthSmall,
           textSize: ArgonSize.Header5,
           value: PersonalCase.GetLable(ResourceKey.Recycle),
-          backGroundColor: ArgonColors.primary,
-          function: () async {
-            AlertPopupDialogWithAction(context,
-                messageColor: Colors.black,
-                title: PersonalCase.GetLable(
-                    ResourceKey.Recycle_Amount),
-                Children: <Widget>[
-                  // LableTitle(
-                  //     PersonalCase.GetLable(ResourceKey.OpenNewRoundWillCloseOldOne),
-                  //     FontSize: ArgonSize.Header4),
-                  SpinBox(
-                    max: val.toDouble()<1?1:val.toDouble(),
-                    min: 1,
-                    textStyle: TextStyle(fontSize: ArgonSize.Header3),
-                    value: 1,
-                    onChanged: (value) {
-                      AssignAmount = value.toInt();
-                      print('${AssignAmount}');
+          backGroundColor:Item.Recycle_Amount != Item.Error_Amount ? ArgonColors.primary:ArgonColors.myGrey,
+          function: ()async {
+            Item.Recycle_Amount != Item.Error_Amount?
+              AlertPopupDialogWithAction(context,
+                  messageColor: Colors.black,
+                  title: PersonalCase.GetLable(
+                      ResourceKey.Recycle_Amount),
+                  Children: <Widget>[
+                    // LableTitle(
+                    //     PersonalCase.GetLable(ResourceKey.OpenNewRoundWillCloseOldOne),
+                    //     FontSize: ArgonSize.Header4),
+                    SpinBox(
+                      max: val.toDouble()<1?1:val.toDouble(),
+                      min: 1,
+                      textStyle: TextStyle(fontSize: ArgonSize.Header3),
+                      value: 1,
+                      onChanged: (value) {
+                        AssignAmount = value.toInt();
+                        print('${AssignAmount}');
 
-                      print(value);
-                    },
-                  ),
-                ],
-                FirstActionLable: PersonalCase.GetLable(ResourceKey.Okay),
-                SecondActionLable: PersonalCase.GetLable(ResourceKey.Cancel),
-                OnFirstAction: () async {
-              Item.Recycle_Amount = AssignAmount;
-              Item.Recycle_Employee_Id = PersonalCase.GetCurrentUser().Id;
-              bool result =
-                  await Item.Set_RecycleUserQualityTasnifControlRec(Item);
-              if (result == true)
-                function();
-              else
-                print('some thing wrong');
+                        print(value);
+                      },
+                    ),
+                  ],
+                  FirstActionLable: PersonalCase.GetLable(ResourceKey.Okay),
+                  SecondActionLable: PersonalCase.GetLable(ResourceKey.Cancel),
+                  OnFirstAction: () async {
+                    Item.Recycle_Amount = AssignAmount;
+                    Item.Recycle_Employee_Id = PersonalCase.GetCurrentUser().Id;
+                    bool result =
+                    await Item.Set_RecycleUserQualityTasnifControlRec(Item);
+                    if (result == true)
+                      function();
+                    else
+                      print('some thing wrong');
 
-              Navigator.pop(context);
-            });
+                    Navigator.pop(context);
+                  }):
+            print('equal');
           }),
     ],
   );
