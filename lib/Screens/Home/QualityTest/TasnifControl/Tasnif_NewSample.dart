@@ -32,13 +32,13 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
     var Items =
         await GroupsBLL.Get_TasnifGroups(widget.DeptModelOrder_QualityTest_Id);
     setState(() {
-      widget.TansifGroup = Items;
+      widget.TansifGroup = Items??[];
     });
   }
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     GetTanifGroupItem();
   }
@@ -100,54 +100,53 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
         ),
         SizedBox(height: ArgonSize.Padding3),
         Center(
-          child: GestureDetector(
-            onTap: () async {
-              int CheckItem = 0;
-              if (PersonalCase.SelectedMatrix == null) CheckItem = 1;
+            child: CustomButton(
+          height: ArgonSize.WidthSmall1,
+          width: getScreenWidth() / 2.5,
+          textSize: ArgonSize.Header4,
+          backGroundColor: ArgonColors.primary,
+          value: PersonalCase.GetLable(ResourceKey.NewSample),
+          function: () async {
+            int CheckItem = 0;
+            if (PersonalCase.SelectedMatrix == null) CheckItem = 1;
             //  var Sample = int.tryParse(SampleAmountController.text);
-              var Sample = AssignAmount;
-              if (Sample == 0) CheckItem = 2;
+            var Sample = AssignAmount;
+            if (Sample == 0) CheckItem = 2;
 
-              if (CheckItem == 0) {
-                var Item = QualityDept_ModelOrder_TrackingBLL();
-                Item.Employee_Id = PersonalCase.GetCurrentUser().Id;
-                Item.DeptModelOrder_QualityTest_Id = PersonalCase.SelectedTest.Id;
-                Item.OrderSizeColorDetail_Id = PersonalCase.SelectedMatrix.Id;
-                Item.StartDate = DateTime.now();
-               // Item.Sample_Amount = int.tryParse(SampleAmountController.text);
-                Item.Sample_Amount =AssignAmount;
-                if (SelectedItem != null)
-                  Item.QualityItem_Group_Id = SelectedItem.Groups_id;
+            if (CheckItem == 0) {
+              var Item = QualityDept_ModelOrder_TrackingBLL();
+              Item.Employee_Id = PersonalCase.GetCurrentUser().Id;
+              Item.DeptModelOrder_QualityTest_Id = PersonalCase.SelectedTest.Id;
+              Item.OrderSizeColorDetail_Id = PersonalCase.SelectedMatrix.Id;
+              Item.StartDate = DateTime.now();
+              // Item.Sample_Amount = int.tryParse(SampleAmountController.text);
+              Item.Sample_Amount = AssignAmount;
+              if (SelectedItem != null)
+                Item.QualityItem_Group_Id = SelectedItem.Groups_id;
 
-                Item.Fabric_TopNo = KumnasNoController.text;
-                Item.Status = ControlStatus.TansifControlOpenStatus;
-                PersonalCase.SelectedTracking =
-                    await Item.Create_QualityDept_ModelOrder_Tracking();
-                if (PersonalCase.SelectedTracking.Id > 0)
-                  Navigator.pop(context, "Okay");
-                else
-                  AlertPopupDialog(
-                      context,
-                      PersonalCase.GetLable(ResourceKey.SaveMessage),
-                      PersonalCase.GetLable(ResourceKey.SaveErrorMessage),
-                      ActionLable: PersonalCase.GetLable(ResourceKey.Okay));
-              } else {
+              Item.Fabric_TopNo = KumnasNoController.text;
+              Item.Status = ControlStatus.TansifControlOpenStatus;
+              PersonalCase.SelectedTracking =
+                  await Item.Create_QualityDept_ModelOrder_Tracking();
+              if (PersonalCase.SelectedTracking.Id > 0)
+                Navigator.pop(context, "Okay");
+              else
                 AlertPopupDialog(
                     context,
+                    PersonalCase.GetLable(
+                      ResourceKey.SaveMessage,
+                    ),
                     PersonalCase.GetLable(ResourceKey.SaveErrorMessage),
-                    PersonalCase.GetLable(ResourceKey.MandatoryFields),
                     ActionLable: PersonalCase.GetLable(ResourceKey.Okay));
-              }
-            },
-            child: ButtonWithNumber(
-                buttonHegiht: ArgonSize.HeightMedium,
-                buttonWidth: getScreenWidth() / 2.5,
-                textSize: ArgonSize.Header4,
-                text: PersonalCase.GetLable(ResourceKey.NewSample),
-                btnBgColor: ArgonColors.primary,
-                textColor: Colors.white),
-          ),
-        ),
+            } else {
+              AlertPopupDialog(
+                  context,
+                  PersonalCase.GetLable(ResourceKey.SaveErrorMessage),
+                  PersonalCase.GetLable(ResourceKey.MandatoryFields),
+                  ActionLable: PersonalCase.GetLable(ResourceKey.Okay));
+            }
+          },
+        )),
         FutureBuilder(
           future: LoadingOpenPage(PersonalCase),
           builder: (context, snapshot) {
@@ -169,21 +168,13 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                         Expanded(
                           flex: 2,
                           child: SizedBox(
-
-                            child:
-                            // Standard_Input(
-                            //   suffixIcon: Icon(Icons.countertops,
-                            //       size: ArgonSize.IconSize),
-                            // controller: SampleAmountController,
-                            //   Ktype: TextInputType.number,
-                            // ),
-
-                            Padding(
+                            child: Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: ArgonSize.Padding1),
                               child: SpinBox(
                                 max: 999999,
-                                textStyle:TextStyle(fontSize:ArgonSize.Header3),
+                                textStyle:
+                                    TextStyle(fontSize: ArgonSize.Header3),
                                 value: 1,
                                 onChanged: (value) {
                                   AssignAmount = value.toInt();
@@ -194,7 +185,7 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                         )
                       ],
                     ),
-                    SizedBox(height:ArgonSize.Padding4),
+                    SizedBox(height: ArgonSize.Padding4),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
@@ -228,8 +219,7 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                             ))
                       ],
                     ),
-                    SizedBox(height:ArgonSize.Padding4),
-
+                    SizedBox(height: ArgonSize.Padding4),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,

@@ -65,7 +65,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
     return null;
   }
 
-  RegisterSampeAmount(PersonalCase, bool IsCorrect) async {
+ Future<bool> RegisterSampeAmount(PersonalCase, bool IsCorrect) async {
     int ActionStatus = 0;
     if (XAxias.Id == null) ActionStatus = 1;
 
@@ -88,12 +88,20 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
         UsrQualityTrac.Error_Amount = AssignAmount;
 
       await UsrQualityTrac.Set_User_QualityTracking_Detail();
+
+
+      final snackBar = SnackBar(
+          content: Text(IsCorrect?PersonalCase.GetLable(ResourceKey.Add):PersonalCase.GetLable(ResourceKey.Delete)));
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(snackBar);
     } else {
       AlertPopupDialog(
           context,
           PersonalCase.GetLable(ResourceKey.SaveErrorMessage),
           PersonalCase.GetLable(ResourceKey.MandatoryFields),
           ActionLable: PersonalCase.GetLable(ResourceKey.Okay));
+
     }
   }
 
@@ -307,6 +315,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                   function:
                   () async {
                     await RegisterSampeAmount(PersonalCase, true);
+
                   }),
 
               //BlinkAnimation()
@@ -336,7 +345,8 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                   iconSize: ArgonSize.IconSize,
                   size: ArgonSize.IconSize,
                   function: () async {
-                    await RegisterSampeAmount(PersonalCase, true);
+                    await RegisterSampeAmount(PersonalCase, false);
+
                   }),
             ),
 

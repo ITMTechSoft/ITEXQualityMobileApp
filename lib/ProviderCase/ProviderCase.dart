@@ -15,11 +15,12 @@ import 'package:itex_soft_qualityapp/SystemImports.dart';
 class PersonalProvider with ChangeNotifier {
   EmployeesBLL _CurrentUser;
   Employee_DepartmentBLL SelectedDepartment;
-  QualityDepartment_ModelOrderBLL SelectedOrder;
-  SharedPref _UserPref;
+  QualityDepartment_ModelOrderBLL     SelectedOrder;
   DepartmentModelOrder_QualityTestBLL SelectedTest;
   OrderSizeColorDetailsBLL SelectedMatrix;
   QualityDept_ModelOrder_TrackingBLL SelectedTracking;
+
+  SharedPref _UserPref;
   List<Language_ResourcesKeyBLL> GlobalKeys;
   bool IsLoading = false;
 

@@ -5,6 +5,7 @@ import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 
+import 'Correction.dart';
 import 'Tasnif_NewSample.dart';
 import 'Tasnsif_SampleControl.dart';
 
@@ -96,13 +97,13 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
                         flex:1,
                         child: Padding(
                           padding:  EdgeInsets.only(left: ArgonSize.Padding3,right:ArgonSize.Padding4),
-                          child: StandardButton(
-              FontSize:ArgonSize.Header5,
-                              Lable:
+                          child: CustomButton(
+                              textSize:ArgonSize.Header5,
+                              height:ArgonSize.WidthSmall1,
+                              value:
                                   PersonalCase.GetLable(ResourceKey.CreateTasnifSample),
-                              ForColor: ArgonColors.white,
-                              BakColor: ArgonColors.primary,
-                              OnTap: () async {
+                              backGroundColor: ArgonColors.primary,
+                              function: () async {
                                 PersonalCase.SelectedMatrix = null;
                                 var value = await Navigator.push(
                                     context,
@@ -121,14 +122,18 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
                         flex:1,
                         child: Padding(
                           padding:  EdgeInsets.only(right: ArgonSize.Padding3,left:ArgonSize.Padding4),
-                          child: StandardButton(
-                              FontSize:ArgonSize.Header5,
-
-                              Lable:
+                          child: CustomButton(
+                              textSize:ArgonSize.Header5,
+                              height:ArgonSize.WidthSmall1,
+                              value:
                               PersonalCase.GetLable(ResourceKey.Correction),
-                              ForColor: ArgonColors.white,
-                              BakColor: ArgonColors.myGreen,
-                              OnTap: () async {
+                              backGroundColor: ArgonColors.myGreen,
+                              function: () async {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Tasnif_Correction()));
 
                               }),
                         ),

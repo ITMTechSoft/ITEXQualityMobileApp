@@ -1352,6 +1352,11 @@ enum ResourceKey{
   ChooseTheTime,
   DeleteItemConfirmation ,
   lengthErrorMessage,
+  Xaxis_QualityItem,
+  Yaxis_QualityItem,
+  Recycle,
+  Recycle_Amount,
+  EnterNumberOfItemsToRecycle
 
 
 

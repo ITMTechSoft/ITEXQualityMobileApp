@@ -10,14 +10,18 @@ AlertDialog AlertPopupDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
             title: LableTitle(title, color: ArgonColors.warning),
-            content: new Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[LableTitle(Message, FontSize: 10)],
+            content:  Container(
+              width:getScreenWidth()*0.8,
+
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[LableTitle(Message, FontSize: 10)],
+              ),
             ),
             actions: <Widget>[
               TextButton(
-                child: Text(ActionLable),
+                child: Text(ActionLable,style:TextStyle(fontSize:ArgonSize.Header5)),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -34,15 +38,16 @@ AlertDialog AlertPopupDialogWithAction(
   Function OnFirstAction,
   @required String SecondActionLable,
   Function OnSecondAction,
-      Color textButton1Color = Colors.black,
-      Color textButton2Color = Colors.black,
+      Color textButton1Color = ArgonColors.primary,
+      Color textButton2Color = ArgonColors.primary,
+      Color messageColor =  ArgonColors.warning,
 
     }) {
   showDialog(
       context: context,
       builder: (BuildContext context) => Container(
         child: AlertDialog(
-              title: LableTitle(title, color: ArgonColors.warning,FontSize: ArgonSize.Header3),
+              title: LableTitle(title, color: messageColor,FontSize: ArgonSize.Header3),
               content:  Container(
                 width:getScreenWidth()*0.8,
                 height:getScreenHeight()*0.1,

@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +9,7 @@ class DateTimePicker extends StatefulWidget {
   String DateFormat;
   int FirstDate;
   int LastDate;
-  DateTime  SelectedDate ;
+  DateTime  SelectedDate  = DateTime.now() ;
 
   /// TYPE OF DATE PICKER , CUPERTINO OR NORMAL
   DateMode dateMode = DateMode.normal;
@@ -246,7 +245,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
   @override
   Widget build(BuildContext context) {
     getInitialFormat(dateChoices: widget.dateChoices);
-    widget.SelectedDate??DateTime.now();
+    widget.SelectedDate==null?DateTime.now():widget.SelectedDate;
     return InkWell(
       onTap: () async {
         getDate();

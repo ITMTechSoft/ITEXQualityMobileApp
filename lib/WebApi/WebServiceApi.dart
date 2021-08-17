@@ -52,7 +52,9 @@ enum WebApiMethod{
   Get_ModelOrder_Matrix,
   Get_ModelOrderSizes,
   Get_StitchQuality_Items,
-  Delete_User_QualityTracking_Detail
+  Delete_User_QualityTracking_Detail,
+  Get_UserQualityTasnifControl ,
+  Set_RecycleUserQualityTasnifControlRec
 }
 
 

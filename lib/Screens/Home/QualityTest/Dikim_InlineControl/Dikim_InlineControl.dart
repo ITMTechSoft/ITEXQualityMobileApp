@@ -84,7 +84,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
         ListTile(
           title: HeaderTitle(
 
-                  PersonalCase.SelectedOrder.Order_Number,
+                  getScreenWidth().toString(),
               color: ArgonColors.header,
               FontSize: ArgonSize.Header3),
           subtitle: Text(DateFormat("yyyy/MM/dd HH:mm")
@@ -120,7 +120,9 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                         ),
                         Expanded(
                         flex:4,
-                          child: DateTimePicker(SelectedDateFunction: (DateTime SelectedTime) {
+                          child: DateTimePicker(
+                              SelectedDate: DateTime.now(),
+                              SelectedDateFunction: (DateTime SelectedTime ) {
                             setState(() {
                               SelectedDate = SelectedTime;
                             });
@@ -129,10 +131,12 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                       ]
                     ):
                     Column(
-                        mainAxisAlignment:MainAxisAlignment.spaceAround,
+                        mainAxisAlignment:MainAxisAlignment.spaceEvenly,
                         children:[
 
-                          DateTimePicker(SelectedDateFunction: (DateTime SelectedTime) {
+                          DateTimePicker( SelectedDate: DateTime.now(),
+                              SelectedDateFunction: (DateTime SelectedTime) {
+
                             setState(() {
                               SelectedDate = SelectedTime;
                             });
