@@ -4,13 +4,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class SharedPref {
-  static String ServerIp;
-  static String ServerPort;
-  static String UserName;
-  static String UserPassword;
-  static String WebApiDomain;
-  static LanguagesBLL SelLanguage;
-  static bool isLogin;
+  static String? ServerIp;
+  static String? ServerPort;
+  static String? UserName;
+  static String? UserPassword;
+  static String? WebApiDomain;
+  static LanguagesBLL? SelLanguage;
+  static bool? isLogin;
 
   readFromJson(String key) async {
     final prefs = await SharedPreferences.getInstance();
@@ -59,7 +59,7 @@ class SharedPref {
 
 
 
-        if (ServerIp.isNotEmpty || ServerPort.isNotEmpty)
+        if (ServerIp!.isNotEmpty || ServerPort!.isNotEmpty)
           return true;
         else {
           return false;
@@ -86,13 +86,13 @@ class SharedPref {
       target = new Uri(
           scheme: "http",
           host: ServerIp,
-          port: int.parse(ServerPort, radix: 16),
+          port: int.parse(ServerPort!, radix: 16),
           path: path);
     else
       target = new Uri(
           scheme: "http",
           host: ServerIp,
-          port: int.parse(ServerPort, radix: 16),
+          port: int.parse(ServerPort!, radix: 16),
           path: path,
           queryParameters: Paramters);
 
@@ -109,9 +109,9 @@ class SharedPref {
       // await SavePrefernce("UserPassword", UserPassword);
 
       /// TODO : CHECK LANGUAGE HERE
-      await SavePrefernce("SelLanguage", json.encode(SelLanguage.toJson()));
+      await SavePrefernce("SelLanguage", json.encode(SelLanguage!.toJson()));
 
-      if (ServerIp.isNotEmpty || ServerPort.isNotEmpty) return true;
+      if (ServerIp!.isNotEmpty || ServerPort!.isNotEmpty) return true;
     } catch (Exception) {
     }
     return false;

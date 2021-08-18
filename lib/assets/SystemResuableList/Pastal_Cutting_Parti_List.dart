@@ -11,8 +11,8 @@ import 'package:itex_soft_qualityapp/Widgets/button.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 
 class Pastal_Cutting_Parti_List extends StatefulWidget {
-  List<Pastal_Cutting_PartiBLL> Items;
-  Function OnClickItems;
+  List<Pastal_Cutting_PartiBLL>? Items;
+  Function? OnClickItems;
 
   Pastal_Cutting_Parti_List({@required this.Items, this.OnClickItems});
 
@@ -24,7 +24,7 @@ class Pastal_Cutting_Parti_List extends StatefulWidget {
 class _Pastal_Cutting_Parti_ListState extends State<Pastal_Cutting_Parti_List> {
   int SelectedIndex = -1;
 
-  Widget MainAction;
+  Widget? MainAction;
 
 
 
@@ -57,12 +57,12 @@ class _Pastal_Cutting_Parti_ListState extends State<Pastal_Cutting_Parti_List> {
                   scrollDirection: Axis.vertical,
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: widget.Items.length,
+                  itemCount: widget.Items!.length,
                   itemBuilder: (context, int i) {
                     return Card_Pastal_Cutting_Parti(
-                        Card_Item: widget.Items[i],
+                        Card_Item: widget.Items![i],
                         OnTap: (Pastal_Cutting_PartiBLL Item) {
-                          if(widget.OnClickItems !=null) widget.OnClickItems(Item);
+                          if(widget.OnClickItems !=null) widget.OnClickItems!(Item);
                           setState(() {
                             CaseProvider.SelectedPastal = Item;
 

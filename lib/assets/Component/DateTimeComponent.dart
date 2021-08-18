@@ -17,13 +17,13 @@ class DateTimePicker extends StatefulWidget {
   DateChoices dateChoices = DateChoices.date;
 
   DateTimePicker(
-      {this.SelectedDateFunction,
+      {required this.SelectedDateFunction,
         this.FirstDate = 2020,
         this.LastDate = 2090,
-        this.DateFormat,
+        this.DateFormat = '',
         this.dateMode = DateMode.normal,
         this.dateChoices = DateChoices.date ,
-        this.SelectedDate});
+        required this.SelectedDate});
 
   @override
   _DateTimePickerState createState() => _DateTimePickerState();
@@ -119,12 +119,12 @@ class _DateTimePickerState extends State<DateTimePicker> {
 
   /// CHOOSE DATE
   Future<Void> _openDatePicker(BuildContext context) async {
-    widget.SelectedDate = await showDatePicker(
+    widget.SelectedDate = (await showDatePicker(
       context: context,
       initialDate: widget.SelectedDate ?? DateTime.now(),
       firstDate: new DateTime(widget.SelectedDate.year),
       lastDate:  new DateTime(widget.LastDate),
-    );
+    ))!;
 
     if (widget.SelectedDate != null)
       setState(() {
@@ -262,6 +262,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
           ),
           IconButton(
             icon: Icon(Icons.calendar_today),
+            onPressed:(){}
           )
         ],
       ),

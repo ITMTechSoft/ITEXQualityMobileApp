@@ -15,7 +15,7 @@ import 'package:itex_soft_qualityapp/Widgets/ImageLoader.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 import 'package:intl/intl.dart';
 
-Widget DepartmentCard(Employee_DepartmentBLL Item, Function OnTap) {
+Widget DepartmentCard(Employee_DepartmentBLL Item, Function() OnTap) {
   return Container(
     height: ArgonSize.WidthBig,
     width: ArgonSize.HeightBig,
@@ -41,7 +41,7 @@ Widget DepartmentCard(Employee_DepartmentBLL Item, Function OnTap) {
   );
 }
 
-Widget OneItem({String ItemName, String ItemValue, Function OnTap}) {
+Widget OneItem({required String ItemName,required String ItemValue,required Function() OnTap}) {
   return Container(
     height: ArgonSize.HeightBig,
     width: ArgonSize.WidthBig,
@@ -67,9 +67,9 @@ class OrderCard extends StatelessWidget {
   }
 
   final QualityDepartment_ModelOrderBLL Item;
-  final Function OnTap;
+  final Function() OnTap;
 
-  const OrderCard({Key key, this.Item, this.OnTap}) : super(key: key);
+  const OrderCard({Key? key,required this.Item,required this.OnTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -215,7 +215,7 @@ Widget AraControlCard(
 }
 
 Widget CuttingPastalControl(PersonalCase, DeptModOrderQuality_ItemsBLL Item,
-    Function Approve, Function Reject, Function ReOpenAction) {
+    Function() Approve, Function() Reject, Function() ReOpenAction) {
   Widget ActionControl = Row(
     children: [
       Expanded(
@@ -290,7 +290,7 @@ Widget CuttingPastalControl(PersonalCase, DeptModOrderQuality_ItemsBLL Item,
 }
 
 Widget TansifControlList(PersonalProvider PersonalCase,
-    QualityDept_ModelOrder_TrackingBLL Item, Function OnTap) {
+    QualityDept_ModelOrder_TrackingBLL Item, Function() OnTap) {
   Widget FinishStatus = ClipOval(
     child: Icon(
       Icons.check_circle_rounded,
@@ -406,7 +406,7 @@ Widget TansifControlList(PersonalProvider PersonalCase,
 }
 
 Widget CuttingModelOrderMatrix(
-    PersonalCase, OrderSizeColorDetailsBLL Item, Function OnTap) {
+    PersonalCase, OrderSizeColorDetailsBLL Item, Function() OnTap) {
   Color SelectedColor = ArgonColors.white;
   if (PersonalCase.SelectedMatrix != null &&
       PersonalCase.SelectedMatrix.Id == Item.Id)
@@ -459,7 +459,7 @@ Widget CuttingModelOrderMatrix(
 }
 
 Widget TasnifModelOrderMatrix(
-    PersonalCase, OrderSizeColorDetailsBLL Item, Function OnTap) {
+    PersonalCase, OrderSizeColorDetailsBLL Item, Function() OnTap) {
   Color SelectedColor = ArgonColors.white;
   if (PersonalCase.SelectedMatrix != null &&
       PersonalCase.SelectedMatrix.Id == Item.Id)
@@ -512,7 +512,7 @@ Widget TasnifModelOrderMatrix(
 }
 
 Widget QualityAxisItem(DeptModOrderQuality_ItemsBLL Item,
-    {IsSeleted = false, Function OnTap}) {
+    {IsSeleted = false,required Function() OnTap}) {
   Color SelectedColor;
 
   if (IsSeleted)
@@ -596,7 +596,7 @@ class TableBodyGList<T> extends StatefulWidget {
   Function OnClickItems;
   List<Widget> Headers;
 
-  TableBodyGList({this.Headers, this.Items, this.OnClickItems});
+  TableBodyGList({required this.Headers,required this.Items,required this.OnClickItems});
 
   @override
   _TableBodyGListState createState() => _TableBodyGListState();
@@ -648,7 +648,7 @@ class Tb_InlineDikimList extends StatefulWidget {
   Function OnClickItems;
   List<Widget> Headers;
 
-  Tb_InlineDikimList({this.Headers, this.Items, this.OnClickItems});
+  Tb_InlineDikimList({required this.Headers,required this.Items,required this.OnClickItems});
 
   @override
   _Tb_InlineDikimListState createState() => _Tb_InlineDikimListState();
@@ -761,8 +761,9 @@ Widget BoxColorWithText(String Lable, Color SelectedColor,
 }
 
 Widget StatusWidget(
-    {IconData icon, String text, Color backGroundColor, Color iconColor}) {
+    {required IconData icon, required String text, Color backGroundColor=Colors.white, Color iconColor:ArgonColors.primary}) {
   return Row(children: [
+    /// TODO: CHANGE THE FIXED NUMBER
     IconInsideCircle(
         icon: icon,
         backGroundColor: backGroundColor,
@@ -785,9 +786,9 @@ class Tb_InlineRoundList extends StatefulWidget {
   PersonalProvider PersonalCase;
 
   Tb_InlineRoundList(
-      {@required this.PersonalCase,
-        @required this.Items,
-        @required this.OnClickItems});
+      {required this.PersonalCase,
+        required this.Items,
+        required this.OnClickItems});
 
   @override
   _Tb_InlineRoundListState createState() => _Tb_InlineRoundListState();
@@ -976,7 +977,7 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
 }
 
 /// Employee List Filter
-Widget DropDownBox({String ItemName, Function OnTap, bool IsSelected = false}) {
+Widget DropDownBox({required String ItemName,required Function() OnTap, bool IsSelected = false}) {
   return Card(
       shadowColor: ArgonColors.black,
       elevation: 1,

@@ -5,11 +5,11 @@ import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 import 'LableText.dart';
 
 class RadioSwitch extends StatefulWidget {
-  String Lable;
-  Color LableColor;
-  Function OnTap;
-  bool SwitchValue;
-  double fontSize;
+  String? Lable;
+  Color? LableColor;
+  Function? OnTap;
+  bool? SwitchValue;
+  double? fontSize;
 
   RadioSwitch(
       {this.Lable,
@@ -27,9 +27,9 @@ class _RadioSwitchState extends State<RadioSwitch> {
   Widget build(BuildContext context) {
     return Column(children: [
       CustomText(
-        text: widget.Lable,
-        color: widget.LableColor,
-        size:widget. fontSize,
+        text:  widget.Lable!,
+        color: widget.LableColor!,
+        size:widget. fontSize!,
       ),
       SizedBox(height:10),
       Transform.scale(
@@ -38,11 +38,11 @@ class _RadioSwitchState extends State<RadioSwitch> {
             child: CupertinoSwitch(
               trackColor: Colors.black12, // **INACTIVE STATE COLOR**
               activeColor: Colors.green, // **ACTIVE STATE COLOR**
-              value: widget.SwitchValue,
+              value: widget.SwitchValue!,
               onChanged: (bool value) {
                 setState(() {
                   widget.SwitchValue = value;
-                  widget.OnTap(widget.SwitchValue);
+                  widget.OnTap!(widget.SwitchValue);
                 });
               },
             ),

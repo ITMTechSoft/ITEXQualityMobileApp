@@ -7,14 +7,14 @@ class GlobalizationBLL {
   // Class Attribute
   //static ApplicationsType ITM_Application;
 
-  static List<Language_ResourcesKeyBLL> GlobalResList;
+  static List<Language_ResourcesKeyBLL>? GlobalResList;
 
 
   static String Get_GlobalItem(ResourceKey Key) {
     try {
       if (GlobalResList != null) {
         var Item =
-            GlobalResList.where((element) => element.ResKey == Key.toString())
+            GlobalResList!.where((element) => element.ResKey == Key.toString())
                 .first;
         return Item.ResourceValue;
       }
@@ -23,7 +23,7 @@ class GlobalizationBLL {
       print(Exception);
     }
 
-    return null;
+    return '';
   }
 
 /* static boolean ReloginAgain(Context myContx){

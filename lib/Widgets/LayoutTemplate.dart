@@ -1,13 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
-Widget InformationBox({Widget MainPage, Function function , IconData icon}) {
+Widget InformationBox({required Widget MainPage,required Function() function , required IconData icon}) {
 
   return Stack(
     children:[
       Container(
 
+        /// TOPP : CHANGE FIXED NUMBER
         padding: EdgeInsets.all(15),
         margin: EdgeInsets.all(15),
         decoration: BoxDecoration(
@@ -39,7 +39,7 @@ Widget InformationBox({Widget MainPage, Function function , IconData icon}) {
       ]
   );
     }
-Widget InformationBoxSmall({Widget MainPage , double height,Function function,IconData icon} ) {
+Widget InformationBoxSmall({required Widget MainPage ,required double height,required Function() function,required IconData icon} ) {
 
   return Stack(
       children:[

@@ -12,9 +12,9 @@ import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 import '../../SystemImports.dart';
 class Tb_InlineDikimList2 extends StatefulWidget {
-  List<QualityDept_ModelOrder_TrackingBLL> Items;
-  Function OnClickItems;
-  List<Widget> Headers;
+  List<QualityDept_ModelOrder_TrackingBLL>? Items;
+  Function? OnClickItems;
+  List<Widget>? Headers;
 
   Tb_InlineDikimList2({this.Headers, this.Items, this.OnClickItems});
 
@@ -59,7 +59,7 @@ class _Tb_InlineDikimListState2 extends State<Tb_InlineDikimList2> {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           HeaderColumn(
-            children: widget.Headers,
+            children: widget.Headers!,
           ),
           SingleChildScrollView(
               scrollDirection: Axis.vertical,
@@ -67,17 +67,17 @@ class _Tb_InlineDikimListState2 extends State<Tb_InlineDikimList2> {
                   scrollDirection: Axis.vertical,
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: widget.Items.length,
+                  itemCount: widget.Items!.length,
                   itemBuilder: (context, int i) {
                     return InkWell(
                       onTap: () {
-                        if (widget.OnClickItems != null) widget.OnClickItems(i);
+                        if (widget.OnClickItems != null) widget.OnClickItems!(i);
                         setState(() {
                           SelectedIndex = i;
                         });
                       },
                       child: TableColumn(children: [
-                        TableLable( widget.Items[i].SampleNo.toString(),
+                        TableLable( widget.Items![i].SampleNo.toString(),
                             Flex: 1),
                         TableLable( '12:30',
                             Flex: 1),
@@ -96,9 +96,9 @@ class _Tb_InlineDikimListState2 extends State<Tb_InlineDikimList2> {
 
 
 class Tb_InlineDikimList1 extends StatefulWidget {
-  List<ModelOrderSizesBLL> Items;
-  Function OnClickItems;
-  List<Widget> Headers;
+  List<ModelOrderSizesBLL>? Items;
+  Function? OnClickItems;
+  List<Widget>? Headers;
 
   Tb_InlineDikimList1({this.Headers, this.Items, this.OnClickItems});
 
@@ -141,7 +141,7 @@ class _Tb_InlineDikimListState1 extends State<Tb_InlineDikimList1> {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           HeaderColumn(
-            children: widget.Headers,
+            children: widget.Headers!,
           ),
           SingleChildScrollView(
               scrollDirection: Axis.vertical,
@@ -149,20 +149,20 @@ class _Tb_InlineDikimListState1 extends State<Tb_InlineDikimList1> {
                   scrollDirection: Axis.vertical,
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: widget.Items.length,
+                  itemCount: widget.Items!.length,
                   itemBuilder: (context, int i) {
                     return InkWell(
                       onTap: () {
-                        if (widget.OnClickItems != null) widget.OnClickItems(i);
+                        if (widget.OnClickItems != null) widget.OnClickItems!(i);
                         setState(() {
                           SelectedIndex = i;
                         });
                       },
                       child: TableColumn(children: [
-                        TableLable( widget.Items[i].SizeParam_StringVal.toString(),
+                        TableLable( widget.Items![i].SizeParam_StringVal.toString(),
                             Flex: 1),
                         TableLable(
-                            widget.Items[i].Sample_Number.toString()  ,
+                            widget.Items![i].Sample_Number.toString()  ,
                             Flex: 1),
 
                       ], IsSelectedItem: SelectedIndex == i),
@@ -174,9 +174,9 @@ class _Tb_InlineDikimListState1 extends State<Tb_InlineDikimList1> {
 
 ////
 class Tb_MeasuerCard extends StatefulWidget {
-  List<User_QualityTracking_DetailBLL> Items;
-  Function OnClickItems;
-  PersonalProvider PersonalCase;
+  List<User_QualityTracking_DetailBLL>? Items;
+  Function? OnClickItems;
+  PersonalProvider? PersonalCase;
 
   Tb_MeasuerCard(
       {@required this.PersonalCase,
@@ -194,35 +194,35 @@ class _MeasuerCardState extends State<Tb_MeasuerCard> {
       case 0:
         return
           BoxColorWithText(
-            widget.PersonalCase.GetLable(ResourceKey.Pending),
-            ArgonColors.Pending,
-            Width: 100,
-            Height: 50);
-         // StatusWidget(icon:FontAwesomeIcons.clock,text:"pending",backGroundColor:ArgonColors.Pending ,iconColor:Colors.white);
-      case 1:
-        return BoxColorWithText(
-            widget.PersonalCase.GetLable(ResourceKey.Success),
-            ArgonColors.Success,
-            Width: 100,
-            Height: 50,
-            FontColor: ArgonColors.white);
-      case 2:
-        return BoxColorWithText(
-            widget.PersonalCase.GetLable(ResourceKey.UnderCheck),
-            ArgonColors.UnderCheck,
-            Width: 100,
-            Height: 50);
-      case 3:
-        return BoxColorWithText(
-            widget.PersonalCase.GetLable(ResourceKey.Invalid),
-            ArgonColors.Invalid,
-            Width: 100,
-            Height: 50,
-            FontColor: ArgonColors.white);
+              widget.PersonalCase!.GetLable(ResourceKey.Pending),
+    ArgonColors.Pending,
+    Width: 100,
+    Height: 50);
+    // StatusWidget(icon:FontAwesomeIcons.clock,text:"pending",backGroundColor:ArgonColors.Pending ,iconColor:Colors.white);
+    case 1:
+    return BoxColorWithText(
+    widget.PersonalCase!.GetLable(ResourceKey.Success),
+    ArgonColors.Success,
+    Width: 100,
+    Height: 50,
+    FontColor: ArgonColors.white);
+    case 2:
+    return BoxColorWithText(
+    widget.PersonalCase!.GetLable(ResourceKey.UnderCheck),
+    ArgonColors.UnderCheck,
+    Width: 100,
+    Height: 50);
+    case 3:
+    return BoxColorWithText(
+    widget.PersonalCase!.GetLable(ResourceKey.Invalid),
+    ArgonColors.Invalid,
+    Width: 100,
+    Height: 50,
+    FontColor: ArgonColors.white);
     }
     return BoxColorWithText(
-        widget.PersonalCase.GetLable(ResourceKey.Pending), ArgonColors.Pending,
-        Width: 100, Height: 50);
+    widget.PersonalCase!.GetLable(ResourceKey.Pending), ArgonColors.Pending,
+    Width: 100, Height: 50);
   }
 
   Widget RoundControl(
@@ -251,7 +251,7 @@ class _MeasuerCardState extends State<Tb_MeasuerCard> {
                             Expanded(
                                 child: LableTitle(
                                   PersonalCase.GetLable(ResourceKey.Measurement),
-                                    FontSize  :20 ,
+                                  FontSize  :20 ,
 
                                 ),
                                 flex: 2),
@@ -263,7 +263,7 @@ class _MeasuerCardState extends State<Tb_MeasuerCard> {
                           //  PersonalCase.GetLable(ResourceKey.Operator)
                             'Kol Measuerment',
                             FontSize  :17 ,
-                          color:ArgonColors.primary
+                            color:ArgonColors.primary
 
                         ),
                         SizedBox(height:10),
@@ -274,7 +274,7 @@ class _MeasuerCardState extends State<Tb_MeasuerCard> {
                           children: [
                             Expanded(
                                 child: LableTitle(
-                               PersonalCase.GetLable(ResourceKey.MeasurementNumbers),
+                                  PersonalCase.GetLable(ResourceKey.MeasurementNumbers),
 
 
                                 ),
@@ -286,7 +286,7 @@ class _MeasuerCardState extends State<Tb_MeasuerCard> {
                                 flex: 1),
                             Expanded(
                                 child: LableTitle(
-                                    PersonalCase.GetLable(ResourceKey.Tolerans),
+                                  PersonalCase.GetLable(ResourceKey.Tolerans),
 
                                 ),
                                 flex: 2),
@@ -298,7 +298,7 @@ class _MeasuerCardState extends State<Tb_MeasuerCard> {
                                 flex:1),
                             Expanded(
                                 child: LableTitle(
-                                 PersonalCase.GetLable(ResourceKey.Fark),
+                                  PersonalCase.GetLable(ResourceKey.Fark),
 
                                 ),
                                 flex: 1),
@@ -371,17 +371,17 @@ class _MeasuerCardState extends State<Tb_MeasuerCard> {
                   scrollDirection: Axis.vertical,
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: widget.Items.length,
+                  itemCount: widget.Items!.length,
                   itemBuilder: (context, int i) {
                     return InkWell(
                       onTap: () {
                         setState(() {
                           SelectedIndex = i;
                         });
-                        if (widget.OnClickItems != null) widget.OnClickItems(i);
+                        if (widget.OnClickItems != null) widget.OnClickItems!(i);
                       },
                       child: TableColumn(children: [
-                        RoundControl(widget.PersonalCase, widget.Items[i])
+                        RoundControl(widget.PersonalCase!, widget.Items![i])
                       ], IsSelectedItem: SelectedIndex == i),
                     );
                   }))

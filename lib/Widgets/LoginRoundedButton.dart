@@ -4,9 +4,9 @@ import 'package:itex_soft_qualityapp/Widgets/RoundedButtons.dart';
 
 
 class LoginRoundedButton extends StatelessWidget {
-  final Function onPressed;
-  final String label;
-  final String heroTag;
+  final Function? onPressed;
+  final String? label;
+  final String? heroTag;
   const LoginRoundedButton({this.onPressed, this.label, this.heroTag});
 
   @override

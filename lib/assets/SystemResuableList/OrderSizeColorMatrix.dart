@@ -6,9 +6,9 @@ import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 
 class OrderSizeColorMatrix extends StatefulWidget {
-  List<OrderSizeColorDetailsBLL> Items;
-  Function OnClickItems;
-  PersonalProvider PersonalCase;
+  List<OrderSizeColorDetailsBLL>? Items;
+  Function? OnClickItems;
+  PersonalProvider? PersonalCase;
 
   OrderSizeColorMatrix(
       {@required this.PersonalCase,
@@ -30,11 +30,11 @@ class _OrderSizeColorMatrixState extends State<OrderSizeColorMatrix> {
         children: <Widget>[
           HeaderColumn(
             children: <Widget>[
-              HeaderLable(widget.PersonalCase.GetLable(ResourceKey.SizeName)),
-              HeaderLable(widget.PersonalCase.GetLable(ResourceKey.ColorName)),
-              HeaderLable(widget.PersonalCase.GetLable(ResourceKey.SizeColor_QTY)),
-              HeaderLable(widget.PersonalCase.GetLable(ResourceKey.ControlAmount)),
-              HeaderLable(widget.PersonalCase.GetLable(ResourceKey.Remain_Value)),
+              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.SizeName)),
+              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.ColorName)),
+              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.SizeColor_QTY)),
+              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.ControlAmount)),
+              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.Remain_Value)),
             ]
           ),
           SingleChildScrollView(
@@ -43,21 +43,21 @@ class _OrderSizeColorMatrixState extends State<OrderSizeColorMatrix> {
                   scrollDirection: Axis.vertical,
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: widget.Items.length,
+                  itemCount: widget.Items!.length,
                   itemBuilder: (context, int i) {
                     return InkWell(
                       onTap: () {
-                        if (widget.OnClickItems != null) widget.OnClickItems(i);
+                        if (widget.OnClickItems != null) widget.OnClickItems!(i);
                         setState(() {
                           SelectedIndex = i;
                         });
                       },
                       child: TableColumn(children: [
-                        TableLable(widget.Items[i].SizeParam_StringVal),
-                        TableLable(widget.Items[i].ColorParam_StringVal),
-                        LableInteger(widget.Items[i].SizeColor_QTY),
-                        LableInteger(widget.Items[i].ControlAmount),
-                        LableInteger(widget.Items[i].Remain_Value),
+                        TableLable(widget.Items![i].SizeParam_StringVal),
+                        TableLable(widget.Items![i].ColorParam_StringVal),
+                        LableInteger(widget.Items![i].SizeColor_QTY),
+                        LableInteger(widget.Items![i].ControlAmount),
+                        LableInteger(widget.Items![i].Remain_Value),
                       ], IsSelectedItem: SelectedIndex == i),
                     );
                   }))

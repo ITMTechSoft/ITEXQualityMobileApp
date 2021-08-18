@@ -5,7 +5,7 @@ import 'package:itex_soft_qualityapp/SystemImports.dart';
 
 class BoxMainContainer extends StatelessWidget {
   var Childrens;
-  BoxMainContainer({this.Childrens});
+  BoxMainContainer({required this.Childrens});
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +36,10 @@ class BoxMainContainer extends StatelessWidget {
 
 class BoxMaterialCard extends StatelessWidget {
   var Childrens;
- final Widget topRight;
- final Widget topLeft ;
- final Widget bottomRight;
- final Widget bottomLeft ;
+ final Widget? topRight;
+ final Widget? topLeft ;
+ final Widget? bottomRight;
+ final Widget? bottomLeft ;
  final double paddingHorizontal ;
  final double paddingVertical ;
   BoxMaterialCard({this.Childrens, this.topRight, this.topLeft, this.bottomRight, this.bottomLeft, this.paddingHorizontal=20,this.paddingVertical=20});
@@ -62,7 +62,7 @@ class BoxMaterialCard extends StatelessWidget {
         ),
         topRight != null
             ? Positioned(
-          child: topRight,
+          child: topRight!,
           top: 5,
           right: 5,
         )
@@ -72,7 +72,7 @@ class BoxMaterialCard extends StatelessWidget {
         ),
         topLeft != null
             ? Positioned(
-          child: topLeft,
+          child: topLeft!,
           top:5,
           left: 5,
         )
@@ -82,14 +82,14 @@ class BoxMaterialCard extends StatelessWidget {
         ),
         bottomLeft != null
             ? Positioned(
-          child: bottomLeft,
+          child: bottomLeft!,
           bottom: 5,
           left: 5,
         )
             : Container(width: 0, height: 0),
         bottomRight != null
             ? Positioned(
-          child: bottomRight,
+          child: bottomRight!,
           bottom: 5,
           right: 5,
         )

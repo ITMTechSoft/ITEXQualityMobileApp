@@ -23,8 +23,8 @@ class _SetupApplicationsState extends State<SetupApplications> {
       new TextEditingController(text: SharedPref.ServerPort);
   final List<LanguagesBLL> languageList = LanguagesBLL.Get_Languages();
 
-  String errorMsg;
-  LanguagesBLL CurrentLanguage;
+  String? errorMsg;
+  LanguagesBLL? CurrentLanguage;
 
   @override
   void initState() {
@@ -68,7 +68,6 @@ class _SetupApplicationsState extends State<SetupApplications> {
                       errorMessage: "Ip can't be empty ",
                       MaxLength: 25,
                       hintMessage: '192.158. 1.38',
-                      isIp: true,
                       Ktype: TextInputType.text,
                       //  initialValue: serverIpController.text,
                     ),
@@ -128,9 +127,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                               setState(() {
                                 SharedPref.SelLanguage = CurrentLanguage = newValue;
                               });
-                              // somehow set here selected 'value' above whith
-                              // newValue
-                              // via setState or reactive.
+
                             },
                             items: languageList.map((LanguagesBLL value) {
                               return DropdownMenuItem<LanguagesBLL>(
@@ -149,7 +146,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                     ),
 
                     CustomText(
-                      text: CurrentLanguage.CultureName,
+                      text: CurrentLanguage!.CultureName,
                       size: ArgonSize.Header5,
                       color: ArgonColors.myBlue,
                     ),
@@ -168,7 +165,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
 
                         function: () async {
 
-                          if (_formKey.currentState.validate()) {
+                          if (_formKey.currentState!.validate()) {
                             setState(() {
                               _isLoading=true;
                             });
@@ -193,35 +190,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                         },
                       ),
                     ),
-                    // StretchableButton(
-                    //   buttonColor: ArgonColors.primary,
-                    //   children: [
-                    //     Text(
-                    //       StaticLable.Save,
-                    //       style: TextStyle(color: Colors.white),
-                    //     ),
-                    //   ],
-                    //   onPressed: () async {
-                    //     if (_formKey.currentState.validate()) {
-                    //       SharedPref.ServerIp = serverIpController.text;
-                    //       SharedPref.ServerPort = portController.text;
-                    //     //  SharedPref.SelLanguage = CurrentLanguage;
-                    //
-                    //       bool status = await PersonalCase.SetupAndLogin();
-                    //
-                    //       ///
-                    //       if (status == true) {
-                    //
-                    //         Navigator.popAndPushNamed(context, '/login');
-                    //
-                    //       } else {
-                    //         setState(() {
-                    //           errorMsg = "Server can't be reached ";
-                    //         });
-                    //       }
-                    //     }
-                    //   },
-                    // ),
+
                   ],
                 ),
               ),

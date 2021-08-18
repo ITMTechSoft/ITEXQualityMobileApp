@@ -6,13 +6,13 @@ import 'dart:async';
 
 class Criteria_ModelOrderBLL {
   //#region Properties
-  int Id;
-  int DeptModelOrder_QualityTest_Id;
-  bool IsMandatory;
-  String HTML_Data;
-  int QualityTest_Id;
-  int QualityDept_ModelOrder_Id;
-  int WaitTimeSNY;
+  int? Id;
+  int? DeptModelOrder_QualityTest_Id;
+  bool? IsMandatory;
+  String? HTML_Data;
+  int? QualityTest_Id;
+  int? QualityDept_ModelOrder_Id;
+  int? WaitTimeSNY;
 
   //#endregion
 
@@ -58,7 +58,7 @@ class Criteria_ModelOrderBLL {
         DeptModelOrder_QualityTest_Id.toString(),
         'IsMandatory': IsMandatory.toString(),
 
-        'HTML_Data': HTML_Data,
+        'HTML_Data': HTML_Data.toString(),
         'WaitTimeSNY': WaitTimeSNY.toString(),
         'QualityTest_Id': QualityTest_Id.toString(),
         'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),

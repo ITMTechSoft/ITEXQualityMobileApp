@@ -27,7 +27,7 @@ MainBar(PersonalProvider PersonalCase, BuildContext context) => new AppBar(
       ],
     );
 
-DetailBar({String Title, PersonalCase, Function OnTap,BuildContext context,bool showIcon=true}) => new AppBar(
+DetailBar({required String Title, PersonalCase,required Function() OnTap,required BuildContext context,bool showIcon=true}) => new AppBar(
     toolbarHeight: ArgonSize.WidthMedium,
 
   leading: IconButton(
@@ -62,7 +62,7 @@ class QualityTestBar extends StatelessWidget {
   String Title;
   Function OnClose;
 
-  QualityTestBar({Key key, String Title, Function OnClose}) : super(key: key);
+  QualityTestBar({Key? key,required String Title, required Function OnClose}) : super(key: key);
 
   @override
   AppBar build(BuildContext context) {

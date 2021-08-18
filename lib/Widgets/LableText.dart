@@ -10,9 +10,9 @@ const double _kBottomMargin = 10.0;
 const double _HeaderFontSize = 20.0;
 */
 
-Text HeaderTitle(String Title, {Color color, double FontSize}) {
+Text HeaderTitle(String? Title, {Color? color, double? FontSize}) {
   return Text(
-    Title,
+    Title!,
     style: TextStyle(
       fontSize: FontSize == null ? ArgonSize.Header3 : FontSize,
       fontWeight: FontWeight.bold,
@@ -22,7 +22,7 @@ Text HeaderTitle(String Title, {Color color, double FontSize}) {
 }
 
 Widget LableTitle(String Title,
-    {Color color  , double FontSize, bool IsCenter = false}) {
+    {Color? color  , double? FontSize, bool IsCenter = false}) {
   if (IsCenter)
     return Container(
       padding: EdgeInsets.all(2),
@@ -49,9 +49,9 @@ Widget LableTitle(String Title,
     );
 }
 
-Widget LableInteger(int Value,
-    {Color color,
-    double FontSize,
+Widget LableInteger(int? Value,
+    {Color? color,
+    double? FontSize,
     bool IsCenter = false,
     int Flex = 1}) {
   Widget TextValue(String TextVal) => new Text(
@@ -79,8 +79,8 @@ Widget LableInteger(int Value,
 
 Widget LableDateTime(DateTime TargetDate,
     {String Format = "yyyy/MM/dd HH:mm",
-    Color color,
-    double FontSize,
+    Color? color,
+    double? FontSize,
     bool IsCenter = false}) {
   if (IsCenter)
     return Container(
@@ -122,8 +122,8 @@ Widget TableLable(String TableText, {int Flex = 1}) {
       ));
 }
 
-Widget ExpandedLableTitle(String Title,
-    {Color color, double FontSize, bool IsCenter = false}) {
+Widget ExpandedLableTitle(String? Title,
+    {Color? color, double? FontSize, bool IsCenter = false}) {
   if (IsCenter)
     return Expanded(
       child: Text(
@@ -135,10 +135,12 @@ Widget ExpandedLableTitle(String Title,
         ),
       ),
     );
+  else
+    return Container();
 }
 
 Widget FilterItem(
-        context, controller, Function onSearchTextChanged, PersonalCase) =>
+    {required context, required controller,required Function(String) onSearchTextChanged,required  PersonalCase}) =>
     new Container(
       height:ArgonSize.WidthMedium,
       alignment:Alignment.center,
@@ -175,12 +177,12 @@ Widget FilterItem(
 
 class LabelWithValue extends StatelessWidget {
   @required
-  final String label;
+  final String ?  label;
   @required
-  final String value;
-  final double fontSize;
+  final String? value;
+  final double? fontSize;
 
-  const LabelWithValue({Key key, this.label, this.value, this.fontSize}) : super(key: key);
+  const LabelWithValue({Key? key, this.label, this.value, this.fontSize}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -193,13 +195,13 @@ class LabelWithValue extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            label,
+            label!,
             style: TextStyle(
                 color: ArgonColors.myVinous, fontWeight: FontWeight.bold,fontSize: fontSize),
           ),
 
           Text(
-            value,
+            value!,
             style: TextStyle(
                 color: ArgonColors.myBlue, fontWeight: FontWeight.bold,fontSize: fontSize),
           )
@@ -210,12 +212,12 @@ class LabelWithValue extends StatelessWidget {
 }
 class LabelWithIntegerVal extends StatelessWidget {
   @required
-  final String label;
+  final String? label;
   @required
-  final int value;
-  final double fontSize ;
+  final int? value;
+  final double? fontSize ;
 
-  const LabelWithIntegerVal({Key key, this.label, this.value, this.fontSize}) : super(key: key);
+  const LabelWithIntegerVal({Key? key, this.label, this.value, this.fontSize}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -228,7 +230,7 @@ class LabelWithIntegerVal extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            label,
+            label!,
             style: TextStyle(
                 color: ArgonColors.myVinous, fontWeight: FontWeight.bold,fontSize:fontSize),
           ),
@@ -245,15 +247,15 @@ class LabelWithIntegerVal extends StatelessWidget {
 }
 
 class CustomText extends StatelessWidget {
-  final String text;
-  final double size;
-  final Color color;
-  final FontWeight fontWeight;
+  final String?  text;
+  final double?  size;
+  final Color ? color;
+  final FontWeight? fontWeight;
 
   final TextDecoration textDecoration;
   final TextAlign textAlign;
 
-  const CustomText({Key key,
+  const CustomText({Key? key,
     this.text,
     this.size,
     this.color = ArgonColors.Title,
@@ -265,7 +267,7 @@ class CustomText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text,
+      text!,
       textAlign: textAlign,
       style: TextStyle(
         fontSize: size,

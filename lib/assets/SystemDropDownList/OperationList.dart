@@ -7,10 +7,10 @@ import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 class Operation_List extends StatefulWidget {
   List<OperationBLL> Items;
-  Function OnClickItems;
+  Function? OnClickItems;
   PersonalProvider PersonalCase;
 
-  Operation_List({this.PersonalCase, this.Items, this.OnClickItems});
+  Operation_List({required this.PersonalCase,required this.Items, this.OnClickItems});
 
   @override
   _Operation_ListState createState() => _Operation_ListState();
@@ -21,7 +21,7 @@ class _Operation_ListState extends State<Operation_List> {
   final TextEditingController SearchController = new TextEditingController();
   int SelectedItem = -1;
 
-  Widget FilterItem(Function onSearchTextChanged) =>
+  Widget FilterItem( VoidCallback   onSearchTextChanged) =>
       new Container(
         height: ArgonSize.WidthMedium,
 

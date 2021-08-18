@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 
 class ImageLoader extends StatefulWidget {
-  Future<String> LoadingImage;
-  ImageLoader({Key key,@required this.LoadingImage}) : super(key: key);
+  Future<String>? LoadingImage;
+  ImageLoader({Key? key,@required this.LoadingImage}) : super(key: key);
 
   @override
   _ImageLoaderState createState() => _ImageLoaderState();
@@ -14,7 +14,7 @@ class ImageLoader extends StatefulWidget {
 class _ImageLoaderState extends State<ImageLoader> {
   int IntiteStatus = 0;
 
-  Widget GetImage(String base64Image){
+  Widget GetImage(String  base64Image){
     final _byteImage = Base64Decoder().convert(base64Image);
     return Image.memory(_byteImage);
   }
@@ -25,7 +25,7 @@ class _ImageLoaderState extends State<ImageLoader> {
       future: widget.LoadingImage,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return GetImage(snapshot.data);
+          return GetImage(snapshot.data.toString());
         } else
           return Center(child: CircularProgressIndicator());
 

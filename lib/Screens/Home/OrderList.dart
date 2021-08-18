@@ -73,7 +73,7 @@ class _OrderListState extends State<OrderList> {
                       ),
                       SizedBox(height:ArgonSize.Padding3),
 
-                      FilterItem(context, SearchController, FilterSearch,PersonalCase),
+                      FilterItem (context: context,controller: SearchController,onSearchTextChanged: FilterSearch, PersonalCase: PersonalCase),
                       SizedBox(height:ArgonSize.Padding4),
 
 

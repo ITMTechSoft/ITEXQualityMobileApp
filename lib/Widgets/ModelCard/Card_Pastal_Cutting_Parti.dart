@@ -11,7 +11,7 @@ class Card_Pastal_Cutting_Parti extends StatefulWidget {
   Pastal_Cutting_PartiBLL Card_Item;
   Function(Pastal_Cutting_PartiBLL Item) OnTap;
 
-  Card_Pastal_Cutting_Parti({this.Card_Item, this.OnTap});
+  Card_Pastal_Cutting_Parti({required this.Card_Item, required this.OnTap});
 
   @override
   _Card_Pastal_Cutting_PartiState createState() =>
@@ -156,7 +156,7 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
                         value: PersonalCase.GetLable(ResourceKey.Delete),
                         backGroundColor: ArgonColors.myRed,
                         function: () {
-                          AlertPopupDialogWithAction(context,
+                          AlertPopupDialogWithAction(context :context,
                               textButton1Color: Colors.red,
                               title: PersonalCase.GetLable(
                                   ResourceKey.WarrningMessage),
@@ -201,7 +201,7 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
 class Pastal_NewSample extends StatefulWidget {
   Pastal_Cutting_PartiBLL Card_Item ;
 
-  Pastal_NewSample({Key key, this.Card_Item}) : super(key: key);
+  Pastal_NewSample({Key? key,required  this.Card_Item}) : super(key: key);
 
   @override
   _Pastal_NewSampleState createState() => _Pastal_NewSampleState();

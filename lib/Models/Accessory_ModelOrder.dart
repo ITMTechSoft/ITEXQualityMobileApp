@@ -90,7 +90,7 @@ class Accessory_ModelOrderBLL {
 
   //#region GetWebApiUrl
   static Future<List<Accessory_ModelOrderBLL>> Get_Accessory_ModelOrder({int DeptModelOrder_QualityTest_Id = 0}) async {
-    List<Accessory_ModelOrderBLL> ItemList;
+    List<Accessory_ModelOrderBLL>? ItemList;
     try {
 
       Map<String, String> qParams = {

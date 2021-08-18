@@ -26,7 +26,7 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
   final TextEditingController SampleAmountController =
       new TextEditingController();
   final TextEditingController KumnasNoController = new TextEditingController();
-  GroupsBLL SelectedItem;
+  GroupsBLL? SelectedItem;
 
   Future GetTanifGroupItem() async {
     var Items =
@@ -211,7 +211,7 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                                   }).toList(),
                                   Lable: PersonalCase.GetLable(
                                       ResourceKey.SelectItems),
-                                  OnChange: (GroupsBLL NewValue) {
+                                  OnChange: (GroupsBLL? NewValue) {
                                     setState(() {
                                       SelectedItem = NewValue;
                                     });

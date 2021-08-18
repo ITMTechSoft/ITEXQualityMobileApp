@@ -4,7 +4,6 @@ import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 import 'package:itex_soft_qualityapp/QualityTestImports.dart';
-
 import 'QualityTest/Cutting_Control/Cutting_Control.dart';
 import 'QualityTest/MeasurementControl/OrderSizeMatrix.dart';
 
@@ -15,7 +14,7 @@ class QualityTestList extends StatefulWidget {
 
 class _QualityTestListState extends State<QualityTestList> {
   int IntiteStatus = 0;
-  bool IsUserApproved;
+  bool IsUserApproved ;
 
   Future<List<DepartmentModelOrder_QualityTestBLL>> LoadEmployeeOrders(
       PersonalProvider PersonalCase) async {
@@ -45,12 +44,12 @@ class _QualityTestListState extends State<QualityTestList> {
       if (IsUserApproved)
        {
          PersonalCase.SelectedTest = DataList[Index];
-         MandatoryCritieraAction(PersonalCase.SelectedTest);
+         MandatoryCritieraAction(PersonalCase.SelectedTest!);
        }
       else {
         PersonalCase.SelectedTest = Critiera.first;
         AlertPopupDialogWithAction(
-          context,
+          context:context,
           title: PersonalCase.GetLable(ResourceKey.WarrningMessage),
           Children: [
             LableTitle(PersonalCase.GetLable(ResourceKey.PleaseCheckCriteria),
@@ -61,13 +60,13 @@ class _QualityTestListState extends State<QualityTestList> {
           SecondActionLable: PersonalCase.GetLable(ResourceKey.Cancel),
             OnFirstAction:(){
             Navigator.pop(context);
-            MandatoryCritieraAction(PersonalCase.SelectedTest);
+            MandatoryCritieraAction(PersonalCase.SelectedTest!);
             }
         );
       }
     } else {
       PersonalCase.SelectedTest = DataList[Index];
-      MandatoryCritieraAction(PersonalCase.SelectedTest);
+      MandatoryCritieraAction(PersonalCase.SelectedTest!);
     }
   }
 
@@ -140,7 +139,7 @@ class _QualityTestListState extends State<QualityTestList> {
                     children: <Widget>[
                       ListTile(
                         title: HeaderTitle(
-                            PersonalCase.SelectedOrder.Order_Number,
+                            PersonalCase.SelectedOrder!.Order_Number,
                             color: ArgonColors.header,
                             FontSize: ArgonSize.Header1),
                         subtitle: Text(

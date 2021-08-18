@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SelectList extends StatelessWidget {
-  List<Widget> ListItems =<Widget>[];
-  bool IsOpenFilter;
-  double padding;
-  double margin;
+  List<Widget>? ListItems =<Widget>[];
+  bool? IsOpenFilter;
+  double? padding;
+  double? margin;
 
   SelectList(
       {@required this.ListItems,
@@ -22,15 +22,15 @@ class SelectList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    if(IsOpenFilter)
-      this.ListItems.insert(0, FilterItem());
+    if(IsOpenFilter!)
+      this.ListItems!.insert(0, FilterItem());
     if(ListItems ==null)
-      ListItems.add(Text("No Data"));
+      ListItems!.add(Text("No Data"));
     return Container(
-        padding: EdgeInsets.all(this.padding),
-        margin: EdgeInsets.all(this.margin),
+        padding: EdgeInsets.all(this.padding!),
+        margin: EdgeInsets.all(this.margin!),
         child: ListView(
-          children: ListItems,
+          children: ListItems!,
         ));
   }
 }

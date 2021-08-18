@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:itex_soft_qualityapp/Preferences/SetupApplications.dart';
-import 'package:itex_soft_qualityapp/Utility/Globalization.dart';
 import 'package:itex_soft_qualityapp/Utility/ResourceKeys.dart';
 import 'package:itex_soft_qualityapp/Widgets/Input.dart';
 import 'package:itex_soft_qualityapp/assets/images/ImgAssets.dart';
@@ -19,7 +18,7 @@ class _LoginPagesState extends State<LoginPages> {
   var errorMsg;
   bool obscure = true;
   IconData passwordSuffixIcon = Icons.lock;
-  String name ;
+  String name ='' ;
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController UserNameController = new TextEditingController();
@@ -42,20 +41,7 @@ class _LoginPagesState extends State<LoginPages> {
       Navigator.popAndPushNamed(context, '/main');
     }
   }
-  // void initState() {
-  //   super.initState();
-  //   if ( ResourceKey.btn_Logins == PersonalCase.GetLable(ResourceKey.btn_Logins))
-  //   {
-  //     print('${ResourceKey.btn_Logins}' '${PersonalCase.GetLable(ResourceKey.btn_Logins)}');
-  //     print('Loaded');
-  //   }
-  //   else{
-  //     print('${ResourceKey.btn_Logins} ' '${PersonalCase.GetLable(ResourceKey.btn_Logins)}');
-  //
-  //     print('Loadded ');
-  //   }
-  // }
-////
+
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
@@ -196,7 +182,7 @@ class _LoginPagesState extends State<LoginPages> {
                               value: PersonalCase.GetLable(ResourceKey.btn_Logins),
                               textSize: ArgonSize.Header3,
                               function: () async {
-                                if (_formKey.currentState.validate()) {
+                                if (_formKey.currentState!.validate()) {
                                   await LoginFunction(PersonalCase);
                                   print('working ');
                                   setState(() {

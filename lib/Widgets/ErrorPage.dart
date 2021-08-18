@@ -5,9 +5,9 @@ import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 class ErrorPage extends StatelessWidget {
-  final String ActionName;
-  final String MessageError;
-  final String DetailError;
+  final String? ActionName;
+  final String? MessageError;
+  final String? DetailError;
 
   ErrorPage({this.ActionName, this.MessageError, this.DetailError});
 
@@ -33,7 +33,7 @@ class ErrorPage extends StatelessWidget {
                   margin: new EdgeInsets.symmetric(horizontal: 10.0),
                   padding: new EdgeInsets.symmetric(vertical: 10.0),
                   child: Text(
-                    MessageError,
+                    MessageError!,
                     style: TextStyle(
                         color: ArgonColors.errorinfo,
                         fontSize: ArgonSize.Header1),

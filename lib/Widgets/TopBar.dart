@@ -5,19 +5,19 @@ import 'package:itex_soft_qualityapp/Utility/constants.dart';
 class TopBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final Widget child;
-  final Function onPressed;
-  final Function onTitleTapped;
-  final String buttonHeroTag;
+  final Function() onPressed;
+  final Function()? onTitleTapped;
+  final String? buttonHeroTag;
 
   @override
   final Size preferredSize;
 
   TopBar(
-      {@required this.title,
-      @required this.child,
-      @required this.onPressed,
+      {required this.title,
+      required this.child,
+      required this.onPressed,
       this.buttonHeroTag = 'topBarBtn',
-      this.onTitleTapped})
+      required this.onTitleTapped})
       : preferredSize = Size.fromHeight(60.0);
 
   @override
@@ -38,7 +38,7 @@ class _TopBarState extends State<TopBar> {
             children: <Widget>[
               Hero(
                 transitionOnUserGestures: true,
-                tag: widget.buttonHeroTag,
+                tag: widget.buttonHeroTag!,
                 child: Container(
                   // elevation: 10,
                   // shape: kBackButtonShape,
@@ -77,7 +77,7 @@ class _TopBarState extends State<TopBar> {
                           child: FittedBox(
                             fit: BoxFit.fitWidth,
                             child: Text(
-                              widget.title,
+                              widget.title!,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 25,

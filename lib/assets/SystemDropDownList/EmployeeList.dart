@@ -7,10 +7,10 @@ import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 class Employee_List extends StatefulWidget {
   List<EmployeesBLL> Items;
-  Function OnClickItems;
+  Function() OnClickItems;
   PersonalProvider PersonalCase;
 
-  Employee_List({this.PersonalCase, this.Items, this.OnClickItems});
+  Employee_List({required this.PersonalCase,required this.Items,required this.OnClickItems});
 
   @override
   _Employee_ListState createState() => _Employee_ListState();
@@ -43,7 +43,7 @@ class _Employee_ListState extends State<Employee_List> {
                   controller: SearchController,
                   decoration: new InputDecoration(
                       hintText:
-                          widget.PersonalCase.GetLable(ResourceKey.Search),
+                          widget.PersonalCase?.GetLable(ResourceKey.Search),
                       border: InputBorder.none),
                   onChanged: onSearchTextChanged,
                 ),
@@ -97,8 +97,8 @@ class _Employee_ListState extends State<Employee_List> {
       margin: EdgeInsets.only(left: 2, top: 0, right: 2, bottom: 0),
       child: Column(
         children: [
-          HeaderLable(widget.PersonalCase.GetLable(ResourceKey.EmployeeList),
-              fontSize: 15),
+          HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.EmployeeList),
+              fontSize: ArgonSize.Header4),
           FilterItem((String Text) {
             setState(() {});
           }),

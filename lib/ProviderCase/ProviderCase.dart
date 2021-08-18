@@ -13,20 +13,20 @@ import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 
 class PersonalProvider with ChangeNotifier {
-  EmployeesBLL _CurrentUser;
-  Employee_DepartmentBLL SelectedDepartment;
-  QualityDepartment_ModelOrderBLL     SelectedOrder;
-  DepartmentModelOrder_QualityTestBLL SelectedTest;
-  OrderSizeColorDetailsBLL SelectedMatrix;
-  QualityDept_ModelOrder_TrackingBLL SelectedTracking;
+  EmployeesBLL ?  _CurrentUser;
+  Employee_DepartmentBLL? SelectedDepartment;
+  QualityDepartment_ModelOrderBLL?     SelectedOrder;
+  DepartmentModelOrder_QualityTestBLL? SelectedTest;
+  OrderSizeColorDetailsBLL? SelectedMatrix;
+  QualityDept_ModelOrder_TrackingBLL? SelectedTracking;
 
-  SharedPref _UserPref;
-  List<Language_ResourcesKeyBLL> GlobalKeys;
-  bool IsLoading = false;
+  SharedPref? _UserPref;
+  List<Language_ResourcesKeyBLL>? GlobalKeys;
+  bool? IsLoading = false;
 
-  Accessory_ModelOrderBLL SelectedAccessoryModel;
+  Accessory_ModelOrderBLL? SelectedAccessoryModel;
 
-  ModelOrderSizesBLL SelectedSize;
+  ModelOrderSizesBLL? SelectedSize;
 
   PersonalProvider() {
     _CurrentUser = new EmployeesBLL();
@@ -37,7 +37,7 @@ class PersonalProvider with ChangeNotifier {
   }
 
   EmployeesBLL GetCurrentUser() {
-    return _CurrentUser;
+    return _CurrentUser!;
   }
 
   Future<bool> loadSharedPrefs() async {
@@ -45,22 +45,22 @@ class PersonalProvider with ChangeNotifier {
 
       IsLoading = true;
 
-      bool Status = await _UserPref.initiateAppPrefernce();
-       await GetGlobalization(SharedPref.SelLanguage.Id);
-        print('the language is ${SharedPref.SelLanguage.Id}') ;
+      bool Status = await _UserPref!.initiateAppPrefernce();
+       await GetGlobalization(SharedPref.SelLanguage!.Id);
+        print('the language is ${SharedPref.SelLanguage!.Id}') ;
       if (Status) {
 
-        _CurrentUser.Employee_User = SharedPref.UserName;
-        _CurrentUser.Employee_Password = SharedPref.UserPassword;
+        _CurrentUser!.Employee_User = SharedPref.UserName!;
+        _CurrentUser!.Employee_Password = SharedPref.UserPassword!;
 
-        await _CurrentUser.login();
+        await _CurrentUser!.login();
 
-        if (_CurrentUser.ValidUser) {
+        if (_CurrentUser!.ValidUser) {
           notifyListeners();
         }
         IsLoading = false;
       } else {
-        _CurrentUser.LoginMessage = "Error in the port or ip ";
+        _CurrentUser!.LoginMessage = "Error in the port or ip ";
       }
 
       return Status;
@@ -71,22 +71,22 @@ class PersonalProvider with ChangeNotifier {
   }
 
   Login() async {
-    await _CurrentUser.login();
+    await _CurrentUser!.login();
 
-    if (_CurrentUser.ValidUser == true) {
-      SharedPref.UserName     = _CurrentUser.Employee_User;
-      SharedPref.UserPassword = _CurrentUser.Employee_Password;
+    if (_CurrentUser!.ValidUser == true) {
+      SharedPref.UserName     = _CurrentUser!.Employee_User;
+      SharedPref.UserPassword = _CurrentUser!.Employee_Password;
 
-      SharedPref.SavePrefernce("UserName", _CurrentUser.Employee_User);
-      SharedPref.SavePrefernce("UserPassword", _CurrentUser.Employee_User);
+      SharedPref.SavePrefernce("UserName", _CurrentUser!.Employee_User);
+      SharedPref.SavePrefernce("UserPassword", _CurrentUser!.Employee_User);
 
       notifyListeners();
     }
   }
 
   Future<bool> SetupAndLogin() async {
-    String test = await _CurrentUser.CheckIP();
-    await GetGlobalization(SharedPref.SelLanguage.Id);
+    String test = await _CurrentUser!.CheckIP();
+    await GetGlobalization(SharedPref.SelLanguage!.Id);
 
 
     if (test == "True") {
@@ -103,8 +103,8 @@ class PersonalProvider with ChangeNotifier {
   UpdateInformation() async {
     SelectedTracking = await QualityDept_ModelOrder_TrackingBLL
         .GetOrCreate_QualityDept_ModelOrder_Tracking(
-            this.GetCurrentUser().Id, this.SelectedTest.Id,
-            OrderSizeColorDetail_Id: this.SelectedMatrix.Id);
+            this.GetCurrentUser().Id, this.SelectedTest!.Id,
+            OrderSizeColorDetail_Id: this.SelectedMatrix!.Id);
     notifyListeners();
   }
 
@@ -115,7 +115,7 @@ class PersonalProvider with ChangeNotifier {
     // _CurrentUser.Employee_Password = "";
     // SharedPref.UserName = "";
     // SharedPref.UserPassword = "";
-    _CurrentUser.Logout();
+    _CurrentUser!.Logout();
     print ('logout');
 
     SharedPref.SavePrefernce('UserName', '');
@@ -125,8 +125,8 @@ class PersonalProvider with ChangeNotifier {
   }
 
   String GetLable(ResourceKey KeyRes) {
-    if (GlobalKeys != null && GlobalKeys.length > 0) {
-      var GetResournce = GlobalKeys.where(
+    if (GlobalKeys != null && GlobalKeys!.length > 0) {
+      var GetResournce = GlobalKeys!.where(
           (element) => element.ResKey == KeyRes.toShortString()).toList();
       if (GetResournce.length > 0) return GetResournce.first.ResourceValue;
     }

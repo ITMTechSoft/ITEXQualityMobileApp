@@ -6,81 +6,18 @@ import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 const double defaultBorderRadius = 3.0;
 
-class StretchableButton extends StatelessWidget {
-  final Function onPressed;
-  final String NormalText;
-  final double borderRadius;
-  final double buttonPadding;
-  final Color buttonColor, splashColor;
-  final Color buttonBorderColor;
-  final Color TextColor;
-  final List<Widget> children;
-
-  StretchableButton({
-    @required this.buttonColor,
-    this.NormalText,
-    this.children,
-    this.borderRadius = 5,
-    this.splashColor,
-    this.buttonBorderColor,
-    this.onPressed,
-    this.TextColor,
-    this.buttonPadding = 0,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        var contents = List<Widget>.from(children);
-
-        /* if (constraints.minWidth == 0) {
-          contents.add(SizedBox.shrink());
-        } else {
-          contents.add(Spacer());
-        }*/
-
-        BorderSide bs;
-        if (buttonBorderColor != null) {
-          bs = BorderSide(
-            color: buttonBorderColor,
-          );
-        } else {
-          bs = BorderSide.none;
-        }
-
-        return ButtonTheme(
-          height: 40.0,
-          padding: EdgeInsets.all(buttonPadding),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadius),
-            side: bs,
-          ),
-          child: MaterialButton(
-            onPressed: onPressed,
-            color: buttonColor,
-            splashColor: splashColor,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: contents,
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
 Widget StandardButton(
-    {String Lable,
-      Color ForColor,
-      Color BakColor,
-      Function OnTap,
-      double FontSize}) =>
+        {required String Lable,
+        required Function() OnTap,
+        Color ForColor = ArgonColors.primary,
+        Color BakColor = ArgonColors.primary,
+        double? FontSize}) =>
     TextButton(
-        child: Text(Lable.toUpperCase(), style: TextStyle(fontSize: FontSize ?? ArgonSize.Header4)),
+        child: Text(Lable.toUpperCase(),
+            style: TextStyle(fontSize: FontSize ?? ArgonSize.Header4)),
         style: ButtonStyle(
-            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(ArgonSize.Padding4)),
+            padding: MaterialStateProperty.all<EdgeInsets>(
+                EdgeInsets.all(ArgonSize.Padding4)),
             foregroundColor: MaterialStateProperty.all<Color>(ForColor),
             backgroundColor: MaterialStateProperty.all<Color>(BakColor),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -90,7 +27,10 @@ Widget StandardButton(
         onPressed: OnTap);
 
 Widget CircleButton(
-    {Color ForColor, Color BakColor, IconData ActionIcon, Function OnTap}) {
+    {Color ForColor = ArgonColors.myGreen,
+    Color BakColor = ArgonColors.primary,
+    required IconData ActionIcon,
+    required Function() OnTap}) {
   return ClipOval(
     child: Material(
       color: BakColor, // button color
@@ -111,66 +51,57 @@ Widget CircleButton(
 }
 
 Widget ButtonWithNumber({
-  String text,
-  double buttonWidth =500,
-  double buttonHegiht=40,
+  required String text,
+  double? buttonWidth ,
+  double? buttonHegiht ,
   Color btnBgColor = ArgonColors.myLightBlue,
-  double textSize = 20,
-  Color textColor = Colors.black54,
-  double padding = 5,
-  Widget topRight,
-  Widget topLeft,
-  Widget bottomRight,
-  Widget bottomLeft,
-  Widget image,
+  double? textSize,
+  Color  textColor = Colors.black54,
+  Widget? topRight,
+  Widget? topLeft,
+  Widget? bottomRight,
+  Widget? bottomLeft,
+  Widget? image,
   bool orientation = false,
-
 }) {
-  return Container (
-      width:  buttonWidth,
+  return Container(
+      width: buttonWidth,
       height: buttonHegiht,
-      child:Stack(
-          children:[
-            CustomContainer(
-              width: buttonWidth,
-              height: buttonHegiht,
-              value: text,
-              textColor: textColor,
-              backGroundColor: btnBgColor,
-              textSize: textSize,
-              image: image,
-              topRight:topRight,
-              topLeft:topLeft,
-              bottomRight:bottomRight,
-              bottomLeft:bottomLeft,
-              padding1:padding
-            ),
-
-          ]
-      )
-  );
+      child: Stack(children: [
+        CustomContainer(
+            width: buttonWidth??ArgonSize.WidthBig,
+            height: buttonHegiht??ArgonSize.HeightBig,
+            text: text,
+            textColor: textColor,
+            backGroundColor: btnBgColor,
+            textSize: textSize ?? ArgonSize.Header4,
+            image: image??Container(),
+            topRight:    topRight?? Container(),
+            topLeft:     topLeft??  Container(),
+            bottomRight: bottomRight??Container(),
+            bottomLeft:  bottomLeft??Container(),),
+      ]));
 }
 
 Widget IconInsideCircle(
-    {IconData icon,
-      Color color,
-      double iconSize = 15,
-      Color backGroundColor,
-      double size = 13,
-    Function function}) {
+    {required IconData icon,
+    Color color = Colors.white,
+    double? iconSize,
+    Color backGroundColor = ArgonColors.primary,
+    double size = 13,
+    Function()? function}) {
   return GestureDetector(
-    onTap :function,
+    onTap: function ?? () {},
     child: Container(
       padding: EdgeInsets.all(size),
       margin: EdgeInsets.only(left: 0),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: backGroundColor,
-
-    ),
+      ),
       child: Icon(
         icon,
-        size: iconSize,
+        size: iconSize ?? ArgonSize.IconSize,
         color: color,
       ),
     ),
@@ -178,25 +109,26 @@ Widget IconInsideCircle(
 }
 
 Widget CircleShape(
-    {String text,
-      Color color = ArgonColors.myBlue2,
-      double width = 80,
-      double height = 70,
-      double fontSize = 18,
-      Color textColor = Colors.white}) {
+    {required String text,
+    Color color = ArgonColors.myBlue2,
+    required double width,
+    required double height,
+    double? fontSize,
+    Color textColor = Colors.white}) {
   return Container(
     width: width,
     height: height,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
       color: color,
-
     ),
     child: Center(
       child: Text(
         text,
         style: TextStyle(
-            color: textColor, fontSize: fontSize, fontWeight: FontWeight.bold),
+            color: textColor,
+            fontSize: fontSize ?? ArgonSize.Header4,
+            fontWeight: FontWeight.bold),
       ),
     ),
   );
@@ -204,26 +136,22 @@ Widget CircleShape(
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
-    Key key,
-    this.value,
-    this.function,
-    this.backGroundColor,
-    this.width,
-    this.height,
-    this.textColor,
-    this.textSize = 20,
-  }) : super(key: key);
+    required this.value,
+    required this.function,
+    required this.width,
+    required this.height,
+    this.backGroundColor = ArgonColors.primary,
+    this.textColor = ArgonColors.black,
+    this.textSize,
+  });
 
   final String value;
-
-  final Function function;
-
+  final Function() function;
   final Color backGroundColor;
   final Color textColor;
   final double width;
-
   final double height;
-  final double textSize;
+  final double? textSize;
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +166,7 @@ class CustomButton extends StatelessWidget {
         onPressed: function,
         child: CustomText(
           text: value,
-          size: textSize,
+          size: textSize ?? ArgonSize.Header4,
           color: textColor,
           fontWeight: FontWeight.w800,
         ),
@@ -249,25 +177,27 @@ class CustomButton extends StatelessWidget {
 
 class CustomContainer extends StatelessWidget {
   const CustomContainer({
-    Key key,
-    this.value,
-    this.function,
-    this.backGroundColor,
-    this.width,
-    this.height,
-    this.textColor,
-    this.textSize = 20,
-    this.image, this.topRight, this.topLeft, this.bottomRight, this.bottomLeft, this.padding1=10,
+    Key? key,
+    required  this.text,
+    this.backGroundColor = ArgonColors.primary,
+    required this.width,
+    required this.height,
+    this.textColor = ArgonColors.black,
+    required this.textSize ,
+    required this.image,
+    required this.topRight,
+    required this.topLeft,
+    required this.bottomRight,
+    required this.bottomLeft,
+
   }) : super(key: key);
 
-  final String value;
 
-  final Function function;
 
+  final String text;
   final Color backGroundColor;
   final Color textColor;
   final double width;
-
   final double height;
   final double textSize;
   final image;
@@ -275,7 +205,6 @@ class CustomContainer extends StatelessWidget {
   final Widget topLeft;
   final Widget bottomRight;
   final Widget bottomLeft;
-  final double padding1 ;
 
   @override
   Widget build(BuildContext context) {
@@ -285,17 +214,19 @@ class CustomContainer extends StatelessWidget {
           Container(
             width: width,
             height: height,
-            padding:EdgeInsets.all( 5),
+            /// TODO: REPLACE THE STATIC NUMBER WITH VALUE FROM ARGONSIZE
+            padding: EdgeInsets.all(5),
             child: Container(
-
               width: width,
               height: height,
               decoration: BoxDecoration(
+                ///TODO: AND HERE
                 borderRadius: BorderRadius.circular(15),
                 color: backGroundColor, // background
               ),
               child: Padding(
                 padding: image != null
+                ///TODO : AND HERE
                     ? const EdgeInsets.only(bottom: 8.0)
                     : const EdgeInsets.only(bottom: 0),
                 child: Column(
@@ -308,7 +239,7 @@ class CustomContainer extends StatelessWidget {
                       flex: 1,
                       child: Center(
                         child: CustomText(
-                          text: value,
+                          text: text,
                           size: textSize,
                           color: textColor,
                           fontWeight: FontWeight.w800,
@@ -320,42 +251,25 @@ class CustomContainer extends StatelessWidget {
               ),
             ),
           ),
-          topRight != null
-              ? Positioned(
+          Positioned(
             child: topRight,
             top: 0,
             right: 0,
-          )
-              : Container(
-            width: 0,
-            height: 0,
           ),
-          topLeft != null
-              ? Positioned(
+          Positioned(
             child: topLeft,
             top: 0,
             left: 0,
-          )
-              : Container(
-            width: 0,
-            height: 0,
           ),
-          bottomLeft != null
-              ? Positioned(
+          Positioned(
             child: bottomLeft,
             bottom: 0,
             left: 0,
-          )
-              : Container(width: 0, height: 0),
-          bottomRight != null
-              ? Positioned(
+          ),
+          Positioned(
             child: bottomRight,
             bottom: 0,
             right: 0,
-          )
-              : Container(
-            width: 0,
-            height: 0,
           ),
         ],
       ),
@@ -365,33 +279,32 @@ class CustomContainer extends StatelessWidget {
 
 class CircularIconWithNumber extends StatelessWidget {
   final IconData icon;
-
-  final Color backGroundColor;
-
-  final Color iconColor;
-
-  final double size;
-
-  final double bubbleWidth;
-
-  final double bubbleHeight;
-
-  final String bubbleText;
-  final double bubbleTextSize;
-  final Color  bubbleBgColor;
-  final double fontSize;
-  final Function function ;
+  final Color    backGroundColor;
+  final Color    iconColor;
+  final double   size;
+  final double?  iconSize;
+  final double?  bubbleWidth;
+  final double?  bubbleHeight;
+  final String?  bubbleText;
+  final double?  bubbleTextSize;
+  final Color    bubbleBgColor;
+  final Function()? function;
 
   const CircularIconWithNumber(
-      {Key key,
-        this.icon,
-        this.backGroundColor,
-        this.iconColor,
-        this.size = 15,
-        this.bubbleWidth = 25,
-        this.bubbleHeight = 25,
-        this.bubbleText = '',
-        this.bubbleTextSize = 25, this.fontSize=15, this.function, this.bubbleBgColor})
+      {Key? key,
+      required this.icon,
+      this.backGroundColor = ArgonColors.white,
+      this.iconColor = ArgonColors.primary,
+        /// TODO : CHNAGE THE FIXED NUMBER INTO VALUE FROM ARGON FILE
+      this.size = 15,
+      this.iconSize,
+      this.bubbleWidth ,
+      this.bubbleHeight ,
+      this.bubbleText ,
+      this.bubbleTextSize ,
+      this.bubbleBgColor = ArgonColors.myGreen,
+      this.function,
+      })
       : super(key: key);
 
   @override
@@ -399,78 +312,28 @@ class CircularIconWithNumber extends StatelessWidget {
     return Column(
       children: [
         GestureDetector(
-          onTap:function,
+          onTap: function??(){},
           child: Container(
             child: Stack(children: [
               IconInsideCircle(
                   icon: icon,
                   backGroundColor: backGroundColor,
                   color: Colors.white,
-                  iconSize: 25,
+                  iconSize: iconSize??ArgonSize.IconSize,
                   size: size),
               Positioned(
                   child: CircleShape(
-                      color :bubbleBgColor,
-                      text: bubbleText,
-                      width: bubbleWidth,
-                      height: bubbleHeight,
-                      fontSize: bubbleTextSize),
+                      color:  bubbleBgColor,
+                      text:   bubbleText??'',
+                      width:  bubbleWidth??ArgonSize.WidthSmall,
+                      height: bubbleHeight??ArgonSize.HeightSmall,
+                      fontSize: bubbleTextSize??ArgonSize.Header5),
                   top: 0,
                   right: 0),
             ]),
           ),
         ),
       ],
-    );
-  }
-}
-
-class ImageButton extends StatelessWidget {
-  final String text;
-
-  final Function function;
-
-  final Color color;
-
-  final double width;
-  final double height;
-  final Widget childWidget;
-
-  const ImageButton(
-      {Key key,
-        this.text,
-        this.function,
-        this.color,
-        this.width = 200,
-        this.height = 80,
-        this.childWidget})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: function,
-      child: Container(
-          width: width,
-          height: height,
-          decoration: BoxDecoration(
-            color: color,
-            border: Border.all(
-              width: 1,
-              color: Colors.white,
-            ),
-            borderRadius: BorderRadius.circular(15),
-            //
-          ),
-          child: Column(children: [
-            childWidget != null
-                ? Expanded(flex: 2, child: childWidget)
-                : Container(width: 0, height: 0),
-            Expanded(
-              flex: 1,
-              child: Center(child: CustomText(text: text)),
-            )
-          ])),
     );
   }
 }

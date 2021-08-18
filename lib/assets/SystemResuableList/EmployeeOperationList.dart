@@ -11,9 +11,9 @@ import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 class EmployeeOperationList extends StatefulWidget {
-  List<User_QualityTracking_DetailBLL> Items;
-  Function OnClickItems;
-  PersonalProvider PersonalCase;
+  List<User_QualityTracking_DetailBLL>? Items;
+  Function? OnClickItems;
+  PersonalProvider? PersonalCase;
 
   EmployeeOperationList(
       {@required this.PersonalCase,
@@ -36,10 +36,10 @@ class _EmployeeOperationListState extends State<EmployeeOperationList> {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           HeaderColumn(children: <Widget>[
-            HeaderLable(widget.PersonalCase.GetLable(ResourceKey.Operation)),
-            HeaderLable(widget.PersonalCase.GetLable(ResourceKey.Operator)),
-            HeaderLable(widget.PersonalCase.GetLable(ResourceKey.CreateDate)),
-            HeaderLable(widget.PersonalCase.GetLable(ResourceKey.Del)),
+            HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.Operation)),
+            HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.Operator)),
+            HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.CreateDate)),
+            HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.Del)),
           ]),
           SingleChildScrollView(
               scrollDirection: Axis.vertical,
@@ -47,20 +47,20 @@ class _EmployeeOperationListState extends State<EmployeeOperationList> {
                   scrollDirection: Axis.vertical,
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: widget.Items.length,
+                  itemCount: widget.Items!.length,
                   itemBuilder: (context, int i) {
                     return InkWell(
                       onTap: () async {
                         if (widget.OnClickItems != null)
-                          await widget.OnClickItems(i);
+                          await widget.OnClickItems!(i);
                         setState(() {
                           SelectedIndex = i;
                         });
                       },
                       child: TableColumn(children: [
-                        TableLable(widget.Items[i].Operation_Name),
-                        TableLable(widget.Items[i].Inline_Employee_Name),
-                        LableDateTime(widget.Items[i].Create_Date),
+                        TableLable(widget.Items![i].Operation_Name),
+                        TableLable(widget.Items![i].Inline_Employee_Name),
+                        LableDateTime(widget.Items![i].Create_Date),
              
 
                         Container(
