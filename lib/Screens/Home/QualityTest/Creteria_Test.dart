@@ -26,7 +26,8 @@ class _Criteria_TestState extends State<Criteria_Test> {
 
     IsUserApproved = await PersonalCase.SelectedTest.IsUserApprovedBefore(
         Employee_Id: PersonalCase.GetCurrentUser().Id);
-    if (Critiera != null) WaitSYC = (Critiera.WaitTimeSNY ?? 0 / 100).toInt();
+    if (Critiera != null)
+      WaitSYC = ((Critiera.WaitTimeSNY ?? 0) / 100).toInt() + 1;
 
     var Item = new QualityDept_ModelOrder_TrackingBLL();
     Item.Employee_Id = PersonalCase.GetCurrentUser().Id;
