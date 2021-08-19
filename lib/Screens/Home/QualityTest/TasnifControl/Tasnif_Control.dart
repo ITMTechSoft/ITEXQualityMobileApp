@@ -16,7 +16,7 @@ class Tasnif_Control extends StatefulWidget {
 class _Tasnif_ControlState extends State<Tasnif_Control> {
   int IntiteStatus = 0;
 
-  Future<List<QualityDept_ModelOrder_TrackingBLL>> LoadingOpenPage(
+  Future<List<QualityDept_ModelOrder_TrackingBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<QualityDept_ModelOrder_TrackingBLL> Criteria =
         await QualityDept_ModelOrder_TrackingBLL
@@ -34,7 +34,7 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
   }
 
   Widget GetTansifControlList(
-      context, PersonalProvider PersonalCase, snapshot) {
+    context, PersonalCase, snapshot) {
     return ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
@@ -62,7 +62,7 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
     return Scaffold(
-      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
           context:  context
@@ -71,10 +71,10 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
         ListTile(
           title: HeaderTitle(
 
-                  PersonalCase.SelectedOrder.Order_Number,
+                  PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header,
               FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString(),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??'',
               style:TextStyle(fontSize:ArgonSize.Header6)),
           dense: true,
           selected: true,
@@ -109,7 +109,7 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
                                     MaterialPageRoute(
                                         builder: (context) => Tasnif_NewSample(
                                             DeptModelOrder_QualityTest_Id:
-                                                PersonalCase.SelectedTest.Id)));
+                                                PersonalCase.SelectedTest!.Id)));
                                 setState(() {
                                   print(value);
                                 });

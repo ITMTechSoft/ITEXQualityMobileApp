@@ -41,7 +41,7 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
     final CaseProvider = Provider.of<SubCaseProvider>(context);
 
     bool IsSelectedItem = CaseProvider.SelectedPastal != null
-        ? (CaseProvider.SelectedPastal.Id == widget.Card_Item.Id)
+        ? (CaseProvider.SelectedPastal!.Id == widget.Card_Item.Id)
         : false;
     return Card(
       shadowColor: ArgonColors.black,
@@ -199,9 +199,9 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
 }
 
 class Pastal_NewSample extends StatefulWidget {
-  Pastal_Cutting_PartiBLL Card_Item ;
+  Pastal_Cutting_PartiBLL? Card_Item ;
 
-  Pastal_NewSample({Key? key,required  this.Card_Item}) : super(key: key);
+  Pastal_NewSample({Key? key,  this.Card_Item}) : super(key: key);
 
   @override
   _Pastal_NewSampleState createState() => _Pastal_NewSampleState();
@@ -213,8 +213,8 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
   // Pastal_Cutting_PartiBLL Card_Item = new Pastal_Cutting_PartiBLL();
   final _formKey = GlobalKey<FormState>();
 
-  String ErrorMesage;
-  bool _isLoading;
+  String? ErrorMesage;
+  bool? _isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -223,13 +223,13 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
     widget.Card_Item =widget.Card_Item ==null? new   Pastal_Cutting_PartiBLL() :widget.Card_Item ;
 
     final TextEditingController Fabric_Type = new TextEditingController(
-        text: widget.Card_Item != null ? widget.Card_Item.Fabric_Type : '');
+        text: widget.Card_Item != null ? widget.Card_Item!.Fabric_Type : '');
     final TextEditingController FabricRestingTime = new TextEditingController(
         text:
-        widget.Card_Item != null ? widget.Card_Item.FabricRestingTime : '');
+        widget.Card_Item != null ? widget.Card_Item!.FabricRestingTime : '');
     return Scaffold(
         appBar: DetailBar(
-            Title: PersonalCase.SelectedTest.Test_Name,
+            Title: PersonalCase.SelectedTest!.Test_Name,
             PersonalCase: PersonalCase,
             OnTap: () {
               Navigator.pop(context);
@@ -252,21 +252,21 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                   textSize: ArgonSize.Header4,
                   width: getScreenWidth() * 0.5,
                   height: ArgonSize.HeightSmall1,
-                  value: PersonalCase.GetLable(widget.Card_Item.CuttingDate!= null
+                  value: PersonalCase.GetLable(widget.Card_Item!.CuttingDate!= null
                       ? ResourceKey.Edit
                       : ResourceKey.AddNew),
                   backGroundColor: ArgonColors.primary,
                   function: () async {
-                    if (_formKey.currentState.validate()) {
-                      widget.Card_Item.Fabric_Type = Fabric_Type.text;
-                      widget.Card_Item.FabricRestingTime = FabricRestingTime.text;
-                      widget. Card_Item.Order_id = PersonalCase.SelectedOrder.Order_Id;
-                      widget.Card_Item.Create_Employee_Id =
+                    if (_formKey.currentState!.validate()) {
+                      widget.Card_Item!.Fabric_Type = Fabric_Type.text;
+                      widget.Card_Item!.FabricRestingTime = FabricRestingTime.text;
+                      widget. Card_Item!.Order_id = PersonalCase.SelectedOrder!.Order_Id;
+                      widget.Card_Item!.Create_Employee_Id =
                           PersonalCase.GetCurrentUser().Id;
-                      widget. Card_Item.CuttingDate=   widget. Card_Item.CuttingDate!=null? widget.Card_Item.CuttingDate:DateTime.now();
+                      widget. Card_Item!.CuttingDate=   widget. Card_Item!.CuttingDate!=null? widget.Card_Item!.CuttingDate:DateTime.now();
 
-                      widget.  Card_Item.Pastel_Laying= widget.Card_Item.Pastel_Laying!=null? widget.Card_Item.Pastel_Laying:DateTime.now();
-                      bool CheckItem = await widget.Card_Item.SaveEntity();
+                      widget.  Card_Item!.Pastel_Laying= widget.Card_Item!.Pastel_Laying!=null? widget.Card_Item!.Pastel_Laying:DateTime.now();
+                      bool CheckItem = await widget.Card_Item!.SaveEntity();
                       if (CheckItem) {
                         CaseProvider.ReloadAction();
                         Navigator.pop(context, "Okay");
@@ -359,14 +359,14 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                               Expanded(
                                 flex: 2,
                                 child: DateTimePicker(
-                                    SelectedDate: widget.Card_Item.Pastel_Laying != null
-                                        ? widget.Card_Item.Pastel_Laying
+                                    SelectedDate: widget.Card_Item!.Pastel_Laying != null
+                                        ? widget.Card_Item!.Pastel_Laying
                                         : DateTime.now(),
 
                                 //  SelectedDate:  DateTime.now(),
                                     SelectedDateFunction:
                                         (DateTime SelectedTime) {
-                                    widget.Card_Item.Pastel_Laying = SelectedTime;
+                                    widget.Card_Item!.Pastel_Laying = SelectedTime;
                                     },
                                     dateMode: DateMode.normal,
                                     dateChoices: DateChoices.dateAndTime),
@@ -386,14 +386,14 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                               Expanded(
                                 flex: 2,
                                 child: DateTimePicker(
-                                    SelectedDate: widget.Card_Item.CuttingDate!= null
-                                        ? widget.Card_Item.CuttingDate
+                                    SelectedDate: widget.Card_Item!.CuttingDate!= null
+                                        ? widget.Card_Item!.CuttingDate
                                         : DateTime.now(),
                                   // SelectedDate:  DateTime.now(),
 
                                     SelectedDateFunction:
                                         (DateTime SelectedTime) {
-                                   widget.Card_Item.CuttingDate = SelectedTime ;
+                                   widget.Card_Item!.CuttingDate = SelectedTime ;
 
                                     },
                                     dateMode: DateMode.normal,

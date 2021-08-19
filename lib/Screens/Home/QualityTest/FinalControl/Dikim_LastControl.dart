@@ -15,7 +15,7 @@ class Dikim_LastControl extends StatefulWidget {
 class _Dikim_LastControlState extends State<Dikim_LastControl> {
   int IntiteStatus = 0;
 
-  Future<List<OrderSizeColorDetailsBLL>> LoadingOpenPage(
+  Future<List<OrderSizeColorDetailsBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<OrderSizeColorDetailsBLL> Critiera =
         await OrderSizeColorDetailsBLL.Get_OrderSizeColorDetails(
@@ -54,7 +54,7 @@ class _Dikim_LastControlState extends State<Dikim_LastControl> {
         ),
         SizedBox(height:ArgonSize.Padding3),
 
-        FutureBuilder(
+        FutureBuilder<List<OrderSizeColorDetailsBLL>?>(
           future: LoadingOpenPage(PersonalCase),
           builder: (context, snapshot) {
             if (snapshot.hasData) {

@@ -22,7 +22,7 @@ class _MeasureSizeSample_ListState extends State<MeasureSizeSample_List> {
   int IntiteStatus = 0;
   DateTime SelectedDate = DateTime.now();
 
-  Future<List<QualityDept_ModelOrder_TrackingBLL>> LoadingOpenPage(
+  Future<List<QualityDept_ModelOrder_TrackingBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<QualityDept_ModelOrder_TrackingBLL> Criteria =
     await QualityDept_ModelOrder_TrackingBLL
@@ -91,7 +91,7 @@ class _MeasureSizeSample_ListState extends State<MeasureSizeSample_List> {
           dense: true,
           selected: true,
         ),
-        FutureBuilder(
+        FutureBuilder<List<QualityDept_ModelOrder_TrackingBLL>?>(
           future: LoadingOpenPage(PersonalCase),
           builder: (context, snapshot) {
             if (snapshot.hasData) {

@@ -13,7 +13,7 @@ class Tasnif_Correction extends StatefulWidget {
 class _Tasnif_CorrectionState extends State<Tasnif_Correction> {
   int IntiteStatus = 0;
 
-  Future<List<User_QualityTracking_DetailBLL>> LoadingOpenPage(
+  Future<List<User_QualityTracking_DetailBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<User_QualityTracking_DetailBLL> Criteria =
     await User_QualityTracking_DetailBLL

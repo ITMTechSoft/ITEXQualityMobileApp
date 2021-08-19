@@ -23,7 +23,7 @@ class _OrderSize_MatrixState extends State<OrderSize_Matrix> {
   /// TODO : DELETE IT
   DateTime SelectedDate = DateTime.now();
 
-  Future<List<ModelOrderSizesBLL>> LoadingOpenPage(
+  Future<List<ModelOrderSizesBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<ModelOrderSizesBLL> Criteria =
     await ModelOrderSizesBLL
@@ -93,7 +93,7 @@ class _OrderSize_MatrixState extends State<OrderSize_Matrix> {
           dense: true,
           selected: true,
         ),
-        FutureBuilder(
+        FutureBuilder<List<ModelOrderSizesBLL>?>(
           future: LoadingOpenPage(PersonalCase),
           builder: (context, snapshot) {
             if (snapshot.hasData) {

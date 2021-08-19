@@ -19,7 +19,7 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
 
   String ActionMessage = "";
 
-  Future<List<OrderSizeColorDetailsBLL>> LoadingQualityTest(
+  Future<List<OrderSizeColorDetailsBLL>?> LoadingQualityTest(
       PersonalProvider PersonalCase) async {
     List<OrderSizeColorDetailsBLL> Critiera =
         await OrderSizeColorDetailsBLL.Get_OrderSizeColorDetails(

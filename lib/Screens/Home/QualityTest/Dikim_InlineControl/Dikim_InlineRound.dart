@@ -23,7 +23,7 @@ class Dikim_InlineRound extends StatefulWidget {
 class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
   int IntiteStatus = 0;
 
-  Future<List<User_QualityTracking_DetailBLL>> LoadingOpenPage(
+  Future<List<User_QualityTracking_DetailBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<User_QualityTracking_DetailBLL> Criteria =
         await User_QualityTracking_DetailBLL.Get_User_QualityTracking_Detail(
@@ -58,7 +58,7 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
           dense: true,
           selected: true,
         ),
-        FutureBuilder(
+        FutureBuilder< List<User_QualityTracking_DetailBLL>?>(
           future: LoadingOpenPage(PersonalCase),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -123,7 +123,7 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                       ],
                     ),
                     Tb_InlineRoundList(
-                      Items: snapshot.data,
+                      Items: snapshot.data!,
                       PersonalCase: PersonalCase,
                       OnClickItems: (int Index) {
                         if (snapshot.data[Index].CheckStatus ==

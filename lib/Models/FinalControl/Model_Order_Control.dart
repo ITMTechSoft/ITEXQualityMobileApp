@@ -12,20 +12,20 @@ class GroupType {
 
 class Model_Order_ControlBLL {
   //#region Properties
-  int Quality_Items_Id;
+  int? Quality_Items_Id;
   String Control_Type;
-  int OrderSizeColorDetail_Id;
-  int Order_Id;
-  int Matrix_Control_Amount;
-  int Employee_Matrix_Amount;
+  int? OrderSizeColorDetail_Id;
+  int? Order_Id;
+  int? Matrix_Control_Amount;
+  int? Employee_Matrix_Amount;
   int QualityDept_ModelOrder_Tracking_Id;
 
   //#endregion
 
   Model_Order_ControlBLL(
-      {this.Control_Type,
-      this.OrderSizeColorDetail_Id,
-      this.QualityDept_ModelOrder_Tracking_Id}) {}
+      { required this.Control_Type,
+         this.OrderSizeColorDetail_Id,
+        required  this.QualityDept_ModelOrder_Tracking_Id}) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {

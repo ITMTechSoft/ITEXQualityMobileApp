@@ -13,7 +13,7 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
   @override
   int IntiteStatus = 0;
 
-  Future<List<DeptModOrderQuality_ItemsBLL>> LoadingCutttingControl(
+  Future<List<DeptModOrderQuality_ItemsBLL>?> LoadingCutttingControl(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
     List<DeptModOrderQuality_ItemsBLL> Criteria =
         await DeptModOrderQuality_ItemsBLL.Get_DeptModOrderQuality_Items(

@@ -16,15 +16,15 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
   final TextEditingController CuttingAmountController =
       new TextEditingController();
 
-  Future<List<DeptModOrderQuality_ItemsBLL>> LoadingOpenPage(
+  Future<List<DeptModOrderQuality_ItemsBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<DeptModOrderQuality_ItemsBLL> Criteria =
         await DeptModOrderQuality_ItemsBLL.Get_CuttingPastalQuality_Items(
-            PersonalCase.GetCurrentUser().Id, PersonalCase.SelectedTest.Id);
+            PersonalCase.GetCurrentUser().Id, PersonalCase.SelectedTest!.Id);
     if (Criteria != null) {
       PersonalCase.SelectedTracking = await QualityDept_ModelOrder_TrackingBLL
           .GetOrCreate_QualityDept_ModelOrder_Tracking(
-              PersonalCase.GetCurrentUser().Id, PersonalCase.SelectedTest.Id);
+              PersonalCase.GetCurrentUser().Id, PersonalCase.SelectedTest!.Id);
       IntiteStatus = 1;
       return Criteria;
     } else {
@@ -43,7 +43,7 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
           return CuttingPastalControl(PersonalCase, snapshot.data[i], () async {
             var Item = new User_QualityTracking_DetailBLL();
             Item.QualityDept_ModelOrder_Tracking_Id =
-                PersonalCase.SelectedTracking.Id;
+                PersonalCase.SelectedTracking!.Id;
             Item.Xaxis_QualityItem_Id = snapshot.data[i].Id;
             Item.CheckStatus = 1;
             Item.Create_Date = DateTime.now();
@@ -54,7 +54,7 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
             CuttingAmountController.text = "";
             var Item = new User_QualityTracking_DetailBLL();
             Item.QualityDept_ModelOrder_Tracking_Id =
-                PersonalCase.SelectedTracking.Id;
+                PersonalCase.SelectedTracking!.Id;
             Item.Xaxis_QualityItem_Id = snapshot.data[i].Id;
             Item.CheckStatus = 0;
             Item.Create_Date = DateTime.now();
@@ -69,7 +69,7 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
           }, () async {
             var Item = new User_QualityTracking_DetailBLL();
             Item.QualityDept_ModelOrder_Tracking_Id =
-                PersonalCase.SelectedTracking.Id;
+                PersonalCase.SelectedTracking!.Id;
             Item.Xaxis_QualityItem_Id = snapshot.data[i].Id;
             await QualityDept_ModelOrder_TrackingBLL
                 .CuttingPastal_ReOpenCheckItem(Item);
@@ -139,7 +139,7 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
 
     return Scaffold(
       appBar: DetailBar(
-          Title: PersonalCase.SelectedTest.Test_Name,
+          Title: PersonalCase.SelectedTest!.Test_Name??'',
           PersonalCase: PersonalCase,
           OnTap: () {
             Navigator.pop(context);
@@ -149,10 +149,10 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
         ListTile(
           title: HeaderTitle(
 
-                  PersonalCase.SelectedOrder.Order_Number,
+                  PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header,
               FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString(),style:TextStyle(fontSize:ArgonSize.Header6)),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??'',style:TextStyle(fontSize:ArgonSize.Header6)),
           dense: true,
           selected: true,
         ),

@@ -16,11 +16,11 @@ class _Accessory_ControlState extends State<Accessory_Control> {
   int IntiteStatus = 0;
   int AssignAmount = 1;
 
-  Future<List<Accessory_ModelOrderBLL>> LoadingOpenPage(
+  Future<List<Accessory_ModelOrderBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<Accessory_ModelOrderBLL> Criteria =
         await Accessory_ModelOrderBLL.Get_Accessory_ModelOrder(
-            DeptModelOrder_QualityTest_Id: PersonalCase.SelectedTest.Id);
+            DeptModelOrder_QualityTest_Id: PersonalCase.SelectedTest!.Id);
 
     if (Criteria != null) {
       IntiteStatus = 1;
@@ -66,7 +66,7 @@ class _Accessory_ControlState extends State<Accessory_Control> {
           dense: true,
           selected: true,
         ),
-        FutureBuilder(
+        FutureBuilder<List<Accessory_ModelOrderBLL>?>(
           future: LoadingOpenPage(PersonalCase),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -79,7 +79,7 @@ class _Accessory_ControlState extends State<Accessory_Control> {
                     HeaderLable(
                         PersonalCase.GetLable(ResourceKey.Checks_Quantity)),
                   ],
-                  Items: snapshot.data,
+                  Items: snapshot.data!,
                   OnClickItems: (int Index) {
                     showDialog(
                         context: context,

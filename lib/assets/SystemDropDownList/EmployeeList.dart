@@ -7,11 +7,12 @@ import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 class Employee_List extends StatefulWidget {
   List<EmployeesBLL> Items;
-  Function(dynamic) OnClickItems;
+  Function(EmployeesBLL) OnClickItems;
   PersonalProvider PersonalCase;
 
   Employee_List(
-      {required this.PersonalCase,
+      {
+      required this.PersonalCase,
       required this.Items,
       required this.OnClickItems});
 
@@ -23,7 +24,7 @@ class _Employee_ListState extends State<Employee_List> {
   final TextEditingController SearchController = new TextEditingController();
   int SelectedItem = -1;
 
-  Widget FilterItem(Function onSearchTextChanged(String)) {
+  Widget FilterItem(Function onSearchTextChanged()) {
     return Container(
       height: ArgonSize.WidthMedium,
       child: new Card(
@@ -46,7 +47,7 @@ class _Employee_ListState extends State<Employee_List> {
                   controller: SearchController,
                   decoration: new InputDecoration(
                       hintText:
-                          widget.PersonalCase?.GetLable(ResourceKey.Search),
+                          widget.PersonalCase.GetLable(ResourceKey.Search),
                       border: InputBorder.none),
                   onChanged: onSearchTextChanged,
                 ),

@@ -60,15 +60,15 @@ Container(),
 
 class QualityTestBar extends StatelessWidget {
   String Title;
-  Function OnClose;
+  Function() OnClose;
 
-  QualityTestBar({Key? key,required String Title, required Function OnClose}) : super(key: key);
+  QualityTestBar({Key? key,required String Title, required  VoidCallback OnClose}) : super(key: key);
 
   @override
   AppBar build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     new AppBar(
-      title: new Text(Title ?? PersonalCase.SelectedTest.Test_Name),
+      title: new Text(Title ),
       actions: <Widget>[
         TextButton.icon(
             onPressed: OnClose,

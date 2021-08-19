@@ -15,7 +15,7 @@ class Cutting_Control extends StatefulWidget {
 class _Cutting_ControlState extends State<Cutting_Control> {
   int IntiteStatus = 0;
 
-  Future<List<Pastal_Cutting_PartiBLL>> LoadingCutttingControl(
+  Future<List<Pastal_Cutting_PartiBLL>?> LoadingCutttingControl(
       PersonalProvider PersonalCase) async {
     List<Pastal_Cutting_PartiBLL> Criteria =
         await Pastal_Cutting_PartiBLL.Get_Pastal_Cutting_Parti(
@@ -46,11 +46,11 @@ class _Cutting_ControlState extends State<Cutting_Control> {
         ListTile(
           title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header, FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??''),
           dense: true,
           selected: true,
         ),
-        FutureBuilder(
+        FutureBuilder<List<Pastal_Cutting_PartiBLL>?>(
           future: LoadingCutttingControl(PersonalCase),
           builder: (context, snapshot) {
             if (snapshot.hasData) {

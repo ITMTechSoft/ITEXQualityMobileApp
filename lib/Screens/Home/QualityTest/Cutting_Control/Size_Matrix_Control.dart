@@ -17,7 +17,7 @@ class Size_Matrix_Control extends StatefulWidget {
 class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
   int IntiteStatus = 0;
 
-  Future<List<ModelOrderSizesBLL>> LoadingOpenPage(
+  Future<List<ModelOrderSizesBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<ModelOrderSizesBLL> Criteria =
         await ModelOrderSizesBLL.Get_ModelOrderSizes_CuttingControl(
@@ -52,7 +52,7 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
           dense: true,
           selected: true,
         ),
-        FutureBuilder(
+        FutureBuilder<List<ModelOrderSizesBLL>?>(
           future: LoadingOpenPage(PersonalCase),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -81,7 +81,7 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
                                 builder: (BuildContext context) =>
                                     Cutting_Kontrol_List()));
                       },
-                      Items: snapshot.data,
+                      Items: snapshot.data!,
                       Headers: <Widget>[
                         HeaderLable(PersonalCase.GetLable(ResourceKey.SizeName),
                             Flex: 1),

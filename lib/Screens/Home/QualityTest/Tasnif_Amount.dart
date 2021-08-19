@@ -19,7 +19,7 @@ class _Tasnif_AmountState extends State<Tasnif_Amount> {
 
   String ActionMessage = "";
 
-  Future<List<OrderSizeColorDetailsBLL>> LoadingOpenPage(
+  Future<List<OrderSizeColorDetailsBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<OrderSizeColorDetailsBLL> Criteria =
         await OrderSizeColorDetailsBLL.Get_OrderSizeColorDetails(

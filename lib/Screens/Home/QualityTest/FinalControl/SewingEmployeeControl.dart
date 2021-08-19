@@ -21,7 +21,7 @@ class SewingEmployeeControl extends StatefulWidget {
   Quality_ItemsBLL QualityItem;
   String HeaderName;
 
-  SewingEmployeeControl({requried this.ParentReCalc,required this.QualityItem,required this.HeaderName});
+  SewingEmployeeControl({required this.ParentReCalc,required this.QualityItem,required this.HeaderName});
 
   @override
   State<SewingEmployeeControl> createState() => _SewingEmployeeControlState();
@@ -51,7 +51,7 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
     return false;
   }
 
-  Future<List<User_QualityTracking_DetailBLL>> GetSelectedOperationOperator(
+  Future<List<User_QualityTracking_DetailBLL>?> GetSelectedOperationOperator(
       SubCaseProvider CaseProvider) async {
     List<User_QualityTracking_DetailBLL> Critiera =
     await User_QualityTracking_DetailBLL.Get_User_QualityTracking_Detail(
@@ -152,7 +152,7 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
           );
       },
     )
-        : FutureBuilder(
+        : FutureBuilder<List<User_QualityTracking_DetailBLL>?>(
       future: GetSelectedOperationOperator(CaseProvider),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -234,7 +234,7 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
       )
     );
     return Scaffold(
-      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
           context:  context
@@ -246,10 +246,10 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
 
               children:[
               ListTile(
-                title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+                title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
                     color: ArgonColors.header, FontSize: ArgonSize.Header2),
                 subtitle:
-                Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+                Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??''),
                 dense: true,
                 selected: true,
               ),

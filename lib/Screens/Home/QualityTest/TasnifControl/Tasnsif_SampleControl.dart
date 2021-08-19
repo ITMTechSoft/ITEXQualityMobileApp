@@ -30,28 +30,14 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
   DeptModOrderQuality_ItemsBLL YAxias = new DeptModOrderQuality_ItemsBLL();
 
 
-  List<DeptModOrderQuality_ItemsBLL> XAxsiasItems;
-  List<DeptModOrderQuality_ItemsBLL> YAxsiasItems;
+  List<DeptModOrderQuality_ItemsBLL>? XAxsiasItems;
+  List<DeptModOrderQuality_ItemsBLL>? YAxsiasItems;
 
-  /* Future<List<QualityDept_ModelOrder_TrackingBLL>> LoadingOpenPage(
-      PersonalProvider PersonalCase) async {
-    List<QualityDept_ModelOrder_TrackingBLL> Criteria =
-    await QualityDept_ModelOrder_TrackingBLL.Get_QualityDept_ModelOrder_TrackingBLL(
-        PersonalCase.SelectedOrder.Order_Id);
-
-    if (Criteria != null) {
-      IntiteStatus = 1;
-      return Criteria;
-    } else {
-      IntiteStatus = -1;
-    }
-    return null;
-  }*/
 
   LoadingOpenPage(PersonalProvider PersonalCase) async {
     List<DeptModOrderQuality_ItemsBLL> Criteria =
         await DeptModOrderQuality_ItemsBLL.Get_DeptModOrderQualityTest_Items(
-            PersonalCase.SelectedTest.Id);
+            PersonalCase.SelectedTest!.Id);
 
     if (Criteria != null) {
       IntiteStatus = 1;
@@ -68,7 +54,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
     return null;
   }
 
- Future<bool> RegisterSampeAmount(PersonalCase, bool IsCorrect) async {
+ Future RegisterSampeAmount(PersonalCase, bool IsCorrect) async {
     int ActionStatus = 0;
     if (XAxias.Id == null) ActionStatus = 1;
 
@@ -107,11 +93,8 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
           });
       });
 
-      // final snackBar = SnackBar(
-      //     content: Text(IsCorrect?PersonalCase.GetLable(ResourceKey.Add):PersonalCase.GetLable(ResourceKey.Delete)));
-      //
-      // ScaffoldMessenger.of(context)
-      //     .showSnackBar(snackBar);
+
+
     } else {
       AlertPopupDialog(
           context,
@@ -120,6 +103,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
           ActionLable: PersonalCase.GetLable(ResourceKey.Okay));
 
     }
+
   }
 
   Widget HeaderPage(PersonalCase) => ListTile(
@@ -154,7 +138,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 
             Expanded(
                 flex: 2,
-                child: LableTitle(PersonalCase.SelectedOrder.Model_Name,
+                child: LableTitle(PersonalCase.SelectedOrder!.Model_Name,
                     color: ArgonColors.text)),
           ],
         ),
@@ -182,7 +166,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 
               Expanded(
                   flex: 2,
-                  child: LableTitle(PersonalCase.SelectedOrder.Model_Name,
+                  child: LableTitle(PersonalCase.SelectedOrder!.Model_Name??'',
                       color: ArgonColors.text)),
             ],
           ),
@@ -198,12 +182,12 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
               Expanded(
                   flex: 2,
                   child: LableTitle(
-                      (PersonalCase.SelectedTracking.Sample_Amount ?? 0)
+                      (PersonalCase.SelectedTracking!.Sample_Amount ?? 0)
                           .toString(),
                       color: ArgonColors.text)),
               Expanded(
                   flex: 2,
-                  child: LableTitle(PersonalCase.SelectedTracking.Fabric_TopNo,
+                  child: LableTitle(PersonalCase.SelectedTracking!.Fabric_TopNo,
                       color: ArgonColors.text)),
             ],
           ),
@@ -218,11 +202,11 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                       '${PersonalCase.GetLable(ResourceKey.ColorName)}')),
               Expanded(
                   flex: 2,
-                  child: LableTitle(PersonalCase.SelectedTracking.SizeName,
+                  child: LableTitle(PersonalCase.SelectedTracking!.SizeName,
                       color: ArgonColors.text)),
               Expanded(
                   flex: 2,
-                  child: LableTitle(PersonalCase.SelectedTracking.ColorName,
+                  child: LableTitle(PersonalCase.SelectedTracking!.ColorName,
                       color: ArgonColors.text)),
             ],
           ),
@@ -238,13 +222,13 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
               Expanded(
                   flex: 2,
                   child: LableTitle(
-                      (PersonalCase.SelectedTracking.SizeColor_QTY ?? 0)
+                      (PersonalCase.SelectedTracking!.SizeColor_QTY ?? 0)
                           .toString(),
                       color: ArgonColors.text)),
               Expanded(
                   flex: 2,
                   child: LableTitle(
-                      (PersonalCase.SelectedTracking.OrderSizeColor_QTY ?? 0)
+                      (PersonalCase.SelectedTracking!.OrderSizeColor_QTY ?? 0)
                           .toString(),
                       color: ArgonColors.text)),
             ],
@@ -262,7 +246,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
             ExpandedLableTitle(PersonalCase.GetLable(ResourceKey.ErrorGroup),
                 IsCenter: true ,FontSize:ArgonSize.Header4),
             ExpandedLableTitle(
-                PersonalCase.SelectedTracking.Group_Name ??
+                PersonalCase.SelectedTracking!.Group_Name ??
                     PersonalCase.GetLable(ResourceKey.ALL),
                 color: ArgonColors.text,
                 IsCenter: true,
@@ -282,7 +266,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 primary: false,
-                itemCount: XAxsiasItems.length,
+                itemCount: XAxsiasItems!.length,
                 itemBuilder: (context, int i) {
                   return QualityAxisItem(XAxsiasItems[i],
                       IsSeleted: (XAxias.Id == XAxsiasItems[i].Id), OnTap: () {
@@ -299,7 +283,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 primary: false,
-                itemCount: YAxsiasItems.length,
+                itemCount: YAxsiasItems!.length,
                 itemBuilder: (context, int i) {
                   return QualityAxisItem(YAxsiasItems[i],
                       IsSeleted: YAxsiasItems[i].Id == YAxias.Id, OnTap: () {
@@ -323,17 +307,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
             Expanded(
               flex:2,
               child:
-              // IconInsideCircle(
-              //     icon: FontAwesomeIcons.plus,
-              //     backGroundColor: ArgonColors.primary,
-              //     color: Colors.white,
-              //     iconSize: ArgonSize.IconSize,
-              //     size: ArgonSize.IconSize,
-              //     function:
-              //     () async {
-              //       await RegisterSampeAmount(PersonalCase, true);
-              //
-              //     }),
+
 
               CircularIconWithNumber(
                   icon: FontAwesomeIcons.plus,
@@ -392,7 +366,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                 bubbleWidth: ArgonSize.WidthSmall/1.5,
                 bubbleText: deleteNumber.toString(),
                 bubbleTextSize :ArgonSize.Header7 ,
-                bubbleBgColor:Colors.red[900],
+                bubbleBgColor:Colors.red[900]!,
                 function: () async {
             await RegisterSampeAmount(PersonalCase, false);
 
@@ -425,7 +399,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 
     return Scaffold(
       appBar: DetailBar(
-          Title: PersonalCase.SelectedTest.Test_Name,
+          Title: PersonalCase.SelectedTest!.Test_Name??'',
           PersonalCase: PersonalCase,
           OnTap: () {
             Navigator.pop(context);

@@ -22,7 +22,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
   int IntiteStatus = 0;
   DateTime SelectedDate = DateTime.now();
 
-  Future<List<QualityDept_ModelOrder_TrackingBLL>> LoadingOpenPage(
+  Future<List<QualityDept_ModelOrder_TrackingBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<QualityDept_ModelOrder_TrackingBLL> Criteria =
         await QualityDept_ModelOrder_TrackingBLL
@@ -54,7 +54,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
       try {
         var Tracking = new QualityDept_ModelOrder_TrackingBLL();
         Tracking.Employee_Id = PersonalCase.GetCurrentUser().Id;
-        Tracking.DeptModelOrder_QualityTest_Id = PersonalCase.SelectedTest.Id;
+        Tracking.DeptModelOrder_QualityTest_Id = PersonalCase.SelectedTest!.Id;
         Tracking.Status = DikimInlineStatus.Open.index;
         Tracking.StartDate = DateTime.now();
         await Tracking.Generate_DikimInline_Tracking();
@@ -92,7 +92,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
           dense: true,
           selected: true,
         ),
-        FutureBuilder(
+        FutureBuilder<List<QualityDept_ModelOrder_TrackingBLL>?>(
           future: LoadingOpenPage(PersonalCase),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -158,7 +158,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                     SizedBox(height:ArgonSize.Padding3),
                     Tb_InlineDikimList(
                       OnClickItems: (int Index) {
-                        if (snapshot.data[Index].Status ==
+                        if ((snapshot.data as  dynamic)[Index].Status ==
                             DikimInlineStatus.Open.index)
                           Navigator.push(
                               context,
@@ -166,7 +166,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                                   builder: (context) => Dikim_InlineRound(
                                       RoundItem: snapshot.data[Index])));
                       },
-                      Items: snapshot.data,
+                      Items: snapshot.data!,
                       Headers: <Widget>[
                         HeaderLable(PersonalCase.GetLable(ResourceKey.Id),
                             Flex: 1),

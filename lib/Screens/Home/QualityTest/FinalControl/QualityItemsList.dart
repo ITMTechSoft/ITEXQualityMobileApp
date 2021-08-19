@@ -29,7 +29,7 @@ class _QualityItemsListState extends State<QualityItemsList> {
   bool _KeepPage = false;
   bool _IsDeletedVal = false;
 
-  Future<List<Quality_ItemsBLL>> LoadingOpenPage(
+  Future<List<Quality_ItemsBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
     List<Quality_ItemsBLL> Critiera =
         await Quality_ItemsBLL.Get_Quality_Items_WithValue(widget.GroupType,

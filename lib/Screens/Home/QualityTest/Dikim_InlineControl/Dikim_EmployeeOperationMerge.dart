@@ -14,7 +14,7 @@ import 'package:itex_soft_qualityapp/assets/SystemDropDownList/OperationList.dar
 class Dikim_EmployeeOperationMerge extends StatefulWidget {
   QualityDept_ModelOrder_TrackingBLL RoundItem;
 
-  Dikim_EmployeeOperationMerge({this.RoundItem});
+  Dikim_EmployeeOperationMerge({required this.RoundItem});
 
   @override
   _Dikim_EmployeeOperationMergeState createState() =>
@@ -24,14 +24,14 @@ class Dikim_EmployeeOperationMerge extends StatefulWidget {
 class _Dikim_EmployeeOperationMergeState
     extends State<Dikim_EmployeeOperationMerge> {
   int IntiteStatus = 0;
-  List<EmployeesBLL> OperatorList;
-  List<OperationBLL> OperationList;
-  EmployeesBLL SelectedEmployee;
-  OperationBLL SelectedOperation;
+  List<EmployeesBLL>? OperatorList;
+  List<OperationBLL>? OperationList;
+  EmployeesBLL? SelectedEmployee;
+  OperationBLL? SelectedOperation;
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     OperationList =
-        await OperationBLL.Get_Operation(PersonalCase.SelectedTest.Id);
+        await OperationBLL.Get_Operation(PersonalCase.SelectedTest!.Id);
     OperatorList = await EmployeesBLL.Get_Employees();
 
     if (OperationList != null && OperatorList != null) {
@@ -48,7 +48,7 @@ class _Dikim_EmployeeOperationMergeState
     final PersonalCase = Provider.of<PersonalProvider>(context);
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
-      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
           context:  context
@@ -56,12 +56,11 @@ class _Dikim_EmployeeOperationMergeState
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(
-              PersonalCase.SelectedTest.Test_Name +
-                  ": " +
-                  PersonalCase.SelectedOrder.Order_Number,
+
+                  PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header,
               FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??''),
           dense: true,
           selected: true,
         ),
@@ -76,15 +75,15 @@ class _Dikim_EmployeeOperationMergeState
                       Expanded(
                           child: Employee_List(
                         PersonalCase: PersonalCase,
-                        Items: OperatorList,
-                        OnClickItems: (EmployeesBLL SelectedItem) {
+                        Items: OperatorList!,
+                        OnClickItems:  (EmployeesBLL SelectedItem) {
                           SelectedEmployee = SelectedItem;
                         },
                       )),
                       Expanded(
                           child: Operation_List(
                         PersonalCase: PersonalCase,
-                        Items: OperationList,
+                        Items: OperationList!,
                         OnClickItems: (OperationBLL SelectedItem) {
                           SelectedOperation = SelectedItem;
                         },
@@ -104,8 +103,8 @@ class _Dikim_EmployeeOperationMergeState
                               widget.RoundItem.Id;
                           UserQuality.Create_Date = DateTime.now();
                           UserQuality.Operation_Id =
-                              SelectedOperation.Operation_Id;
-                          UserQuality.Inline_Employee_Id = SelectedEmployee.Id;
+                              SelectedOperation!.Operation_Id;
+                          UserQuality.Inline_Employee_Id = SelectedEmployee!.Id;
                           UserQuality.CheckStatus =
                               InlineOperatorStatus.Pending;
 

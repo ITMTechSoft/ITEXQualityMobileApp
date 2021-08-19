@@ -14,7 +14,7 @@ class QualityTestList extends StatefulWidget {
 
 class _QualityTestListState extends State<QualityTestList> {
   int IntiteStatus = 0;
-  bool IsUserApproved ;
+  bool? IsUserApproved ;
 
   Future<List<DepartmentModelOrder_QualityTestBLL>> LoadEmployeeOrders(
       PersonalProvider PersonalCase) async {
@@ -41,7 +41,7 @@ class _QualityTestListState extends State<QualityTestList> {
     if (Critiera.length > 0 && DataList[Index].QualityTest_Id != 1) {
       IsUserApproved = await Critiera.first
           .IsUserApprovedBefore(Employee_Id: PersonalCase.GetCurrentUser().Id);
-      if (IsUserApproved)
+      if (IsUserApproved!)
        {
          PersonalCase.SelectedTest = DataList[Index];
          MandatoryCritieraAction(PersonalCase.SelectedTest!);
@@ -143,7 +143,7 @@ class _QualityTestListState extends State<QualityTestList> {
                             color: ArgonColors.header,
                             FontSize: ArgonSize.Header1),
                         subtitle: Text(
-                            PersonalCase.SelectedOrder.Model_Name.toString(),
+                            PersonalCase.SelectedOrder!.Model_Name.toString()??'',
                             style: TextStyle(fontSize: ArgonSize.Header6)),
                         dense: true,
                         selected: true,

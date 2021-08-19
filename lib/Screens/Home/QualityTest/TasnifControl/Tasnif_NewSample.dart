@@ -12,9 +12,9 @@ import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 
 class Tasnif_NewSample extends StatefulWidget {
   int DeptModelOrder_QualityTest_Id;
-  List<GroupsBLL> TansifGroup;
+  List<GroupsBLL>? TansifGroup;
 
-  Tasnif_NewSample({this.DeptModelOrder_QualityTest_Id});
+  Tasnif_NewSample({required this.DeptModelOrder_QualityTest_Id});
 
   @override
   _Tasnif_NewSampleState createState() => _Tasnif_NewSampleState();
@@ -62,11 +62,11 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
     );
   }
 
-  Future<List<OrderSizeColorDetailsBLL>> LoadingOpenPage(
+  Future<List<OrderSizeColorDetailsBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<OrderSizeColorDetailsBLL> Criteria =
         await OrderSizeColorDetailsBLL.Get_OrderSizeColorDetails(
-            PersonalCase.SelectedOrder.Order_Id);
+            PersonalCase.SelectedOrder!.Order_Id);
 
     if (Criteria != null) {
       IntiteStatus = 1;
@@ -83,7 +83,7 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
 
     return Scaffold(
       appBar: DetailBar(
-          Title: PersonalCase.SelectedTest.Test_Name,
+          Title: PersonalCase.SelectedTest!.Test_Name??'',
           PersonalCase: PersonalCase,
           OnTap: () {
             Navigator.pop(context);
@@ -116,19 +116,19 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
             if (CheckItem == 0) {
               var Item = QualityDept_ModelOrder_TrackingBLL();
               Item.Employee_Id = PersonalCase.GetCurrentUser().Id;
-              Item.DeptModelOrder_QualityTest_Id = PersonalCase.SelectedTest.Id;
-              Item.OrderSizeColorDetail_Id = PersonalCase.SelectedMatrix.Id;
+              Item.DeptModelOrder_QualityTest_Id = PersonalCase.SelectedTest!.Id;
+              Item.OrderSizeColorDetail_Id = PersonalCase.SelectedMatrix!.Id;
               Item.StartDate = DateTime.now();
               // Item.Sample_Amount = int.tryParse(SampleAmountController.text);
               Item.Sample_Amount = AssignAmount;
               if (SelectedItem != null)
-                Item.QualityItem_Group_Id = SelectedItem.Groups_id;
+                Item.QualityItem_Group_Id = SelectedItem!.Groups_id;
 
               Item.Fabric_TopNo = KumnasNoController.text;
               Item.Status = ControlStatus.TansifControlOpenStatus;
               PersonalCase.SelectedTracking =
                   await Item.Create_QualityDept_ModelOrder_Tracking();
-              if (PersonalCase.SelectedTracking.Id > 0)
+              if (PersonalCase.SelectedTracking!.Id > 0)
                 Navigator.pop(context, "Okay");
               else
                 AlertPopupDialog(

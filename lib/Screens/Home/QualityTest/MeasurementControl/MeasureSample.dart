@@ -25,7 +25,7 @@ class Measuer_Sample extends StatefulWidget {
 class _Measuer_SampleState extends State<Measuer_Sample> {
   int IntiteStatus = 0;
 
-  Future<List<User_QualityTracking_DetailBLL>> LoadingOpenPage(
+  Future<List<User_QualityTracking_DetailBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<User_QualityTracking_DetailBLL> Criteria =
     await User_QualityTracking_DetailBLL.Get_User_QualityTracking_Detail(
@@ -61,7 +61,7 @@ class _Measuer_SampleState extends State<Measuer_Sample> {
           dense: true,
           selected: true,
         ),
-        FutureBuilder(
+        FutureBuilder<List<User_QualityTracking_DetailBLL>?>(
           future: LoadingOpenPage(PersonalCase),
           builder: (context, snapshot) {
             if (snapshot.hasData) {

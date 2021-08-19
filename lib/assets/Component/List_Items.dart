@@ -1,12 +1,9 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:itex_soft_qualityapp/Models/DeptModOrderQuality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/Employee_Department.dart';
-import 'package:itex_soft_qualityapp/Models/Employees.dart';
 import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDepartment_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
@@ -238,7 +235,8 @@ Widget CuttingPastalControl(PersonalProvider PersonalCase, DeptModOrderQuality_I
   );
 }
 
-Widget TansifControlList() {
+Widget TansifControlList( PersonalProvider PersonalCase,
+   QualityDept_ModelOrder_TrackingBLL Item, Function() OnTap) {
   Widget FinishStatus = ClipOval(
     child: Icon(
       Icons.check_circle_rounded,
@@ -434,7 +432,7 @@ Widget TasnifCorrectionList(BuildContext context, PersonalProvider PersonalCase,
           backGroundColor:Item.Recycle_Amount != Item.Error_Amount ? ArgonColors.primary:ArgonColors.myGrey,
           function: ()async {
             Item.Recycle_Amount != Item.Error_Amount?
-              AlertPopupDialogWithAction(context,
+              AlertPopupDialogWithAction(context:context,
                   messageColor: Colors.black,
                   title: PersonalCase.GetLable(
                       ResourceKey.Recycle_Amount),
