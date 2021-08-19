@@ -138,7 +138,7 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     required this.value,
     required this.function,
-    required this.width,
+    this.width,
     required this.height,
     this.backGroundColor = ArgonColors.primary,
     this.textColor = ArgonColors.black,
@@ -149,14 +149,14 @@ class CustomButton extends StatelessWidget {
   final Function() function;
   final Color backGroundColor;
   final Color textColor;
-  final double width;
+  final double? width;
   final double height;
   final double? textSize;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width,
+      width: width??getScreenWidth()/2,
       height: height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(

@@ -14,7 +14,7 @@ import 'Dikim_InlineEmployeeOperationControl.dart';
 class Dikim_InlineRound extends StatefulWidget {
   QualityDept_ModelOrder_TrackingBLL RoundItem;
 
-  Dikim_InlineRound({this.RoundItem});
+  Dikim_InlineRound({required this.RoundItem});
 
   @override
   _Dikim_InlineRoundState createState() => _Dikim_InlineRoundState();
@@ -44,7 +44,7 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
       appBar: DetailBar(
-          Title: PersonalCase.SelectedTest.Test_Name,
+          Title: PersonalCase.SelectedTest!.Test_Name??'',
           PersonalCase: PersonalCase,
           OnTap: () {
             Navigator.pop(context);
@@ -52,9 +52,9 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
           context: context),
       body: ListView(children: [
         ListTile(
-          title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+          title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header, FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??''),
           dense: true,
           selected: true,
         ),
@@ -103,7 +103,7 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                                 PersonalCase.GetLable(ResourceKey.CloseControl),
                             backGroundColor: ArgonColors.warning,
                             function: () {
-                              AlertPopupDialogWithAction(context,
+                              AlertPopupDialogWithAction(context:context,
                                   title: PersonalCase.GetLable(
                                       ResourceKey.WarrningMessage),
                                   Children: <Widget>[

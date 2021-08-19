@@ -7,10 +7,13 @@ import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 class Employee_List extends StatefulWidget {
   List<EmployeesBLL> Items;
-  Function() OnClickItems;
+  Function(dynamic) OnClickItems;
   PersonalProvider PersonalCase;
 
-  Employee_List({required this.PersonalCase,required this.Items,required this.OnClickItems});
+  Employee_List(
+      {required this.PersonalCase,
+      required this.Items,
+      required this.OnClickItems});
 
   @override
   _Employee_ListState createState() => _Employee_ListState();
@@ -20,7 +23,7 @@ class _Employee_ListState extends State<Employee_List> {
   final TextEditingController SearchController = new TextEditingController();
   int SelectedItem = -1;
 
-  Widget FilterItem(Function onSearchTextChanged) {
+  Widget FilterItem(Function onSearchTextChanged(String)) {
     return Container(
       height: ArgonSize.WidthMedium,
       child: new Card(
@@ -31,7 +34,7 @@ class _Employee_ListState extends State<Employee_List> {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Expanded(
-              child: Icon(Icons.search,size:ArgonSize.IconSize),
+              child: Icon(Icons.search, size: ArgonSize.IconSize),
             ),
             Expanded(
                 child: TextField(
@@ -50,7 +53,7 @@ class _Employee_ListState extends State<Employee_List> {
                 flex: 3),
             Expanded(
               child: IconButton(
-                icon: new Icon(Icons.cancel,size:ArgonSize.IconSize),
+                icon: new Icon(Icons.cancel, size: ArgonSize.IconSize),
                 onPressed: () {
                   SearchController.clear();
                   onSearchTextChanged('');
@@ -69,7 +72,6 @@ class _Employee_ListState extends State<Employee_List> {
     return SingleChildScrollView(
       primary: true,
       scrollDirection: Axis.vertical,
-
       child: ListView.builder(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
@@ -97,7 +99,7 @@ class _Employee_ListState extends State<Employee_List> {
       margin: EdgeInsets.only(left: 2, top: 0, right: 2, bottom: 0),
       child: Column(
         children: [
-          HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.EmployeeList),
+          HeaderLable(widget.PersonalCase.GetLable(ResourceKey.EmployeeList),
               fontSize: ArgonSize.Header4),
           FilterItem((String Text) {
             setState(() {});

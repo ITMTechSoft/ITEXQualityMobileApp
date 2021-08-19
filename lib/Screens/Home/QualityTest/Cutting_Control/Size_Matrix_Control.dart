@@ -7,7 +7,6 @@ import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
-
 import 'Cutting_Kontrol_List.dart';
 
 class Size_Matrix_Control extends StatefulWidget {
@@ -22,7 +21,7 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
       PersonalProvider PersonalCase) async {
     List<ModelOrderSizesBLL> Criteria =
         await ModelOrderSizesBLL.Get_ModelOrderSizes_CuttingControl(
-            PersonalCase.SelectedTest.Order_Id, PersonalCase.SelectedTest.Id);
+            PersonalCase.SelectedTest!.Order_Id, PersonalCase.SelectedTest!.Id);
 
     if (Criteria != null) {
       IntiteStatus = 1;
@@ -39,7 +38,7 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
       appBar: DetailBar(
-          Title: PersonalCase.SelectedTest.Test_Name,
+          Title: PersonalCase.SelectedTest!.Test_Name??'',
           PersonalCase: PersonalCase,
           OnTap: () {
             Navigator.pop(context);
@@ -47,9 +46,9 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
           context: context),
       body: ListView(children: [
         ListTile(
-          title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+          title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header, FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??''),
           dense: true,
           selected: true,
         ),
@@ -71,11 +70,11 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
                             await QualityDept_ModelOrder_TrackingBLL
                                 .GetOrCreate_QualityDept_ModelOrder_Tracking(
                                     PersonalCase.GetCurrentUser().Id,
-                                    PersonalCase.SelectedTest.Id,
+                                    PersonalCase.SelectedTest!.Id,
                                     ModelOrderSizes_Id:
-                                        PersonalCase.SelectedSize.Id,
+                                        PersonalCase.SelectedSize!.Id,
                                     Pastal_Cutting_Parti_Id:
-                                        CaseProvider.SelectedPastal.Id);
+                                        CaseProvider.SelectedPastal!.Id);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -93,6 +92,7 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
                             PersonalCase.GetLable(ResourceKey.Error_Amount),
                             Flex: 1),
                       ],
+
                     ),
                   ],
                 ),
@@ -118,7 +118,7 @@ class Size_Matrix_List extends StatefulWidget {
   Function OnClickItems;
   List<Widget> Headers;
 
-  Size_Matrix_List({this.Headers, this.Items, this.OnClickItems});
+  Size_Matrix_List({required this.Headers, required this.Items,required this.OnClickItems});
 
   @override
   _Size_Matrix_ListState createState() => _Size_Matrix_ListState();

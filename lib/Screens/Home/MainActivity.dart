@@ -68,7 +68,7 @@ class _MainActivityState extends State<MainActivity> {
                         ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemCount: snapshot.data.length,
+                            itemCount: snapshot.data!.length,
                             itemBuilder: (context, int i) {
                               return DepartmentCard(snapshot.data[i],
                                   () {

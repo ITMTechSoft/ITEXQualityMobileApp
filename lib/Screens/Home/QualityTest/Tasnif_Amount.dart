@@ -23,7 +23,7 @@ class _Tasnif_AmountState extends State<Tasnif_Amount> {
       PersonalProvider PersonalCase) async {
     List<OrderSizeColorDetailsBLL> Criteria =
         await OrderSizeColorDetailsBLL.Get_OrderSizeColorDetails(
-            PersonalCase.SelectedOrder.Order_Id);
+            PersonalCase.SelectedOrder!.Order_Id);
 
     if (Criteria != null) {
       IntiteStatus = 1;
@@ -59,7 +59,7 @@ class _Tasnif_AmountState extends State<Tasnif_Amount> {
     );
   }
 
-  Widget RegisterTasnifAmount(BuildContext cntx, PersonalCase,
+   RegisterTasnifAmount(BuildContext cntx, PersonalCase,
       OrderSizeColorDetailsBLL Item, Function Refersh) {
     showDialog(
         context: cntx,
@@ -95,7 +95,7 @@ class _Tasnif_AmountState extends State<Tasnif_Amount> {
                     var Tasnif = new QualityDept_ModelOrder_TrackingBLL();
                     Tasnif.Id = 0;
                     Tasnif.Sample_Amount =
-                        int.tryParse(TasnifAmountController.text);
+                        int.tryParse(TasnifAmountController.text)!;
                     Tasnif.Employee_Id = PersonalCase.GetCurrentUser().Id;
                     Tasnif.OrderSizeColorDetail_Id = Item.Id;
                     Tasnif.DeptModelOrder_QualityTest_Id =
@@ -122,7 +122,7 @@ class _Tasnif_AmountState extends State<Tasnif_Amount> {
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     return Scaffold(
-      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
           context:  context
@@ -130,12 +130,11 @@ class _Tasnif_AmountState extends State<Tasnif_Amount> {
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(
-              PersonalCase.SelectedTest.Test_Name +
-                  ": " +
-                  PersonalCase.SelectedOrder.Order_Number,
+
+                  PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header,
               FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??''),
           dense: true,
           selected: true,
         ),

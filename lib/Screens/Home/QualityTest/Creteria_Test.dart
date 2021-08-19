@@ -5,7 +5,6 @@ import 'package:flutter_html/image_render.dart';
 import 'package:itex_soft_qualityapp/Models/Criteria_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
-import 'package:timer_button/timer_button.dart';
 
 class Criteria_Test extends StatefulWidget {
   @override
@@ -14,7 +13,7 @@ class Criteria_Test extends StatefulWidget {
 
 class _Criteria_TestState extends State<Criteria_Test> {
   int IntiteStatus = 0;
-  bool IsUserApproved;
+  bool IsUserApproved = false;
   int WaitSYC = 1;
 
   //PDFViewController _pdfViewController;
@@ -22,16 +21,16 @@ class _Criteria_TestState extends State<Criteria_Test> {
   Future<Criteria_ModelOrderBLL> LoginFunction(
       PersonalProvider PersonalCase) async {
     var Critiera = await Criteria_ModelOrderBLL.Get_Criteria_ModelOrder(
-        PersonalCase.SelectedTest.Id);
+        PersonalCase.SelectedTest!.Id);
 
-    IsUserApproved = await PersonalCase.SelectedTest.IsUserApprovedBefore(
+    IsUserApproved = await PersonalCase.SelectedTest!.IsUserApprovedBefore(
         Employee_Id: PersonalCase.GetCurrentUser().Id);
     if (Critiera != null)
       WaitSYC = ((Critiera.WaitTimeSNY ?? 0) / 100).toInt() + 1;
 
     var Item = new QualityDept_ModelOrder_TrackingBLL();
     Item.Employee_Id = PersonalCase.GetCurrentUser().Id;
-    Item.DeptModelOrder_QualityTest_Id = PersonalCase.SelectedTest.Id;
+    Item.DeptModelOrder_QualityTest_Id = PersonalCase.SelectedTest!.Id;
     bool IsReading = await Item.SetReadValidationAction();
 
     if (Critiera != null) {
@@ -58,10 +57,10 @@ class _Criteria_TestState extends State<Criteria_Test> {
       body: ListView(
         children: [
           ListTile(
-            title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+            title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
                 color: ArgonColors.header, FontSize: ArgonSize.Header),
             subtitle:
-                Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+                Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??''),
             dense: true,
             selected: true,
           ),
@@ -73,35 +72,13 @@ class _Criteria_TestState extends State<Criteria_Test> {
                   child: Column(
                     children: [
                       !IsUserApproved
-                          ? TimerButton(
-                              label:
-                                  PersonalCase.GetLable(ResourceKey.Validation),
-                              activeTextStyle: TextStyle(
-                                fontSize: ArgonSize.WidthSmall,
-                                color: ArgonColors.initial,
-                              ),
-                              disabledTextStyle: TextStyle(
-                                  fontSize: ArgonSize.WidthSmall,
-                                  color: ArgonColors.Title),
-                              timeOutInSeconds: WaitSYC > 0 ? WaitSYC : 1,
-                              onPressed: () async {
-                                bool IsValidated = await PersonalCase
-                                        .SelectedTest
-                                    .SetValidationAction(
-                                        Employee_Id:
-                                            PersonalCase.GetCurrentUser().Id);
-                                if (IsValidated) Navigator.pop(context);
-                              },
-                              buttonType: ButtonType.FlatButton,
-                              disabledColor: Colors.deepOrange,
-                              color: ArgonColors.success,
-                            )
+                          ? Container()
                           : Container(),
                       new Container(
                           child: new Column(
                             children: <Widget>[
                               Html(
-                                data: snapshot.data.HTML_Data ?? "",
+                                data: snapshot.data!.HTML_Data ?? "",
                               ),
                             ],
                           )),

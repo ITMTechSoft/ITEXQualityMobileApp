@@ -23,7 +23,7 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
       PersonalProvider PersonalCase) async {
     List<OrderSizeColorDetailsBLL> Critiera =
         await OrderSizeColorDetailsBLL.Get_OrderSizeColorDetails(
-            PersonalCase.SelectedOrder.Order_Id);
+            PersonalCase.SelectedOrder!.Order_Id);
 
     if (Critiera != null) {
       IntiteStatus = 1;
@@ -34,32 +34,26 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
     return null;
   }
 
-  Widget RegisterCuttingAmount(BuildContext cntx, PersonalCase,
+   RegisterCuttingAmount(BuildContext cntx, PersonalCase,
       OrderSizeColorDetailsBLL Item, Function Refersh) {
     showDialog(
         context: cntx,
         builder: (cntx) => Container(
-          child: AlertDialog(
-
+              child: AlertDialog(
                 title: Text(
-                    PersonalCase.GetLable(ResourceKey.RegisterCuttingAmount)
-                ,style:TextStyle( fontSize:ArgonSize.Header3,)),
+                    PersonalCase.GetLable(ResourceKey.RegisterCuttingAmount),
+                    style: TextStyle(
+                      fontSize: ArgonSize.Header3,
+                    )),
                 content: Container(
-                  width:getScreenWidth()*0.7,
+                  width: getScreenWidth() * 0.7,
                   child: new Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      // Standard_Input(
-                      //   prefixIcon: Icon(Icons.cut,size:ArgonSize.IconSize),
-                      //   controller: CuttingAmountController,
-                      //   Ktype: TextInputType.number,
-                      // ),
-
                       SpinBox(
                         max: 999999,
-                        textStyle: TextStyle(
-                            fontSize: ArgonSize.Header2),
+                        textStyle: TextStyle(fontSize: ArgonSize.Header2),
                         value: 1,
                         onChanged: (value) {
                           AssignAmount = value.toInt();
@@ -75,20 +69,26 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
                 ),
                 actions: <Widget>[
                   TextButton(
-                    child: Text(PersonalCase.GetLable(ResourceKey.Cancel),style:TextStyle( fontSize:ArgonSize.Header4,)),
+                    child: Text(PersonalCase.GetLable(ResourceKey.Cancel),
+                        style: TextStyle(
+                          fontSize: ArgonSize.Header4,
+                        )),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
                   ),
                   TextButton(
-                    child: Text(PersonalCase.GetLable(ResourceKey.Save),style:TextStyle( fontSize:ArgonSize.Header4,)),
+                    child: Text(PersonalCase.GetLable(ResourceKey.Save),
+                        style: TextStyle(
+                          fontSize: ArgonSize.Header4,
+                        )),
                     onPressed: () async {
                       var Cutting = new QualityDept_ModelOrder_TrackingBLL();
                       Cutting.Id = 0;
                       // Cutting.Sample_Amount =
                       //     int.tryParse(CuttingAmountController.text);
 
-                      Cutting.Sample_Amount =  AssignAmount;
+                      Cutting.Sample_Amount = AssignAmount;
                       Cutting.Employee_Id = PersonalCase.GetCurrentUser().Id;
                       Cutting.OrderSizeColorDetail_Id = Item.Id;
                       Cutting.DeptModelOrder_QualityTest_Id =
@@ -100,7 +100,7 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
                             PersonalCase.GetLable(ResourceKey.InvalidAction);
                       else {
                         //CuttingAmountController.text = "";
-                        AssignAmount = 1 ;
+                        AssignAmount = 1;
                         Navigator.of(context).pop();
                       }
                       Item.SizeColor_QTY =
@@ -110,7 +110,7 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
                   ),
                 ],
               ),
-        ));
+            ));
   }
 
   Widget ModelOrderList(
@@ -142,7 +142,7 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
 
     return Scaffold(
       appBar: DetailBar(
-          Title: PersonalCase.SelectedTest.Test_Name,
+          Title: PersonalCase.SelectedTest!.Test_Name ?? '',
           PersonalCase: PersonalCase,
           OnTap: () {
             Navigator.pop(context);
@@ -151,10 +151,10 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
       body: ListView(
         children: [
           ListTile(
-            title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+            title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number ?? '',
                 color: ArgonColors.header, FontSize: ArgonSize.Header2),
             subtitle: Text(
-                PersonalCase.SelectedDepartment.Start_Date.toString(),
+                PersonalCase.SelectedDepartment!.Start_Date.toString() ?? '',
                 style: TextStyle(fontSize: ArgonSize.Header6)),
             dense: true,
             selected: true,
@@ -205,11 +205,12 @@ class CuttingMatrixDataTable extends StatefulWidget {
 class _CuttingMatrixDataTableState extends State<CuttingMatrixDataTable> {
   final TextEditingController CuttingAmountController =
       new TextEditingController();
-  List<OrderSizeColorDetailsBLL> SelectedItems;
-  bool sort;
+  List<OrderSizeColorDetailsBLL>? SelectedItems;
+  bool sort = false;
 
   String ActionMessage = "";
-  int AssignAmount = 1 ;
+  int AssignAmount = 1;
+
   @override
   void initState() {
     sort = false;
@@ -249,8 +250,7 @@ class _CuttingMatrixDataTableState extends State<CuttingMatrixDataTable> {
 
           SpinBox(
             max: 999999,
-            textStyle: TextStyle(
-                fontSize: ArgonSize.Header2),
+            textStyle: TextStyle(fontSize: ArgonSize.Header2),
             value: 1,
             onChanged: (value) {
               AssignAmount = value.toInt();
@@ -275,8 +275,8 @@ class _CuttingMatrixDataTableState extends State<CuttingMatrixDataTable> {
           onPressed: () async {
             var Cutting = new QualityDept_ModelOrder_TrackingBLL();
             Cutting.Id = 0;
-         //   Cutting.Sample_Amount = int.tryParse(CuttingAmountController.text);
-            Cutting.Sample_Amount =    AssignAmount;
+            //   Cutting.Sample_Amount = int.tryParse(CuttingAmountController.text);
+            Cutting.Sample_Amount = AssignAmount;
             Cutting.Employee_Id = PersonalCase.GetCurrentUser().Id;
             Cutting.OrderSizeColorDetail_Id = Item.Id;
             Cutting.DeptModelOrder_QualityTest_Id =
@@ -286,8 +286,8 @@ class _CuttingMatrixDataTableState extends State<CuttingMatrixDataTable> {
             if (!Status)
               ActionMessage = PersonalCase.GetLable(ResourceKey.InvalidAction);
             else {
-             // CuttingAmountController.text = "";
-              AssignAmount = 1 ;
+              // CuttingAmountController.text = "";
+              AssignAmount = 1;
               Navigator.of(context).pop();
             }
             Item.SizeColor_QTY =
@@ -323,8 +323,7 @@ class _CuttingMatrixDataTableState extends State<CuttingMatrixDataTable> {
                     builder: (BuildContext context) =>
                         _buildPopupDialog(context, PersonalCase, item, () {
                       setState(() {});
-                    }
-                    ),
+                    }),
                   );
                 },
                 cells: [

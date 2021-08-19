@@ -7,13 +7,12 @@ import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
-import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 
 class Dikim_InlineEmployeeOperationControl extends StatefulWidget {
   User_QualityTracking_DetailBLL EmployeeOperation;
   bool IsDirect;
 
-  Dikim_InlineEmployeeOperationControl({this.EmployeeOperation,this.IsDirect = true});
+  Dikim_InlineEmployeeOperationControl({required this.EmployeeOperation,this.IsDirect = true});
 
   @override
   _Dikim_InlineEmployeeOperationControlState createState() =>
@@ -62,7 +61,7 @@ class _Dikim_InlineEmployeeOperationControlState
               mainAxisSize: MainAxisSize.max,
               children: [
                 HeaderLable('${PersonalCase.GetLable(ResourceKey.Order_Number)} / ' '${PersonalCase.GetLable(ResourceKey.Operation_Name)}' ,Flex:3 ),
-                TableLable(PersonalCase.SelectedOrder.Order_Number,Flex:2),
+                TableLable(PersonalCase.SelectedOrder!.Order_Number,Flex:2),
                 TableLable(widget.EmployeeOperation.Operation_Name.toString(),Flex:2),
               ],
             ),
@@ -130,6 +129,7 @@ class _Dikim_InlineEmployeeOperationControlState
                       backGroundColor: ArgonColors.error,
                       textSize: ArgonSize.Header5,
                       height: ArgonSize.HeightSmall1,
+                      width :ArgonSize.WidthSmall1,
                       value: PersonalCase.GetLable(ResourceKey.Error_Amount),
                       function: () async {
                         bool Check = await widget.EmployeeOperation
@@ -151,7 +151,7 @@ class _Dikim_InlineEmployeeOperationControlState
               backGroundColor: ArgonColors.primary,
               function: () async {
                 widget.EmployeeOperation.Order_Id =
-                    PersonalCase.SelectedOrder.Order_Id;
+                    PersonalCase.SelectedOrder!.Order_Id;
                 var Check = await widget.EmployeeOperation
                     .CloseEmployeeOperationControlRound();
                 if (Check) {
@@ -177,7 +177,7 @@ class _Dikim_InlineEmployeeOperationControlState
     final CaseProvider = Provider.of<SubCaseProvider>(context);
 
     return Scaffold(
-      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
           context:  context
@@ -186,10 +186,10 @@ class _Dikim_InlineEmployeeOperationControlState
         ListTile(
           title: HeaderTitle(
 
-                  PersonalCase.SelectedOrder.Order_Number,
+                  PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header,
               FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString(),style:TextStyle(fontSize:ArgonSize.Header6)),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??'',style:TextStyle(fontSize:ArgonSize.Header6)),
           dense: true,
           selected: true,
         ),

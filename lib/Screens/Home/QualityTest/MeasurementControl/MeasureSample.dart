@@ -16,7 +16,7 @@ import 'MeasureItemControl.dart';
 class Measuer_Sample extends StatefulWidget {
   QualityDept_ModelOrder_TrackingBLL RoundItem;
 
-  Measuer_Sample({this.RoundItem});
+  Measuer_Sample({required this.RoundItem});
 
   @override
   _Measuer_SampleState createState() => _Measuer_SampleState();
@@ -45,7 +45,7 @@ class _Measuer_SampleState extends State<Measuer_Sample> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
-      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
           context:  context
@@ -53,12 +53,11 @@ class _Measuer_SampleState extends State<Measuer_Sample> {
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(
-              PersonalCase.SelectedTest.Test_Name +
-                  ": " +
-                  PersonalCase.SelectedOrder.Order_Number,
+
+                  PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header,
               FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??''),
           dense: true,
           selected: true,
         ),
@@ -98,7 +97,7 @@ class _Measuer_SampleState extends State<Measuer_Sample> {
                             ForColor: ArgonColors.white,
                             BakColor: ArgonColors.myLightBlue,
                             OnTap: () {
-                              AlertPopupDialogWithAction(context,
+                              AlertPopupDialogWithAction(context:context,
                                   title: PersonalCase.GetLable(
                                       ResourceKey.WarrningMessage),
                                   Children: <Widget>[

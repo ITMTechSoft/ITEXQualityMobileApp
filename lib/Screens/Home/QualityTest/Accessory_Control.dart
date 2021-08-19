@@ -49,7 +49,7 @@ class _Accessory_ControlState extends State<Accessory_Control> {
 
     return Scaffold(
       appBar: DetailBar(
-          Title: PersonalCase.SelectedTest.Test_Name,
+          Title: PersonalCase.SelectedTest!.Test_Name??'',
           PersonalCase: PersonalCase,
           OnTap: () {
             Navigator.pop(context);
@@ -57,10 +57,10 @@ class _Accessory_ControlState extends State<Accessory_Control> {
           context: context),
       body: ListView(children: [
         ListTile(
-          title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+          title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header, FontSize: ArgonSize.Header2),
           subtitle: Text(
-            PersonalCase.SelectedDepartment.Start_Date.toString(),
+            PersonalCase.SelectedDepartment!.Start_Date.toString()??'',
             style: TextStyle(fontSize: ArgonSize.Header6),
           ),
           dense: true,

@@ -20,7 +20,7 @@ class _OrderListState extends State<OrderList> {
       List<QualityDepartment_ModelOrderBLL> MainItems =
           await QualityDepartment_ModelOrderBLL
               .Get_QualityDepartment_ModelOrder(
-                  PersonalCase.SelectedDepartment.Department_Id);
+                  PersonalCase.SelectedDepartment!.Department_Id);
 
       var Items =
           MainItems.where((i) => i.Order_Number.contains(SearchController.text))
@@ -60,12 +60,12 @@ class _OrderListState extends State<OrderList> {
                     children: <Widget>[
                       ListTile(
                         title: HeaderTitle(
-                            PersonalCase.SelectedDepartment.Depart_Name,
+                            PersonalCase.SelectedDepartment!.Depart_Name??'',
                             color: ArgonColors.header,
                             FontSize: ArgonSize.Header1),
                         subtitle: Text(PersonalCase
-                            .SelectedDepartment.Start_Date
-                            .toString(),
+                            .SelectedDepartment!.Start_Date
+                            .toString()??'',
                             style: TextStyle(fontSize:ArgonSize.Header6)),
 
                         dense: true,

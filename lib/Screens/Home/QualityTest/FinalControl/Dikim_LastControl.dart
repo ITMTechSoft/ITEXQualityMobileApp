@@ -5,7 +5,6 @@ import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/assets/SystemResuableList/OrderSizeColorMatrix.dart';
-
 import 'FinalControl.dart';
 
 class Dikim_LastControl extends StatefulWidget {
@@ -20,7 +19,7 @@ class _Dikim_LastControlState extends State<Dikim_LastControl> {
       PersonalProvider PersonalCase) async {
     List<OrderSizeColorDetailsBLL> Critiera =
         await OrderSizeColorDetailsBLL.Get_OrderSizeColorDetails(
-            PersonalCase.SelectedOrder.Order_Id);
+            PersonalCase.SelectedOrder!.Order_Id);
 
     if (Critiera != null) {
       IntiteStatus = 1;
@@ -36,7 +35,7 @@ class _Dikim_LastControlState extends State<Dikim_LastControl> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
-      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
           context:  context
@@ -44,12 +43,11 @@ class _Dikim_LastControlState extends State<Dikim_LastControl> {
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(
-              PersonalCase.SelectedTest.Test_Name +
-                  ": " +
-                  PersonalCase.SelectedOrder.Order_Number,
+
+                  PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header,
               FontSize: ArgonSize.Header3),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString() ,
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??'' ,
               style: TextStyle(fontSize:ArgonSize.Header6)),
           dense: true,
           selected: true,

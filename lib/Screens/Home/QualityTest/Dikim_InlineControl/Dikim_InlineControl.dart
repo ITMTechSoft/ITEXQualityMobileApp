@@ -28,7 +28,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
         await QualityDept_ModelOrder_TrackingBLL
             .GetInlineDikim_QualityDept_ModelOrder_Tracking(
                 Employee_Id: PersonalCase.GetCurrentUser().Id,
-                DeptModelOrder_QualityTest_Id: PersonalCase.SelectedTest.Id,
+                DeptModelOrder_QualityTest_Id: PersonalCase.SelectedTest!.Id,
                 SelectDate: SelectedDate);
 
     if (Criteria != null) {
@@ -41,7 +41,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
   }
 
   Future<void> GenerateNewRound(PersonalProvider PersonalCase) async {
-    AlertPopupDialogWithAction(context,
+    AlertPopupDialogWithAction(context :context,
         title: PersonalCase.GetLable(ResourceKey.WarrningMessage),
         Children: <Widget>[
           LableTitle(
@@ -75,7 +75,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
 
     return Scaffold(
       appBar:
-      DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+      DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
           context:  context
@@ -88,7 +88,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
               color: ArgonColors.header,
               FontSize: ArgonSize.Header3),
           subtitle: Text(DateFormat("yyyy/MM/dd HH:mm")
-              .format(PersonalCase.SelectedDepartment.Start_Date)),
+              .format(PersonalCase.SelectedDepartment!.Start_Date)),
           dense: true,
           selected: true,
         ),
@@ -110,7 +110,8 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                           flex:3,
                           child: CustomButton(
                               height: ArgonSize.HeightSmall,
-                  textSize:ArgonSize.Header4,
+                              width:ArgonSize.WidthSmall,
+                              textSize:ArgonSize.Header4,
                               value:
                               PersonalCase.GetLable(ResourceKey.ControlValid),
                               backGroundColor: ArgonColors.primary,
@@ -143,6 +144,8 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                           }),
                           CustomButton(
                               height: ArgonSize.HeightSmall,
+                              width :ArgonSize.WidthSmall,
+                              ///TODO : CHECK THE WIDTH OF THE BUTTON
                               textSize:ArgonSize.Header4,
                               value:
                               PersonalCase.GetLable(ResourceKey.ControlValid),

@@ -34,7 +34,7 @@ AlertDialog AlertPopupDialogWithAction(
   required String FirstActionLable,
   required Function OnFirstAction,
   required String SecondActionLable,
-  required Function OnSecondAction,
+    Function? OnSecondAction,
   Color textButton1Color = ArgonColors.primary,
   Color textButton2Color = ArgonColors.primary,
   Color messageColor = ArgonColors.warning,
