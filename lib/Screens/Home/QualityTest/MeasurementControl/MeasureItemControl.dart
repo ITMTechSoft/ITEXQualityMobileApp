@@ -7,13 +7,12 @@ import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
-import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 
 class MeasureItem_Control extends StatefulWidget {
   User_QualityTracking_DetailBLL EmployeeOperation;
   bool IsDirect;
 
-  MeasureItem_Control({this.EmployeeOperation,this.IsDirect = true});
+  MeasureItem_Control({required this.EmployeeOperation,this.IsDirect = true});
 
   @override
   _MeasureItem_ControlState createState() =>
@@ -62,7 +61,7 @@ class _MeasureItem_ControlState
               mainAxisSize: MainAxisSize.max,
               children: [
                 HeaderLable(PersonalCase.GetLable(ResourceKey.Order_Number)),
-                TableLable(PersonalCase.SelectedOrder.Order_Number),
+                TableLable(PersonalCase.SelectedOrder!.Order_Number??''),
                 HeaderLable(PersonalCase.GetLable(ResourceKey.Operation_Name)),
                 TableLable(widget.EmployeeOperation.Operation_Name.toString()),
               ],
@@ -148,7 +147,7 @@ class _MeasureItem_ControlState
               BakColor: ArgonColors.primary,
               OnTap: () async {
                 widget.EmployeeOperation.Order_Id =
-                    PersonalCase.SelectedOrder.Order_Id;
+                    PersonalCase.SelectedOrder!.Order_Id;
                 var Check = await widget.EmployeeOperation
                     .CloseEmployeeOperationControlRound();
                 if (Check) {
@@ -174,7 +173,7 @@ class _MeasureItem_ControlState
     final CaseProvider = Provider.of<SubCaseProvider>(context);
 
     return Scaffold(
-      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
           context:  context
@@ -182,12 +181,11 @@ class _MeasureItem_ControlState
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(
-              PersonalCase.SelectedTest.Test_Name +
-                  ": " +
-                  PersonalCase.SelectedOrder.Order_Number,
+
+                  PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header,
               FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??''),
           dense: true,
           selected: true,
         ),

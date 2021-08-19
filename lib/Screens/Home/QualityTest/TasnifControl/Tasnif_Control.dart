@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
-
 import 'Correction.dart';
 import 'Tasnif_NewSample.dart';
 import 'Tasnsif_SampleControl.dart';
@@ -22,8 +21,8 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
     List<QualityDept_ModelOrder_TrackingBLL> Criteria =
         await QualityDept_ModelOrder_TrackingBLL
             .Get_QualityDept_ModelOrder_Tracking(
-                PersonalCase.SelectedOrder.Order_Id,
-                PersonalCase.SelectedTest.Id);
+                PersonalCase.SelectedOrder!.Order_Id,
+                PersonalCase.SelectedTest!.Id);
 
     if (Criteria != null) {
       IntiteStatus = 1;

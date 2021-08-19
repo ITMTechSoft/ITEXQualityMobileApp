@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:itex_soft_qualityapp/Models/Employees.dart';
 import 'package:itex_soft_qualityapp/Models/FinalControl/Quality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/Operation.dart';
-import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
-import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
@@ -14,19 +11,17 @@ import 'package:itex_soft_qualityapp/Widgets/button.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 import 'package:itex_soft_qualityapp/assets/SystemDropDownList/EmployeeList.dart';
 import 'package:itex_soft_qualityapp/assets/SystemDropDownList/OperationList.dart';
-import 'package:itex_soft_qualityapp/assets/SystemResuableList/OrderSizeColorMatrix.dart';
 import 'package:itex_soft_qualityapp/assets/SystemResuableList/EmployeeOperationList.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 import '../../../../SystemImports.dart';
-import 'FinalControl.dart';
 
 class SewingEmployeeControl extends StatefulWidget {
   Function ParentReCalc;
   Quality_ItemsBLL QualityItem;
   String HeaderName;
 
-  SewingEmployeeControl({this.ParentReCalc, this.QualityItem, this.HeaderName});
+  SewingEmployeeControl({requried this.ParentReCalc,required this.QualityItem,required this.HeaderName});
 
   @override
   State<SewingEmployeeControl> createState() => _SewingEmployeeControlState();
@@ -35,11 +30,11 @@ class SewingEmployeeControl extends StatefulWidget {
 class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
   bool _KeepPage = false;
   bool _IsDeletedVal = false;
-  List<EmployeesBLL> OperatorList;
-  List<OperationBLL> OperationList;
+  List<EmployeesBLL>? OperatorList;
+  List<OperationBLL>? OperationList;
   int IntiteStatus = 0;
-  EmployeesBLL SelectedEmployee;
-  OperationBLL SelectedOperation;
+  EmployeesBLL? SelectedEmployee;
+  OperationBLL? SelectedOperation;
   bool _switchValue = false;
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
@@ -60,7 +55,7 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
       SubCaseProvider CaseProvider) async {
     List<User_QualityTracking_DetailBLL> Critiera =
     await User_QualityTracking_DetailBLL.Get_User_QualityTracking_Detail(
-        CaseProvider.QualityTracking.Id,
+        CaseProvider.QualityTracking!.Id,
         Quality_Items_Id: widget.QualityItem.Id);
     if (Critiera != null) {
       IntiteStatus = 1;
@@ -89,10 +84,10 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
         var UserQuality = new User_QualityTracking_DetailBLL();
         UserQuality.Quality_Items_Id = widget.QualityItem.Id;
         UserQuality.QualityDept_ModelOrder_Tracking_Id =
-            CaseProvider.QualityTracking.Id;
+            CaseProvider.QualityTracking!.Id;
         if (SelectedEmployee != null && SelectedOperation != null) {
-          UserQuality.Inline_Employee_Id = SelectedEmployee.Id;
-          UserQuality.Operation_Id = SelectedOperation.Operation_Id;
+          UserQuality.Inline_Employee_Id = SelectedEmployee!.Id;
+          UserQuality.Operation_Id = SelectedOperation!.Operation_Id;
           UserQuality.Create_Date = DateTime.now();
           UserQuality.Amount = 1;
 
@@ -124,7 +119,7 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
                     flex:1,
                     child: Operation_List(
                       PersonalCase: PersonalCase,
-                      Items: OperationList,
+                      Items: OperationList!,
                       OnClickItems: (OperationBLL SelectedItem) {
                         SelectedOperation = SelectedItem;
                       },
@@ -135,7 +130,7 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
 
                     child: Employee_List(
                       PersonalCase: PersonalCase,
-                      Items: OperatorList,
+                      Items: OperatorList!,
                       OnClickItems: (EmployeesBLL SelectedItem) {
                         SelectedEmployee = SelectedItem;
                       },

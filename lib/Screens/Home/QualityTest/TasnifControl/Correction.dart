@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
-import 'Tasnsif_SampleControl.dart';
 
 class Tasnif_Correction extends StatefulWidget {
   @override
@@ -20,7 +18,7 @@ class _Tasnif_CorrectionState extends State<Tasnif_Correction> {
     List<User_QualityTracking_DetailBLL> Criteria =
     await User_QualityTracking_DetailBLL
         .Get_UserQualityTasnifControl(
-       PersonalCase.SelectedTest.Id
+       PersonalCase.SelectedTest!.Id
 
     );
 
@@ -59,7 +57,7 @@ class _Tasnif_CorrectionState extends State<Tasnif_Correction> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
     return Scaffold(
-      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
           context:  context
@@ -68,10 +66,10 @@ class _Tasnif_CorrectionState extends State<Tasnif_Correction> {
         ListTile(
           title: HeaderTitle(
 
-              PersonalCase.SelectedOrder.Order_Number,
+              PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header,
               FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString(),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??'',
               style:TextStyle(fontSize:ArgonSize.Header6)),
           dense: true,
           selected: true,

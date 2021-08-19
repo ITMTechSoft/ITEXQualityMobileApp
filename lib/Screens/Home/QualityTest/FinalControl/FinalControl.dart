@@ -15,7 +15,6 @@ import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
 import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
-
 import 'QualityItemsList.dart';
 import 'SewingEmployeeControl.dart';
 
@@ -27,12 +26,12 @@ class FinalControl extends StatefulWidget {
 class _FinalControlState extends State<FinalControl> {
 
   int IntiteStatus = 0;
-  ModelOrder_MatrixBLL ModelOrder;
+  ModelOrder_MatrixBLL? ModelOrder;
 
   Future<bool> LoadingOpenPage(SubCaseProvider CaseProvider) async {
     ModelOrder = await ModelOrder_MatrixBLL.Get_ModelOrder_Matrix(
-        CaseProvider.ModelOrderMatrix.Order_Id,
-        CaseProvider.ModelOrderMatrix.Id);
+        CaseProvider.ModelOrderMatrix!.Order_Id,
+        CaseProvider.ModelOrderMatrix!.Id);
     var QualityList =
         await Quality_ItemsBLL.Get_Quality_Items(GroupType.FirstQuality);
     if (ModelOrder != null && QualityList != null) {
@@ -44,7 +43,7 @@ class _FinalControlState extends State<FinalControl> {
   }
 
   Future<String> GetModelImage() async {
-    return await ModelOrder.GetModelOrderImage();
+    return await ModelOrder!.GetModelOrderImage()??'';
   }
 
   Widget ProductDetail(
@@ -64,7 +63,7 @@ Childrens: <Widget>[
                   SizedBox(
                     height: 10,
                   ),
-                  LableTitle(ModelOrder.Model_Name,FontSize :ArgonSize.Header5)                ],
+                  LableTitle(ModelOrder!.Model_Name??'',FontSize :ArgonSize.Header5)                ],
               ),
             ),
             Expanded(
@@ -81,24 +80,24 @@ Childrens: <Widget>[
                           LabelWithValue(
                               label:
                                   PersonalCase.GetLable(ResourceKey.Customer),
-                              value: ModelOrder.Customer_Name,
+                              value: ModelOrder!.Customer_Name??'',
                               fontSize:ArgonSize.Header5),
                           LabelWithValue(
                               label:
                                   PersonalCase.GetLable(ResourceKey.Employee),
                               value:
-                                  CaseProvider.QualityTracking.Employee_Name??""
+                                  CaseProvider.QualityTracking!.Employee_Name??''
                            ,fontSize:ArgonSize.Header5),
                           LabelWithIntegerVal(
                               label: PersonalCase.GetLable(
                                   ResourceKey.Plan_Quantity),
-                              value: ModelOrder.PlanSizeColor_QTY  ,
+                              value: ModelOrder!.PlanSizeColor_QTY??0  ,
                               fontSize:ArgonSize.Header5),
                           LabelWithValue(
                               label:
                                   PersonalCase.GetLable(ResourceKey.SizeColor),
                               value:
-                                  "${ModelOrder.SizeName}/ ${ModelOrder.ColorName}" ,
+                                  "${ModelOrder!.SizeName??''}/ ${ModelOrder!.ColorName??''}" ,
                               fontSize:ArgonSize.Header5)
                         ],
                       ),
@@ -109,22 +108,22 @@ Childrens: <Widget>[
                         LabelWithValue(
                             label:
                                 PersonalCase.GetLable(ResourceKey.Order_Number),
-                            value: ModelOrder.Order_Number ,
+                            value: ModelOrder!.Order_Number??'' ,
                             fontSize:ArgonSize.Header5),
                         LabelWithValue(
                             label: PersonalCase.GetLable(ResourceKey.Model_STD),
-                            value: (ModelOrder.Analysis_Model_STD ?? 0)
+                            value: (ModelOrder!.Analysis_Model_STD ?? 0)
                                 .toString(),
                             fontSize:ArgonSize.Header5),
                         LabelWithIntegerVal(
                             label: PersonalCase.GetLable(
                                 ResourceKey.OrderSizeColor_QTY),
-                            value: ModelOrder.OrderSizeColor_QTY,
+                            value: ModelOrder!.OrderSizeColor_QTY??0,
                             fontSize:ArgonSize.Header5),
                         LabelWithIntegerVal(
                             label:
                                 PersonalCase.GetLable(ResourceKey.SizeColorQTY),
-                            value: ModelOrder.SizeColor_QTY ,
+                            value: ModelOrder!.SizeColor_QTY??0 ,
                             fontSize:ArgonSize.Header5),
                       ],
                     )),
@@ -145,7 +144,7 @@ Childrens: <Widget>[
     SizeConfig().init(context);
     return Scaffold(
         appBar:
-        DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+        DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
           Navigator.pop(context);
         },
             context:  context
@@ -155,7 +154,7 @@ Childrens: <Widget>[
             ListTile(
               title: HeaderTitle(getScreenWidth().toString(),
                   color: ArgonColors.header, FontSize: ArgonSize.Header2),
-              subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString() ,
+              subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??'' ,
               style:TextStyle(fontSize:ArgonSize.Header6)),
               dense: true,
               selected: true,
@@ -175,7 +174,7 @@ Childrens: <Widget>[
                           FirstQualityInfo: new Model_Order_ControlBLL(
                               Control_Type: GroupType.FirstQuality,
                               QualityDept_ModelOrder_Tracking_Id:
-                                  CaseProvider.QualityTracking.Id),
+                                  CaseProvider.QualityTracking!.Id),
                         ),
                       ),
 
@@ -190,7 +189,7 @@ Childrens: <Widget>[
                                 SecondQualityInfo: new Model_Order_ControlBLL(
                                     Control_Type: GroupType.SecondQuality,
                                     QualityDept_ModelOrder_Tracking_Id:
-                                        CaseProvider.QualityTracking.Id),
+                                        CaseProvider.QualityTracking!.Id),
                               ),
                             ),
                             Expanded(
@@ -198,7 +197,7 @@ Childrens: <Widget>[
                                 TamirQualityInfo: new Model_Order_ControlBLL(
                                     Control_Type: GroupType.TamirQuality,
                                     QualityDept_ModelOrder_Tracking_Id:
-                                        CaseProvider.QualityTracking.Id),
+                                        CaseProvider.QualityTracking!.Id),
                               ),
                             ),
                           ],
@@ -225,7 +224,7 @@ Childrens: <Widget>[
 class ProductFirstQuality extends StatefulWidget {
   Model_Order_ControlBLL FirstQualityInfo;
 
-  ProductFirstQuality({this.FirstQualityInfo});
+  ProductFirstQuality({required this.FirstQualityInfo});
 
   @override
   _ProductFirstQualityState createState() => _ProductFirstQualityState();
@@ -233,7 +232,7 @@ class ProductFirstQuality extends StatefulWidget {
 
 class _ProductFirstQualityState extends State<ProductFirstQuality> {
   bool _switchValue = false;
-  Model_Order_ControlBLL Critiera;
+  Model_Order_ControlBLL? Critiera;
   int IntiteStatus = 0;
   int warning_massage = 0;
 
@@ -300,9 +299,9 @@ Childrens: <Widget>[
               GestureDetector(
                 onTap: () async {
                   var UserQuality = new User_QualityTracking_DetailBLL();
-                  UserQuality.Quality_Items_Id = CaseProvider.FirstQuality.Id;
+                  UserQuality.Quality_Items_Id = CaseProvider.FirstQuality!.Id;
                   UserQuality.QualityDept_ModelOrder_Tracking_Id =
-                      CaseProvider.QualityTracking.Id;
+                      CaseProvider.QualityTracking!.Id;
                   UserQuality.Amount = 1;
                   UserQuality.IsRecycle = _switchValue;
                   int CheckStatus =
@@ -376,16 +375,16 @@ Childrens: <Widget>[
 class ProductSecondQuality extends StatefulWidget {
   Model_Order_ControlBLL SecondQualityInfo;
 
-  ProductSecondQuality({this.SecondQualityInfo});
+  ProductSecondQuality({required this.SecondQualityInfo});
 
   @override
   _ProductSecondQualityState createState() => _ProductSecondQualityState();
 }
 
 class _ProductSecondQualityState extends State<ProductSecondQuality> {
-  Model_Order_ControlBLL Critiera;
+  Model_Order_ControlBLL? Critiera;
   int IntiteStatus = 0;
-  Quality_ItemsBLL SecqStitch;
+  Quality_ItemsBLL? SecqStitch;
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
@@ -446,7 +445,6 @@ Childrens: <Widget>[
                     buttonHegiht: getScreenHeight()/10,
                     btnBgColor: ArgonColors.myOrange,
                     textSize: ArgonSize.Header3,
-                    padding: 10,
                     topLeft: CircleShape(
                         text: (widget.SecondQualityInfo.Matrix_Control_Amount ??
                                 0)
@@ -463,7 +461,7 @@ Childrens: <Widget>[
                       context,
                       MaterialPageRoute(
                           builder: (context) => new SewingEmployeeControl(
-                              QualityItem: SecqStitch,
+                              QualityItem: SecqStitch!,
                               HeaderName: PersonalCase.GetLable(
                                   ResourceKey.SecondQuality),
                               ParentReCalc: () {
@@ -502,15 +500,15 @@ Childrens: <Widget>[
 class ProductTamirQuality extends StatefulWidget {
   Model_Order_ControlBLL TamirQualityInfo;
 
-  ProductTamirQuality({this.TamirQualityInfo});
+  ProductTamirQuality({required this.TamirQualityInfo});
 
   @override
   _ProductTamirQualityState createState() => _ProductTamirQualityState();
 }
 
 class _ProductTamirQualityState extends State<ProductTamirQuality> {
-  Model_Order_ControlBLL Critiera;
-  Quality_ItemsBLL TamirStitch;
+  Model_Order_ControlBLL? Critiera;
+  Quality_ItemsBLL? TamirStitch;
 
   
   int IntiteStatus = 0;
@@ -574,7 +572,6 @@ Childrens: <Widget>[
                     buttonHegiht: getScreenHeight()/10,
                     btnBgColor: ArgonColors.myYellow,
                     textSize: ArgonSize.Header3,
-                    padding: 10,
 
                     ///TODO : DO THE NUMBERS IN CIRCLE
                     topLeft: CircleShape(
@@ -593,7 +590,7 @@ Childrens: <Widget>[
                       context,
                       MaterialPageRoute(
                           builder: (context) => new SewingEmployeeControl(
-                              QualityItem: TamirStitch,
+                              QualityItem: TamirStitch!,
                               HeaderName: PersonalCase.GetLable(
                                   ResourceKey.SecondQuality),
                               ParentReCalc: () {

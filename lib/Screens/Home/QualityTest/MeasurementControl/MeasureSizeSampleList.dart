@@ -2,18 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-import 'package:itex_soft_qualityapp/Models/Employees.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Dikim_InlineControl/Dikim_InlineRound.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
-import 'package:itex_soft_qualityapp/assets/Component/DateTimeComponent.dart';
-import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 import 'package:itex_soft_qualityapp/assets/SystemResuableList/MeasuerTestTable.dart';
 
 import 'MeasureSample.dart';
-import 'MeasureSizeSampleList.dart';
 
 class MeasureSizeSample_List extends StatefulWidget {
   @override
@@ -45,7 +41,7 @@ class _MeasureSizeSample_ListState extends State<MeasureSizeSample_List> {
   }
 
   Future<void> GenerateNewRound(PersonalProvider PersonalCase) async {
-    AlertPopupDialogWithAction(context,
+    AlertPopupDialogWithAction(context:context,
         title: PersonalCase.GetLable(ResourceKey.WarrningMessage),
         Children: <Widget>[
           LableTitle(
@@ -58,7 +54,7 @@ class _MeasureSizeSample_ListState extends State<MeasureSizeSample_List> {
           try {
             var Tracking = new QualityDept_ModelOrder_TrackingBLL();
             Tracking.Employee_Id = PersonalCase.GetCurrentUser().Id;
-            Tracking.DeptModelOrder_QualityTest_Id = PersonalCase.SelectedTest.Id;
+            Tracking.DeptModelOrder_QualityTest_Id = PersonalCase.SelectedTest!.Id;
             Tracking.Status = DikimInlineStatus.Open.index;
             Tracking.StartDate = DateTime.now();
             await Tracking.Generate_DikimInline_Tracking();
@@ -76,7 +72,7 @@ class _MeasureSizeSample_ListState extends State<MeasureSizeSample_List> {
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
       appBar:
-      DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+      DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
           context:  context
@@ -86,13 +82,12 @@ class _MeasureSizeSample_ListState extends State<MeasureSizeSample_List> {
       body: ListView(children: [
         ListTile(
           title: HeaderTitle(
-              PersonalCase.SelectedTest.Test_Name +
-                  ": " +
-                  PersonalCase.SelectedOrder.Order_Number,
+
+                  PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header,
               FontSize: ArgonSize.Header3),
           subtitle: Text(DateFormat("yyyy/MM/dd HH:mm")
-              .format(PersonalCase.SelectedDepartment.Start_Date)),
+              .format(PersonalCase.SelectedDepartment!.Start_Date)),
           dense: true,
           selected: true,
         ),

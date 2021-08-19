@@ -17,7 +17,7 @@ class QualityItemsList extends StatefulWidget {
   String GroupType;
   String HeaderName;
 
-  QualityItemsList({this.ParentReCalc, this.GroupType, this.HeaderName});
+  QualityItemsList({required this.ParentReCalc,required this.GroupType,required this.HeaderName});
 
   @override
   _QualityItemsListState createState() => _QualityItemsListState();
@@ -33,7 +33,7 @@ class _QualityItemsListState extends State<QualityItemsList> {
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
     List<Quality_ItemsBLL> Critiera =
         await Quality_ItemsBLL.Get_Quality_Items_WithValue(widget.GroupType,
-            PersonalCase.GetCurrentUser().Id, CaseProvider.ModelOrderMatrix.Id);
+            PersonalCase.GetCurrentUser().Id, CaseProvider.ModelOrderMatrix!.Id);
 
     if (Critiera != null) {
       IntiteStatus = 1;
@@ -54,7 +54,7 @@ class _QualityItemsListState extends State<QualityItemsList> {
       var UserQuality = new User_QualityTracking_DetailBLL();
       UserQuality.Quality_Items_Id = item.Id;
       UserQuality.QualityDept_ModelOrder_Tracking_Id =
-          CaseProvider.QualityTracking.Id;
+          CaseProvider.QualityTracking!.Id;
 
       if (_IsDeletedVal)
         UserQuality.Amount = -1;
@@ -88,16 +88,16 @@ class _QualityItemsListState extends State<QualityItemsList> {
     }
 
     return Scaffold(
-      appBar: DetailBar(Title:PersonalCase.SelectedTest.Test_Name,PersonalCase: PersonalCase, OnTap:() {
+      appBar: DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
           context:  context
       ),
       body: ListView(children: [
         ListTile(
-          title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
+          title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header, FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString()),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??''),
           dense: true,
           selected: true,
         ),
