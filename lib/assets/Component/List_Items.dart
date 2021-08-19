@@ -709,7 +709,7 @@ Widget RowColumn(
 //// New Design for Header and Table Information
 class TableBodyGList<T> extends StatefulWidget {
   List<T> Items;
-  Function OnClickItems;
+  Function( ) OnClickItems;
   List<Widget> Headers;
 
   TableBodyGList({required this.Headers,required this.Items, required this.OnClickItems()});

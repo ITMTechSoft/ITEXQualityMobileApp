@@ -16,13 +16,13 @@ class _QualityTestListState extends State<QualityTestList> {
   int IntiteStatus = 0;
   bool? IsUserApproved ;
 
-  Future<List<DepartmentModelOrder_QualityTestBLL>> LoadEmployeeOrders(
+  Future<List<DepartmentModelOrder_QualityTestBLL>?> LoadEmployeeOrders(
       PersonalProvider PersonalCase) async {
     try {
       List<DepartmentModelOrder_QualityTestBLL> Items =
           await DepartmentModelOrder_QualityTestBLL
               .Get_DepartmentModelOrder_QualityTest(
-                  PersonalCase.SelectedOrder.Id);
+                  PersonalCase.SelectedOrder!.Id);
 
       if (Items != null)
         IntiteStatus = 1;
@@ -126,7 +126,7 @@ class _QualityTestListState extends State<QualityTestList> {
       },
           context:  context
       ),
-      body: FutureBuilder(
+      body: FutureBuilder<List<DepartmentModelOrder_QualityTestBLL>?> (
         future: LoadEmployeeOrders(PersonalCase),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -153,12 +153,12 @@ class _QualityTestListState extends State<QualityTestList> {
                       ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          itemCount: snapshot.data.length,
+                          itemCount: snapshot.data!.length,
                           itemBuilder: (context, int i) {
                             return OneItem(
-                                ItemName: snapshot.data[i].Test_Name,
-                                ItemValue: snapshot.data[i].StartDate != null
-                                    ? snapshot.data[i].StartDate.toString()
+                                ItemName: snapshot.data![i].Test_Name,
+                                ItemValue: snapshot.data![i].StartDate != null
+                                    ? snapshot.data![i].StartDate.toString()
                                     : "Not Started Yet",
                                 OnTap: () async {
                                   await MappingSelectedQualityTest(

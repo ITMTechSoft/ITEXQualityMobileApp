@@ -65,7 +65,7 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
                   children: [
                     Size_Matrix_List(
                       OnClickItems: (int Index) async {
-                        PersonalCase.SelectedSize = snapshot.data[Index];
+                        PersonalCase.SelectedSize = snapshot.data![Index];
                         PersonalCase.SelectedTracking =
                             await QualityDept_ModelOrder_TrackingBLL
                                 .GetOrCreate_QualityDept_ModelOrder_Tracking(

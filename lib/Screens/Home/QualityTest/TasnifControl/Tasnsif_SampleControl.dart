@@ -268,10 +268,10 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                 primary: false,
                 itemCount: XAxsiasItems!.length,
                 itemBuilder: (context, int i) {
-                  return QualityAxisItem(XAxsiasItems[i],
-                      IsSeleted: (XAxias.Id == XAxsiasItems[i].Id), OnTap: () {
+                  return QualityAxisItem(XAxsiasItems![i],
+                      IsSeleted: (XAxias.Id == XAxsiasItems![i].Id), OnTap: () {
                     setState(() {
-                      XAxias = XAxsiasItems[i];
+                      XAxias = XAxsiasItems![i];
                     });
                   });
                 }),
@@ -285,10 +285,10 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                 primary: false,
                 itemCount: YAxsiasItems!.length,
                 itemBuilder: (context, int i) {
-                  return QualityAxisItem(YAxsiasItems[i],
-                      IsSeleted: YAxsiasItems[i].Id == YAxias.Id, OnTap: () {
+                  return QualityAxisItem(YAxsiasItems![i],
+                      IsSeleted: YAxsiasItems![i].Id == YAxias.Id, OnTap: () {
                     setState(() {
-                      YAxias = YAxsiasItems[i];
+                      YAxias = YAxsiasItems![i];
                     });
                   });
                 }),

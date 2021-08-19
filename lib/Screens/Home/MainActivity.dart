@@ -24,7 +24,7 @@ class _MainActivityState extends State<MainActivity> {
     super.initState();
   }
 
-  Future<List<Employee_DepartmentBLL>> LoadDepartment(
+  Future<List<Employee_DepartmentBLL>?> LoadDepartment(
       PersonalProvider PersonalCase) async {
     try {
       var Items = await Employee_DepartmentBLL.Get_EmployeeDepartment(
@@ -35,6 +35,9 @@ class _MainActivityState extends State<MainActivity> {
         IntiteStatus = -1;
       return Items;
     } catch (Excption) {}
+
+
+    return null;
   }
 
   @override
@@ -43,7 +46,7 @@ class _MainActivityState extends State<MainActivity> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     return Scaffold(
         appBar: MainBar(PersonalCase,context),
-        body: FutureBuilder(
+        body: FutureBuilder<List<Employee_DepartmentBLL>?>(
             future: LoadDepartment(PersonalCase),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -68,9 +71,9 @@ class _MainActivityState extends State<MainActivity> {
                             shrinkWrap: true,
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, int i) {
-                              return DepartmentCard(snapshot.data[i],
+                              return DepartmentCard(snapshot.data![i],
                                   () {
-                                    PersonalCase.SelectedDepartment = snapshot.data[i];
+                                    PersonalCase.SelectedDepartment = snapshot.data![i];
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) => OrderList()));

@@ -101,7 +101,7 @@ class _QualityItemsListState extends State<QualityItemsList> {
           dense: true,
           selected: true,
         ),
-        FutureBuilder(
+        FutureBuilder<List<Quality_ItemsBLL>?> (
           future: LoadingOpenPage(PersonalCase, CaseProvider),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -149,13 +149,13 @@ class _QualityItemsListState extends State<QualityItemsList> {
                   primary: false,
                   childAspectRatio:getScreenHeight() >1100?3/ 1.5 :7/ 6,
                   crossAxisCount: 3,
-                  children: List.generate(snapshot.data.length, (index) {
+                  children: List.generate(snapshot.data!.length, (index) {
                     return GestureDetector(
                       onTap: () async {
-                        await OnTapQualityItem(snapshot.data[index], index);
+                        await OnTapQualityItem(snapshot.data![index], index);
                       },
                       child: ButtonWithNumber(
-                        text: snapshot.data[index].Item_Name,
+                        text: snapshot.data![index].Item_Name,
                         buttonWidth: getScreenWidth()/2,
                         buttonHegiht: getScreenHeight()/6,
                         btnBgColor: selectedList.contains(index)
@@ -163,7 +163,7 @@ class _QualityItemsListState extends State<QualityItemsList> {
                             : ArgonColors.myOrange,
                         textSize: ArgonSize.Header4,
                         topRight: CircleShape(
-                            text: (snapshot.data[index].Amount ?? 0).toString(),
+                            text: (snapshot.data![index].Amount ?? 0).toString(),
                             width: ArgonSize.WidthSmall,
                             height: ArgonSize.WidthSmall,
                             fontSize: ArgonSize.Header5

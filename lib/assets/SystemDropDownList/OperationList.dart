@@ -21,7 +21,7 @@ class _Operation_ListState extends State<Operation_List> {
   final TextEditingController SearchController = new TextEditingController();
   int SelectedItem = -1;
 
-  Widget FilterItem( VoidCallback   onSearchTextChanged) =>
+  Widget FilterItem( Function(String)   onSearchTextChanged) =>
       new Container(
         height: ArgonSize.WidthMedium,
 

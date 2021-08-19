@@ -117,13 +117,13 @@ class _MeasureSizeSample_ListState extends State<MeasureSizeSample_List> {
                     // }),
                     Tb_InlineDikimList2(
                       OnClickItems: (int Index) {
-                        if (snapshot.data[Index].Status ==
+                        if (snapshot.data![Index].Status ==
                             DikimInlineStatus.Open.index)
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Measuer_Sample(
-                                      RoundItem: snapshot.data[Index])));
+                                      RoundItem: snapshot.data![Index])));
                       },
                       Items: snapshot.data,
                       Headers: <Widget>[

@@ -39,7 +39,7 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     OperationList =
-    await OperationBLL.Get_Operation(PersonalCase.SelectedTest.Id);
+    await OperationBLL.Get_Operation(PersonalCase.SelectedTest!.Id);
     OperatorList = await EmployeesBLL.Get_Employees();
     if (OperationList != null && OperatorList != null) {
       IntiteStatus = 1;
@@ -160,7 +160,7 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
             PersonalCase: PersonalCase,
             Items: snapshot.data,
             OnClickItems: (int Index) async {
-              var UserQuality = snapshot.data[Index];
+              var UserQuality = snapshot.data![Index];
               bool Result = await UserQuality.Delete_User_QualityTracking_Detail();
 
               if (Result)

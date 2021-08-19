@@ -24,7 +24,7 @@ class _Employee_ListState extends State<Employee_List> {
   final TextEditingController SearchController = new TextEditingController();
   int SelectedItem = -1;
 
-  Widget FilterItem(Function onSearchTextChanged()) {
+  Widget FilterItem(Function(String) onSearchTextChanged) {
     return Container(
       height: ArgonSize.WidthMedium,
       child: new Card(

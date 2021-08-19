@@ -126,7 +126,7 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                       Items: snapshot.data!,
                       PersonalCase: PersonalCase,
                       OnClickItems: (int Index) {
-                        if (snapshot.data[Index].CheckStatus ==
+                        if (snapshot.data![Index].CheckStatus ==
                             DikimInlineStatus.Open.index)
                           Navigator.push(
                               context,
@@ -134,7 +134,7 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                                 builder: (context) =>
                                     Dikim_InlineEmployeeOperationControl(
                                         EmployeeOperation:
-                                            snapshot.data[Index]),
+                                            snapshot.data![Index]),
                               ));
                       },
                     ),

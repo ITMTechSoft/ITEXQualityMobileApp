@@ -7,7 +7,6 @@ import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Dikim_InlineControl/Dikim_EmployeeOperationMerge.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
-import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 import 'package:itex_soft_qualityapp/assets/SystemResuableList/MeasuerTestTable.dart';
 
 import 'MeasureItemControl.dart';
@@ -124,7 +123,7 @@ class _Measuer_SampleState extends State<Measuer_Sample> {
                       Items: snapshot.data,
                       PersonalCase: PersonalCase,
                       OnClickItems: (int Index) {
-                        if (snapshot.data[Index].CheckStatus ==
+                        if (snapshot.data![Index].CheckStatus ==
                             DikimInlineStatus.Open.index)
                           Navigator.push(
                               context,
@@ -132,7 +131,7 @@ class _Measuer_SampleState extends State<Measuer_Sample> {
                                 builder: (context) =>
                                     MeasureItem_Control(
                                         EmployeeOperation:
-                                        snapshot.data[Index]),));
+                                        snapshot.data![Index]),));
                       },
                     ),
                   ],

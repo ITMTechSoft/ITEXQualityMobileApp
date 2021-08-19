@@ -123,7 +123,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                             icon: Icon(Icons.keyboard_arrow_down),
                             iconSize: 40,
                             elevation: 40,
-                            onChanged: (LanguagesBLL newValue) {
+                            onChanged: (LanguagesBLL? newValue) {
                               setState(() {
                                 SharedPref.SelLanguage = CurrentLanguage = newValue;
                               });

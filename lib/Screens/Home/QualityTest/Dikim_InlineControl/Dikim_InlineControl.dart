@@ -164,7 +164,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Dikim_InlineRound(
-                                      RoundItem: snapshot.data[Index])));
+                                      RoundItem: snapshot.data![Index])));
                       },
                       Items: snapshot.data!,
                       Headers: <Widget>[

@@ -62,7 +62,7 @@ class _Dikim_LastControlState extends State<Dikim_LastControl> {
                 PersonalCase: PersonalCase,
                 Items: snapshot.data,
                 OnClickItems: (int Index) async {
-                  CaseProvider.ModelOrderMatrix = snapshot.data[Index];
+                  CaseProvider.ModelOrderMatrix = snapshot.data![Index];
                   CaseProvider.QualityTracking = await QualityDept_ModelOrder_TrackingBLL.GetOrCreate_QualityDept_ModelOrder_Tracking(
                       PersonalCase.GetCurrentUser().Id,
                       PersonalCase.SelectedTest!.Id,
