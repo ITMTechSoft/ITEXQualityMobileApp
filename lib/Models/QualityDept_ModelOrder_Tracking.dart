@@ -220,12 +220,13 @@ class QualityDept_ModelOrder_TrackingBLL {
           int Order_Id, int DeptModelOrder_QualityTest_Id) async {
     List<QualityDept_ModelOrder_TrackingBLL> ItemList;
     try {
-      var response = await http.get(SharedPref.GetWebApiUrl(
-              WebApiMethod.Get_Quality_ModelOrder_Tracking) +
-          "?Order_Id=" +
-          Order_Id.toString() +
-          "&DeptModelOrder_QualityTest_Id=" +
-          DeptModelOrder_QualityTest_Id.toString());
+
+      Map<String,String> qParams = {
+        'Order_Id': Order_Id.toString(),
+        'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id.toString()
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+              WebApiMethod.Get_Quality_ModelOrder_Tracking,qParams));
 
       // print(response.request);
       if (response.statusCode == 200) {
@@ -501,10 +502,12 @@ class QualityDept_ModelOrder_TrackingBLL {
 
   Future<bool> CloseTanifSample() async {
     try {
+      Map<String,String> qParams = {
+        'QualityDept_ModelOrder_Tracking_Id':Id.toString()
+      };
+
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Set_CloseTanifSample) +
-              "?QualityDept_ModelOrder_Tracking_Id=" +
-              Id.toString());
+          SharedPref.GetWebApiUri(WebApiMethod.Set_CloseTanifSample,qParams));
 
       if (response.statusCode == 200) {
         return true;
@@ -518,10 +521,14 @@ class QualityDept_ModelOrder_TrackingBLL {
 
   Future<bool> CloseDikimInlineTur() async {
     try {
+
+
+      Map<String,String> qParams = {
+        'QualityDept_ModelOrder_Tracking_Id':Id.toString()
+      };
+
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.CloseDikimInlineTur) +
-              "?QualityDept_ModelOrder_Tracking_Id=" +
-              Id.toString());
+          SharedPref.GetWebApiUri(WebApiMethod.CloseDikimInlineTur,qParams));
 
       if (response.statusCode == 200) {
         return true;

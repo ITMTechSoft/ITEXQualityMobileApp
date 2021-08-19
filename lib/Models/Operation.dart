@@ -293,13 +293,15 @@ class OperationBLL {
   //#endregion
 
   //#region GetWebApiUrl
-  static Future<List<OperationBLL>> Get_Operation(int DeptModelOrder_QualityTest_Id) async {
-    List<OperationBLL> ItemList;
+  static Future<List<OperationBLL>?> Get_Operation(int DeptModelOrder_QualityTest_Id) async {
+    List<OperationBLL>? ItemList;
     try {
+
+      Map<String,String> qParams = {
+        'DeptModelOrder_QualityTest_Id':DeptModelOrder_QualityTest_Id.toString()
+      };
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_ModelOrderOperation) +
-              "?DeptModelOrder_QualityTest_Id=" +
-              DeptModelOrder_QualityTest_Id.toString());
+          SharedPref.GetWebApiUri(WebApiMethod.Get_ModelOrderOperation,qParams));
 
       print(SharedPref.GetWebApiUrl(WebApiMethod.Get_ModelOrderOperation) +
           "?DeptModelOrder_QualityTest_Id=" +

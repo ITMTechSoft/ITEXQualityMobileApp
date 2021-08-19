@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'RoundedButtons.dart';
 
 
 
 class LoginRoundedButton extends StatelessWidget {
-  final Function? onPressed;
+  final Function()? onPressed;
   final String? label;
   final String? heroTag;
   const LoginRoundedButton({this.onPressed, this.label, this.heroTag});

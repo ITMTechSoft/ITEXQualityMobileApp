@@ -71,12 +71,13 @@ class Criteria_ModelOrderBLL {
       int DeptModelOrder_QualityTest_Id) async {
     Criteria_ModelOrderBLL Item = new Criteria_ModelOrderBLL();
     try {
-      String URL =
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_Criteria_ModelOrder) +
-              "?DeptModelOrder_QualityTest_Id=" +
-              DeptModelOrder_QualityTest_Id.toString();
-      print(URL);
-      var response = await http.get(URL);
+      Map<String, String> qParams = {
+        'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id.toString(),
+      };
+      var response = await http.get(
+          SharedPref.GetWebApiUri(WebApiMethod.Get_Criteria_ModelOrder,qParams)
+      );
+
 
       if (response.statusCode == 200) {
         Item.LoadFromJson(json.decode(response.body));

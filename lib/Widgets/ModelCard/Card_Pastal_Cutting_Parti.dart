@@ -22,7 +22,7 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
   TextEditingController Fabric_Type = new TextEditingController();
 
   /// DELETE ITEM FUNCTION
-  Future<bool> DeleteItem() async {
+  Future<bool?> DeleteItem() async {
     bool Criteria = await widget.Card_Item.DeleteEntity();
 
     print(widget.Card_Item.Id);
@@ -171,7 +171,7 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
                               SecondActionLable:
                               PersonalCase.GetLable(ResourceKey.Cancel),
                               OnFirstAction: () async {
-                                bool result = await DeleteItem();
+                                bool? result = await DeleteItem();
                                 if (result != null) Navigator.of(context).pop();
                                 if (result == true) {
                                   final snackBar = SnackBar(

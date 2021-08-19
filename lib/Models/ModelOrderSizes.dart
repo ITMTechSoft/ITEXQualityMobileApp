@@ -6,21 +6,21 @@ import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 class ModelOrderSizesBLL {
   //#region Properties
   int Id;
-  int Size_Id;
-  int Order_id;
-  DateTime CreateDate;
-  DateTime LastUpdateDate;
-  int CreatedBy;
-  int LastUpdateBy;
-  String CreateUser_FullName;
-  String UpdateUser_FullName;
-  String SizeParam_StringVal;
-  int SizeEntityOrder;
-  int Model_id;
-  int Sample_Number;
-  int Sample_Amount;
-  int Error_Amount;
-  int ErrorPerc;
+  int? Size_Id;
+  int? Order_id;
+  DateTime? CreateDate;
+  DateTime? LastUpdateDate;
+  int? CreatedBy;
+  int? LastUpdateBy;
+  String? CreateUser_FullName;
+  String? UpdateUser_FullName;
+  String? SizeParam_StringVal;
+  int? SizeEntityOrder;
+  int? Model_id;
+  int? Sample_Number;
+  int? Sample_Amount;
+  int? Error_Amount;
+  int? ErrorPerc;
 
   //#endregion
 
@@ -89,7 +89,7 @@ class ModelOrderSizesBLL {
         'LastUpdateDate': LastUpdateDate.toString(),
         'CreatedBy': CreatedBy.toString(),
         'LastUpdateBy': LastUpdateBy.toString(),
-        'Param_StringVal': SizeParam_StringVal,
+        'Param_StringVal': SizeParam_StringVal.toString(),
         'Model_id': Model_id.toString(),
         'SizeEntityOrder': SizeEntityOrder.toString(),
         'Sample_Amount': Sample_Amount.toString(),
@@ -100,14 +100,16 @@ class ModelOrderSizesBLL {
   //#endregion
 
   //#region GetWebApiUrl
-  static Future<List<ModelOrderSizesBLL>> Get_ModelOrderSizes(
+  static Future<List<ModelOrderSizesBLL>?> Get_ModelOrderSizes(
       int Order_Id) async {
-    List<ModelOrderSizesBLL> ItemList;
+    List<ModelOrderSizesBLL>? ItemList;
     try {
+
+      Map<String,String> qParams = {
+        'Order_Id':Order_Id.toString()
+      };
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_ModelOrderSizes) +
-              "?Order_Id=" +
-              Order_Id.toString());
+          SharedPref.GetWebApiUri(WebApiMethod.Get_ModelOrderSizes,qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
@@ -121,9 +123,9 @@ class ModelOrderSizesBLL {
     return ItemList;
   }
 
-  static Future<List<ModelOrderSizesBLL>> Get_ModelOrderSizes_CuttingControl(
+  static Future<List<ModelOrderSizesBLL>?> Get_ModelOrderSizes_CuttingControl(
       int Order_Id, int DeptModelOrder_QualityTest_Id) async {
-    List<ModelOrderSizesBLL> ItemList = null;
+    List<ModelOrderSizesBLL>? ItemList ;
     try {
       Map<String, String> qParams = {
         'Order_Id': Order_Id.toString(),

@@ -14,7 +14,7 @@ class _OrderListState extends State<OrderList> {
   int IntiteStatus = 0;
   final TextEditingController SearchController = new TextEditingController();
 
-  Future<List<QualityDepartment_ModelOrderBLL>> LoadEmployeeOrders(
+  Future<List<QualityDepartment_ModelOrderBLL>?> LoadEmployeeOrders(
       PersonalProvider PersonalCase) async {
     try {
       List<QualityDepartment_ModelOrderBLL> MainItems =
@@ -47,7 +47,7 @@ class _OrderListState extends State<OrderList> {
       },
           context:  context
       ),
-      body: FutureBuilder(
+      body: FutureBuilder<List<QualityDepartment_ModelOrderBLL>?>(
         future: LoadEmployeeOrders(PersonalCase),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -81,10 +81,10 @@ class _OrderListState extends State<OrderList> {
                       ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          itemCount: snapshot.data.length,
+                          itemCount: snapshot.data!.length,
                           itemBuilder: (context, int i) {
-                            return OrderCard(Item:snapshot.data[i], OnTap:() {
-                              PersonalCase.SelectedOrder = snapshot.data[i];
+                            return OrderCard(Item:snapshot.data![i], OnTap:() {
+                              PersonalCase.SelectedOrder = snapshot.data![i];
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

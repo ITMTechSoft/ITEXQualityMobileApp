@@ -4,18 +4,18 @@ import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 
 class GroupType {
-  static String KalityItem = "KITM";
-  static String FirstQuality = "FKAL";
+  static String KalityItem    = "KITM";
+  static String FirstQuality  = "FKAL";
   static String SecondQuality = "SKAL";
-  static String TamirQuality = "TKAL";
+  static String TamirQuality  = "TKAL";
 }
 
 class Model_Order_ControlBLL {
   //#region Properties
-  int? Quality_Items_Id;
+  int Quality_Items_Id;
   String Control_Type;
   int? OrderSizeColorDetail_Id;
-  int? Order_Id;
+  int Order_Id;
   int? Matrix_Control_Amount;
   int? Employee_Matrix_Amount;
   int QualityDept_ModelOrder_Tracking_Id;
@@ -74,8 +74,8 @@ class Model_Order_ControlBLL {
   //#endregion
 
   //#region GetWebApiUrl
-  Future<List<Model_Order_ControlBLL>> Get_Model_Order_Control() async {
-    List<Model_Order_ControlBLL> ItemList;
+  Future<List<Model_Order_ControlBLL>?> Get_Model_Order_Control() async {
+    List<Model_Order_ControlBLL>? ItemList;
     try {
       final String url =
           SharedPref.GetWebApiUrl(WebApiMethod.Get_Model_Order_Control);

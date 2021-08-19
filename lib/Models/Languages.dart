@@ -10,9 +10,9 @@ class LanguagesBLL {
   //#region Properties
   int Id;
   String CultureName;
-  String EnglishName;
-  bool IsRtl;
-  String NativeName;
+  String? EnglishName;
+  bool? IsRtl;
+  String? NativeName;
 
   //#endregion
 
@@ -45,9 +45,9 @@ class LanguagesBLL {
   Map<String, String> toPost() => {
         'Id': Id.toString(),
         'CultureName': CultureName,
-        'EnglishName': EnglishName,
+        'EnglishName': EnglishName??'',
         'IsRtl': IsRtl.toString(),
-        'NativeName': NativeName,
+        'NativeName': NativeName??'',
       };
 
   //#endregion

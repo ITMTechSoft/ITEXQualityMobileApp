@@ -64,7 +64,7 @@ class _Criteria_TestState extends State<Criteria_Test> {
             dense: true,
             selected: true,
           ),
-          FutureBuilder(
+          FutureBuilder<Criteria_ModelOrderBLL>(
             future: LoginFunction(PersonalCase),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -78,7 +78,7 @@ class _Criteria_TestState extends State<Criteria_Test> {
                           child: new Column(
                             children: <Widget>[
                               Html(
-                                data: snapshot.data!.HTML_Data ?? "",
+                                data: snapshot.data!.HTML_Data   ?? "",
                               ),
                             ],
                           )),

@@ -80,7 +80,7 @@ class _Accessory_ControlState extends State<Accessory_Control> {
                         PersonalCase.GetLable(ResourceKey.Checks_Quantity)),
                   ],
                   Items: snapshot.data!,
-                  OnClickItems: (int Index) {
+                  OnClickItems: (Index) {
                     showDialog(
                         context: context,
                         builder: (cntx) => Container(

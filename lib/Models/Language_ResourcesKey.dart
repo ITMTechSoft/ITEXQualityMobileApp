@@ -115,15 +115,18 @@ class Language_ResourcesKeyBLL {
   //#endregion
 
   //#region GetWebApiUrl
-  static Future<List<Language_ResourcesKeyBLL>> Get_Language_ResourcesKey(
+  static Future<List<Language_ResourcesKeyBLL>?> Get_Language_ResourcesKey(
       int Language_Id) async {
-    List<Language_ResourcesKeyBLL> ItemList;
+    List<Language_ResourcesKeyBLL>? ItemList;
     try {
+
+
+      Map<String,String> qParams = {
+        'Language_Id':Language_Id.toString()
+      };
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_Language_ResourcesKey) +
-              "?Language_Id=" +
-              Language_Id.toString()
-              );
+          SharedPref.GetWebApiUri(WebApiMethod.Get_Language_ResourcesKey,qParams)
+      );
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

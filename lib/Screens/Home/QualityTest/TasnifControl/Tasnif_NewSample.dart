@@ -203,7 +203,7 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                               child: DropDowndList<GroupsBLL>(
                                   CurrentItem: SelectedItem,
                                   Items:
-                                      widget.TansifGroup.map((GroupsBLL value) {
+                                      widget.TansifGroup?.map((GroupsBLL value) {
                                     return DropdownMenuItem<GroupsBLL>(
                                       value: value,
                                       child: Text(value.Group_Name),

@@ -99,16 +99,18 @@ class Quality_ItemsBLL {
 
   //#region GetWebApiUrl
 
-  static Future<List<Quality_ItemsBLL>> Get_Quality_Items_WithValue(
-      String GroupType,int Employee_Id,int Matrix_Id
-      ) async {
+  static Future<List<Quality_ItemsBLL>?> Get_Quality_Items_WithValue(
+      String GroupType,int Employee_Id,int Matrix_Id) async {
     List<Quality_ItemsBLL> ItemList;
     try {
+
+      Map<String,String > qParams = {
+        'GroupType':GroupType,
+        'Employee_Id':Employee_Id.toString() ,
+        'OrderSizeColorDetail_Id': Matrix_Id.toString()
+      }
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_Quality_Items_WithValue) +
-              "?GroupType=" + GroupType +
-              "&Employee_Id=" + Employee_Id.toString() +
-              "&OrderSizeColorDetail_Id=" + Matrix_Id.toString()
+          SharedPref.GetWebApiUri(WebApiMethod.Get_Quality_Items_WithValue,qParams)
       );
 
       print(response.request);
@@ -125,14 +127,15 @@ class Quality_ItemsBLL {
     return ItemList;
   }
 
-  static Future<List<Quality_ItemsBLL>> Get_Quality_Items(
-      String GroupType
-      ) async {
+  static Future<List<Quality_ItemsBLL>?> Get_Quality_Items(String GroupType) async {
     List<Quality_ItemsBLL> ItemList;
     try {
+
+      Map<String,String> qParams = {
+        'GroupType':GroupType
+      };
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_Quality_Items) +
-              "?GroupType=" + GroupType
+          SharedPref.GetWebApiUri(WebApiMethod.Get_Quality_Items,qParams)
       );
 
       if (response.statusCode == 200) {
@@ -148,14 +151,14 @@ class Quality_ItemsBLL {
   }
 
 
-  static Future<Quality_ItemsBLL> Get_StitchQuality_Items(
-      String GroupType
-      ) async {
+  static Future<Quality_ItemsBLL> Get_StitchQuality_Items(String GroupType) async {
     Quality_ItemsBLL Item = new Quality_ItemsBLL();
     try {
+      Map<String,String> qParams = {
+        'GType':GroupType
+      };
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_StitchQuality_Items) +
-              "?GType=" + GroupType
+          SharedPref.GetWebApiUri(WebApiMethod.Get_StitchQuality_Items,qParams)
       );
 
       print(response.request);

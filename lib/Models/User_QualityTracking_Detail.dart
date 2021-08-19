@@ -251,12 +251,14 @@ class User_QualityTracking_DetailBLL {
           {int Quality_Items_Id = 0}) async {
     List<User_QualityTracking_DetailBLL> ItemList;
     try {
-      var response = await http.get(SharedPref.GetWebApiUrl(
-              WebApiMethod.Get_User_QualityTracking_Detail) +
-          "?QualityDept_ModelOrder_Tracking_Id=" +
-          QualityDept_ModelOrder_Tracking_Id.toString() +
-          "&Quality_Items_Id=" +
-          Quality_Items_Id.toString());
+
+
+      Map<String,String> qParams = {
+        'QualityDept_ModelOrder_Tracking_Id':QualityDept_ModelOrder_Tracking_Id.toString(),
+        'Quality_Items_Id':Quality_Items_Id.toString()
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+              WebApiMethod.Get_User_QualityTracking_Detail,qParams) );
 
       print(response.request);
       if (response.statusCode == 200) {
@@ -448,10 +450,12 @@ class User_QualityTracking_DetailBLL {
   static Future<List<User_QualityTracking_DetailBLL>> Get_UserQualityTasnifControl( int DeptModelOrder_QualityTest_Id) async {
     List<User_QualityTracking_DetailBLL> ItemList;
     try {
+
+      Map<String,String> qParams = {
+        'GroupType':DeptModelOrder_QualityTest_Id.toString()
+      };
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_UserQualityTasnifControl) +
-              "?DeptModelOrder_QualityTest_Id=" +
-              DeptModelOrder_QualityTest_Id.toString());
+          SharedPref.GetWebApiUri(WebApiMethod.Get_UserQualityTasnifControl,qParams) );
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

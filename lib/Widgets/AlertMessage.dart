@@ -27,7 +27,7 @@ AlertPopupDialog(BuildContext context, String title, String Message,
           ));
 }
 
-AlertDialog AlertPopupDialogWithAction(
+ AlertPopupDialogWithAction(
   {required BuildContext context,
   required String title,
   required List<Widget> Children,

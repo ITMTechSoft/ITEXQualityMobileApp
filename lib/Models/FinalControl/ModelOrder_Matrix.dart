@@ -67,40 +67,40 @@ class ModelOrder_MatrixBLL {
         SizeColorNote = json['SizeColorNote'];
 
   Map<String, dynamic> toJson() => {
-        'Order_id': Order_id,
-        'Order_DeadLine': Order_DeadLine,
-        'Order_Number': Order_Number,
-        'Model_id': Model_id,
-        'Model_Name': Model_Name,
-        'Analysis_Model_STD': Analysis_Model_STD,
-        'Customer_id': Customer_id,
-        'Customer_Name': Customer_Name,
-        'OrderSizeColorDetails_Id': OrderSizeColorDetails_Id,
-        'SizeColor_QTY': SizeColor_QTY,
-        'OrderSizeColor_QTY': OrderSizeColor_QTY,
-        'PlanSizeColor_QTY': PlanSizeColor_QTY,
-        'SizeName': SizeName,
-        'ColorName': ColorName,
-        'SizeColorNote': SizeColorNote,
-      };
+    'Order_id': Order_id,
+    'Order_DeadLine': Order_DeadLine,
+    'Order_Number': Order_Number,
+    'Model_id': Model_id,
+    'Model_Name': Model_Name,
+    'Analysis_Model_STD': Analysis_Model_STD,
+    'Customer_id': Customer_id,
+    'Customer_Name': Customer_Name,
+    'OrderSizeColorDetails_Id': OrderSizeColorDetails_Id,
+    'SizeColor_QTY': SizeColor_QTY,
+    'OrderSizeColor_QTY': OrderSizeColor_QTY,
+    'PlanSizeColor_QTY': PlanSizeColor_QTY,
+    'SizeName': SizeName,
+    'ColorName': ColorName,
+    'SizeColorNote': SizeColorNote,
+  };
 
   Map<String, String> toPost() => {
-        'Order_id': Order_id.toString(),
-        'Order_DeadLine': Order_DeadLine.toString(),
-        'Order_Number': Order_Number,
-        'Model_id': Model_id.toString(),
-        'Model_Name': Model_Name,
-        'Analysis_Model_STD': Analysis_Model_STD.toString(),
-        'Customer_id': Customer_id.toString(),
-        'Customer_Name': Customer_Name,
-        'OrderSizeColorDetails_Id': OrderSizeColorDetails_Id.toString(),
-        'SizeColor_QTY': SizeColor_QTY.toString(),
-        'OrderSizeColor_QTY': OrderSizeColor_QTY.toString(),
-        'PlanSizeColor_QTY': PlanSizeColor_QTY.toString(),
-        'SizeName': SizeName,
-        'ColorName': ColorName,
-        'SizeColorNote': SizeColorNote,
-      };
+    'Order_id': Order_id.toString(),
+    'Order_DeadLine': Order_DeadLine.toString(),
+    'Order_Number': Order_Number,
+    'Model_id': Model_id.toString(),
+    'Model_Name': Model_Name,
+    'Analysis_Model_STD': Analysis_Model_STD.toString(),
+    'Customer_id': Customer_id.toString(),
+    'Customer_Name': Customer_Name,
+    'OrderSizeColorDetails_Id': OrderSizeColorDetails_Id.toString(),
+    'SizeColor_QTY': SizeColor_QTY.toString(),
+    'OrderSizeColor_QTY': OrderSizeColor_QTY.toString(),
+    'PlanSizeColor_QTY': PlanSizeColor_QTY.toString(),
+    'SizeName': SizeName,
+    'ColorName': ColorName,
+    'SizeColorNote': SizeColorNote,
+  };
 
   //#endregion
 
@@ -109,12 +109,12 @@ class ModelOrder_MatrixBLL {
       int Order_Id, int OrderSizeColorDetails_Id) async {
     List<ModelOrder_MatrixBLL> ItemList;
     try {
+      Map<String, String> qParams = {
+        'Order_Id': Order_Id.toString(),
+        'OrderSizeColorDetails_Id': OrderSizeColorDetails_Id.toString(),
+      };
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_ModelOrder_Matrix) +
-              "?Order_Id=" +
-              Order_Id.toString() +
-              "&OrderSizeColorDetails_Id=" +
-              OrderSizeColorDetails_Id.toString());
+          SharedPref.GetWebApiUri(WebApiMethod.Get_ModelOrder_Matrix, qParams));
 
       print(response.request);
       if (response.statusCode == 200) {
@@ -132,10 +132,13 @@ class ModelOrder_MatrixBLL {
 
   Future<String> GetModelOrderImage() async {
     try {
+
+      Map<String, String> qParams = {
+        'Order_Id': Order_Id.toString(),
+
+      };
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_ModelOrder_Image) +
-              "?Order_Id=" +
-              this.Order_id.toString());
+          SharedPref.GetWebApiUri(WebApiMethod.Get_ModelOrder_Image,qParams));
 
       if (response.statusCode == 200) {
         String Image = json.decode(response.body);

@@ -141,13 +141,13 @@ class Input_Form extends StatelessWidget {
   final Widget? prefixIcon;
   final Function()? onTap;
   final Function(String)? onChanged;
-  final Function(String)? onValidator;
+  final Function()? onValidator;
   final TextEditingController? controller;
   final bool autofocus;
   final Color borderColor;
   final String? labelText;
   final String? labelHint;
-  final Function(String)? validator;
+  final String Function(String?)? validator;
   final TextInputType KType;
   final double InputHeight;
   final double? fontSize;

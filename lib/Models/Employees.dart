@@ -65,38 +65,38 @@ class EmployeesBLL {
         LoginMessage = json['LoginMessage'];
 
   Map<String, dynamic> toJson() => {
-        'Id': Id,
-        'Employee_Name': Employee_Name,
-        'Employee_Barcode': Employee_Barcode,
-        'Depart_id': Depart_id,
-        'Employee_Image': Employee_Image,
-        'Job_title_id': Job_title_id,
-        'WorkerStatus': WorkerStatus,
-        'Card_Code': Card_Code,
-        'Emp_Type_id': Emp_Type_id,
-        'Employee_Password': Employee_Password,
-        'Employee_User': Employee_User,
-        'Line_Id': Line_Id,
-        'ValidUser': ValidUser,
-        'LoginMessage': LoginMessage,
-      };
+    'Id': Id,
+    'Employee_Name': Employee_Name,
+    'Employee_Barcode': Employee_Barcode,
+    'Depart_id': Depart_id,
+    'Employee_Image': Employee_Image,
+    'Job_title_id': Job_title_id,
+    'WorkerStatus': WorkerStatus,
+    'Card_Code': Card_Code,
+    'Emp_Type_id': Emp_Type_id,
+    'Employee_Password': Employee_Password,
+    'Employee_User': Employee_User,
+    'Line_Id': Line_Id,
+    'ValidUser': ValidUser,
+    'LoginMessage': LoginMessage,
+  };
 
   Map<String, String> toPost() => {
-        'Id': this.Id.toString(),
-        'Employee_Name': this.Employee_Name,
-        'Employee_Barcode': this.Employee_Barcode,
-        'Depart_id': this.Depart_id.toString(),
-        'Employee_Image': this.Employee_Image.toString(),
-        'Job_title_id': this.Job_title_id.toString(),
-        'WorkerStatus': this.WorkerStatus.toString(),
-        'Card_Code': this.Card_Code,
-        'Emp_Type_id': this.Emp_Type_id.toString(),
-        'Employee_Password': this.Employee_Password,
-        'Employee_User': this.Employee_User,
-        'Line_Id': this.Line_Id.toString(),
-        'ValidUser': this.ValidUser.toString(),
-        'LoginMessage': this.LoginMessage.toString(),
-      };
+    'Id': this.Id.toString(),
+    'Employee_Name': this.Employee_Name,
+    'Employee_Barcode': this.Employee_Barcode,
+    'Depart_id': this.Depart_id.toString(),
+    'Employee_Image': this.Employee_Image.toString(),
+    'Job_title_id': this.Job_title_id.toString(),
+    'WorkerStatus': this.WorkerStatus.toString(),
+    'Card_Code': this.Card_Code,
+    'Emp_Type_id': this.Emp_Type_id.toString(),
+    'Employee_Password': this.Employee_Password,
+    'Employee_User': this.Employee_User,
+    'Line_Id': this.Line_Id.toString(),
+    'ValidUser': this.ValidUser.toString(),
+    'LoginMessage': this.LoginMessage.toString(),
+  };
 
 //#endregion
 
@@ -104,7 +104,7 @@ class EmployeesBLL {
   Future<void> login() async {
     try {
       final String url =
-          SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection);
+      SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection);
       print(url.toString());
       var response = await http.post(
         url,
@@ -142,13 +142,15 @@ class EmployeesBLL {
       final String url = SharedPref.GetWebApiUrl(WebApiMethod.Get_Version,
           WebApiDomain: "api/MaksitusTable");
       print(url.toString());
+
+
       var response = await http.get(url).timeout(const Duration(seconds: 70),
           onTimeout: () {
-        LoginMessage = "SERVER CAN'T BE REACHED";
+            LoginMessage = "SERVER CAN'T BE REACHED";
 
-        throw TimeoutException(
-            'The connection has timed out, Please try again!');
-      });
+            throw TimeoutException(
+                'The connection has timed out, Please try again!');
+          });
 
       if (response.statusCode == 200) {
         print(response.body);
@@ -165,12 +167,14 @@ class EmployeesBLL {
   /// TODO: WHAT IS THE DIFFERENCE BETWEEN LOGIN AND SIGNIN
   Sign_In(String UserName, String Password) async {
     EmployeesBLL CheckUserLogin =
-        new EmployeesBLL(Employee_User: UserName, Employee_Password: Password);
+    new EmployeesBLL(Employee_User: UserName, Employee_Password: Password);
     Map data = {'User': CheckUserLogin};
-    var jsonResponse = null;
-    var response = await http.post(
-        SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection),
-        body: data);
+
+    var url = Uri.parse( SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection));
+
+
+    var response = await http.post(url, body: data);
+
     if (response.statusCode == 200) {
       CheckUserLogin = EmployeesBLL.fromJson(json.decode(response.body));
     }
@@ -181,11 +185,15 @@ class EmployeesBLL {
     this.ValidUser = false;
   }
 
-  static Future<List<EmployeesBLL>> Get_Employees() async {
-    List<EmployeesBLL> ItemList;
+  static Future<List<EmployeesBLL>?> Get_Employees() async {
+    List<EmployeesBLL>? ItemList;
     try {
+
+      Map<String,String> qParams = {
+      };
+
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_Employees));
+          SharedPref.GetWebApiUri(WebApiMethod.Get_Employees,qParams));
 
       print(  SharedPref.GetWebApiUrl(WebApiMethod.Get_Employees));
       if (response.statusCode == 200) {
@@ -200,12 +208,15 @@ class EmployeesBLL {
     return ItemList;
   }
 
-  static Future<List<EmployeesBLL>> Get_EmployeesByOperation(int Operation_Id) async {
-    List<EmployeesBLL> ItemList;
+  static Future<List<EmployeesBLL>?> Get_EmployeesByOperation(int Operation_Id) async {
+    List<EmployeesBLL>? ItemList;
     try {
+
+      Map<String,String> qParams = {
+        'Operation_Id':Operation_Id.toString()
+      };
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_EmployeesByOperation)+
-              "?Operation_Id=" + Operation_Id.toString());
+          SharedPref.GetWebApiUri(WebApiMethod.Get_EmployeesByOperation,qParams));
 
 
       if (response.statusCode == 200) {

@@ -84,10 +84,13 @@ class Pastal_Cutting_PartiBLL {
   static Future<List<Pastal_Cutting_PartiBLL>> Get_Pastal_Cutting_Parti(int Order_Id) async {
     List<Pastal_Cutting_PartiBLL> ItemList;
     try {
+
+
+      Map<String,String> qParams = {
+        'Order_Id':Order_Id.toString()
+      };
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_Pastal_Cutting_Parti) +
-              "?Order_Id=" +
-              Order_Id.toString());
+          SharedPref.GetWebApiUri(WebApiMethod.Get_Pastal_Cutting_Parti, qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

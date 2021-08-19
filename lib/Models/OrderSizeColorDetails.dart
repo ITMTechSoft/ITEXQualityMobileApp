@@ -142,14 +142,16 @@ class OrderSizeColorDetailsBLL {
   //#endregion
 
   //#region GetWebApiUrl
-  static Future<List<OrderSizeColorDetailsBLL>> Get_OrderSizeColorDetails(
+  static Future<List<OrderSizeColorDetailsBLL>?> Get_OrderSizeColorDetails(
       int Order_id) async {
-    List<OrderSizeColorDetailsBLL> ItemList;
+    List<OrderSizeColorDetailsBLL>? ItemList;
     try {
+
+      Map<String,String> qParams = {
+        'Order_id':Order_id.toString()
+      };
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_OrderSizeColorDetails) +
-              "?Order_id=" +
-              Order_id.toString());
+          SharedPref.GetWebApiUri(WebApiMethod.Get_OrderSizeColorDetails,qParams));
 
       // print(response.request.toString());
       if (response.statusCode == 200) {

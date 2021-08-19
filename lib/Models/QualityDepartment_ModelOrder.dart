@@ -99,10 +99,11 @@ class QualityDepartment_ModelOrderBLL {
   static Get_QualityDepartment_ModelOrder(int Department_Id) async {
     List<QualityDepartment_ModelOrderBLL> ItemList;
     try {
-      var response = await http.get(SharedPref.GetWebApiUrl(
-              WebApiMethod.Get_QualityDepartment_ModelOrder) +
-          "?Department_Id=" +
-          Department_Id.toString());
+      Map<String,String> qParams = {
+        'Department_Id':Department_Id.toString()
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+              WebApiMethod.Get_QualityDepartment_ModelOrder,qParams) );
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
@@ -118,10 +119,12 @@ class QualityDepartment_ModelOrderBLL {
 //#endregion
   Future<String> GetModelOrderImage() async {
     try {
+
+      Map<String,String> qParams = {
+        'Order_Id':this.Order_Id.toString()
+      };
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_ModelOrder_Image) +
-              "?Order_Id=" +
-              this.Order_Id.toString());
+          SharedPref.GetWebApiUri(WebApiMethod.Get_ModelOrder_Image,qParams) );
 
       if (response.statusCode == 200) {
         String Image = json.decode(response.body);

@@ -70,7 +70,7 @@ class _QualityTestListState extends State<QualityTestList> {
     }
   }
 
-  int MandatoryCritieraAction(DepartmentModelOrder_QualityTestBLL TargetTest) {
+  void MandatoryCritieraAction(DepartmentModelOrder_QualityTestBLL TargetTest) {
     switch (TargetTest.QualityTest_Id) {
       case 1:
         Navigator.push(
