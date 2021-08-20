@@ -6,21 +6,21 @@ import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 class ModelOrder_MatrixBLL {
   //#region Properties
 
-  int Order_id;
-  DateTime Order_DeadLine;
-  String Order_Number;
-  int Model_id;
-  String Model_Name;
-  double Analysis_Model_STD;
-  int Customer_id;
-  String Customer_Name;
-  int OrderSizeColorDetails_Id;
-  int SizeColor_QTY;
-  int OrderSizeColor_QTY;
-  int PlanSizeColor_QTY;
-  String SizeName;
-  String ColorName;
-  String SizeColorNote;
+  int Order_id=0;
+  DateTime? Order_DeadLine;
+  String? Order_Number;
+  int? Model_id;
+  String? Model_Name;
+  double? Analysis_Model_STD;
+  int? Customer_id;
+  String? Customer_Name;
+  int? OrderSizeColorDetails_Id;
+  int? SizeColor_QTY;
+  int? OrderSizeColor_QTY;
+  int? PlanSizeColor_QTY;
+  String? SizeName;
+  String? ColorName;
+  String? SizeColorNote;
 
   //#endregion
 
@@ -87,19 +87,19 @@ class ModelOrder_MatrixBLL {
   Map<String, String> toPost() => {
     'Order_id': Order_id.toString(),
     'Order_DeadLine': Order_DeadLine.toString(),
-    'Order_Number': Order_Number,
+    'Order_Number': Order_Number??'',
     'Model_id': Model_id.toString(),
-    'Model_Name': Model_Name,
+    'Model_Name': Model_Name??'',
     'Analysis_Model_STD': Analysis_Model_STD.toString(),
     'Customer_id': Customer_id.toString(),
-    'Customer_Name': Customer_Name,
+    'Customer_Name': Customer_Name??'',
     'OrderSizeColorDetails_Id': OrderSizeColorDetails_Id.toString(),
     'SizeColor_QTY': SizeColor_QTY.toString(),
     'OrderSizeColor_QTY': OrderSizeColor_QTY.toString(),
     'PlanSizeColor_QTY': PlanSizeColor_QTY.toString(),
-    'SizeName': SizeName,
-    'ColorName': ColorName,
-    'SizeColorNote': SizeColorNote,
+    'SizeName': SizeName??'',
+    'ColorName': ColorName??'',
+    'SizeColorNote': SizeColorNote??'',
   };
 
   //#endregion

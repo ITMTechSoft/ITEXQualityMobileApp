@@ -17,7 +17,7 @@ class Pastal_Cutting_PartiBLL {
   String? Employee_Name;
 
   //#endregion
-
+  Pastal_Cutting_PartiBLL(){}
 
 
   //#region Json Mapping

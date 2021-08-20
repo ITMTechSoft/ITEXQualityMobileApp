@@ -20,7 +20,7 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
       PersonalProvider PersonalCase) async {
     List<DeptModOrderQuality_ItemsBLL>? Criteria =
         await DeptModOrderQuality_ItemsBLL.Get_CuttingPastalQuality_Items(
-            PersonalCase.GetCurrentUser().Id, PersonalCase.SelectedTest!.Id);
+            PersonalCase.GetCurrentUser().Id, PersonalCase.SelectedTest.Id);
     if (Criteria != null) {
       PersonalCase.SelectedTracking = await QualityDept_ModelOrder_TrackingBLL
           .GetOrCreate_QualityDept_ModelOrder_Tracking(

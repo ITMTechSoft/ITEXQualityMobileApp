@@ -156,7 +156,7 @@ class ThemeNotifier with ChangeNotifier {
 
 class SizeConfig {
   static MediaQueryData? _mediaQueryData;
-  static double? screenWidth;
+  static double? screenWidth ;
   static double? screenHeight;
   static double? defaultSize;
   static Orientation? orientation;
