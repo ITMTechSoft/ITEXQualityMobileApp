@@ -1,11 +1,9 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:itex_soft_qualityapp/Models/DeptModOrderQuality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/Employee_Department.dart';
-import 'package:itex_soft_qualityapp/Models/Employees.dart';
 import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDepartment_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
@@ -13,7 +11,6 @@ import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/ImageLoader.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
-import 'package:intl/intl.dart';
 
 Widget DepartmentCard(Employee_DepartmentBLL Item, Function() OnTap) {
   return Container(
@@ -27,12 +24,12 @@ Widget DepartmentCard(Employee_DepartmentBLL Item, Function() OnTap) {
         child: ListTile(
           onTap: OnTap,
           title: Text(
-            Item.Depart_Name,
+            Item.Depart_Name??'',
             style:
             TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.text),
           ),
           subtitle: Text(
-            Item.Depart_Name,
+            Item.Depart_Name??'',
             style: TextStyle(fontSize: ArgonSize.Header4),
           ),
         ),
@@ -62,7 +59,7 @@ Widget OneItem({required String ItemName,required String ItemValue,required Func
 }
 
 class OrderCard extends StatelessWidget {
-  Future<String> GetModelImage() async {
+  Future<String?> GetModelImage() async {
     return await Item.GetModelOrderImage();
   }
 
@@ -343,7 +340,7 @@ Widget TansifControlList(PersonalProvider PersonalCase,
                 PersonalCase.GetLable(ResourceKey.SizeName),
               )),
           Expanded(
-              child: LableTitle(Item.SizeName,
+              child: LableTitle(Item.SizeName??'',
                   color: ArgonColors.text, IsCenter: true)),
           Expanded(
               child: LableTitle(
@@ -431,12 +428,12 @@ Widget CuttingModelOrderMatrix(
               children: [
                 Expanded(
                     child: Center(
-                      child: LableTitle(Item.SizeParam_StringVal,
+                      child: LableTitle(Item.SizeParam_StringVal??'',
                           color: ArgonColors.text),
                     )),
                 Expanded(
                     child: Center(
-                      child: LableTitle(Item.ColorParam_StringVal,
+                      child: LableTitle(Item.ColorParam_StringVal??'',
                           color: ArgonColors.text),
                     )),
                 Expanded(
@@ -484,12 +481,12 @@ Widget TasnifModelOrderMatrix(
               children: [
                 Expanded(
                     child: Center(
-                      child: LableTitle(Item.SizeParam_StringVal,
+                      child: LableTitle(Item.SizeParam_StringVal??'',
                           color: ArgonColors.text),
                     )),
                 Expanded(
                     child: Center(
-                      child: LableTitle(Item.ColorParam_StringVal,
+                      child: LableTitle(Item.ColorParam_StringVal??'',
                           color: ArgonColors.text),
                     )),
                 Expanded(
@@ -711,15 +708,15 @@ class _Tb_InlineDikimListState extends State<Tb_InlineDikimList> {
                             Flex: 1),
                         TableLable(
                             DateFormat('HH:mm')
-                                .format(widget.Items[i].StartDate),
+                                .format(widget.Items[i].StartDate!),
                             Flex: 3),
                         TableLable(
                             widget.Items[i].EndDate != null
                                 ? DateFormat('HH:mm')
-                                .format(widget.Items[i].EndDate)
+                                .format(widget.Items[i].EndDate!)
                                 : "",
                             Flex: 3),
-                        Expanded(child: GetStatusIcon(widget.Items[i].Status)),
+                        Expanded(child: GetStatusIcon(widget.Items[i].Status!)),
                       ], IsSelectedItem: SelectedIndex == i),
                     );
                   }))
@@ -883,7 +880,7 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
                                 ),
                                 flex: 2),
                             Expanded(
-                                child: LableTitle(Item.Operation_Name,
+                                child: LableTitle(Item.Operation_Name??'',
                                     color: ArgonColors.text, IsCenter: true),
                                 flex: 2),
                             Expanded(
@@ -908,7 +905,7 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
                                 ),
                                 flex: 2),
                             Expanded(
-                                child: LableDateTime(Item.StartDate,
+                                child: LableDateTime(Item.StartDate!,
                                     Format: "HH:mm",
                                     color: ArgonColors.text,
                                     IsCenter: true)),
@@ -919,7 +916,7 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
                               flex: 2,
                             ),
                             Expanded(
-                                child: LableDateTime(Item.EndDate,
+                                child: LableDateTime(Item.EndDate!,
                                     Format: "HH:mm",
                                     color: ArgonColors.text,
                                     IsCenter: true)),
@@ -930,7 +927,7 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
-                              child: GetBoxInfo(Item.CheckStatus),
+                              child: GetBoxInfo(Item.CheckStatus!),
                               padding: EdgeInsets.all(5),
                             )
                           ],

@@ -18,7 +18,7 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
 
   Future<List<DeptModOrderQuality_ItemsBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
-    List<DeptModOrderQuality_ItemsBLL> Criteria =
+    List<DeptModOrderQuality_ItemsBLL>? Criteria =
         await DeptModOrderQuality_ItemsBLL.Get_CuttingPastalQuality_Items(
             PersonalCase.GetCurrentUser().Id, PersonalCase.SelectedTest!.Id);
     if (Criteria != null) {

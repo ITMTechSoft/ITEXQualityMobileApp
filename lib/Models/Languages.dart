@@ -1,15 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
-import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
+
 
 class LanguagesBLL {
   //#region Properties
   int Id;
-  String CultureName;
+  String? CultureName;
   String? EnglishName;
   bool? IsRtl;
   String? NativeName;
@@ -44,7 +38,7 @@ class LanguagesBLL {
 
   Map<String, String> toPost() => {
         'Id': Id.toString(),
-        'CultureName': CultureName,
+        'CultureName': CultureName??'',
         'EnglishName': EnglishName??'',
         'IsRtl': IsRtl.toString(),
         'NativeName': NativeName??'',

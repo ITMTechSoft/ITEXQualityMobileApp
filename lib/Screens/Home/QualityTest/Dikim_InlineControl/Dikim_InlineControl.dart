@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-import 'package:itex_soft_qualityapp/Models/Employees.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/QualityTest/Dikim_InlineControl/Dikim_InlineRound.dart';
@@ -24,7 +23,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
 
   Future<List<QualityDept_ModelOrder_TrackingBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
-    List<QualityDept_ModelOrder_TrackingBLL> Criteria =
+    List<QualityDept_ModelOrder_TrackingBLL>? Criteria =
         await QualityDept_ModelOrder_TrackingBLL
             .GetInlineDikim_QualityDept_ModelOrder_Tracking(
                 Employee_Id: PersonalCase.GetCurrentUser().Id,

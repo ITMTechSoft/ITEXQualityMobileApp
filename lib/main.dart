@@ -28,9 +28,7 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
 
   Future<bool> LoadingSharedPreference(PersonalProvider PersonalCase) async {
     return await PersonalCase.loadSharedPrefs();
-    // IsLoading =false
-    return PersonalCase.GetCurrentUser().ValidUser;
-    //await PersonalCase.Login();
+
   }
 
   @override

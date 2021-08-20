@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 
 class ImageLoader extends StatefulWidget {
-  Future<String>? LoadingImage;
-  ImageLoader({Key? key,@required this.LoadingImage}) : super(key: key);
+  Future<String?> LoadingImage;
+  ImageLoader({Key? key,required this.LoadingImage}) : super(key: key);
 
   @override
   _ImageLoaderState createState() => _ImageLoaderState();

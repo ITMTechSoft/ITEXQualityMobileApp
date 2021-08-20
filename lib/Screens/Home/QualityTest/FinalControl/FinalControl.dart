@@ -30,7 +30,7 @@ class _FinalControlState extends State<FinalControl> {
 
   Future<bool> LoadingOpenPage(SubCaseProvider CaseProvider) async {
     ModelOrder = await ModelOrder_MatrixBLL.Get_ModelOrder_Matrix(
-        CaseProvider.ModelOrderMatrix!.Order_Id,
+        CaseProvider.ModelOrderMatrix!.Order_Id!,
         CaseProvider.ModelOrderMatrix!.Id);
     var QualityList =
         await Quality_ItemsBLL.Get_Quality_Items(GroupType.FirstQuality);
@@ -238,12 +238,12 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
-      List<Model_Order_ControlBLL> ModelList =
+      List<Model_Order_ControlBLL>? ModelList =
           await widget.FirstQualityInfo.Get_Model_Order_Control();
 
       if (widget.FirstQualityInfo != null) {
         IntiteStatus = 1;
-        widget.FirstQualityInfo = ModelList[0];
+        widget.FirstQualityInfo = ModelList![0];
       } else {
         IntiteStatus = -1;
       }
@@ -388,14 +388,14 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
-      List<Model_Order_ControlBLL> ModelList =
+      List<Model_Order_ControlBLL>? ModelList =
           await widget.SecondQualityInfo.Get_Model_Order_Control();
 
       SecqStitch = await Quality_ItemsBLL.Get_StitchQuality_Items(GroupType.SecondQuality);
 
       if (widget.SecondQualityInfo != null) {
         IntiteStatus = 1;
-        widget.SecondQualityInfo = ModelList[0];
+        widget.SecondQualityInfo = ModelList![0];
       } else {
         IntiteStatus = -1;
       }
@@ -515,7 +515,7 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
     try {
-      List<Model_Order_ControlBLL> ModelList =
+      List<Model_Order_ControlBLL>? ModelList =
           await widget.TamirQualityInfo.Get_Model_Order_Control();
       
       TamirStitch = await Quality_ItemsBLL.Get_StitchQuality_Items(GroupType.TamirQuality);
@@ -523,7 +523,7 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
 
       if (widget.TamirQualityInfo != null) {
         IntiteStatus = 1;
-        widget.TamirQualityInfo = ModelList[0];
+        widget.TamirQualityInfo = ModelList![0];
       } else {
         IntiteStatus = -1;
       }

@@ -10,7 +10,7 @@ class GlobalizationBLL {
   static List<Language_ResourcesKeyBLL>? GlobalResList;
 
 
-  static String Get_GlobalItem(ResourceKey Key) {
+  static String? Get_GlobalItem(ResourceKey Key) {
     try {
       if (GlobalResList != null) {
         var Item =

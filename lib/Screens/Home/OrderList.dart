@@ -23,7 +23,7 @@ class _OrderListState extends State<OrderList> {
                   PersonalCase.SelectedDepartment!.Department_Id);
 
       var Items =
-          MainItems.where((i) => i.Order_Number.contains(SearchController.text))
+          MainItems.where((i) => i.Order_Number!.contains(SearchController.text))
               .toList();
 
       if (Items != null)

@@ -23,7 +23,10 @@ class Model_Order_ControlBLL {
   //#endregion
 
   Model_Order_ControlBLL(
-      { required this.Control_Type,
+
+      { required this.Quality_Items_Id,
+        required this.Order_Id,
+        required this.Control_Type,
          this.OrderSizeColorDetail_Id,
         required  this.QualityDept_ModelOrder_Tracking_Id}) {}
 
@@ -77,17 +80,26 @@ class Model_Order_ControlBLL {
   Future<List<Model_Order_ControlBLL>?> Get_Model_Order_Control() async {
     List<Model_Order_ControlBLL>? ItemList;
     try {
-      final String url =
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_Model_Order_Control);
+      // final String url =
+      //     SharedPref.GetWebApiUrl(WebApiMethod.Get_Model_Order_Control);
+      //
+      // var response = await http.post(url,
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/json; charset=UTF-8',
+      //     },
+      //     body: jsonEncode(toPost()));
+      //
+      // print(url);
+      // print(jsonEncode(toPost()));
 
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(toPost()));
 
-      print(url);
-      print(jsonEncode(toPost()));
+      String val = jsonEncode(this.toPost());
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Get_Model_Order_Control));
+      var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
             .map((i) => Model_Order_ControlBLL.fromJson(i))

@@ -105,7 +105,7 @@ class ModelOrder_MatrixBLL {
   //#endregion
 
   //#region GetWebApiUrl
-  static Future<ModelOrder_MatrixBLL> Get_ModelOrder_Matrix(
+  static Future<ModelOrder_MatrixBLL?> Get_ModelOrder_Matrix(
       int Order_Id, int OrderSizeColorDetails_Id) async {
     List<ModelOrder_MatrixBLL> ItemList;
     try {
@@ -130,7 +130,7 @@ class ModelOrder_MatrixBLL {
     return null;
   }
 
-  Future<String> GetModelOrderImage() async {
+  Future<String?> GetModelOrderImage() async {
     try {
 
       Map<String, String> qParams = {

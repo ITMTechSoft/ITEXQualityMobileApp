@@ -4,7 +4,6 @@ import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/assets/Component/DateTimeComponent.dart';
-import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 class Card_Pastal_Cutting_Parti extends StatefulWidget {
@@ -68,7 +67,7 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
                             '${PersonalCase.GetLable(ResourceKey.Fabric_Type)}',
                             FontSize: ArgonSize.Header4)),
                     Expanded(
-                        child: LableTitle(widget.Card_Item.Fabric_Type,
+                        child: LableTitle(widget.Card_Item.Fabric_Type??'',
                             color: ArgonColors.text,
                             IsCenter: true,
                             FontSize: ArgonSize.Header4)),
@@ -85,7 +84,7 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
                             '${PersonalCase.GetLable(ResourceKey.FabricRestingTime)}',
                             FontSize: ArgonSize.Header4)),
                     Expanded(
-                        child: LableTitle(widget.Card_Item.FabricRestingTime,
+                        child: LableTitle(widget.Card_Item.FabricRestingTime??'',
                             color: ArgonColors.text,
                             IsCenter: true,
                             FontSize: ArgonSize.Header4)),
@@ -102,7 +101,7 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
                           FontSize: ArgonSize.Header4),
                     ),
                     Expanded(
-                        child: LableDateTime(widget.Card_Item.Pastel_Laying,
+                        child: LableDateTime(widget.Card_Item.Pastel_Laying!,
                             color: ArgonColors.text,
                             IsCenter: true,
                             FontSize: ArgonSize.Header4)),
@@ -120,7 +119,7 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
                             '${PersonalCase.GetLable(ResourceKey.CuttingDate)}',
                             FontSize: ArgonSize.Header4)),
                     Expanded(
-                        child: LableDateTime(widget.Card_Item.CuttingDate,
+                        child: LableDateTime(widget.Card_Item.CuttingDate!,
                             color: ArgonColors.text,
                             IsCenter: true,
                             FontSize: ArgonSize.Header4)),
@@ -229,7 +228,7 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
         widget.Card_Item != null ? widget.Card_Item!.FabricRestingTime : '');
     return Scaffold(
         appBar: DetailBar(
-            Title: PersonalCase.SelectedTest!.Test_Name,
+            Title: PersonalCase.SelectedTest!.Test_Name??'',
             PersonalCase: PersonalCase,
             OnTap: () {
               Navigator.pop(context);

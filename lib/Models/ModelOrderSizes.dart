@@ -24,7 +24,7 @@ class ModelOrderSizesBLL {
 
   //#endregion
 
-  ModelOrderSizesBLL() {}
+  ModelOrderSizesBLL({required this.Id}) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {

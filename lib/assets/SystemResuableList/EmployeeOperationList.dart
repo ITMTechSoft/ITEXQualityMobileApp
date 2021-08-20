@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
-import 'package:itex_soft_qualityapp/Screens/Home/QualityTest/FinalControl/SewingEmployeeControl.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Utility/ResourceKeys.dart';
 import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
@@ -58,9 +56,9 @@ class _EmployeeOperationListState extends State<EmployeeOperationList> {
                         });
                       },
                       child: TableColumn(children: [
-                        TableLable(widget.Items![i].Operation_Name),
-                        TableLable(widget.Items![i].Inline_Employee_Name),
-                        LableDateTime(widget.Items![i].Create_Date),
+                        TableLable(widget.Items![i].Operation_Name??''),
+                        TableLable(widget.Items![i].Inline_Employee_Name??''),
+                        LableDateTime(widget.Items![i].Create_Date!),
              
 
                         Container(

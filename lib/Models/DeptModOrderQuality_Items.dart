@@ -1,7 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
@@ -9,27 +6,30 @@ import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 class DeptModOrderQuality_ItemsBLL {
   //#region Properties
   int Id;
-  int DeptModelOrder_QualityTest_Id;
-  int Group_Id;
+  int? DeptModelOrder_QualityTest_Id;
+  int? Group_Id;
   String Item_Name;
+
+  /// TODO: Quality_Items_Id THIS FIELD EXIST IN DATABSAE BUT NOT EXIT HERE
   int Item_Level;
-  int Entity_Order;
-  int QualityTest_Id;
-  int QualityDept_ModelOrder_Id;
-  bool IsMandatory;
-  String Group_Name;
-  int Amount;
-  int Correct_Amount;
-  int Error_Amount;
-  int Employee_Id;
-  int ModelOrderSizes_Id;
-  int QualityDept_ModelOrder_Tracking_Id;
-  int CheckStatus;
-  String Reject_Note;
+  int? Entity_Order;
+  int? QualityTest_Id;
+  int? QualityDept_ModelOrder_Id;
+  bool? IsMandatory;
+  String? Group_Name;
+  int? Amount;
+  int? Correct_Amount;
+  int? Error_Amount;
+  int? Employee_Id;
+  int? ModelOrderSizes_Id;
+  int? QualityDept_ModelOrder_Tracking_Id;
+  int? CheckStatus;
+  String? Reject_Note;
 
   //#endregion
 
-  DeptModOrderQuality_ItemsBLL() {}
+  DeptModOrderQuality_ItemsBLL(
+      {required this.Id, required this.Item_Name, required this.Item_Level}) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -49,7 +49,7 @@ class DeptModOrderQuality_ItemsBLL {
     this.Employee_Id = json['Employee_Id'];
     this.ModelOrderSizes_Id = json['ModelOrderSizes_Id'];
     this.QualityDept_ModelOrder_Tracking_Id =
-    json['QualityDept_ModelOrder_Tracking_Id'];
+        json['QualityDept_ModelOrder_Tracking_Id'];
     this.CheckStatus = json['CheckStatus'];
     this.Reject_Note = json['Reject_Note'];
   }
@@ -71,12 +71,11 @@ class DeptModOrderQuality_ItemsBLL {
         Employee_Id = json['Employee_Id'],
         ModelOrderSizes_Id = json['ModelOrderSizes_Id'],
         QualityDept_ModelOrder_Tracking_Id =
-        json["QualityDept_ModelOrder_Tracking_Id"],
+            json["QualityDept_ModelOrder_Tracking_Id"],
         CheckStatus = json['CheckStatus'],
         Reject_Note = json['Reject_Note'];
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         'Id': Id,
         'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id,
         'Group_Id': Group_Id,
@@ -93,16 +92,15 @@ class DeptModOrderQuality_ItemsBLL {
         'Employee_Id': Employee_Id,
         'ModelOrderSizes_Id': ModelOrderSizes_Id,
         'QualityDept_ModelOrder_Tracking_Id':
-        QualityDept_ModelOrder_Tracking_Id,
+            QualityDept_ModelOrder_Tracking_Id,
         'CheckStatus': CheckStatus,
         'Reject_Note': Reject_Note,
       };
 
-  Map<String, String> toPost() =>
-      {
+  Map<String, String> toPost() => {
         'Id': Id.toString(),
         'DeptModelOrder_QualityTest_Id':
-        DeptModelOrder_QualityTest_Id.toString(),
+            DeptModelOrder_QualityTest_Id.toString(),
         'Group_Id': Group_Id.toString(),
         'Item_Name': Item_Name,
         'Item_Level': Item_Level.toString(),
@@ -110,38 +108,38 @@ class DeptModOrderQuality_ItemsBLL {
         'QualityTest_Id': QualityTest_Id.toString(),
         'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),
         'IsMandatory': IsMandatory.toString(),
-        'Group_Name': Group_Name,
+        'Group_Name': Group_Name ?? '',
         'Amount': Amount.toString(),
         'Correct_Amount': Correct_Amount.toString(),
         'Error_Amount': Error_Amount.toString(),
         'Employee_Id': Employee_Id.toString(),
         'ModelOrderSizes_Id': ModelOrderSizes_Id.toString(),
         'QualityDept_ModelOrder_Tracking_Id':
-        QualityDept_ModelOrder_Tracking_Id.toString(),
+            QualityDept_ModelOrder_Tracking_Id.toString(),
         'CheckStatus': CheckStatus.toString(),
-        'Reject_Note': Reject_Note,
+        'Reject_Note': Reject_Note ?? '',
       };
 
 //#endregion
 
 //#region GetWebApiUrl
-  static Future<List<DeptModOrderQuality_ItemsBLL>>
-  Get_DeptModOrderQuality_Items(int Employee_Id,
-      int DeptModelOrder_QualityTest_Id,
-      int ModelOrderSizes_Id,
-      int Pastal_Cutting_Parti_Id) async {
-    List<DeptModOrderQuality_ItemsBLL> ItemList;
+  static Future<List<DeptModOrderQuality_ItemsBLL>?>
+      Get_DeptModOrderQuality_Items(
+          int Employee_Id,
+          int DeptModelOrder_QualityTest_Id,
+          int ModelOrderSizes_Id,
+          int Pastal_Cutting_Parti_Id) async {
+    List<DeptModOrderQuality_ItemsBLL>? ItemList;
     try {
-      var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_DeptModOrderQuality_Items) +
-              "?Employee_Id=" +
-              Employee_Id.toString() +
-              "&DeptModelOrder_QualityTest_Id=" +
-              DeptModelOrder_QualityTest_Id.toString() +
-              "&ModelOrderSizes_Id=" +
-              ModelOrderSizes_Id.toString()
-              + "&Pastal_Cutting_Parti_Id=" +
-              Pastal_Cutting_Parti_Id.toString());
+      Map<String, String> qParams = {
+        'Employee_Id=': Employee_Id.toString(),
+        'DeptModelOrder_QualityTest_Id':
+            DeptModelOrder_QualityTest_Id.toString(),
+        'ModelOrderSizes_Id': ModelOrderSizes_Id.toString(),
+        'Pastal_Cutting_Parti_Id': Pastal_Cutting_Parti_Id.toString()
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_DeptModOrderQuality_Items, qParams));
 
       //  print(response.request);
 
@@ -157,14 +155,17 @@ class DeptModOrderQuality_ItemsBLL {
     return ItemList;
   }
 
-  static Future<List<DeptModOrderQuality_ItemsBLL>>
-  Get_DeptModOrderQualityTest_Items(int DeptModelOrder_QualityTest_Id) async {
-    List<DeptModOrderQuality_ItemsBLL> ItemList;
+  static Future<List<DeptModOrderQuality_ItemsBLL>?>
+      Get_DeptModOrderQualityTest_Items(
+          int DeptModelOrder_QualityTest_Id) async {
+    List<DeptModOrderQuality_ItemsBLL>? ItemList;
     try {
-      var response = await http.get(SharedPref.GetWebApiUrl(
-          WebApiMethod.Get_DeptModOrderQualityTest_Items) +
-          "?DeptModelOrder_QualityTest_Id=" +
-          DeptModelOrder_QualityTest_Id.toString());
+      Map<String, String> qParams = {
+        'DeptModelOrder_QualityTest_Id':
+            DeptModelOrder_QualityTest_Id.toString()
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_DeptModOrderQualityTest_Items, qParams));
 
       //  print(response.request);
 
@@ -180,22 +181,31 @@ class DeptModOrderQuality_ItemsBLL {
     return ItemList;
   }
 
-  Future<DeptModOrderQuality_ItemsBLL> CorrectSpecificAmount(
+  Future<DeptModOrderQuality_ItemsBLL?> CorrectSpecificAmount(
       int EnterValue) async {
     this.Correct_Amount = EnterValue;
     this.Error_Amount = 0;
 
     try {
-      final String url =
-      SharedPref.GetWebApiUrl(WebApiMethod.Set_DeptModOrderQualityItems);
+      // final String url =
+      //     SharedPref.GetWebApiUrl(WebApiMethod.Set_DeptModOrderQualityItems);
+      //
+      // String val = jsonEncode(this.toPost());
+      // var response = await http.post(url,
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/json; charset=UTF-8',
+      //     },
+      //     body: jsonEncode(this.toPost()));
+
+
 
       String val = jsonEncode(this.toPost());
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(this.toPost()));
-
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_DeptModOrderQualityItems));
+      var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         Map<String, dynamic> map = json.decode(response.body);
         var Item = DeptModOrderQuality_ItemsBLL.fromJson(map);
@@ -208,23 +218,32 @@ class DeptModOrderQuality_ItemsBLL {
     return null;
   }
 
-  Future<DeptModOrderQuality_ItemsBLL> ErrorSpecificAmount(
+  Future<DeptModOrderQuality_ItemsBLL?> ErrorSpecificAmount(
       int EnterValue) async {
     this.Correct_Amount = 0;
     this.Error_Amount = EnterValue;
 
     try {
-      final String url =
-      SharedPref.GetWebApiUrl(WebApiMethod.Set_DeptModOrderQualityItems);
+      // final String url =
+      //     SharedPref.GetWebApiUrl(WebApiMethod.Set_DeptModOrderQualityItems);
+      //
+      // String val = jsonEncode(this.toPost());
+      //
+      // //  print(val);
+      // var response = await http.post(url,
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/json; charset=UTF-8',
+      //     },
+      //     body: jsonEncode(this.toPost()));
+
 
       String val = jsonEncode(this.toPost());
-
-      //  print(val);
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(this.toPost()));
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_DeptModOrderQualityItems));
+      var response = await http.post(url, body: val, headers: headers);
 
       if (response.statusCode == 200) {
         var map = json.decode(response.body);
@@ -237,17 +256,18 @@ class DeptModOrderQuality_ItemsBLL {
     return null;
   }
 
-  static Future<List<DeptModOrderQuality_ItemsBLL>>
-  Get_CuttingPastalQuality_Items(int Employee_Id,
-      int DeptModelOrder_QualityTest_Id) async {
-    List<DeptModOrderQuality_ItemsBLL> ItemList;
+  static Future<List<DeptModOrderQuality_ItemsBLL>?>
+      Get_CuttingPastalQuality_Items(
+          int Employee_Id, int DeptModelOrder_QualityTest_Id) async {
+    List<DeptModOrderQuality_ItemsBLL>? ItemList;
     try {
-      var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_CuttingPastalQuality_Items) +
-              "?Employee_Id=" +
-              Employee_Id.toString() +
-              "&DeptModelOrder_QualityTest_Id=" +
-              DeptModelOrder_QualityTest_Id.toString());
+      Map<String, String> qParams = {
+        'Employee_Id': Employee_Id.toString(),
+        'DeptModelOrder_QualityTest_Id':
+            DeptModelOrder_QualityTest_Id.toString()
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_CuttingPastalQuality_Items, qParams));
 
       //  print(response.request);
 

@@ -7,20 +7,18 @@ import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 class Pastal_Cutting_PartiBLL {
   //#region Properties
   int Id;
-  int Order_id;
-  String Fabric_Type;
-  DateTime CuttingDate;
-  DateTime Pastel_Laying;
-  String FabricRestingTime;
-  int Create_Employee_Id;
-  String Order_Number;
-  String Employee_Name;
+  int? Order_id;
+  String? Fabric_Type;
+  DateTime? CuttingDate;
+  DateTime? Pastel_Laying;
+  String? FabricRestingTime;
+  int? Create_Employee_Id;
+  String? Order_Number;
+  String? Employee_Name;
 
   //#endregion
 
-  Pastal_Cutting_PartiBLL() {
 
-  }
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -66,23 +64,21 @@ class Pastal_Cutting_PartiBLL {
 
     'Id': Id.toString(),
     'Order_id': Order_id.toString(),
-    'Fabric_Type': Fabric_Type,
+    'Fabric_Type': Fabric_Type??'',
     'CuttingDate': CuttingDate.toString(),
     'Pastel_Laying': Pastel_Laying.toString(),
-    'FabricRestingTime': FabricRestingTime,
+    'FabricRestingTime': FabricRestingTime??'',
     'Create_Employee_Id': Create_Employee_Id.toString(),
-    'Order_Number': Order_Number,
-    'Employee_Name': Employee_Name,
+    'Order_Number': Order_Number??'',
+    'Employee_Name': Employee_Name??'',
 
   };
-
-
 
   //#endregion
 
   //#region GetWebApiUrl
-  static Future<List<Pastal_Cutting_PartiBLL>> Get_Pastal_Cutting_Parti(int Order_Id) async {
-    List<Pastal_Cutting_PartiBLL> ItemList;
+  static Future<List<Pastal_Cutting_PartiBLL>?> Get_Pastal_Cutting_Parti(int Order_Id) async {
+    List<Pastal_Cutting_PartiBLL>? ItemList;
     try {
 
 
@@ -105,15 +101,23 @@ class Pastal_Cutting_PartiBLL {
   }
   Future<bool> SaveEntity() async {
     try {
-      final String url = SharedPref.GetWebApiUrl(
-          WebApiMethod.Set_CreatePastal_Cutting_Parti);
+      // final String url = SharedPref.GetWebApiUrl(
+      //     WebApiMethod.Set_CreatePastal_Cutting_Parti);
+      //
+      // var response = await http.post(url,
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/json; charset=UTF-8',
+      //     },
+      //     body: jsonEncode(toPost()));
 
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(toPost()));
 
+      String val = jsonEncode(this.toPost());
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Start_DikimInlineProcess));
+      var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         this.LoadFromJson(json.decode(response.body));
         return true;
@@ -126,15 +130,23 @@ class Pastal_Cutting_PartiBLL {
 
   Future<bool> DeleteEntity() async {
     try {
-      final String url = SharedPref.GetWebApiUrl(
-          WebApiMethod.DeletePastal_Cutting_Parti);
+      // final String url = SharedPref.GetWebApiUrl(
+      //     WebApiMethod.DeletePastal_Cutting_Parti);
+      //
+      // var response = await http.post(url,
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/json; charset=UTF-8',
+      //     },
+      //     body: jsonEncode(toPost()));
 
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(toPost()));
 
+      String val = jsonEncode(toPost());
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.DeletePastal_Cutting_Parti));
+      var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         // Item.LoadFromJson(json.decode(response.body));
         return true;

@@ -25,11 +25,11 @@ class _OrderSize_MatrixState extends State<OrderSize_Matrix> {
 
   Future<List<ModelOrderSizesBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
-    List<ModelOrderSizesBLL> Criteria =
+    List<ModelOrderSizesBLL>? Criteria =
     await ModelOrderSizesBLL
         .Get_ModelOrderSizes(
 
-     PersonalCase.SelectedTest!.Order_Id,
+     PersonalCase.SelectedTest!.Order_Id!,
         );
 
     if (Criteria != null) {

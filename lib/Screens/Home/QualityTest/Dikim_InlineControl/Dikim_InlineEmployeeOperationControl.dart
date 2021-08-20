@@ -61,7 +61,7 @@ class _Dikim_InlineEmployeeOperationControlState
               mainAxisSize: MainAxisSize.max,
               children: [
                 HeaderLable('${PersonalCase.GetLable(ResourceKey.Order_Number)} / ' '${PersonalCase.GetLable(ResourceKey.Operation_Name)}' ,Flex:3 ),
-                TableLable(PersonalCase.SelectedOrder!.Order_Number,Flex:2),
+                TableLable(PersonalCase.SelectedOrder!.Order_Number??'',Flex:2),
                 TableLable(widget.EmployeeOperation.Operation_Name.toString(),Flex:2),
               ],
             ),
@@ -70,7 +70,7 @@ class _Dikim_InlineEmployeeOperationControlState
               mainAxisSize: MainAxisSize.max,
               children: [
                 HeaderLable('${PersonalCase.GetLable(ResourceKey.Employee_Name)} / ' '${PersonalCase.GetLable(ResourceKey.Sample_Amount)}' , Flex:3),
-                TableLable(widget.EmployeeOperation.Inline_Employee_Name,Flex:2),
+                TableLable(widget.EmployeeOperation.Inline_Employee_Name??'',Flex:2),
                 TableLable((widget.EmployeeOperation.Amount ?? 0).toString(),Flex:2),
               ],
             ),

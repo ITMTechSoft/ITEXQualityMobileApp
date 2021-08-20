@@ -25,7 +25,7 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
 
   Future<List<User_QualityTracking_DetailBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
-    List<User_QualityTracking_DetailBLL> Criteria =
+    List<User_QualityTracking_DetailBLL>? Criteria =
         await User_QualityTracking_DetailBLL.Get_User_QualityTracking_Detail(
             widget.RoundItem.Id);
 

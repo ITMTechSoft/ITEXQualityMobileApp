@@ -17,7 +17,7 @@ class _Cutting_ControlState extends State<Cutting_Control> {
 
   Future<List<Pastal_Cutting_PartiBLL>?> LoadingCutttingControl(
       PersonalProvider PersonalCase) async {
-    List<Pastal_Cutting_PartiBLL> Criteria =
+    List<Pastal_Cutting_PartiBLL>? Criteria =
         await Pastal_Cutting_PartiBLL.Get_Pastal_Cutting_Parti(
             PersonalCase.SelectedOrder!.Order_Id);
 

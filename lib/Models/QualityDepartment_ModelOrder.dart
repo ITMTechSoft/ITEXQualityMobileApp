@@ -1,7 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
@@ -11,19 +8,19 @@ class QualityDepartment_ModelOrderBLL {
   int Id;
   int Order_Id;
   int Department_Id;
-  DateTime StartDate;
-  DateTime EndDate;
-  bool IsValidateRequired;
-  bool IsAutoMail;
-  int Model_id;
-  int Quantity;
-  String Order_Number;
-  String Depart_Name;
-  String Model_Name;
+  DateTime? StartDate;
+  DateTime? EndDate;
+  bool? IsValidateRequired;
+  bool? IsAutoMail;
+  int? Model_id;
+  int? Quantity;
+  String? Order_Number;
+  String? Depart_Name;
+  String? Model_Name;
 
   //#endregion
 
-  QualityDepartment_ModelOrderBLL() {}
+  QualityDepartment_ModelOrderBLL({required this.Id,required this.Order_Id , required this.Department_Id}) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -88,8 +85,8 @@ class QualityDepartment_ModelOrderBLL {
 
         'Model_id': Model_id.toString(),
         'Quantity': Quantity.toString(),
-        'Order_Number': Order_Number,
-        'Depart_Name': Depart_Name,
+        'Order_Number': Order_Number!,
+        'Depart_Name': Depart_Name.toString(),
 
       };
 
@@ -97,7 +94,7 @@ class QualityDepartment_ModelOrderBLL {
 
 //#region Methods
   static Get_QualityDepartment_ModelOrder(int Department_Id) async {
-    List<QualityDepartment_ModelOrderBLL> ItemList;
+    List<QualityDepartment_ModelOrderBLL>? ItemList;
     try {
       Map<String,String> qParams = {
         'Department_Id':Department_Id.toString()
@@ -117,7 +114,7 @@ class QualityDepartment_ModelOrderBLL {
     return ItemList;
   }
 //#endregion
-  Future<String> GetModelOrderImage() async {
+  Future<String?> GetModelOrderImage() async {
     try {
 
       Map<String,String> qParams = {

@@ -9,19 +9,19 @@ class DepartmentModelOrder_QualityTestBLL {
   int Id;
   int QualityTest_Id;
   int QualityDept_ModelOrder_Id;
-  DateTime StartDate;
-  DateTime EndDate;
-  bool IsMandatory;
-  int Entity_Order;
-  String Test_Name;
-  int Order_Id;
-  int Department_Id;
-  bool IsValidateRequired;
-  bool IsAutoMail;
+  DateTime? StartDate;
+  DateTime? EndDate;
+  bool? IsMandatory;
+  int? Entity_Order;
+  String? Test_Name;
+  int? Order_Id;
+  int? Department_Id;
+  bool? IsValidateRequired;
+  bool? IsAutoMail;
 
   //#endregion
 
-  DepartmentModelOrder_QualityTestBLL() {}
+  DepartmentModelOrder_QualityTestBLL({required this.Id,required this.QualityTest_Id,required this.QualityDept_ModelOrder_Id}) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -81,7 +81,7 @@ class DepartmentModelOrder_QualityTestBLL {
         'EndDate': EndDate.toString(),
         'IsMandatory': IsMandatory.toString(),
         'Entity_Order': Entity_Order.toString(),
-        'Test_Name': Test_Name,
+        'Test_Name': Test_Name??'',
         'Order_Id': Order_Id.toString(),
         'Department_Id': Department_Id.toString(),
         'IsValidateRequired': IsValidateRequired.toString(),
@@ -90,15 +90,18 @@ class DepartmentModelOrder_QualityTestBLL {
 
 //#endregion
 
-  static Future<List<DepartmentModelOrder_QualityTestBLL>>
+  static Future<List<DepartmentModelOrder_QualityTestBLL>?>
       Get_DepartmentModelOrder_QualityTest(
           int QualityDept_ModelOrder_Id) async {
-    List<DepartmentModelOrder_QualityTestBLL> ItemList;
+    List<DepartmentModelOrder_QualityTestBLL>? ItemList;
     try {
-      var response = await http.get(SharedPref.GetWebApiUrl(
-              WebApiMethod.Get_DepartmentModelOrder_QualityTest) +
-          "?QualityDept_ModelOrder_Id=" +
-          QualityDept_ModelOrder_Id.toString());
+
+
+      Map<String,String> qParams = {
+        'QualityDept_ModelOrder_Id':QualityDept_ModelOrder_Id.toString()
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+              WebApiMethod.Get_DepartmentModelOrder_QualityTest,qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
@@ -112,7 +115,7 @@ class DepartmentModelOrder_QualityTestBLL {
     return ItemList;
   }
 
-  Future<bool> SetValidationAction({int Employee_Id}) async {
+  Future<bool> SetValidationAction({required int Employee_Id}) async {
     try {
       var Item = new QualityDept_ModelOrder_TrackingBLL();
       Item.Employee_Id = Employee_Id;
@@ -120,15 +123,24 @@ class DepartmentModelOrder_QualityTestBLL {
       //  Item.Id = 0;
       Item.ApprovalDate = new DateTime.now();
 
-      final String url = SharedPref.GetWebApiUrl(
-          WebApiMethod.Set_ValidatQualityCriticalQualityTest);
+      // final String url = SharedPref.GetWebApiUrl(
+      //     WebApiMethod.Set_ValidatQualityCriticalQualityTest);
+      //
+      // String val = jsonEncode(Item.toPost());
+      // var response = await http.post(url,
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/json; charset=UTF-8',
+      //     },
+      //     body: jsonEncode(Item.toPost()));
+
 
       String val = jsonEncode(Item.toPost());
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(Item.toPost()));
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_ValidatQualityCriticalQualityTest));
+      var response = await http.post(url, body: val, headers: headers);
 
       if (response.statusCode == 200) {
         Item.LoadFromJson(json.decode(response.body));
@@ -142,22 +154,30 @@ class DepartmentModelOrder_QualityTestBLL {
 
 
 
-  Future<bool> IsUserApprovedBefore({int Employee_Id}) async {
+  Future<bool> IsUserApprovedBefore({required int Employee_Id}) async {
     try {
       var Item = new QualityDept_ModelOrder_TrackingBLL();
       Item.Employee_Id = Employee_Id;
       Item.DeptModelOrder_QualityTest_Id = this.Id;
 
-      final String url =
-          SharedPref.GetWebApiUrl(WebApiMethod.IsUserApprovedCriteriaBefore);
+      // final String url =
+      //     SharedPref.GetWebApiUrl(WebApiMethod.IsUserApprovedCriteriaBefore);
+      //
+      // String val = jsonEncode(Item.toPost());
+      // var response = await http.post(url,
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/json; charset=UTF-8',
+      //     },
+      //     body: jsonEncode(Item.toPost()));
+
 
       String val = jsonEncode(Item.toPost());
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(Item.toPost()));
-
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.IsUserApprovedCriteriaBefore));
+      var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         Item.LoadFromJson(json.decode(response.body));
         if (Item.ApprovalDate != null)

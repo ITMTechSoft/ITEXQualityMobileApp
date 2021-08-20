@@ -68,7 +68,7 @@ class _Employee_ListState extends State<Employee_List> {
   }
 
   Widget FilterList() {
-    var FilterListItem = widget.Items.where((r) => r.Employee_Name.toUpperCase()
+    var FilterListItem = widget.Items.where((r) => r.Employee_Name!.toUpperCase()
         .contains(SearchController.text.toUpperCase())).toList();
     return SingleChildScrollView(
       primary: true,
@@ -80,7 +80,7 @@ class _Employee_ListState extends State<Employee_List> {
           itemCount: FilterListItem.length,
           itemBuilder: (context, int i) {
             return DropDownBox(
-                ItemName: FilterListItem[i].Employee_Name,
+                ItemName: FilterListItem[i].Employee_Name??'',
                 OnTap: () {
                   widget.OnClickItems(FilterListItem[i]);
                   setState(() {

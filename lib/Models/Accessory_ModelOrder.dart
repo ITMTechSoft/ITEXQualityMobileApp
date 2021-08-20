@@ -79,8 +79,8 @@ class Accessory_ModelOrderBLL {
     'IsSupplierAutoEmail': IsSupplierAutoEmail.toString(),
     'Entity_Order': Entity_Order.toString(),
     'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),
-    'Accessory': Accessory,
-    'Group_Name': Group_Name,
+    'Accessory': Accessory??'',
+    'Group_Name': Group_Name??'',
 
   };
 

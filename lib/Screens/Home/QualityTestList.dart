@@ -19,7 +19,7 @@ class _QualityTestListState extends State<QualityTestList> {
   Future<List<DepartmentModelOrder_QualityTestBLL>?> LoadEmployeeOrders(
       PersonalProvider PersonalCase) async {
     try {
-      List<DepartmentModelOrder_QualityTestBLL> Items =
+      List<DepartmentModelOrder_QualityTestBLL>? Items =
           await DepartmentModelOrder_QualityTestBLL
               .Get_DepartmentModelOrder_QualityTest(
                   PersonalCase.SelectedOrder!.Id);
@@ -156,7 +156,7 @@ class _QualityTestListState extends State<QualityTestList> {
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, int i) {
                             return OneItem(
-                                ItemName: snapshot.data![i].Test_Name,
+                                ItemName: snapshot.data![i].Test_Name!,
                                 ItemValue: snapshot.data![i].StartDate != null
                                     ? snapshot.data![i].StartDate.toString()
                                     : "Not Started Yet",

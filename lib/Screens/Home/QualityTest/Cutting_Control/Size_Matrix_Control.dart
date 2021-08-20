@@ -19,9 +19,9 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
 
   Future<List<ModelOrderSizesBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
-    List<ModelOrderSizesBLL> Criteria =
+    List<ModelOrderSizesBLL>? Criteria =
         await ModelOrderSizesBLL.Get_ModelOrderSizes_CuttingControl(
-            PersonalCase.SelectedTest!.Order_Id, PersonalCase.SelectedTest!.Id);
+            PersonalCase.SelectedTest!.Order_Id!, PersonalCase.SelectedTest!.Id);
 
     if (Criteria != null) {
       IntiteStatus = 1;

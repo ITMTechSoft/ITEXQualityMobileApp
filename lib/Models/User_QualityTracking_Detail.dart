@@ -1,59 +1,55 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 
 class User_QualityTracking_DetailBLL {
   //#region Properties
-  int Id;
-  int QualityDept_ModelOrder_Tracking_Id;
-  DateTime Create_Date;
-  DateTime Update_Date;
-  int Amount;
-  int Quality_Items_Id;
-  int Xaxis_QualityItem_Id;
-  int Yaxis_QualityItem_Id;
-  int Recycle_Amount;
-  DateTime Recycle_Date;
- String  XAxis_Item_Name;
- String  YAxis_Item_Name;
-  int Recycle_Employee_Id;
-  int Operation_Id;
-  int EmpLine_DailyMoves_Id;
-  int Employee_DailyProduction_Id;
-  int CheckStatus;
-  String Reject_Note;
-  int Correct_Amount;
-  int Error_Amount;
-  int Employee_Id;
-  int DeptModelOrder_QualityTest_Id;
-  int OrderSizeColorDetail_Id;
-  int Accessory_ModelOrder_Id;
-  int Plan_Daily_Production_Id;
-  String Item_Name;
-  int Item_Level;
-  int Entity_Order;
-  int Group_Id;
-  String Employee_Name;
-  String Inline_Employee_Name;
-  int Inline_Employee_Id;
-  String Operation_Name;
-  bool IsRecycle;
+  int Id = 0;
+  int? QualityDept_ModelOrder_Tracking_Id;
+  DateTime? Create_Date;
+  DateTime? Update_Date;
+  int? Amount;
+  int? Quality_Items_Id;
+  int? Xaxis_QualityItem_Id;
+  int? Yaxis_QualityItem_Id;
+  int? Recycle_Amount;
+  DateTime? Recycle_Date;
+  String? XAxis_Item_Name;
+  String? YAxis_Item_Name;
+  int? Recycle_Employee_Id;
+  int? Operation_Id;
+  int? EmpLine_DailyMoves_Id;
+  int? Employee_DailyProduction_Id;
+  int? CheckStatus;
+  String? Reject_Note;
+  int? Correct_Amount;
+  int? Error_Amount;
+  int? Employee_Id;
+  int? DeptModelOrder_QualityTest_Id;
+  int? OrderSizeColorDetail_Id;
+  int? Accessory_ModelOrder_Id;
+  int? Plan_Daily_Production_Id;
+  String? Item_Name;
+  int? Item_Level;
+  int? Entity_Order;
+  int? Group_Id;
+  String? Employee_Name;
+  String? Inline_Employee_Name;
+  int? Inline_Employee_Id;
+  String? Operation_Name;
+  bool? IsRecycle;
 
-  int AssignAmount;
-  String ControlType;
-  int Order_Id;
+  int? AssignAmount;
+  String? ControlType;
+  int? Order_Id;
 
-  DateTime StartDate;
-  DateTime EndDate;
+  DateTime? StartDate;
+  DateTime? EndDate;
 
   //#endregion
 
-  User_QualityTracking_DetailBLL() {}
-
+  User_QualityTracking_DetailBLL(){}
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
     this.Id = json['Id'];
@@ -112,7 +108,7 @@ class User_QualityTracking_DetailBLL {
         QualityDept_ModelOrder_Tracking_Id =
             json['QualityDept_ModelOrder_Tracking_Id'],
         XAxis_Item_Name = json['XAxis_Item_Name'],
-  YAxis_Item_Name = json['YAxis_Item_Name'],
+        YAxis_Item_Name = json['YAxis_Item_Name'],
         Create_Date = json['Create_Date'] == null
             ? null
             : DateTime.parse(json['Create_Date']),
@@ -215,7 +211,7 @@ class User_QualityTracking_DetailBLL {
         'EmpLine_DailyMoves_Id': EmpLine_DailyMoves_Id.toString(),
         'Employee_DailyProduction_Id': Employee_DailyProduction_Id.toString(),
         'CheckStatus': CheckStatus.toString(),
-        'Reject_Note': Reject_Note,
+        'Reject_Note': Reject_Note ?? '',
         'Correct_Amount': Correct_Amount.toString(),
         'Error_Amount': Error_Amount.toString(),
         'Employee_Id': Employee_Id.toString(),
@@ -224,21 +220,21 @@ class User_QualityTracking_DetailBLL {
         'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id.toString(),
         'Accessory_ModelOrder_Id': Accessory_ModelOrder_Id.toString(),
         'Plan_Daily_Production_Id': Plan_Daily_Production_Id.toString(),
-        'Item_Name': Item_Name,
+        'Item_Name': Item_Name ?? '',
         'Item_Level': Item_Level.toString(),
         'Entity_Order': Entity_Order.toString(),
         'Id': Id.toString(),
         'DeptModelOrder_QualityTest_Id':
             DeptModelOrder_QualityTest_Id.toString(),
         'Group_Id': Group_Id.toString(),
-        'Item_Name': Item_Name,
+        'Item_Name': Item_Name ?? '',
         'Item_Level': Item_Level.toString(),
         'Entity_Order': Entity_Order.toString(),
-        'Employee_Name': Employee_Name,
+        'Employee_Name': Employee_Name ?? '',
         'Inline_Employee_Id': Inline_Employee_Id.toString(),
-        'Inline_Employee_Name': Inline_Employee_Name,
+        'Inline_Employee_Name': Inline_Employee_Name ?? '',
         'AssignAmount': AssignAmount.toString(),
-        'ControlType': ControlType,
+        'ControlType': ControlType ?? '',
         'Order_Id': Order_Id.toString(),
         'IsRecycle': IsRecycle.toString(),
       };
@@ -246,19 +242,18 @@ class User_QualityTracking_DetailBLL {
   //#endregion
 
   //#region GetWebApiUrl
-  static Future<List<User_QualityTracking_DetailBLL>>
+  static Future<List<User_QualityTracking_DetailBLL>?>
       Get_User_QualityTracking_Detail(int QualityDept_ModelOrder_Tracking_Id,
           {int Quality_Items_Id = 0}) async {
-    List<User_QualityTracking_DetailBLL> ItemList;
+    List<User_QualityTracking_DetailBLL>? ItemList;
     try {
-
-
-      Map<String,String> qParams = {
-        'QualityDept_ModelOrder_Tracking_Id':QualityDept_ModelOrder_Tracking_Id.toString(),
-        'Quality_Items_Id':Quality_Items_Id.toString()
+      Map<String, String> qParams = {
+        'QualityDept_ModelOrder_Tracking_Id':
+            QualityDept_ModelOrder_Tracking_Id.toString(),
+        'Quality_Items_Id': Quality_Items_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
-              WebApiMethod.Get_User_QualityTracking_Detail,qParams) );
+          WebApiMethod.Get_User_QualityTracking_Detail, qParams));
 
       print(response.request);
       if (response.statusCode == 200) {
@@ -273,19 +268,28 @@ class User_QualityTracking_DetailBLL {
     return ItemList;
   }
 
-  Future<bool> Set_User_QualityTracking_Detail() async {
+  Future<bool?> Set_User_QualityTracking_Detail() async {
     try {
-      final String url =
-          SharedPref.GetWebApiUrl(WebApiMethod.Set_User_QualityTracking_Detail);
+      // final String url =
+      //     SharedPref.GetWebApiUrl(WebApiMethod.Set_User_QualityTracking_Detail);
+      //
+      // String val = jsonEncode(this.toPost());
+      // print(val);
+      // print(url);
+      // var response = await http.post(url,
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/json; charset=UTF-8',
+      //     },
+      //     body: jsonEncode(this.toPost()));
+
 
       String val = jsonEncode(this.toPost());
-      print(val);
-      print(url);
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(this.toPost()));
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_User_QualityTracking_Detail));
+      var response = await http.post(url, body: val, headers: headers);
 
       if (response.statusCode == 200) return true;
 
@@ -295,19 +299,28 @@ class User_QualityTracking_DetailBLL {
     }
   }
 
-  Future<bool> Set_User_QualityTracking_Dikim() async {
+  Future<bool?> Set_User_QualityTracking_Dikim() async {
     try {
-      final String url =
-          SharedPref.GetWebApiUrl(WebApiMethod.Set_User_QualityTracking_Dikim);
+      // final String url =
+      //     SharedPref.GetWebApiUrl(WebApiMethod.Set_User_QualityTracking_Dikim);
+      //
+      // String val = jsonEncode(this.toPost());
+      // print(val);
+      // print(url);
+      // var response = await http.post(url,
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/json; charset=UTF-8',
+      //     },
+      //     body: jsonEncode(this.toPost()));
+
 
       String val = jsonEncode(this.toPost());
-      print(val);
-      print(url);
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(this.toPost()));
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_User_QualityTracking_Dikim));
+      var response = await http.post(url, body: val, headers: headers);
 
       if (response.statusCode == 200) return true;
 
@@ -317,18 +330,27 @@ class User_QualityTracking_DetailBLL {
     }
   }
 
-  Future<User_QualityTracking_DetailBLL>
+  Future<User_QualityTracking_DetailBLL?>
       GenerateInlineEmployeeOperation() async {
     try {
-      final String url = SharedPref.GetWebApiUrl(
-          WebApiMethod.Set_GenerateInlineEmployeeOperation);
+      // final String url = SharedPref.GetWebApiUrl(
+      //     WebApiMethod.Set_GenerateInlineEmployeeOperation);
+      //
+      // String val = jsonEncode(this.toPost());
+      // var response = await http.post(url,
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/json; charset=UTF-8',
+      //     },
+      //     body: jsonEncode(this.toPost()));
+
 
       String val = jsonEncode(this.toPost());
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(this.toPost()));
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_GenerateInlineEmployeeOperation));
+      var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         LoadFromJson(json.decode(response.body));
         return this;
@@ -339,18 +361,17 @@ class User_QualityTracking_DetailBLL {
 
   Future<bool> Start_DikimInlineProcess() async {
     try {
-      final String url =
-          SharedPref.GetWebApiUrl(WebApiMethod.Start_DikimInlineProcess);
-
       String val = jsonEncode(this.toPost());
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Start_DikimInlineProcess));
+      var response = await http.post(url, body: val, headers: headers);
 
       print(url);
       print(val);
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(this.toPost()));
+
       if (response.statusCode == 200) {
         LoadFromJson(json.decode(response.body));
         return true;
@@ -359,20 +380,21 @@ class User_QualityTracking_DetailBLL {
     return false;
   }
 
-  Future<bool> Assign_EmployeeControlAmount(
-      int assignAmount, String controlType) async {
+  Future<bool> Assign_EmployeeControlAmount(int assignAmount, String controlType) async {
     try {
       this.AssignAmount = assignAmount;
       this.ControlType = controlType;
-      final String url =
-          SharedPref.GetWebApiUrl(WebApiMethod.Assign_EmployeeControlAmount);
 
       String val = jsonEncode(this.toPost());
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(this.toPost()));
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Assign_EmployeeControlAmount));
+      var response = await http.post(url, body: val, headers: headers);
+
+      ///
+
       if (response.statusCode == 200) {
         LoadFromJson(json.decode(response.body));
         return true;
@@ -383,18 +405,27 @@ class User_QualityTracking_DetailBLL {
 
   Future<bool> CloseEmployeeOperationControlRound() async {
     try {
-      final String url = SharedPref.GetWebApiUrl(
-          WebApiMethod.CloseEmployeeOperationControlRound);
+      // final String url = SharedPref.GetWebApiUrl(
+      //     WebApiMethod.CloseEmployeeOperationControlRound);
+      //
+      // String val = jsonEncode(this.toPost());
+      // print(url);
+      // print(val);
+      //
+      // var response = await http.post(url,
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/json; charset=UTF-8',
+      //     },
+      //     body: jsonEncode(this.toPost()));
+
 
       String val = jsonEncode(this.toPost());
-      print(url);
-      print(val);
-
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(this.toPost()));
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.CloseEmployeeOperationControlRound));
+      var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         LoadFromJson(json.decode(response.body));
         return true;
@@ -405,18 +436,32 @@ class User_QualityTracking_DetailBLL {
 
   Future<bool> Delete_User_QualityTracking_Detail() async {
     try {
-      final String url = SharedPref.GetWebApiUrl(
-          WebApiMethod.Delete_User_QualityTracking_Detail);
+
+
+
+      // ///
+      // final String url = SharedPref.GetWebApiUrl(
+      //     WebApiMethod.Delete_User_QualityTracking_Detail);
+      //
+      //
+      // String val = jsonEncode(this.toPost());
+      // print(url);
+      // print(val);
+      //
+      // var response = await http.post(url,
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/json; charset=UTF-8',
+      //     },
+      //     body: jsonEncode(this.toPost()));
+
 
       String val = jsonEncode(this.toPost());
-      print(url);
-      print(val);
-
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(this.toPost()));
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Delete_User_QualityTracking_Detail));
+      var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         return true;
       }
@@ -427,14 +472,23 @@ class User_QualityTracking_DetailBLL {
   Future<int> Set_UserQualityFinalControl() async {
     int CheckStatus = -1;
     try {
-      final String url =
-          SharedPref.GetWebApiUrl(WebApiMethod.Set_UserQualityFinalControl);
+      // final String url =
+      //     SharedPref.GetWebApiUrl(WebApiMethod.Set_UserQualityFinalControl);
+      //
+      // var response = await http.post(url,
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/json; charset=UTF-8',
+      //     },
+      //     body: jsonEncode(toPost()));
 
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(toPost()));
+
+      String val = jsonEncode(toPost());
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_UserQualityFinalControl));
+      var response = await http.post(url, body: val, headers: headers);
 
       if (response.statusCode == 200) {
         CheckStatus = json.decode(response.body);
@@ -443,19 +497,16 @@ class User_QualityTracking_DetailBLL {
     return CheckStatus;
   }
 
-
-
-
   ///GET ERROR ITEMS LIST TO RECYCLE
-  static Future<List<User_QualityTracking_DetailBLL>> Get_UserQualityTasnifControl( int DeptModelOrder_QualityTest_Id) async {
-    List<User_QualityTracking_DetailBLL> ItemList;
+  static Future<List<User_QualityTracking_DetailBLL>?>
+      Get_UserQualityTasnifControl(int DeptModelOrder_QualityTest_Id) async {
+    List<User_QualityTracking_DetailBLL>? ItemList;
     try {
-
-      Map<String,String> qParams = {
-        'GroupType':DeptModelOrder_QualityTest_Id.toString()
+      Map<String, String> qParams = {
+        'GroupType': DeptModelOrder_QualityTest_Id.toString()
       };
-      var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Get_UserQualityTasnifControl,qParams) );
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_UserQualityTasnifControl, qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
@@ -469,23 +520,32 @@ class User_QualityTracking_DetailBLL {
     return ItemList;
   }
 
-
-
   /// SET RECYCLE ITEM
-   Future<bool> Set_RecycleUserQualityTasnifControlRec(User_QualityTracking_DetailBLL QualityTracking) async {
+  Future<bool?> Set_RecycleUserQualityTasnifControlRec(
+      User_QualityTracking_DetailBLL QualityTracking) async {
     try {
-      final String url =
-      SharedPref.GetWebApiUrl(WebApiMethod.Set_RecycleUserQualityTasnifControlRec);
+      // var url = Uri.parse('https://example.com/whatsit/create');
+      //
+      // final String url = SharedPref.GetWebApiUrl(
+      //     WebApiMethod.Set_RecycleUserQualityTasnifControlRec);
+      //
+      // String val = jsonEncode(this.toPost());
+      // print(val);
+      // print(url);
+      // var response = await http.post(url,
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/json; charset=UTF-8',
+      //     },
+      //     body: jsonEncode(QualityTracking.toPost()));
+
 
       String val = jsonEncode(this.toPost());
-      print(val);
-      print(url);
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(QualityTracking.
-          toPost()));
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_RecycleUserQualityTasnifControlRec));
+      var response = await http.post(url, body: val, headers: headers);
 
       if (response.statusCode == 200) return true;
 

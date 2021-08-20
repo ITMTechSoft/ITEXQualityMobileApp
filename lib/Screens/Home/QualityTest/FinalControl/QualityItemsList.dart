@@ -31,7 +31,7 @@ class _QualityItemsListState extends State<QualityItemsList> {
 
   Future<List<Quality_ItemsBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
-    List<Quality_ItemsBLL> Critiera =
+    List<Quality_ItemsBLL>? Critiera =
         await Quality_ItemsBLL.Get_Quality_Items_WithValue(widget.GroupType,
             PersonalCase.GetCurrentUser().Id, CaseProvider.ModelOrderMatrix!.Id);
 

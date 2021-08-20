@@ -9,62 +9,58 @@ import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 class OperationBLL {
   //#region Properties
   int Operation_Id;
-  String Operationl_Code;
-  String Operation_Description;
-  String Operation_Name;
+  String? Operationl_Code;
+  String? Operation_Description;
+  String? Operation_Name;
   int Operation_Groups;
   int Machine_id;
-  double OperationToplamSTD;
-  String ArticalNO;
-  String OperationVideo;
+  double? OperationToplamSTD;
+  String? ArticalNO;
+  String? OperationVideo;
   Uint8List OperationImage;
-  double Thread_length;
-  double Bobin_Number;
-  String OperationVideoFileName;
-  double HandTMU;
-  double HandMin;
-  double HandTolerStd;
-  double MachineTMU;
-  double MachineMin;
-  double MachineTolStd;
-  double Oper_Target;
-  double Machine_ErrorPossible;
-  double Total_SweingLength;
-  double OperTMU;
-  double Hour_Target;
-  double Machine_Number;
-  String Model_Operation_Barcode;
-  int Oper_Sequence;
-  int Model_id;
-  int Real_Amount;
-  int StitchesUsedFrequently_Id;
-  double StitchThreadLength;
-  double NeedleThread;
-  double LooperThread;
-  int Department_Id;
-  int Material_Type_Id;
-  int ModelCosting_Id;
-  DateTime CreateDate;
-  DateTime LastUpdateDate;
-  int CreatedBy;
-  int LastUpdateBy;
-  bool IsBulkType;
-  int BulkAdet;
-  int Stitch_Tool_Id;
-  String Source_Id;
-  bool IsCriticalControl;
-  String Group_Name;
-  String Machine_name;
-  String Model_Name;
-  String Depart_Name;
-  String Material_Name;
-  String Tool_Name;
+  double? Thread_length;
+  double? Bobin_Number;
+  String? OperationVideoFileName;
+  double? HandTMU;
+  double? HandMin;
+  double? HandTolerStd;
+  double? MachineTMU;
+  double? MachineMin;
+  double? MachineTolStd;
+  double? Oper_Target;
+  double? Machine_ErrorPossible;
+  double? Total_SweingLength;
+  double? OperTMU;
+  double? Hour_Target;
+  double? Machine_Number;
+  String? Model_Operation_Barcode;
+  int? Oper_Sequence;
+  int? Model_id;
+  int? Real_Amount;
+  int? StitchesUsedFrequently_Id;
+  double? StitchThreadLength;
+  double? NeedleThread;
+  double? LooperThread;
+  int? Department_Id;
+  int? Material_Type_Id;
+  int? ModelCosting_Id;
+  DateTime? CreateDate;
+  DateTime? LastUpdateDate;
+  int? CreatedBy;
+  int? LastUpdateBy;
+  bool? IsBulkType;
+  int? BulkAdet;
+  int? Stitch_Tool_Id;
+  String? Source_Id;
+  bool? IsCriticalControl;
+  String? Group_Name;
+  String? Machine_name;
+  String? Model_Name;
+  String? Depart_Name;
+  String? Material_Name;
+  String? Tool_Name;
 
   //#endregion
-
-  OperationBLL() {
-
-  }
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -235,18 +231,18 @@ class OperationBLL {
 
 
     'Operation_Id': Operation_Id.toString(),
-    'Operationl_Code': Operationl_Code,
-    'Operation_Description': Operation_Description,
-    'Operation_Name': Operation_Name,
+    'Operationl_Code': Operationl_Code??'',
+    'Operation_Description': Operation_Description??'',
+    'Operation_Name': Operation_Name??'',
     'Operation_Groups': Operation_Groups.toString(),
     'Machine_id': Machine_id.toString(),
     'OperationToplamSTD': OperationToplamSTD.toString(),
-    'ArticalNO': ArticalNO,
-    'OperationVideo': OperationVideo,
+    'ArticalNO': ArticalNO??'',
+    'OperationVideo': OperationVideo??'',
     'OperationImage': OperationImage.toString(),
     'Thread_length': Thread_length.toString(),
     'Bobin_Number': Bobin_Number.toString(),
-    'OperationVideoFileName': OperationVideoFileName,
+    'OperationVideoFileName': OperationVideoFileName??'',
     'HandTMU': HandTMU.toString(),
     'HandMin': HandMin.toString(),
     'HandTolerStd': HandTolerStd.toString(),
@@ -259,7 +255,7 @@ class OperationBLL {
     'OperTMU': OperTMU.toString(),
     'Hour_Target': Hour_Target.toString(),
     'Machine_Number': Machine_Number.toString(),
-    'Model_Operation_Barcode': Model_Operation_Barcode,
+    'Model_Operation_Barcode': Model_Operation_Barcode??'',
     'Oper_Sequence': Oper_Sequence.toString(),
     'Model_id': Model_id.toString(),
     'Real_Amount': Real_Amount.toString(),
@@ -277,14 +273,14 @@ class OperationBLL {
     'IsBulkType': IsBulkType.toString(),
     'BulkAdet': BulkAdet.toString(),
     'Stitch_Tool_Id': Stitch_Tool_Id.toString(),
-    'Source_Id': Source_Id,
+    'Source_Id': Source_Id??'',
     'IsCriticalControl': IsCriticalControl.toString(),
-    'Group_Name': Group_Name,
-    'Machine_name': Machine_name,
-    'Model_Name': Model_Name,
-    'Depart_Name': Depart_Name,
-    'Material_Name': Material_Name,
-    'Tool_Name': Tool_Name,
+    'Group_Name': Group_Name??'',
+    'Machine_name': Machine_name??'',
+    'Model_Name': Model_Name??'',
+    'Depart_Name': Depart_Name??'',
+    'Material_Name': Material_Name??'',
+    'Tool_Name': Tool_Name??'',
 
   };
 

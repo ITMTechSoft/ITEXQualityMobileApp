@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/image_render.dart';
-
 import 'package:itex_soft_qualityapp/Models/Criteria_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
@@ -18,7 +16,7 @@ class _Criteria_TestState extends State<Criteria_Test> {
 
   //PDFViewController _pdfViewController;
 
-  Future<Criteria_ModelOrderBLL> LoginFunction(
+  Future<Criteria_ModelOrderBLL?> LoginFunction(
       PersonalProvider PersonalCase) async {
     var Critiera = await Criteria_ModelOrderBLL.Get_Criteria_ModelOrder(
         PersonalCase.SelectedTest!.Id);
@@ -64,7 +62,7 @@ class _Criteria_TestState extends State<Criteria_Test> {
             dense: true,
             selected: true,
           ),
-          FutureBuilder<Criteria_ModelOrderBLL>(
+          FutureBuilder<Criteria_ModelOrderBLL?>(
             future: LoginFunction(PersonalCase),
             builder: (context, snapshot) {
               if (snapshot.hasData) {

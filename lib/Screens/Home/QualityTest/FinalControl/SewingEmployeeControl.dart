@@ -53,7 +53,7 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
 
   Future<List<User_QualityTracking_DetailBLL>?> GetSelectedOperationOperator(
       SubCaseProvider CaseProvider) async {
-    List<User_QualityTracking_DetailBLL> Critiera =
+    List<User_QualityTracking_DetailBLL>? Critiera =
     await User_QualityTracking_DetailBLL.Get_User_QualityTracking_Detail(
         CaseProvider.QualityTracking!.Id,
         Quality_Items_Id: widget.QualityItem.Id);

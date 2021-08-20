@@ -21,7 +21,7 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
 
   Future<List<OrderSizeColorDetailsBLL>?> LoadingQualityTest(
       PersonalProvider PersonalCase) async {
-    List<OrderSizeColorDetailsBLL> Critiera =
+    List<OrderSizeColorDetailsBLL>? Critiera =
         await OrderSizeColorDetailsBLL.Get_OrderSizeColorDetails(
             PersonalCase.SelectedOrder!.Order_Id);
 
@@ -104,7 +104,7 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
                         Navigator.of(context).pop();
                       }
                       Item.SizeColor_QTY =
-                          (Item.SizeColor_QTY ?? 0) + Cutting.Sample_Amount;
+                          (Item.SizeColor_QTY ?? 0) + Cutting.Sample_Amount!;
                       Refersh();
                     },
                   ),
@@ -291,7 +291,7 @@ class _CuttingMatrixDataTableState extends State<CuttingMatrixDataTable> {
               Navigator.of(context).pop();
             }
             Item.SizeColor_QTY =
-                (Item.SizeColor_QTY ?? 0) + Cutting.Sample_Amount;
+                (Item.SizeColor_QTY ?? 0) + Cutting.Sample_Amount!;
             Refersh();
           },
         ),
@@ -328,13 +328,13 @@ class _CuttingMatrixDataTableState extends State<CuttingMatrixDataTable> {
                 },
                 cells: [
                   DataCell(
-                    Text(item.SizeParam_StringVal),
+                    Text(item.SizeParam_StringVal??''),
                     onTap: () {
                       print('Selected ${item.SizeParam_StringVal}');
                     },
                   ),
                   DataCell(
-                    Text(item.ColorParam_StringVal),
+                    Text(item.ColorParam_StringVal??''),
                   ),
                   DataCell(
                     Text((item.PlanSizeColor_QTY ?? 0).toString()),

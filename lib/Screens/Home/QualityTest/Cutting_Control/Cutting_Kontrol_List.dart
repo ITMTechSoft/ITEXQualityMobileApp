@@ -15,7 +15,7 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
 
   Future<List<DeptModOrderQuality_ItemsBLL>?> LoadingCutttingControl(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
-    List<DeptModOrderQuality_ItemsBLL> Criteria =
+    List<DeptModOrderQuality_ItemsBLL>? Criteria =
         await DeptModOrderQuality_ItemsBLL.Get_DeptModOrderQuality_Items(
             PersonalCase.GetCurrentUser().Id,
             PersonalCase.SelectedTest!.Id,
@@ -41,8 +41,8 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
   Widget AraControlHeader(PersonalProvider PersonalCase) {
     int Percentage = 0;
     if ((PersonalCase.SelectedTracking!.Sample_Amount ?? 0) > 0)
-      Percentage = ((PersonalCase.SelectedTracking!.Error_Amount * 100) /
-              PersonalCase.SelectedTracking!.Sample_Amount)
+      Percentage = ((PersonalCase.SelectedTracking!.Error_Amount! * 100) /
+              PersonalCase.SelectedTracking!.Sample_Amount!)
           .ceil();
     return Container(
       padding: EdgeInsets.all(15),
@@ -72,7 +72,7 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
                       LableTitle(PersonalCase.GetLable(ResourceKey.SizeName))),
               Expanded(
                   child: LableTitle(
-                      PersonalCase.SelectedSize!.SizeParam_StringVal,
+                      PersonalCase.SelectedSize!.SizeParam_StringVal??'',
                       color: ArgonColors.text)),
               Expanded(
                 flex: 2,
@@ -184,7 +184,7 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
                         var NewItem =
                             await Item.CorrectSpecificAmount(DelValue);
                         if (NewItem != null) Item = NewItem;
-                        PersonalCase.SelectedTracking!.Sample_Amount += 1;
+                        PersonalCase.SelectedTracking!.Sample_Amount! += 1;
 
                         Execute();
                       }),
@@ -210,7 +210,7 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
                         var NewItem = await Item.ErrorSpecificAmount(DelValue);
                         if (NewItem != null) Item = NewItem;
                         PersonalCase.SelectedTracking!.Sample_Amount += 1;
-                        PersonalCase.SelectedTracking!.Error_Amount += 1;
+                        PersonalCase.SelectedTracking!.Error_Amount  += 1;
                         Execute();
                       }),
                 ),

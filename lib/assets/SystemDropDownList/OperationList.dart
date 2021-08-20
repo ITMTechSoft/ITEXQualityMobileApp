@@ -58,7 +58,7 @@ class _Operation_ListState extends State<Operation_List> {
 
   Widget FilterList() {
     var FilterListItem = widget.Items.where((r) =>
-        r.Operation_Name.toUpperCase().contains(SearchController.text.toUpperCase())).toList();
+        r.Operation_Name!.toUpperCase().contains(SearchController.text.toUpperCase())).toList();
     return SingleChildScrollView(
       child: ListView.builder(
           scrollDirection: Axis.vertical,
@@ -67,7 +67,7 @@ class _Operation_ListState extends State<Operation_List> {
 
           itemCount: FilterListItem.length,
           itemBuilder: (context, int i) {
-            return DropDownBox(ItemName: FilterListItem[i].Operation_Name,
+            return DropDownBox(ItemName: FilterListItem[i].Operation_Name??'',
                 OnTap: (){
                   widget.OnClickItems!(FilterListItem[i]);
                   setState(() {

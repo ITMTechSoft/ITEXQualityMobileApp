@@ -15,7 +15,7 @@ class _Tasnif_CorrectionState extends State<Tasnif_Correction> {
 
   Future<List<User_QualityTracking_DetailBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
-    List<User_QualityTracking_DetailBLL> Criteria =
+    List<User_QualityTracking_DetailBLL>? Criteria =
     await User_QualityTracking_DetailBLL
         .Get_UserQualityTasnifControl(
        PersonalCase.SelectedTest!.Id

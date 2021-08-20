@@ -71,7 +71,7 @@ class _MeasureItem_ControlState
               mainAxisSize: MainAxisSize.max,
               children: [
                 HeaderLable(PersonalCase.GetLable(ResourceKey.Employee_Name)),
-                TableLable(widget.EmployeeOperation.Inline_Employee_Name),
+                TableLable(widget.EmployeeOperation.Inline_Employee_Name??''),
                 HeaderLable(PersonalCase.GetLable(ResourceKey.Sample_Amount)),
                 TableLable((widget.EmployeeOperation.Amount ?? 0).toString()),
               ],

@@ -1,7 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
@@ -9,34 +6,33 @@ import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 class OrderSizeColorDetailsBLL {
   //#region Properties
   int Id;
-  int Order_Id;
-  int Size_Id;
-  int Color_Id;
-  int PlanSizeColor_QTY;
-  int OrderSizeColor_QTY;
-  int SizeColor_QTY;
-  DateTime CreateDate;
-  DateTime LastUpdateDate;
-  int CreatedBy;
-  int LastUpdateBy;
-  int Source_Id;
-  String SizeColorNote;
-  int Model_id;
-  int Quantity;
-  String Order_Number;
-  String SizeParam_StringVal;
-  int SizeEntityOrder;
-  String ColorParam_StringVal;
-  int ColorEntityOrder;
+  int? Order_Id;
+  int? Size_Id;
+  int? Color_Id;
+  int? PlanSizeColor_QTY;
+  int? OrderSizeColor_QTY;
+  int? SizeColor_QTY;
+  DateTime? CreateDate;
+  DateTime? LastUpdateDate;
+  int? CreatedBy;
+  int? LastUpdateBy;
+  int? Source_Id;
+  String? SizeColorNote;
+  int? Model_id;
+  int? Quantity;
+  String? Order_Number;
+  String? SizeParam_StringVal;
+  int? SizeEntityOrder;
+  String? ColorParam_StringVal;
+  int? ColorEntityOrder;
 
-  bool IsChecked;
+  bool? IsChecked;
 
-  int ControlAmount;
-  int Remain_Value;
+  int?ControlAmount;
+  int?Remain_Value;
 
   //#endregion
 
-  OrderSizeColorDetailsBLL() {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -118,21 +114,21 @@ class OrderSizeColorDetailsBLL {
 
   Map<String, String> toPost() => {
         'Id': Id.toString(),
-        'Order_Id': Order_Id.toString(),
-        'Size_Id': Size_Id.toString(),
-        'Color_Id': Color_Id.toString(),
-        'PlanSizeColor_QTY': PlanSizeColor_QTY.toString(),
-        'OrderSizeColor_QTY': OrderSizeColor_QTY.toString(),
-        'SizeColor_QTY': SizeColor_QTY.toString(),
-        'CreateDate': CreateDate.toString(),
-        'LastUpdateDate': LastUpdateDate.toString(),
-        'CreatedBy': CreatedBy.toString(),
-        'LastUpdateBy': LastUpdateBy.toString(),
-        'Source_Id': Source_Id.toString(),
-        'SizeColorNote': SizeColorNote,
-        'Model_id': Model_id.toString(),
+        'Order_Id': Order_Id.toString()??'',
+        'Size_Id': Size_Id.toString()??'',
+        'Color_Id': Color_Id.toString()??'',
+        'PlanSizeColor_QTY': PlanSizeColor_QTY.toString()??'',
+        'OrderSizeColor_QTY': OrderSizeColor_QTY.toString()??'',
+        'SizeColor_QTY': SizeColor_QTY.toString()??'',
+        'CreateDate': CreateDate.toString()??'',
+        'LastUpdateDate': LastUpdateDate.toString()??'',
+        'CreatedBy': CreatedBy.toString()??'',
+        'LastUpdateBy': LastUpdateBy.toString()??'',
+        'Source_Id': Source_Id.toString()??'',
+        'SizeColorNote': SizeColorNote??'',
+        'Model_id': Model_id.toString()??'',
         'Quantity': Quantity.toString(),
-        'Order_Number': Order_Number,
+        'Order_Number': Order_Number??'',
         'SizeParam_StringVal': SizeParam_StringVal.toString(),
         'SizeEntityOrder': SizeEntityOrder.toString(),
         'ColorParam_StringVal': ColorParam_StringVal.toString(),

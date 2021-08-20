@@ -21,7 +21,7 @@ class _Tasnif_AmountState extends State<Tasnif_Amount> {
 
   Future<List<OrderSizeColorDetailsBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
-    List<OrderSizeColorDetailsBLL> Criteria =
+    List<OrderSizeColorDetailsBLL>? Criteria =
         await OrderSizeColorDetailsBLL.Get_OrderSizeColorDetails(
             PersonalCase.SelectedOrder!.Order_Id);
 
@@ -110,7 +110,7 @@ class _Tasnif_AmountState extends State<Tasnif_Amount> {
                       Navigator.of(context).pop();
                     }
                     Item.OrderSizeColor_QTY =
-                        (Item.OrderSizeColor_QTY ?? 0) + Tasnif.Sample_Amount;
+                        (Item.OrderSizeColor_QTY ?? 0) + Tasnif.Sample_Amount!;
                     Refersh();
                   },
                 ),

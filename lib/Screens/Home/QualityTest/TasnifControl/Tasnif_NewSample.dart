@@ -64,7 +64,7 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
 
   Future<List<OrderSizeColorDetailsBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
-    List<OrderSizeColorDetailsBLL> Criteria =
+    List<OrderSizeColorDetailsBLL>? Criteria =
         await OrderSizeColorDetailsBLL.Get_OrderSizeColorDetails(
             PersonalCase.SelectedOrder!.Order_Id);
 
@@ -206,7 +206,7 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                                       widget.TansifGroup?.map((GroupsBLL value) {
                                     return DropdownMenuItem<GroupsBLL>(
                                       value: value,
-                                      child: Text(value.Group_Name),
+                                      child: Text(value.Group_Name??''),
                                     );
                                   }).toList(),
                                   Lable: PersonalCase.GetLable(

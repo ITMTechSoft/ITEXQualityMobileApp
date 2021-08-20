@@ -42,7 +42,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
 
 
 
-      DetailBar(Title:GlobalizationBLL.Get_GlobalItem(ResourceKey.Configuration),PersonalCase: PersonalCase, OnTap:() {
+      DetailBar(Title:GlobalizationBLL.Get_GlobalItem(ResourceKey.Configuration)??'',PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
           context:  context ,

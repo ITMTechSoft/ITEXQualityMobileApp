@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
@@ -6,8 +7,8 @@ import 'dart:async';
 
 class Criteria_ModelOrderBLL {
   //#region Properties
-  int? Id;
-  int? DeptModelOrder_QualityTest_Id;
+  int Id;
+  int DeptModelOrder_QualityTest_Id;
   bool? IsMandatory;
   String? HTML_Data;
   int? QualityTest_Id;
@@ -16,8 +17,8 @@ class Criteria_ModelOrderBLL {
 
   //#endregion
 
-  Criteria_ModelOrderBLL() {}
-
+  Criteria_ModelOrderBLL({required  this.Id,
+  required this.DeptModelOrder_QualityTest_Id});
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
     this.Id = json['Id'];
@@ -67,9 +68,9 @@ class Criteria_ModelOrderBLL {
   //#endregion
 
   //#region GetWebApiUrl
-  static Future<Criteria_ModelOrderBLL> Get_Criteria_ModelOrder(
+  static Future<Criteria_ModelOrderBLL?> Get_Criteria_ModelOrder(
       int DeptModelOrder_QualityTest_Id) async {
-    Criteria_ModelOrderBLL Item = new Criteria_ModelOrderBLL();
+    Criteria_ModelOrderBLL? Item = new Criteria_ModelOrderBLL(Id:0,DeptModelOrder_QualityTest_Id:0);
     try {
       Map<String, String> qParams = {
         'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id.toString(),

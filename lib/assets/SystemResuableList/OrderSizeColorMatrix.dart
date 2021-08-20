@@ -53,8 +53,8 @@ class _OrderSizeColorMatrixState extends State<OrderSizeColorMatrix> {
                         });
                       },
                       child: TableColumn(children: [
-                        TableLable(widget.Items![i].SizeParam_StringVal),
-                        TableLable(widget.Items![i].ColorParam_StringVal),
+                        TableLable(widget.Items![i].SizeParam_StringVal??''),
+                        TableLable(widget.Items![i].ColorParam_StringVal??''),
                         LableInteger(widget.Items![i].SizeColor_QTY),
                         LableInteger(widget.Items![i].ControlAmount),
                         LableInteger(widget.Items![i].Remain_Value),

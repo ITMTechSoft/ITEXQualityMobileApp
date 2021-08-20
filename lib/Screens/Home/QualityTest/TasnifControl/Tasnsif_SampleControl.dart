@@ -35,7 +35,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 
 
   LoadingOpenPage(PersonalProvider PersonalCase) async {
-    List<DeptModOrderQuality_ItemsBLL> Criteria =
+    List<DeptModOrderQuality_ItemsBLL>? Criteria =
         await DeptModOrderQuality_ItemsBLL.Get_DeptModOrderQualityTest_Items(
             PersonalCase.SelectedTest!.Id);
 
@@ -138,7 +138,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 
             Expanded(
                 flex: 2,
-                child: LableTitle(PersonalCase.SelectedOrder!.Model_Name,
+                child: LableTitle(PersonalCase.SelectedOrder!.Model_Name??'',
                     color: ArgonColors.text)),
           ],
         ),
@@ -187,7 +187,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                       color: ArgonColors.text)),
               Expanded(
                   flex: 2,
-                  child: LableTitle(PersonalCase.SelectedTracking!.Fabric_TopNo,
+                  child: LableTitle(PersonalCase.SelectedTracking!.Fabric_TopNo??'',
                       color: ArgonColors.text)),
             ],
           ),
@@ -202,11 +202,11 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                       '${PersonalCase.GetLable(ResourceKey.ColorName)}')),
               Expanded(
                   flex: 2,
-                  child: LableTitle(PersonalCase.SelectedTracking!.SizeName,
+                  child: LableTitle(PersonalCase.SelectedTracking!.SizeName??'',
                       color: ArgonColors.text)),
               Expanded(
                   flex: 2,
-                  child: LableTitle(PersonalCase.SelectedTracking!.ColorName,
+                  child: LableTitle(PersonalCase.SelectedTracking!.ColorName??'',
                       color: ArgonColors.text)),
             ],
           ),

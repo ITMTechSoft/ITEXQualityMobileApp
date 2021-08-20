@@ -24,7 +24,7 @@ class _MeasureSizeSample_ListState extends State<MeasureSizeSample_List> {
 
   Future<List<QualityDept_ModelOrder_TrackingBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
-    List<QualityDept_ModelOrder_TrackingBLL> Criteria =
+    List<QualityDept_ModelOrder_TrackingBLL>? Criteria =
     await QualityDept_ModelOrder_TrackingBLL
         .GetInlineDikim_QualityDept_ModelOrder_Tracking(
         Employee_Id: PersonalCase.GetCurrentUser().Id,

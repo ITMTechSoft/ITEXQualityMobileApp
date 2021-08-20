@@ -6,19 +6,19 @@ import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 
 class Quality_ItemsBLL {
   //#region Properties
-  int Id;
-  int QualityTest_Id;
-  int Group_Id;
-  String Item_Name;
-  int Item_Level;
-  int Entity_Order;
-  DateTime CreateDate;
-  DateTime LastUpdateDate;
-  int CreatedBy;
-  int LastUpdateBy;
-  String Group_Name;
-  String Group_Type;
-  int Amount;
+  int Id=0;
+  int? QualityTest_Id;
+  int? Group_Id;
+  String? Item_Name;
+  int? Item_Level;
+  int? Entity_Order;
+  DateTime? CreateDate;
+  DateTime? LastUpdateDate;
+  int? CreatedBy;
+  int? LastUpdateBy;
+  String? Group_Name;
+  String? Group_Type;
+  int? Amount;
 
   //#endregion
 
@@ -81,15 +81,15 @@ class Quality_ItemsBLL {
     'Id': Id.toString(),
     'QualityTest_Id': QualityTest_Id.toString(),
     'Group_Id': Group_Id.toString(),
-    'Item_Name': Item_Name,
+    'Item_Name': Item_Name??'',
     'Item_Level': Item_Level.toString(),
     'Entity_Order': Entity_Order.toString(),
     'CreateDate': CreateDate.toString(),
     'LastUpdateDate': LastUpdateDate.toString(),
     'CreatedBy': CreatedBy.toString(),
     'LastUpdateBy': LastUpdateBy.toString(),
-    'Group_Name': Group_Name,
-    'Group_Type': Group_Type,
+    'Group_Name': Group_Name??'',
+    'Group_Type': Group_Type??'',
 
   };
 
@@ -101,14 +101,14 @@ class Quality_ItemsBLL {
 
   static Future<List<Quality_ItemsBLL>?> Get_Quality_Items_WithValue(
       String GroupType,int Employee_Id,int Matrix_Id) async {
-    List<Quality_ItemsBLL> ItemList;
+    List<Quality_ItemsBLL>? ItemList;
     try {
 
       Map<String,String > qParams = {
         'GroupType':GroupType,
         'Employee_Id':Employee_Id.toString() ,
         'OrderSizeColorDetail_Id': Matrix_Id.toString()
-      }
+      };
       var response = await http.get(
           SharedPref.GetWebApiUri(WebApiMethod.Get_Quality_Items_WithValue,qParams)
       );
@@ -128,7 +128,7 @@ class Quality_ItemsBLL {
   }
 
   static Future<List<Quality_ItemsBLL>?> Get_Quality_Items(String GroupType) async {
-    List<Quality_ItemsBLL> ItemList;
+    List<Quality_ItemsBLL>? ItemList;
     try {
 
       Map<String,String> qParams = {

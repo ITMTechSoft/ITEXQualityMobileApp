@@ -7,24 +7,24 @@ class Language_ResourcesKeyBLL {
   //#region Properties
   int Id;
   int Language_Id;
-  int ResourcesKey_Id;
-  String ResourceValue;
-  DateTime CreateDate;
-  DateTime LastUpdateDate;
-  int CreatedBy;
-  int LastUpdateBy;
-  int Groups_id;
-  int MoveId;
-  String ResourceCode;
-  String ResourceName;
-  String ResourceDesc;
-  String ResourceType;
-  String CultureName;
-  String ResKey;
+  int? ResourcesKey_Id;
+  String? ResourceValue;
+  DateTime? CreateDate;
+  DateTime? LastUpdateDate;
+  int? CreatedBy;
+  int? LastUpdateBy;
+  int? Groups_id;
+  int? MoveId;
+  String? ResourceCode;
+  String? ResourceName;
+  String? ResourceDesc;
+  String? ResourceType;
+  String? CultureName;
+  String? ResKey;
 
   //#endregion
 
-  Language_ResourcesKeyBLL() {
+  Language_ResourcesKeyBLL({required this.Id, required this.Language_Id}) {
 
   }
 
@@ -94,19 +94,19 @@ class Language_ResourcesKeyBLL {
     'Id': Id.toString(),
     'Language_Id': Language_Id.toString(),
     'ResourcesKey_Id': ResourcesKey_Id.toString(),
-    'ResourceValue': ResourceValue,
+    'ResourceValue': ResourceValue??'',
     'CreateDate': CreateDate.toString(),
     'LastUpdateDate': LastUpdateDate.toString(),
     'CreatedBy': CreatedBy.toString(),
     'LastUpdateBy': LastUpdateBy.toString(),
     'Groups_id': Groups_id.toString(),
     'MoveId': MoveId.toString(),
-    'ResourceCode': ResourceCode,
-    'ResourceName': ResourceName,
-    'ResourceDesc': ResourceDesc,
-    'ResourceType': ResourceType,
-    'CultureName': CultureName,
-    'ResKey': ResKey,
+    'ResourceCode': ResourceCode??'',
+    'ResourceName': ResourceName??'',
+    'ResourceDesc': ResourceDesc??'',
+    'ResourceType': ResourceType??'',
+    'CultureName': CultureName??'',
+    'ResKey': ResKey??'',
 
   };
 

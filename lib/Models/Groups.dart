@@ -9,17 +9,14 @@ import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 class GroupsBLL {
   //#region Properties
   int Groups_id;
-  int Source_Id;
-  String Group_Name;
-  String Group_Type;
-  String Group_Description;
-  String Group_Code;
+  int? Source_Id;
+  String? Group_Name;
+  String? Group_Type;
+  String? Group_Description;
+  String? Group_Code;
 
   //#endregion
 
-  GroupsBLL() {
-
-  }
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -56,10 +53,10 @@ class GroupsBLL {
 
     'Groups_id': Groups_id.toString(),
     'Source_Id': Source_Id.toString(),
-    'Group_Name': Group_Name,
-    'Group_Type': Group_Type,
-    'Group_Description': Group_Description,
-    'Group_Code': Group_Code,
+    'Group_Name': Group_Name??'',
+    'Group_Type': Group_Type??'',
+    'Group_Description': Group_Description??'',
+    'Group_Code': Group_Code??'',
 
   };
 
@@ -68,14 +65,15 @@ class GroupsBLL {
   //#endregion
 
   //#region GetWebApiUrl
-  static Future<List<GroupsBLL>> Get_TasnifGroups(
+  static Future<List<GroupsBLL>?> Get_TasnifGroups(
       int DeptModelOrder_QualityTest_Id) async {
-    List<GroupsBLL> ItemList;
+    List<GroupsBLL>? ItemList;
     try {
+      Map<String,String> qParams = {
+        'DeptModelOrder_QualityTest_Id':DeptModelOrder_QualityTest_Id.toString()
+      };
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_TasnifControlGroups) +
-              "?DeptModelOrder_QualityTest_Id=" +
-              DeptModelOrder_QualityTest_Id.toString());
+          SharedPref.GetWebApiUri(WebApiMethod.Get_TasnifControlGroups,qParams) );
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

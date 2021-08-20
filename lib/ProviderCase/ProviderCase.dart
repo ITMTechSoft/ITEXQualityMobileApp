@@ -55,7 +55,7 @@ class PersonalProvider with ChangeNotifier {
 
         await _CurrentUser!.login();
 
-        if (_CurrentUser!.ValidUser) {
+        if (_CurrentUser!.ValidUser!) {
           notifyListeners();
         }
         IsLoading = false;
@@ -128,7 +128,7 @@ class PersonalProvider with ChangeNotifier {
     if (GlobalKeys != null && GlobalKeys!.length > 0) {
       var GetResournce = GlobalKeys!.where(
           (element) => element.ResKey == KeyRes.toShortString()).toList();
-      if (GetResournce.length > 0) return GetResournce.first.ResourceValue;
+      if (GetResournce.length > 0) return GetResournce.first.ResourceValue??'';
     }
 
     return KeyRes.toShortString();

@@ -33,7 +33,7 @@ class _LoginPagesState extends State<LoginPages> {
 
     await PersonalCase.Login();
 
-    if (!PersonalCase.GetCurrentUser().ValidUser) {
+    if (!PersonalCase.GetCurrentUser().ValidUser!) {
       setState(() {
         errorMsg = PersonalCase.GetCurrentUser().LoginMessage;
       });

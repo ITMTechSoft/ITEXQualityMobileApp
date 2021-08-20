@@ -18,7 +18,7 @@ class _Accessory_ControlState extends State<Accessory_Control> {
 
   Future<List<Accessory_ModelOrderBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
-    List<Accessory_ModelOrderBLL> Criteria =
+    List<Accessory_ModelOrderBLL>? Criteria =
         await Accessory_ModelOrderBLL.Get_Accessory_ModelOrder(
             DeptModelOrder_QualityTest_Id: PersonalCase.SelectedTest!.Id);
 
@@ -134,7 +134,7 @@ class _Accessory_ControlState extends State<Accessory_Control> {
                                         style: TextStyle(
                                             fontSize: ArgonSize.Header4)),
                                     onPressed: () async {
-                                      var Item = snapshot.data[Index];
+                                      var Item = snapshot.data![Index];
                                       int Employee_Id =
                                           PersonalCase.GetCurrentUser().Id;
                                       var Tracking =
@@ -147,7 +147,7 @@ class _Accessory_ControlState extends State<Accessory_Control> {
                                       Tracking.Accessory_ModelOrder_Id =
                                           Item.Id;
                                       Tracking.DeptModelOrder_QualityTest_Id =
-                                          Item.DeptModelOrder_QualityTest_Id;
+                                          Item.DeptModelOrder_QualityTest_Id!;
                                       Tracking.ApprovalDate = DateTime.now();
 
                                       bool Status = await Tracking

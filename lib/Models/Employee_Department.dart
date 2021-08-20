@@ -13,18 +13,18 @@ class Employee_DepartmentBLL {
   int Department_Id;
   int Employee_Id;
   DateTime Start_Date;
-  DateTime End_Date;
-  bool IsValidator;
-  DateTime CreateDate;
-  DateTime LastUpdateDate;
-  int CreatedBy;
-  int LastUpdateBy;
-  String Depart_Name;
-  String Employee_Name;
+  DateTime? End_Date;
+  bool? IsValidator;
+  DateTime? CreateDate;
+  DateTime? LastUpdateDate;
+  int? CreatedBy;
+  int? LastUpdateBy;
+  String? Depart_Name;
+  String? Employee_Name;
 
   //#endregion
 
-  Employee_DepartmentBLL() {}
+  Employee_DepartmentBLL({required this.Id,required this.Employee_Id, required this.Department_Id,required this.Start_Date}) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -94,19 +94,21 @@ class Employee_DepartmentBLL {
         'LastUpdateDate': LastUpdateDate.toString(),
         'CreatedBy': CreatedBy.toString(),
         'LastUpdateBy': LastUpdateBy.toString(),
-        'Depart_Name': Depart_Name,
-        'Employee_Name': Employee_Name,
+        'Depart_Name': Depart_Name??'',
+        'Employee_Name': Employee_Name??'',
       };
 
   //#endregion
-  static Future<List<Employee_DepartmentBLL>> Get_EmployeeDepartment(
+  static Future<List<Employee_DepartmentBLL>?> Get_EmployeeDepartment(
       int Employee_Id) async {
-    List<Employee_DepartmentBLL> ItemList;
+    List<Employee_DepartmentBLL>? ItemList;
     try {
+
+      Map<String,String> qParams = {
+        'Employee_Id': Employee_Id.toString()
+      };
       var response = await http.get(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_EmployeeDepartment) +
-              "?Employee_Id=" +
-              Employee_Id.toString());
+          SharedPref.GetWebApiUri(WebApiMethod.Get_EmployeeDepartment,qParams) );
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
