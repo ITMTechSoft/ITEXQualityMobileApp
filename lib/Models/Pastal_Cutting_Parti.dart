@@ -6,7 +6,7 @@ import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 
 class Pastal_Cutting_PartiBLL {
   //#region Properties
-  int Id;
+  int Id=0;
   int? Order_id;
   String? Fabric_Type;
   DateTime? CuttingDate;

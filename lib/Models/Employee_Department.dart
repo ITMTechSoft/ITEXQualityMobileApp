@@ -1,8 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
@@ -24,7 +20,11 @@ class Employee_DepartmentBLL {
 
   //#endregion
 
-  Employee_DepartmentBLL({required this.Id,required this.Employee_Id, required this.Department_Id,required this.Start_Date}) {}
+  Employee_DepartmentBLL(
+      {required this.Id,
+      required this.Employee_Id,
+      required this.Department_Id,
+      required this.Start_Date}) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -32,7 +32,7 @@ class Employee_DepartmentBLL {
     this.Department_Id = json['Department_Id'];
     this.Employee_Id = json['Employee_Id'];
     this.Start_Date =
-        json['Start_Date'] == null ? null : DateTime.parse(json['Start_Date']);
+        json['Start_Date'] ?? DateTime.parse(json['Start_Date']);
     this.End_Date =
         json['End_Date'] == null ? null : DateTime.parse(json['End_Date']);
     this.IsValidator = json['IsValidator'];
@@ -51,9 +51,7 @@ class Employee_DepartmentBLL {
       : Id = json['Id'],
         Department_Id = json['Department_Id'],
         Employee_Id = json['Employee_Id'],
-        Start_Date = json['Start_Date'] == null
-            ? null
-            : DateTime.parse(json['Start_Date']),
+        Start_Date = json['Start_Date'] ?? DateTime.parse(json['Start_Date']),
         End_Date =
             json['End_Date'] == null ? null : DateTime.parse(json['End_Date']),
         IsValidator = json['IsValidator'],
@@ -94,8 +92,8 @@ class Employee_DepartmentBLL {
         'LastUpdateDate': LastUpdateDate.toString(),
         'CreatedBy': CreatedBy.toString(),
         'LastUpdateBy': LastUpdateBy.toString(),
-        'Depart_Name': Depart_Name??'',
-        'Employee_Name': Employee_Name??'',
+        'Depart_Name': Depart_Name ?? '',
+        'Employee_Name': Employee_Name ?? '',
       };
 
   //#endregion
@@ -103,12 +101,9 @@ class Employee_DepartmentBLL {
       int Employee_Id) async {
     List<Employee_DepartmentBLL>? ItemList;
     try {
-
-      Map<String,String> qParams = {
-        'Employee_Id': Employee_Id.toString()
-      };
-      var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Get_EmployeeDepartment,qParams) );
+      Map<String, String> qParams = {'Employee_Id': Employee_Id.toString()};
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_EmployeeDepartment, qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

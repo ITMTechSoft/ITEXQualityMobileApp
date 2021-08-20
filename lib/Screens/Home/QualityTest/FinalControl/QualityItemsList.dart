@@ -155,7 +155,7 @@ class _QualityItemsListState extends State<QualityItemsList> {
                         await OnTapQualityItem(snapshot.data![index], index);
                       },
                       child: ButtonWithNumber(
-                        text: snapshot.data![index].Item_Name,
+                        text: snapshot.data![index].Item_Name!,
                         buttonWidth: getScreenWidth()/2,
                         buttonHegiht: getScreenHeight()/6,
                         btnBgColor: selectedList.contains(index)

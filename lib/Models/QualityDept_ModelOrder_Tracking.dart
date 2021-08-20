@@ -7,8 +7,8 @@ import 'User_QualityTracking_Detail.dart';
 class QualityDept_ModelOrder_TrackingBLL {
   //#region Properties
   int Id= 0;
-  int Employee_Id;
-  int DeptModelOrder_QualityTest_Id;
+  int? Employee_Id;
+  int? DeptModelOrder_QualityTest_Id;
   int? OrderSizeColorDetail_Id;
   int? Accessory_ModelOrder_Id;
   int? Plan_Daily_Production_Id;
@@ -45,7 +45,7 @@ class QualityDept_ModelOrder_TrackingBLL {
   //#endregion
 
 
-  QualityDept_ModelOrder_TrackingBLL()
+  QualityDept_ModelOrder_TrackingBLL(){}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {

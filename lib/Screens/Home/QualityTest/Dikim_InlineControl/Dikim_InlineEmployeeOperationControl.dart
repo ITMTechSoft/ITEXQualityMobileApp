@@ -9,7 +9,7 @@ import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 
 class Dikim_InlineEmployeeOperationControl extends StatefulWidget {
-  User_QualityTracking_DetailBLL EmployeeOperation;
+  User_QualityTracking_DetailBLL? EmployeeOperation;
   bool IsDirect;
 
   Dikim_InlineEmployeeOperationControl({required this.EmployeeOperation,this.IsDirect = true});
@@ -25,7 +25,7 @@ class _Dikim_InlineEmployeeOperationControlState
   int AssignAmount = 1;
 
   Future<bool> LoadingOpenPage() async {
-    bool IsOkay = await widget.EmployeeOperation.Start_DikimInlineProcess();
+    bool IsOkay = await widget.EmployeeOperation!.Start_DikimInlineProcess();
 
     if (IsOkay) {
       IntiteStatus = 1;
@@ -62,7 +62,7 @@ class _Dikim_InlineEmployeeOperationControlState
               children: [
                 HeaderLable('${PersonalCase.GetLable(ResourceKey.Order_Number)} / ' '${PersonalCase.GetLable(ResourceKey.Operation_Name)}' ,Flex:3 ),
                 TableLable(PersonalCase.SelectedOrder!.Order_Number??'',Flex:2),
-                TableLable(widget.EmployeeOperation.Operation_Name.toString(),Flex:2),
+                TableLable(widget.EmployeeOperation!.Operation_Name.toString(),Flex:2),
               ],
             ),
             Row(
@@ -70,8 +70,8 @@ class _Dikim_InlineEmployeeOperationControlState
               mainAxisSize: MainAxisSize.max,
               children: [
                 HeaderLable('${PersonalCase.GetLable(ResourceKey.Employee_Name)} / ' '${PersonalCase.GetLable(ResourceKey.Sample_Amount)}' , Flex:3),
-                TableLable(widget.EmployeeOperation.Inline_Employee_Name??'',Flex:2),
-                TableLable((widget.EmployeeOperation.Amount ?? 0).toString(),Flex:2),
+                TableLable(widget.EmployeeOperation!.Inline_Employee_Name??'',Flex:2),
+                TableLable((widget.EmployeeOperation!.Amount ?? 0).toString(),Flex:2),
               ],
             ),
             Row(
@@ -80,9 +80,9 @@ class _Dikim_InlineEmployeeOperationControlState
               children: [
                 HeaderLable('${PersonalCase.GetLable(ResourceKey.Error_Amount)} / ' '${PersonalCase.GetLable(ResourceKey.Correct_Amount)}' , Flex:3),
                 TableLable(
-                    (widget.EmployeeOperation.Error_Amount ?? 0).toString(), Flex:2),
+                    (widget.EmployeeOperation!.Error_Amount ?? 0).toString(), Flex:2),
                 TableLable(
-                    (widget.EmployeeOperation.Correct_Amount ?? 0).toString(), Flex:2),
+                    (widget.EmployeeOperation!.Correct_Amount ?? 0).toString(), Flex:2),
               ],
             ),
           ],
@@ -100,7 +100,7 @@ class _Dikim_InlineEmployeeOperationControlState
                       height: ArgonSize.HeightSmall1,
                       value: PersonalCase.GetLable(ResourceKey.Correct_Amount),
                       function: () async {
-                        bool Check = await widget.EmployeeOperation
+                        bool Check = await widget.EmployeeOperation!
                             .Assign_EmployeeControlAmount(AssignAmount, "C");
 
                         if (Check) setState(() {});
@@ -132,7 +132,7 @@ class _Dikim_InlineEmployeeOperationControlState
                       width :ArgonSize.WidthSmall1,
                       value: PersonalCase.GetLable(ResourceKey.Error_Amount),
                       function: () async {
-                        bool Check = await widget.EmployeeOperation
+                        bool Check = await widget.EmployeeOperation!
                             .Assign_EmployeeControlAmount(AssignAmount, "E");
                         if (Check) setState(() {});
                       })),
@@ -150,9 +150,9 @@ class _Dikim_InlineEmployeeOperationControlState
               value: PersonalCase.GetLable(ResourceKey.CloseControl),
               backGroundColor: ArgonColors.primary,
               function: () async {
-                widget.EmployeeOperation.Order_Id =
+                widget.EmployeeOperation!.Order_Id =
                     PersonalCase.SelectedOrder!.Order_Id;
-                var Check = await widget.EmployeeOperation
+                var Check = await widget.EmployeeOperation!
                     .CloseEmployeeOperationControlRound();
                 if (Check) {
                   OnCloseCurrentWidget(CaseProvider);

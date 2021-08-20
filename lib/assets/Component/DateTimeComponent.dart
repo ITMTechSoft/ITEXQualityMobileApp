@@ -9,7 +9,7 @@ class DateTimePicker extends StatefulWidget {
   String DateFormat;
   int FirstDate;
   int LastDate;
-  DateTime  SelectedDate  = DateTime.now() ;
+  DateTime?  SelectedDate  = DateTime.now() ;
 
   /// TYPE OF DATE PICKER , CUPERTINO OR NORMAL
   DateMode dateMode = DateMode.normal;
@@ -31,7 +31,7 @@ class DateTimePicker extends StatefulWidget {
 
 class _DateTimePickerState extends State<DateTimePicker> {
   //DateTime  SelectedDate = DateTime.now();
-  TimeOfDay SelectedTime = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
+  TimeOfDay? SelectedTime = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
 
 
 
@@ -118,7 +118,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
   }
 
   /// CHOOSE DATE
-  Future<Void> _openDatePicker(BuildContext context) async {
+  Future<Void?> _openDatePicker(BuildContext context) async {
     widget.SelectedDate = (await showDatePicker(
       context: context,
       initialDate: widget.SelectedDate ?? DateTime.now(),
@@ -135,7 +135,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
   }
 
   /// CHOOSE TIME
-  Future<Void> _openTimePicker(BuildContext context) async {
+  Future<Void?> _openTimePicker(BuildContext context) async {
     SelectedTime = await showTimePicker(
         context: context,
         initialTime: SelectedTime ??
@@ -146,7 +146,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
       setState(() {
         //  widget.SelectedDate(SelectedTime);
         widget.SelectedDate = DateTime(widget.SelectedDate.year, widget.SelectedDate.month,
-            widget.SelectedDate.day, SelectedTime.hour, SelectedTime.minute);
+            widget.SelectedDate.day, SelectedTime!.hour, SelectedTime!.minute);
         widget.SelectedDateFunction(widget.SelectedDate);
       });
     else
@@ -178,8 +178,8 @@ class _DateTimePickerState extends State<DateTimePicker> {
                             val.year,
                             val.month,
                             val.day,
-                            SelectedTime.hour,
-                            SelectedTime.minute);
+                            SelectedTime!.hour,
+                            SelectedTime!.minute);
 
                         widget.SelectedDateFunction(widget.SelectedDate);
                       });

@@ -97,7 +97,7 @@ class _Dikim_EmployeeOperationMergeState
                       OnTap: () async {
                         if (SelectedEmployee != null &&
                             SelectedOperation != null) {
-                          var UserQuality =
+                          User_QualityTracking_DetailBLL? UserQuality =
                               new User_QualityTracking_DetailBLL();
                           UserQuality.QualityDept_ModelOrder_Tracking_Id =
                               widget.RoundItem.Id;
@@ -110,7 +110,7 @@ class _Dikim_EmployeeOperationMergeState
 
                           UserQuality = await UserQuality
                               .GenerateInlineEmployeeOperation();
-                          if (UserQuality.Id > 0) {
+                          if (UserQuality!.Id > 0) {
                             CaseProvider.ReloadAction();
                             Navigator.push(
                                 context,

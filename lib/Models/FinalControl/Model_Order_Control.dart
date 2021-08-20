@@ -12,10 +12,10 @@ class GroupType {
 
 class Model_Order_ControlBLL {
   //#region Properties
-  int Quality_Items_Id;
+  int Quality_Items_Id = 0 ;
   String Control_Type;
   int? OrderSizeColorDetail_Id;
-  int Order_Id;
+  int? Order_Id;
   int? Matrix_Control_Amount;
   int? Employee_Matrix_Amount;
   int QualityDept_ModelOrder_Tracking_Id;
@@ -24,8 +24,7 @@ class Model_Order_ControlBLL {
 
   Model_Order_ControlBLL(
 
-      { required this.Quality_Items_Id,
-        required this.Order_Id,
+      {
         required this.Control_Type,
          this.OrderSizeColorDetail_Id,
         required  this.QualityDept_ModelOrder_Tracking_Id}) {}

@@ -5,13 +5,13 @@ import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 
 class DeptModOrderQuality_ItemsBLL {
   //#region Properties
-  int Id;
+  int Id = 0 ;
   int? DeptModelOrder_QualityTest_Id;
   int? Group_Id;
-  String Item_Name;
+  String? Item_Name;
 
   /// TODO: Quality_Items_Id THIS FIELD EXIST IN DATABSAE BUT NOT EXIT HERE
-  int Item_Level;
+  int? Item_Level;
   int? Entity_Order;
   int? QualityTest_Id;
   int? QualityDept_ModelOrder_Id;
@@ -28,8 +28,7 @@ class DeptModOrderQuality_ItemsBLL {
 
   //#endregion
 
-  DeptModOrderQuality_ItemsBLL(
-      {required this.Id, required this.Item_Name, required this.Item_Level}) {}
+  DeptModOrderQuality_ItemsBLL() {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -102,7 +101,7 @@ class DeptModOrderQuality_ItemsBLL {
         'DeptModelOrder_QualityTest_Id':
             DeptModelOrder_QualityTest_Id.toString(),
         'Group_Id': Group_Id.toString(),
-        'Item_Name': Item_Name,
+        'Item_Name': Item_Name??'',
         'Item_Level': Item_Level.toString(),
         'Entity_Order': Entity_Order.toString(),
         'QualityTest_Id': QualityTest_Id.toString(),
