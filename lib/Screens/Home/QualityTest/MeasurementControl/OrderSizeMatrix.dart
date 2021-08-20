@@ -106,12 +106,14 @@ class _OrderSize_MatrixState extends State<OrderSize_Matrix> {
                   children: [
                     Tb_InlineDikimList1(
                       OnClickItems: (int Index) {
-                        if (snapshot.data![Index].Status ==
-                            DikimInlineStatus.Open.index)
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MeasureSizeSample_List()));
+
+                        /// TODO: CHECK THIS
+                        // if (snapshot.data![Index].Status ==
+                        //     DikimInlineStatus.Open.index)
+                        //   Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //           builder: (context) => MeasureSizeSample_List()));
                       },
                       Items: snapshot.data,
                       Headers: <Widget>[

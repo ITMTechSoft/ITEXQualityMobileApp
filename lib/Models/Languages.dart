@@ -48,7 +48,7 @@ class LanguagesBLL {
 
   //#region GetWebApiUrl
   static List<LanguagesBLL> Get_Languages() {
-    List<LanguagesBLL> ItemList = new List<LanguagesBLL>();
+    List<LanguagesBLL> ItemList = [];
     ItemList.add(new LanguagesBLL(1, "Türkçe"));
     ItemList.add(new LanguagesBLL(2, "English"));
     return ItemList;

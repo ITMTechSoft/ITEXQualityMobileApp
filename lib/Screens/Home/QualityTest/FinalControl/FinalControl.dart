@@ -154,7 +154,7 @@ Childrens: <Widget>[
             ListTile(
               title: HeaderTitle(getScreenWidth().toString(),
                   color: ArgonColors.header, FontSize: ArgonSize.Header2),
-              subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??'' ,
+              subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString() ,
               style:TextStyle(fontSize:ArgonSize.Header6)),
               dense: true,
               selected: true,

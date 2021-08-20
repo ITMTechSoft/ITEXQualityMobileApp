@@ -54,7 +54,7 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
         ListTile(
           title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header, FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??''),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()),
           dense: true,
           selected: true,
         ),

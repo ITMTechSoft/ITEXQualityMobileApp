@@ -140,7 +140,7 @@ Widget AraControlCard(
               Expanded(
                   flex: 3,
                   child: Center(
-                    child: LableTitle(Item.Item_Name, color: ArgonColors.text),
+                    child: LableTitle(Item.Item_Name??'', color: ArgonColors.text),
                   )),
               Expanded(
                   flex: 2,
@@ -271,7 +271,7 @@ Widget CuttingPastalControl(PersonalCase, DeptModOrderQuality_ItemsBLL Item,
     mainAxisAlignment: MainAxisAlignment.center,
     mainAxisSize: MainAxisSize.max,
     children: [
-      LableTitle(Item.Item_Name, color: ArgonColors.text),
+      LableTitle(Item.Item_Name??'', color: ArgonColors.text),
       ActionControl,
     ],
   );
@@ -529,7 +529,7 @@ Widget QualityAxisItem(DeptModOrderQuality_ItemsBLL Item,
         color: SelectedColor,
         padding: EdgeInsets.all(5),
         margin: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
-        child: LableTitle(Item.Item_Name),
+        child: LableTitle(Item.Item_Name??''),
       ),
     ),
   );

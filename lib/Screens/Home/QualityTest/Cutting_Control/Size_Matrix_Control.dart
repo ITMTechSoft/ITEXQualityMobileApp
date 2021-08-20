@@ -48,7 +48,7 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
         ListTile(
           title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header, FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??''),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()),
           dense: true,
           selected: true,
         ),

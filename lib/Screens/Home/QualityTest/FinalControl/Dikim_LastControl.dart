@@ -47,7 +47,7 @@ class _Dikim_LastControlState extends State<Dikim_LastControl> {
                   PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header,
               FontSize: ArgonSize.Header3),
-          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??'' ,
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString() ,
               style: TextStyle(fontSize:ArgonSize.Header6)),
           dense: true,
           selected: true,

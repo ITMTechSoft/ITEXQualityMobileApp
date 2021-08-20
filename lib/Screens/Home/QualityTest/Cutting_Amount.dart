@@ -154,7 +154,7 @@ class _Cutting_AmountState extends State<Cutting_Amount> {
             title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number ?? '',
                 color: ArgonColors.header, FontSize: ArgonSize.Header2),
             subtitle: Text(
-                PersonalCase.SelectedDepartment!.Start_Date.toString() ?? '',
+                PersonalCase.SelectedDepartment!.Start_Date.toString() ,
                 style: TextStyle(fontSize: ArgonSize.Header6)),
             dense: true,
             selected: true,

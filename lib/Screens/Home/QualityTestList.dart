@@ -143,7 +143,7 @@ class _QualityTestListState extends State<QualityTestList> {
                             color: ArgonColors.header,
                             FontSize: ArgonSize.Header1),
                         subtitle: Text(
-                            PersonalCase.SelectedOrder!.Model_Name.toString()??'',
+                            PersonalCase.SelectedOrder!.Model_Name.toString(),
                             style: TextStyle(fontSize: ArgonSize.Header6)),
                         dense: true,
                         selected: true,

@@ -185,7 +185,7 @@ class _MeasureItem_ControlState
                   PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header,
               FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??''),
+          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()),
           dense: true,
           selected: true,
         ),

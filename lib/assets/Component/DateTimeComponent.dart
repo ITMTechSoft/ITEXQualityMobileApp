@@ -122,7 +122,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
     widget.SelectedDate = (await showDatePicker(
       context: context,
       initialDate: widget.SelectedDate ?? DateTime.now(),
-      firstDate: new DateTime(widget.SelectedDate.year),
+      firstDate: new DateTime(widget.SelectedDate!.year),
       lastDate:  new DateTime(widget.LastDate),
     ))!;
 
@@ -145,8 +145,8 @@ class _DateTimePickerState extends State<DateTimePicker> {
     if (SelectedTime != null)
       setState(() {
         //  widget.SelectedDate(SelectedTime);
-        widget.SelectedDate = DateTime(widget.SelectedDate.year, widget.SelectedDate.month,
-            widget.SelectedDate.day, SelectedTime!.hour, SelectedTime!.minute);
+        widget.SelectedDate = DateTime(widget.SelectedDate!.year, widget.SelectedDate!.month,
+            widget.SelectedDate!.day, SelectedTime!.hour, SelectedTime!.minute);
         widget.SelectedDateFunction(widget.SelectedDate);
       });
     else
@@ -215,9 +215,9 @@ class _DateTimePickerState extends State<DateTimePicker> {
                     onDateTimeChanged: (val) {
                       setState(() {
                         widget.SelectedDate = DateTime(
-                            widget.SelectedDate.year,
-                            widget.SelectedDate.month,
-                            widget. SelectedDate.day,
+                            widget.SelectedDate!.year,
+                            widget.SelectedDate!.month,
+                            widget. SelectedDate!.day,
                             val.hour,
                             val.minute);
 
@@ -255,7 +255,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Text(
-            DateFormat(widget.DateFormat).format(widget.SelectedDate).toString(),
+            DateFormat(widget.DateFormat).format(widget.SelectedDate!).toString(),
             // '${SelectedDate.year}/'   '${SelectedDate.month}/'   '${SelectedDate.day}/ - '   '${SelectedTime.hour}:' '${SelectedTime.minute}/',
             style:
             TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.text),

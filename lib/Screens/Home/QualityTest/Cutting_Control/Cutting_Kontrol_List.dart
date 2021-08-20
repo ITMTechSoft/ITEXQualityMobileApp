@@ -153,7 +153,7 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
                     flex: 3,
                     child: Center(
                       child:
-                          LableTitle(Item.Item_Name, color: ArgonColors.text),
+                          LableTitle(Item.Item_Name??'', color: ArgonColors.text),
                     )),
                 Expanded(
                     flex: 2,
@@ -184,7 +184,7 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
                         var NewItem =
                             await Item.CorrectSpecificAmount(DelValue);
                         if (NewItem != null) Item = NewItem;
-                        PersonalCase.SelectedTracking!.Sample_Amount! += 1;
+                        PersonalCase.SelectedTracking!.Sample_Amount = PersonalCase.SelectedTracking!.Sample_Amount??0+1;
 
                         Execute();
                       }),
@@ -209,8 +209,8 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
                         int DelValue = int.tryParse(InputVal.text) ?? 1;
                         var NewItem = await Item.ErrorSpecificAmount(DelValue);
                         if (NewItem != null) Item = NewItem;
-                        PersonalCase.SelectedTracking!.Sample_Amount += 1;
-                        PersonalCase.SelectedTracking!.Error_Amount  += 1;
+                        PersonalCase.SelectedTracking!.Sample_Amount = PersonalCase.SelectedTracking!.Sample_Amount??0+1;
+                        PersonalCase.SelectedTracking!.Error_Amount  =  PersonalCase.SelectedTracking!.Error_Amount??0+1;
                         Execute();
                       }),
                 ),
@@ -260,7 +260,7 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
           title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number ?? '',
               color: ArgonColors.header, FontSize: ArgonSize.Header2),
           subtitle: Text(
-              PersonalCase.SelectedDepartment!.Start_Date.toString() ?? '',
+              PersonalCase.SelectedDepartment!.Start_Date.toString() ,
               style: TextStyle(fontSize: ArgonSize.Header6)),
           dense: true,
           selected: true,

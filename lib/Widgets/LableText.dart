@@ -40,7 +40,7 @@ Widget LableTitle(String Title,
     );
   else
     return Text(
-      (Title ?? "").toUpperCase(),
+      (Title ).toUpperCase(),
       style: TextStyle(
         fontSize: FontSize == null ? ArgonSize.Header5 : FontSize,
         fontWeight: FontWeight.bold,

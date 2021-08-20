@@ -217,7 +217,7 @@ Widget CuttingPastalControl(PersonalProvider PersonalCase, DeptModOrderQuality_I
     mainAxisSize: MainAxisSize.max,
     children: [
       SizedBox(height: ArgonSize.Padding6),
-      LableTitle(Item.Item_Name,
+      LableTitle(Item.Item_Name??'',
           color: ArgonColors.text, FontSize: ArgonSize.Header4),
       SizedBox(height: ArgonSize.Padding3),
       ActionControl,
@@ -354,7 +354,7 @@ Widget TasnifCorrectionList(BuildContext context, PersonalProvider PersonalCase,
     User_QualityTracking_DetailBLL Item, Function function) {
   int AssignAmount = 1;
   int recycleAmount = Item.Recycle_Amount==null ?0:Item.Recycle_Amount!;
-  int val=Item.Error_Amount-recycleAmount;
+  int val=Item.Error_Amount!-recycleAmount;
   User_QualityTracking_DetailBLL user_QualityTracking_DetailBLL =
       new User_QualityTracking_DetailBLL();
 
@@ -451,7 +451,7 @@ Widget TasnifCorrectionList(BuildContext context, PersonalProvider PersonalCase,
                   OnFirstAction: () async {
                     Item.Recycle_Amount = AssignAmount;
                     Item.Recycle_Employee_Id = PersonalCase.GetCurrentUser().Id;
-                    bool result =
+                    bool? result =
                     await Item.Set_RecycleUserQualityTasnifControlRec(Item);
                     if (result == true)
                       function();
@@ -607,7 +607,7 @@ Widget QualityAxisItem(DeptModOrderQuality_ItemsBLL Item,
         color: SelectedColor,
         padding: EdgeInsets.all(5),
         margin: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
-        child: LableTitle(Item.Item_Name, color: SelectedTextColor),
+        child: LableTitle(Item.Item_Name??'', color: SelectedTextColor),
       ),
     ),
   );
@@ -830,7 +830,7 @@ Widget BoxColorWithText(String Lable, Color SelectedColor,
     width: Width,
     height: Height,
     decoration: BoxDecoration(
-      color: SelectedColor ?? Colors.amberAccent,
+      color: SelectedColor,
       border: Border.all(
         color: Color.fromARGB(2, 116, 193, 232),
         width: 1,

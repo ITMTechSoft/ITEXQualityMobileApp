@@ -65,7 +65,7 @@ class _OrderListState extends State<OrderList> {
                             FontSize: ArgonSize.Header1),
                         subtitle: Text(PersonalCase
                             .SelectedDepartment!.Start_Date
-                            .toString()??'',
+                            .toString(),
                             style: TextStyle(fontSize:ArgonSize.Header6)),
 
                         dense: true,

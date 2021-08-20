@@ -58,7 +58,7 @@ class _Criteria_TestState extends State<Criteria_Test> {
             title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
                 color: ArgonColors.header, FontSize: ArgonSize.Header),
             subtitle:
-                Text(PersonalCase.SelectedDepartment!.Start_Date.toString()??''),
+                Text(PersonalCase.SelectedDepartment!.Start_Date.toString()),
             dense: true,
             selected: true,
           ),
