@@ -12,7 +12,7 @@ class GroupType {
 
 class Model_Order_ControlBLL {
   //#region Properties
-  int Quality_Items_Id = 0 ;
+  int    Quality_Items_Id = 0 ;
   String Control_Type;
   int? OrderSizeColorDetail_Id;
   int? Order_Id;
@@ -35,7 +35,7 @@ class Model_Order_ControlBLL {
     this.Control_Type = json['Control_Type'];
     this.OrderSizeColorDetail_Id = json['OrderSizeColorDetail_Id'];
     this.Order_Id = json['Order_Id'];
-    this.Matrix_Control_Amount = json['Matrix_Control_Amount'];
+    this.Matrix_Control_Amount  = json['Matrix_Control_Amount'];
     this.Employee_Matrix_Amount = json['Employee_Matrix_Amount'];
     this.QualityDept_ModelOrder_Tracking_Id =
         json['QualityDept_ModelOrder_Tracking_Id'];
