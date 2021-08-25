@@ -69,7 +69,7 @@ Widget ButtonWithNumber({
       height: buttonHegiht,
       child: Stack(children: [
         CustomContainer(
-            width: buttonWidth??ArgonSize.WidthBig,
+            width : buttonWidth??ArgonSize.WidthBig,
             height: buttonHegiht??ArgonSize.HeightBig,
             text: text,
             textColor: textColor,
@@ -141,7 +141,7 @@ class CustomButton extends StatelessWidget {
     this.width,
     required this.height,
     this.backGroundColor = ArgonColors.primary,
-    this.textColor = ArgonColors.black,
+    this.textColor       = ArgonColors.white,
     this.textSize,
   });
 
@@ -232,9 +232,7 @@ class CustomContainer extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    image != null
-                        ? Expanded(flex: 3, child: image)
-                        : Container(width: 0, height: 0),
+                    image ,
                     Expanded(
                       flex: 1,
                       child: Center(

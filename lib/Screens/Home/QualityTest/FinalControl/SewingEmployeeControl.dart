@@ -38,9 +38,8 @@ class _SewingEmployeeControlState extends State<SewingEmployeeControl> {
   bool _switchValue = false;
 
   Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
-    OperationList =
-    await OperationBLL.Get_Operation(PersonalCase.SelectedTest!.Id);
-    OperatorList = await EmployeesBLL.Get_Employees();
+    OperationList = await OperationBLL.Get_Operation(PersonalCase.SelectedTest!.Id);
+    OperatorList  = await EmployeesBLL.Get_Employees();
     if (OperationList != null && OperatorList != null) {
       IntiteStatus = 1;
       return true;

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 class Standard_Input extends StatelessWidget {
@@ -8,7 +6,7 @@ class Standard_Input extends StatelessWidget {
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   final Function()? onTap;
-  final Function(dynamic )? onChanged;
+  final Function(dynamic)? onChanged;
   final Function()? onValidator;
   final TextEditingController? controller;
   final bool autofocus;
@@ -71,7 +69,6 @@ class Standard_Input extends StatelessWidget {
           maxLines: this.MaxLines,
           maxLength: MaxLength,
           obscureText: obscureText,
-
           validator: (value) {
             if (activeValidation) {
               if (value!.isEmpty) return errorMessage;
@@ -95,14 +92,14 @@ class Standard_Input extends StatelessWidget {
                     ? ArgonSize.HeighttooSmall
                     : verticalPadding),
             labelText: placeholder ?? '',
-            hintText: hintMessage??'',
+            hintText: hintMessage ?? '',
             filled: true,
             fillColor: ArgonColors.white,
             hintStyle: TextStyle(
               color: ArgonColors.black.withOpacity(0.3),
             ),
-            suffixIcon: suffixIcon??Container(),
-            prefixIcon: prefixIcon??Container(),
+            // suffixIcon: suffixIcon ?? Container(),
+            // prefixIcon: prefixIcon ?? Container(),
             suffixIconConstraints: BoxConstraints(
               minWidth: ArgonSize.WidthMedium,
               minHeight: ArgonSize.WidthMedium,
@@ -166,7 +163,8 @@ class Input_Form extends StatelessWidget {
       this.KType = TextInputType.text,
       this.autofocus = false,
       this.borderColor = ArgonColors.border,
-      this.InputHeight = 40, this.fontSize});
+      this.InputHeight = 40,
+      this.fontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -179,13 +177,16 @@ class Input_Form extends StatelessWidget {
           onChanged: this.onChanged,
           keyboardType: KType,
           decoration: InputDecoration(
-            prefixIcon: this.prefixIcon??Container(),
-            suffixIcon: this.suffixIcon??Container(),
+            prefixIcon: this.prefixIcon ?? Container(),
+            suffixIcon: this.suffixIcon ?? Container(),
             labelText: this.labelText,
             labelStyle: TextStyle(
-                height: 1.5, fontWeight: FontWeight.w800, fontSize: fontSize??ArgonSize.Header4),
+                height: 1.5,
+                fontWeight: FontWeight.w800,
+                fontSize: fontSize ?? ArgonSize.Header4),
             border: OutlineInputBorder(
-              /// TODO : CHANGETHE FIXED NUMBER INTO VALUE FROM ARGONSIZE
+
+                /// TODO : CHANGETHE FIXED NUMBER INTO VALUE FROM ARGONSIZE
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(color: Colors.lightGreen)),
             focusedBorder: OutlineInputBorder(
@@ -198,3 +199,6 @@ class Input_Form extends StatelessWidget {
     );
   }
 }
+
+
+

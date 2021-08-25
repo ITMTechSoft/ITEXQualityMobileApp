@@ -122,7 +122,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
     widget.SelectedDate = (await showDatePicker(
       context: context,
       initialDate: widget.SelectedDate ?? DateTime.now(),
-      firstDate: new DateTime(widget.SelectedDate!.year),
+      firstDate: new DateTime(DateTime.now().year),
       lastDate:  new DateTime(widget.LastDate),
     ))!;
 

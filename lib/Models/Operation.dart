@@ -17,7 +17,7 @@ class OperationBLL {
   double? OperationToplamSTD;
   String? ArticalNO;
   String? OperationVideo;
-  Uint8List OperationImage;
+  //Uint8List OperationImage;
   double? Thread_length;
   double? Bobin_Number;
   String? OperationVideoFileName;
@@ -73,7 +73,7 @@ class OperationBLL {
     this.OperationToplamSTD = json['OperationToplamSTD'];
     this.ArticalNO = json['ArticalNO'];
     this.OperationVideo = json['OperationVideo'];
-    this.OperationImage = json['OperationImage'];
+    //this.OperationImage = json['OperationImage'];
     this.Thread_length = json['Thread_length'];
     this.Bobin_Number = json['Bobin_Number'];
     this.OperationVideoFileName = json['OperationVideoFileName'];
@@ -128,7 +128,7 @@ class OperationBLL {
         OperationToplamSTD = json['OperationToplamSTD'],
         ArticalNO = json['ArticalNO'],
         OperationVideo = json['OperationVideo'],
-        OperationImage = json['OperationImage'],
+        //OperationImage = json['OperationImage'],
         Thread_length = json['Thread_length'],
         Bobin_Number = json['Bobin_Number'],
         OperationVideoFileName = json['OperationVideoFileName'],
@@ -182,7 +182,7 @@ class OperationBLL {
     'OperationToplamSTD': OperationToplamSTD,
     'ArticalNO': ArticalNO,
     'OperationVideo': OperationVideo,
-    'OperationImage': OperationImage,
+   // 'OperationImage': OperationImage,
     'Thread_length': Thread_length,
     'Bobin_Number': Bobin_Number,
     'OperationVideoFileName': OperationVideoFileName,
@@ -239,7 +239,7 @@ class OperationBLL {
     'OperationToplamSTD': OperationToplamSTD.toString(),
     'ArticalNO': ArticalNO??'',
     'OperationVideo': OperationVideo??'',
-    'OperationImage': OperationImage.toString(),
+    //'OperationImage': OperationImage.toString(),
     'Thread_length': Thread_length.toString(),
     'Bobin_Number': Bobin_Number.toString(),
     'OperationVideoFileName': OperationVideoFileName??'',

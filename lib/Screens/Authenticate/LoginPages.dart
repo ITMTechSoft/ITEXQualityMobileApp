@@ -18,7 +18,7 @@ class _LoginPagesState extends State<LoginPages> {
   var errorMsg;
   bool obscure = true;
   IconData passwordSuffixIcon = Icons.lock;
-  String name ='' ;
+  String name = '';
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController UserNameController = new TextEditingController();
@@ -47,16 +47,17 @@ class _LoginPagesState extends State<LoginPages> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     SizeConfig().init(context);
 
-    if ( ResourceKey.btn_Logins == PersonalCase.GetLable(ResourceKey.btn_Logins))
-        {
-          print('${ResourceKey.btn_Logins}' '${PersonalCase.GetLable(ResourceKey.btn_Logins)}');
-          print('not loaded');
-        }
-        else{
-          print('${ResourceKey.btn_Logins} ' '${PersonalCase.GetLable(ResourceKey.btn_Logins)}');
+    if (ResourceKey.btn_Logins ==
+        PersonalCase.GetLable(ResourceKey.btn_Logins)) {
+      print('${ResourceKey.btn_Logins}'
+          '${PersonalCase.GetLable(ResourceKey.btn_Logins)}');
+      print('not loaded');
+    } else {
+      print('${ResourceKey.btn_Logins} '
+          '${PersonalCase.GetLable(ResourceKey.btn_Logins)}');
 
-          print('Loadded ');
-        }
+      print('Loadded ');
+    }
 
     return WillPopScope(
       onWillPop: () {
@@ -67,12 +68,11 @@ class _LoginPagesState extends State<LoginPages> {
       child: Scaffold(
         appBar: AppBar(
             toolbarHeight: ArgonSize.WidthMedium,
-
             title: Text(
               PersonalCase.GetLable(ResourceKey.btn_Logins),
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white,fontSize:ArgonSize.Header4),
-
+              style:
+                  TextStyle(color: Colors.white, fontSize: ArgonSize.Header4),
             ),
             actions: [
               TextButton.icon(
@@ -86,142 +86,142 @@ class _LoginPagesState extends State<LoginPages> {
                 },
                 label: Text(
                   PersonalCase.GetLable(ResourceKey.Setting),
-
-
-                  style: TextStyle(color: Colors.white,fontSize:ArgonSize.Header4),
+                  style: TextStyle(
+                      color: Colors.white, fontSize: ArgonSize.Header4),
                 ),
-                icon: Icon(
-                  Icons.settings,
-                  color: Colors.white,
-                    size:ArgonSize.Header3
-                ),
+                icon: Icon(Icons.settings,
+                    color: Colors.white, size: ArgonSize.Header3),
               )
             ]),
         body: SingleChildScrollView(
-          child:  Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 100.0,
+                foregroundColor: Colors.red,
+                backgroundColor: Colors.white10,
+                child: Image.asset(
+                  ImgAssets.QualityIcon,
+                  fit: BoxFit.fill,
+                  alignment: Alignment.center,
+                ),
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
                   children: [
-                    CircleAvatar(
-                      radius: 100.0,
-                      foregroundColor: Colors.red,
-                      backgroundColor: Colors.white10,
-                      child: Image.asset(
-                        ImgAssets.QualityIcon,
-                        fit: BoxFit.fill,
-                        alignment: Alignment.center,
+                    Standard_Input(
+                      activeValidation: true,
+                      suffixIcon:
+                          Icon(FontAwesomeIcons.user, size: ArgonSize.IconSize),
+                      controller: UserNameController,
+                      placeholder: PersonalCase.GetLable(ResourceKey.User_Name),
+                      errorMessage:
+                          PersonalCase.GetLable(ResourceKey.MandatoryFields),
+                      lengthErrorMessage:
+                          PersonalCase.GetLable(ResourceKey.lengthErrorMessage),
+                    ),
+                    Standard_Input(
+                      activeValidation: true,
+                      suffixIcon: IconButton(
+                        icon:
+                            Icon(passwordSuffixIcon, size: ArgonSize.IconSize),
+                        onPressed: () => setState(() {
+                          obscure = !obscure;
+                          obscure == true
+                              ? passwordSuffixIcon =
+                                  passwordSuffixIcon = FontAwesomeIcons.eye
+                              : passwordSuffixIcon = FontAwesomeIcons.eyeSlash;
+                        }),
+                      ),
+                      onChanged: (name) {
+                        setState(() {
+                          if (PasswordController.text.length > 0) {
+                            obscure == true
+                                ? passwordSuffixIcon = FontAwesomeIcons.eye
+                                : passwordSuffixIcon =
+                                    FontAwesomeIcons.eyeSlash;
+                          } else {
+                            passwordSuffixIcon = FontAwesomeIcons.lock;
+                          }
+                        });
+                      },
+                      controller: PasswordController,
+                      placeholder:
+                          PersonalCase.GetLable(ResourceKey.Employee_Password),
+                      errorMessage:
+                          PersonalCase.GetLable(ResourceKey.MandatoryFields),
+                      obscureText: obscure,
+                      lengthErrorMessage:
+                          PersonalCase.GetLable(ResourceKey.lengthErrorMessage),
+                    ),
+                    SizedBox(height: ArgonSize.Padding3),
+                    _isLoading == true
+                        ? CircularProgressIndicator()
+                        : Container(),
+
+                    errorMsg == null
+                        ? Container()
+                        : Text(
+                            "${errorMsg}",
+                            style: TextStyle(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: ArgonSize.Header4),
+                          ),
+
+                    SizedBox(height: ArgonSize.Padding3),
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: ArgonSize.Header1 * 2),
+                      child: CustomButton(
+                        width: double.infinity,
+                        height: ArgonSize.Header1 * 1.5,
+                        value: PersonalCase.GetLable(ResourceKey.btn_Logins),
+                        textSize: ArgonSize.Header3,
+                        function: () async {
+                          if (_formKey.currentState!.validate()) {
+                            await LoginFunction(PersonalCase);
+                            print('working ');
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            //   Navigator.pop(context);
+                          } else
+                            print("Not Working");
+                          setState(() {
+                            _isLoading = false;
+                          });
+                        },
                       ),
                     ),
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          Standard_Input(
-                      activeValidation : true,
-                            suffixIcon: Icon(FontAwesomeIcons.user,size: ArgonSize.IconSize),
-                            controller: UserNameController,
-                            placeholder:
-                                PersonalCase.GetLable(ResourceKey.User_Name),
-                            errorMessage: PersonalCase.GetLable(
-                                ResourceKey.MandatoryFields),
-                            lengthErrorMessage:PersonalCase.GetLable(
-                                ResourceKey.lengthErrorMessage),
-                          ),
-                         Standard_Input(
-                           activeValidation : true,
-
-                           suffixIcon: IconButton(icon: Icon(passwordSuffixIcon,size: ArgonSize.IconSize) ,onPressed:() =>
-                                setState(() {
-                                  obscure=!obscure;
-                                  obscure==true? passwordSuffixIcon = passwordSuffixIcon = FontAwesomeIcons.eye: passwordSuffixIcon = FontAwesomeIcons.eyeSlash;
-
-                          }),),
-                            onChanged: (name){
-
-                              setState(() {
-                                if(PasswordController.text.length>0)
-                                {
-                                 obscure==true? passwordSuffixIcon = FontAwesomeIcons.eye: passwordSuffixIcon = FontAwesomeIcons.eyeSlash;
-                                }
-                                else{
-                                  passwordSuffixIcon =  FontAwesomeIcons.lock;
-
-                                }
-                              });
-                            },
-                            controller: PasswordController,
-                            placeholder: PersonalCase.GetLable(
-                                ResourceKey.Employee_Password),
-                            errorMessage: PersonalCase.GetLable(
-                                ResourceKey.MandatoryFields),
-                              obscureText:obscure,
-                           lengthErrorMessage:PersonalCase.GetLable(
-                               ResourceKey.lengthErrorMessage),
-                          ),
-                          SizedBox(height: ArgonSize.Padding3),
-                          _isLoading==true?  CircularProgressIndicator():Container(),
-
-                          errorMsg == null
-                              ? Container()
-                              : Text(
-                                  "${errorMsg}",
-                                  style: TextStyle(
-                                    color: Colors.redAccent,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: ArgonSize.Header4
-                                  ),
-                                ),
-
-                          SizedBox(height: ArgonSize.Padding3),
-
-                          Padding(
-                            padding:
-                            EdgeInsets.symmetric(horizontal: ArgonSize.Header1 * 2),
-                            child: CustomButton(
-                              width: double.infinity,
-                              height: ArgonSize.Header1*1.5,
-                              value: PersonalCase.GetLable(ResourceKey.btn_Logins),
-                              textSize: ArgonSize.Header3,
-                              function: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  await LoginFunction(PersonalCase);
-                                  print('working ');
-                                  setState(() {
-                                    _isLoading=true;
-                                  });
-                                  //   Navigator.pop(context);
-                                } else
-                                  print("Not Working");
-                                setState(() {
-                                  _isLoading=false;
-                                });
-                              },
-                            ),
-                          ),
-                          // StretchableButton(
-                          //   buttonColor: ArgonColors.primary,
-                          //   children: [
-                          //     Text(
-                          //       PersonalCase.GetLable(ResourceKey.btn_Logins),
-                          //       style: TextStyle(color: Colors.white),
-                          //     )
-                          //   ],
-                          //   //  onPressed:
-                          //
-                          //   onPressed: () async {
-                          //     if (_formKey.currentState.validate()) {
-                          //       await LoginFunction(PersonalCase);
-                          //       print('working ');
-                          //
-                          //       //   Navigator.pop(context);
-                          //     } else
-                          //       print("Not Working");
-                          //   },
-                          // ),
-                        ],
-                      ),
-                    ),
+                    // StretchableButton(
+                    //   buttonColor: ArgonColors.primary,
+                    //   children: [
+                    //     Text(
+                    //       PersonalCase.GetLable(ResourceKey.btn_Logins),
+                    //       style: TextStyle(color: Colors.white),
+                    //     )
+                    //   ],
+                    //   //  onPressed:
+                    //
+                    //   onPressed: () async {
+                    //     if (_formKey.currentState.validate()) {
+                    //       await LoginFunction(PersonalCase);
+                    //       print('working ');
+                    //
+                    //       //   Navigator.pop(context);
+                    //     } else
+                    //       print("Not Working");
+                    //   },
+                    // ),
                   ],
                 ),
+              ),
+            ],
+          ),
         ),
       ),
     );

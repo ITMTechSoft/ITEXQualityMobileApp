@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
@@ -13,7 +12,7 @@ class EmployeesBLL {
   String? Employee_Name;
   String? Employee_Barcode;
   int? Depart_id;
-  Uint8List? Employee_Image;
+ // Uint8List? Employee_Image;
   int? Job_title_id;
   bool? WorkerStatus;
   String? Card_Code;
@@ -53,7 +52,7 @@ class EmployeesBLL {
         Employee_Name = json['Employee_Name'],
         Employee_Barcode = json['Employee_Barcode'],
         Depart_id = json['Depart_id'],
-        Employee_Image = json['Employee_Image'],
+     //   Employee_Image = json['Employee_Image'],
         Job_title_id = json['Job_title_id'],
         WorkerStatus = json['WorkerStatus'],
         Card_Code = json['Card_Code'],
@@ -69,7 +68,7 @@ class EmployeesBLL {
     'Employee_Name': Employee_Name,
     'Employee_Barcode': Employee_Barcode,
     'Depart_id': Depart_id,
-    'Employee_Image': Employee_Image,
+    //'Employee_Image': Employee_Image,
     'Job_title_id': Job_title_id,
     'WorkerStatus': WorkerStatus,
     'Card_Code': Card_Code,
@@ -86,7 +85,7 @@ class EmployeesBLL {
     'Employee_Name': this.Employee_Name??'',
     'Employee_Barcode': this.Employee_Barcode??'',
     'Depart_id': this.Depart_id.toString(),
-    'Employee_Image': this.Employee_Image.toString(),
+    //'Employee_Image': this.Employee_Image.toString(),
     'Job_title_id': this.Job_title_id.toString(),
     'WorkerStatus': this.WorkerStatus.toString(),
     'Card_Code': this.Card_Code??'',
@@ -158,13 +157,9 @@ class EmployeesBLL {
       //     });
 
 
-      String val = jsonEncode(this.toPost());
-      Map<String, String> headers = {
-        'Content-Type': 'application/json; charset=UTF-8',
-      };
       var url = Uri.parse(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_Version));
-      var response = await http.post(url, body: val, headers: headers).timeout(Duration(seconds: 70),
+          SharedPref.GetWebApiUrl(WebApiMethod.Get_Version, WebApiDomain: "api/MaksitusTable"));
+      var response = await http.get(url).timeout(Duration(seconds: 3),
           onTimeout: () {
         LoginMessage = "SERVER CAN'T BE REACHED";
         throw TimeoutException(

@@ -61,7 +61,6 @@ class _SetupApplicationsState extends State<SetupApplications> {
                   children: [
                     Standard_Input(
                       activeValidation : true,
-
                       suffixIcon: Icon(FontAwesomeIcons.server,size: ArgonSize.IconSize),
                       controller: serverIpController,
                       placeholder: StaticLable.ServerIp,
@@ -162,6 +161,7 @@ class _SetupApplicationsState extends State<SetupApplications> {
                         height: ArgonSize.Header1*1.5,
                         value: StaticLable.Save,
                         textSize: ArgonSize.Header3,
+                        backGroundColor: ArgonColors.primary,
 
                         function: () async {
 
@@ -171,11 +171,14 @@ class _SetupApplicationsState extends State<SetupApplications> {
                             });
                             SharedPref.ServerIp = serverIpController.text;
                             SharedPref.ServerPort = portController.text;
+
+                            // SharedPref.ServerIp   = '192.168.1.200';
+                            // SharedPref.ServerPort ='9797';
                             //  SharedPref.SelLanguage = CurrentLanguage;
 
                             bool status = await PersonalCase.SetupAndLogin();
 
-                            ///
+
                             if (status == true) {
                               Navigator.popAndPushNamed(context, '/login');
                             } else {

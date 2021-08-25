@@ -25,8 +25,8 @@ class Pastal_Cutting_PartiBLL {
     this.Id = json['Id'];
     this.Order_id = json['Order_id'];
     this.Fabric_Type = json['Fabric_Type'];
-    this.CuttingDate = json['CuttingDate']==null? null: DateTime.parse(json['CuttingDate']);
-    this.Pastel_Laying = json['Pastel_Laying']==null? null: DateTime.parse(json['Pastel_Laying']);
+    this.CuttingDate = json['CuttingDate']==null? DateTime(00,00,00,0,0,0): DateTime.parse(json['CuttingDate']);
+    this.Pastel_Laying = json['Pastel_Laying']==null?  DateTime(00,00,00,0,0,0): DateTime.parse(json['Pastel_Laying']);
     this.FabricRestingTime = json['FabricRestingTime'];
     this.Create_Employee_Id = json['Create_Employee_Id'];
     this.Order_Number = json['Order_Number'];
@@ -38,8 +38,8 @@ class Pastal_Cutting_PartiBLL {
         Id = json['Id'],
         Order_id = json['Order_id'],
         Fabric_Type = json['Fabric_Type'],
-        CuttingDate = json['CuttingDate']==null? null:  DateTime.parse(json['CuttingDate']),
-        Pastel_Laying = json['Pastel_Laying']==null? null:  DateTime.parse(json['Pastel_Laying']),
+        CuttingDate = json['CuttingDate']==null? DateTime(00,00,00,0,0,0):  DateTime.parse(json['CuttingDate']),
+        Pastel_Laying = json['Pastel_Laying']==null? DateTime(00,00,00,0,0,0):  DateTime.parse(json['Pastel_Laying']),
         FabricRestingTime = json['FabricRestingTime'],
         Create_Employee_Id = json['Create_Employee_Id'],
         Order_Number = json['Order_Number'],
@@ -116,7 +116,7 @@ class Pastal_Cutting_PartiBLL {
         'Content-Type': 'application/json; charset=UTF-8',
       };
       var url = Uri.parse(
-          SharedPref.GetWebApiUrl(WebApiMethod.Start_DikimInlineProcess));
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_CreatePastal_Cutting_Parti));
       var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         this.LoadFromJson(json.decode(response.body));

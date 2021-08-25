@@ -101,8 +101,9 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
                           FontSize: ArgonSize.Header4),
                     ),
                     Expanded(
-                        child: LableDateTime(widget.Card_Item.Pastel_Laying!,
-                            color: ArgonColors.text,
+                       child: LableDateTime(widget.Card_Item.Pastel_Laying!,
+                      //  child: LableDateTime(DateTime.now(),
+                        color: ArgonColors.text,
                             IsCenter: true,
                             FontSize: ArgonSize.Header4)),
                   ],
@@ -119,7 +120,7 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
                             '${PersonalCase.GetLable(ResourceKey.CuttingDate)}',
                             FontSize: ArgonSize.Header4)),
                     Expanded(
-                        child: LableDateTime(widget.Card_Item.CuttingDate!,
+                        child: LableDateTime(widget.Card_Item.CuttingDate !,
                             color: ArgonColors.text,
                             IsCenter: true,
                             FontSize: ArgonSize.Header4)),
@@ -158,7 +159,7 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
                           AlertPopupDialogWithAction(context :context,
                               textButton1Color: Colors.red,
                               title: PersonalCase.GetLable(
-                                  ResourceKey.WarrningMessage),
+                                  ResourceKey.DeleteWarningMessage),
                               Children: <Widget>[
                                 LableTitle(
                                     PersonalCase.GetLable(
@@ -219,7 +220,7 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     final CaseProvider = Provider.of<SubCaseProvider>(context);
-    widget.Card_Item =widget.Card_Item ==null? new   Pastal_Cutting_PartiBLL() :widget.Card_Item ;
+    widget.Card_Item = widget.Card_Item == null? new   Pastal_Cutting_PartiBLL() :widget.Card_Item ;
 
     final TextEditingController Fabric_Type = new TextEditingController(
         text: widget.Card_Item != null ? widget.Card_Item!.Fabric_Type : '');
@@ -259,12 +260,11 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                     if (_formKey.currentState!.validate()) {
                       widget.Card_Item!.Fabric_Type = Fabric_Type.text;
                       widget.Card_Item!.FabricRestingTime = FabricRestingTime.text;
-                      widget. Card_Item!.Order_id = PersonalCase.SelectedOrder!.Order_Id;
-                      widget.Card_Item!.Create_Employee_Id =
-                          PersonalCase.GetCurrentUser().Id;
-                      widget. Card_Item!.CuttingDate=   widget. Card_Item!.CuttingDate!=null? widget.Card_Item!.CuttingDate:DateTime.now();
+                      widget.Card_Item!.Order_id = PersonalCase.SelectedOrder!.Order_Id;
+                      widget.Card_Item!.Create_Employee_Id = PersonalCase.GetCurrentUser().Id;
+                      widget.Card_Item!.CuttingDate = widget.Card_Item!.CuttingDate !=null? widget.Card_Item!.CuttingDate:DateTime.now();
 
-                      widget.  Card_Item!.Pastel_Laying= widget.Card_Item!.Pastel_Laying!=null? widget.Card_Item!.Pastel_Laying:DateTime.now();
+                      widget. Card_Item!.Pastel_Laying= widget.Card_Item!.Pastel_Laying!=null? widget.Card_Item!.Pastel_Laying:DateTime.now();
                       bool CheckItem = await widget.Card_Item!.SaveEntity();
                       if (CheckItem) {
                         CaseProvider.ReloadAction();
@@ -385,7 +385,7 @@ class _Pastal_NewSampleState extends State<Pastal_NewSample> {
                               Expanded(
                                 flex: 2,
                                 child: DateTimePicker(
-                                    SelectedDate: widget.Card_Item!.CuttingDate!= null
+                                    SelectedDate: widget.Card_Item!.CuttingDate != null
                                         ? widget.Card_Item!.CuttingDate
                                         : DateTime.now(),
                                   // SelectedDate:  DateTime.now(),

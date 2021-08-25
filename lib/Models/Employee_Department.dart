@@ -9,10 +9,10 @@ class Employee_DepartmentBLL {
   int Department_Id;
   int Employee_Id;
   DateTime Start_Date;
-  DateTime? End_Date;
+  DateTime End_Date;
+  DateTime CreateDate;
+  DateTime LastUpdateDate;
   bool? IsValidator;
-  DateTime? CreateDate;
-  DateTime? LastUpdateDate;
   int? CreatedBy;
   int? LastUpdateBy;
   String? Depart_Name;
@@ -20,27 +20,36 @@ class Employee_DepartmentBLL {
 
   //#endregion
 
-  Employee_DepartmentBLL(
-      {required this.Id,
-      required this.Employee_Id,
-      required this.Department_Id,
-      required this.Start_Date}) {}
+  Employee_DepartmentBLL({ required this.Id,
+    required this.Employee_Id,
+    required this.Department_Id,
+    required this.Start_Date,
+    required this.End_Date,
+    required this.CreateDate,
+    required this.LastUpdateDate,
+  }) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
     this.Id = json['Id'];
     this.Department_Id = json['Department_Id'];
     this.Employee_Id = json['Employee_Id'];
+
     this.Start_Date =
-        json['Start_Date'] ?? DateTime.parse(json['Start_Date']);
+    json['Start_Date'] == null ? DateTime(0000, 00, 0, 00, 00, 00) : DateTime
+        .parse(json['Start_Date']);
     this.End_Date =
-        json['End_Date'] == null ? null : DateTime.parse(json['End_Date']);
-    this.IsValidator = json['IsValidator'];
+    json['End_Date'] == null ? DateTime(0000, 00, 0, 00, 00, 00) : DateTime
+        .parse(json['End_Date']);
     this.CreateDate =
-        json['CreateDate'] == null ? null : DateTime.parse(json['CreateDate']);
+    json['CreateDate'] == null ? DateTime(0000, 00, 0, 00, 00, 00) : DateTime
+        .parse(json['CreateDate']);
     this.LastUpdateDate = json['LastUpdateDate'] == null
-        ? null
+        ? DateTime(0000, 00, 0, 00, 00, 00)
         : DateTime.parse(json['LastUpdateDate']);
+
+    this.IsValidator = json['IsValidator'];
+
     this.CreatedBy = json['CreatedBy'];
     this.LastUpdateBy = json['LastUpdateBy'];
     this.Depart_Name = json['Depart_Name'];
@@ -51,22 +60,22 @@ class Employee_DepartmentBLL {
       : Id = json['Id'],
         Department_Id = json['Department_Id'],
         Employee_Id = json['Employee_Id'],
-        Start_Date = json['Start_Date'] ?? DateTime.parse(json['Start_Date']),
-        End_Date =
-            json['End_Date'] == null ? null : DateTime.parse(json['End_Date']),
-        IsValidator = json['IsValidator'],
-        CreateDate = json['CreateDate'] == null
-            ? null
-            : DateTime.parse(json['CreateDate']),
-        LastUpdateDate = json['LastUpdateDate'] == null
-            ? null
-            : DateTime.parse(json['LastUpdateDate']),
+        Start_Date = json['Start_Date'] == null ? DateTime(
+            0000, 00, 0, 00, 00, 00) : DateTime.parse(json['Start_Date']),
+        End_Date = json['End_Date'] == null
+            ? DateTime(0000, 00, 0, 00, 00, 00)
+            : DateTime.parse(json['End_Date']),
+        CreateDate = json['CreateDate'] == null ? DateTime(
+            0000, 00, 0, 00, 00, 00) : DateTime.parse(json['CreateDate']),
+        LastUpdateDate = json['LastUpdateDate'] == null ? DateTime(
+            0000, 00, 0, 00, 00, 00) : DateTime.parse(json['LastUpdateDate']),
         CreatedBy = json['CreatedBy'],
         LastUpdateBy = json['LastUpdateBy'],
         Depart_Name = json['Depart_Name'],
         Employee_Name = json['Employee_Name'];
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         'Id': Id,
         'Department_Id': Department_Id,
         'Employee_Id': Employee_Id,
@@ -81,7 +90,8 @@ class Employee_DepartmentBLL {
         'Employee_Name': Employee_Name,
       };
 
-  Map<String, String> toPost() => {
+  Map<String, String> toPost() =>
+      {
         'Id': Id.toString(),
         'Department_Id': Department_Id.toString(),
         'Employee_Id': Employee_Id.toString(),

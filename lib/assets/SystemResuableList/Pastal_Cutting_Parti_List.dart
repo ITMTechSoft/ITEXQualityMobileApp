@@ -26,8 +26,6 @@ class _Pastal_Cutting_Parti_ListState extends State<Pastal_Cutting_Parti_List> {
 
   Widget? MainAction;
 
-
-
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
@@ -37,20 +35,18 @@ class _Pastal_Cutting_Parti_ListState extends State<Pastal_Cutting_Parti_List> {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           CustomButton(
-    textSize:ArgonSize.Header4,
-            width: getScreenWidth()*0.5,
-              height:ArgonSize.HeightSmall1,
+              textSize: ArgonSize.Header4,
+              width: getScreenWidth() * 0.5,
+              height: ArgonSize.HeightSmall1,
               value: PersonalCase.GetLable(ResourceKey.GenerateNewParti),
               backGroundColor: ArgonColors.primary,
               function: () {
-
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => Pastal_NewSample()));
               }),
-
-          SizedBox(height:ArgonSize.Padding4),
+          SizedBox(height: ArgonSize.Padding4),
           SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: ListView.builder(
@@ -62,10 +58,10 @@ class _Pastal_Cutting_Parti_ListState extends State<Pastal_Cutting_Parti_List> {
                     return Card_Pastal_Cutting_Parti(
                         Card_Item: widget.Items![i],
                         OnTap: (Pastal_Cutting_PartiBLL Item) {
-                          if(widget.OnClickItems !=null) widget.OnClickItems!(Item);
+                          if (widget.OnClickItems != null)
+                            widget.OnClickItems!(Item);
                           setState(() {
                             CaseProvider.SelectedPastal = Item;
-
                           });
                         });
                   }))

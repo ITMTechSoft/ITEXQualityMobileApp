@@ -9,12 +9,14 @@ class User_QualityTracking_DetailBLL {
   int? QualityDept_ModelOrder_Tracking_Id;
   DateTime? Create_Date;
   DateTime? Update_Date;
+  DateTime? Recycle_Date;
+  DateTime? StartDate;
+  DateTime? EndDate;
   int? Amount;
   int? Quality_Items_Id;
   int? Xaxis_QualityItem_Id;
   int? Yaxis_QualityItem_Id;
   int? Recycle_Amount;
-  DateTime? Recycle_Date;
   String? XAxis_Item_Name;
   String? YAxis_Item_Name;
   int? Recycle_Employee_Id;
@@ -44,8 +46,7 @@ class User_QualityTracking_DetailBLL {
   String? ControlType;
   int? Order_Id;
 
-  DateTime? StartDate;
-  DateTime? EndDate;
+
 
   //#endregion
 
@@ -57,17 +58,11 @@ class User_QualityTracking_DetailBLL {
     YAxis_Item_Name = json['YAxis_Item_Name'];
     this.QualityDept_ModelOrder_Tracking_Id =
         json['QualityDept_ModelOrder_Tracking_Id'];
-    this.Create_Date = json['Create_Date'] == null
-        ? null
-        : DateTime.parse(json['Create_Date']);
-    this.Update_Date = json['Update_Date'] == null
-        ? null
-        : DateTime.parse(json['Update_Date']);
-    this.StartDate =
-        json['StartDate'] == null ? null : DateTime.parse(json['StartDate']);
-    this.EndDate =
-        json['EndDate'] == null ? null : DateTime.parse(json['EndDate']);
-    this.Amount = json['Amount'];
+    this.Create_Date = json['Create_Date'] == null ? DateTime(0,00,00,00,00,00) : DateTime.parse(json['Create_Date']);
+    this.Update_Date = json['Update_Date'] == null ? DateTime(0,00,00,00,00,00) : DateTime.parse(json['Update_Date']);
+    this.StartDate   = json['StartDate']   == null ? DateTime(0,00,00,00,00,00) : DateTime.parse(json['StartDate']);
+    this.EndDate     = json['EndDate']     == null ? DateTime(0,00,00,00,00,00) : DateTime.parse(json['EndDate']);
+    this.Amount      = json['Amount'];
     this.Quality_Items_Id = json['Quality_Items_Id'];
     this.Xaxis_QualityItem_Id = json['Xaxis_QualityItem_Id'];
     this.Yaxis_QualityItem_Id = json['Yaxis_QualityItem_Id'];
@@ -109,25 +104,17 @@ class User_QualityTracking_DetailBLL {
             json['QualityDept_ModelOrder_Tracking_Id'],
         XAxis_Item_Name = json['XAxis_Item_Name'],
         YAxis_Item_Name = json['YAxis_Item_Name'],
-        Create_Date = json['Create_Date'] == null
-            ? null
-            : DateTime.parse(json['Create_Date']),
-        Update_Date = json['Update_Date'] == null
-            ? null
-            : DateTime.parse(json['Update_Date']),
-        StartDate = json['StartDate'] == null
-            ? null
-            : DateTime.parse(json['StartDate']),
-        EndDate =
-            json['EndDate'] == null ? null : DateTime.parse(json['EndDate']),
-        Amount = json['Amount'],
+        Create_Date  = json['Create_Date']  == null ? DateTime(00,00,00,00,00,00) : DateTime.parse(json['Create_Date']),
+        Update_Date  = json['Update_Date']  == null ? DateTime(00,00,00,00,00,00) : DateTime.parse(json['Update_Date']),
+        StartDate    = json['StartDate']    == null ? DateTime(00,00,00,00,00,00) : DateTime.parse(json['StartDate']),
+        EndDate      = json['EndDate']      == null ? DateTime(00,00,00,00,00,00) : DateTime.parse(json['EndDate']),
+        Recycle_Date = json['Recycle_Date'] == null ? DateTime(00,00,00,00,00,00) : DateTime.parse(json['Recycle_Date']),
+
+      Amount      = json['Amount'],
         Quality_Items_Id = json['Quality_Items_Id'],
         Xaxis_QualityItem_Id = json['Xaxis_QualityItem_Id'],
         Yaxis_QualityItem_Id = json['Yaxis_QualityItem_Id'],
         Recycle_Amount = json['Recycle_Amount'],
-        Recycle_Date = json['Recycle_Date'] == null
-            ? null
-            : DateTime.parse(json['Recycle_Date']),
         Recycle_Employee_Id = json['Recycle_Employee_Id'],
         Operation_Id = json['Operation_Id'],
         EmpLine_DailyMoves_Id = json['EmpLine_DailyMoves_Id'],
@@ -503,7 +490,7 @@ class User_QualityTracking_DetailBLL {
     List<User_QualityTracking_DetailBLL>? ItemList;
     try {
       Map<String, String> qParams = {
-        'GroupType': DeptModelOrder_QualityTest_Id.toString()
+        'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
           WebApiMethod.Get_UserQualityTasnifControl, qParams));

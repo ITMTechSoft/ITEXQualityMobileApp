@@ -79,20 +79,20 @@ class SharedPref {
 
   static Uri GetWebApiUri(
       WebApiMethod MethodName, Map<String, dynamic> Paramters) {
-    String path = "/" + MethodName.toString().split('.').last;
+    String path = "/api/Quality/" + MethodName.toString().split('.').last;
 
     Uri target;
     if (Paramters == null)
       target = new Uri(
           scheme: "http",
           host: ServerIp,
-          port: int.parse(ServerPort!, radix: 16),
+          port: int.parse(ServerPort!),
           path: path);
     else
       target = new Uri(
           scheme: "http",
           host: ServerIp,
-          port: int.parse(ServerPort!, radix: 16),
+          port: int.parse(ServerPort!),
           path: path,
           queryParameters: Paramters);
 

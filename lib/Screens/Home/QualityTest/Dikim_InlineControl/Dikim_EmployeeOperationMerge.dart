@@ -29,18 +29,18 @@ class _Dikim_EmployeeOperationMergeState
   EmployeesBLL? SelectedEmployee;
   OperationBLL? SelectedOperation;
 
-  Future<bool> LoadingOpenPage(PersonalProvider PersonalCase) async {
+  Future<List<OperationBLL>?> LoadingOpenPage(PersonalProvider PersonalCase) async {
     OperationList =
         await OperationBLL.Get_Operation(PersonalCase.SelectedTest!.Id);
     OperatorList = await EmployeesBLL.Get_Employees();
 
     if (OperationList != null && OperatorList != null) {
       IntiteStatus = 1;
-      return true;
+      return OperationList;
     } else {
       IntiteStatus = -1;
     }
-    return false;
+    return OperationList;
   }
 
   @override
