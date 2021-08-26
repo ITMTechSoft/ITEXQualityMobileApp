@@ -95,7 +95,10 @@ class _QualityItemsListState extends State<QualityItemsList> {
       ),
       body: ListView(children: [
         ListTile(
-          title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
+          title:
+          HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
+          //HeaderTitle(getScreenWidth().toString()??'',
+
               color: ArgonColors.header, FontSize: ArgonSize.Header2),
           subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()),
           dense: true,
@@ -147,7 +150,7 @@ class _QualityItemsListState extends State<QualityItemsList> {
                   mainAxisSpacing: 3,
                   shrinkWrap: true,
                   primary: false,
-                  childAspectRatio:getScreenHeight() >1100?3/ 1.5 :7/ 6,
+                  childAspectRatio:getScreenWidth() >500?3/ 1.7 :7/ 6,
                   crossAxisCount: 3,
                   children: List.generate(snapshot.data!.length, (index) {
                     return GestureDetector(

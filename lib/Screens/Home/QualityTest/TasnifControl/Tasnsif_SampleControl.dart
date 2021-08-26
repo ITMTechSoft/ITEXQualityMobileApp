@@ -19,9 +19,9 @@ class Tasnsif_SampleControl extends StatefulWidget {
 class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
   int IntiteStatus = 0;
   int AssignAmount = 1;
-  int addedNumber  = 0 ;
-  int deleteNumber = 0 ;
+  int addedNumber = 0;
 
+  int deleteNumber = 0;
 
   bool showSmall = true;
   IconData arrowIcon = Icons.arrow_downward;
@@ -29,10 +29,8 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 
   DeptModOrderQuality_ItemsBLL YAxias = new DeptModOrderQuality_ItemsBLL();
 
-
   List<DeptModOrderQuality_ItemsBLL>? XAxsiasItems;
   List<DeptModOrderQuality_ItemsBLL>? YAxsiasItems;
-
 
   LoadingOpenPage(PersonalProvider PersonalCase) async {
     List<DeptModOrderQuality_ItemsBLL>? Criteria =
@@ -54,7 +52,8 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
     return null;
   }
 
- Future RegisterSampeAmount(PersonalCase, bool IsCorrect) async {
+  Future RegisterSampeAmount(PersonalCase, bool IsCorrect) async {
+    print('test');
     int ActionStatus = 0;
     if (XAxias.Id == null) ActionStatus = 1;
 
@@ -65,176 +64,171 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 
     if (ActionStatus == 0) {
       var UsrQualityTrac = User_QualityTracking_DetailBLL();
-      UsrQualityTrac.QualityDept_ModelOrder_Tracking_Id =
-          PersonalCase.SelectedTracking.Id;
+      UsrQualityTrac.QualityDept_ModelOrder_Tracking_Id = PersonalCase.SelectedTracking.Id;
       UsrQualityTrac.Create_Date = DateTime.now();
       UsrQualityTrac.Xaxis_QualityItem_Id = XAxias.Id;
       UsrQualityTrac.Yaxis_QualityItem_Id = YAxias.Id;
       if (IsCorrect)
-        UsrQualityTrac.Correct_Amount =
-            AssignAmount;
+        UsrQualityTrac.Correct_Amount = AssignAmount;
       else
-        UsrQualityTrac.Error_Amount = AssignAmount;
+        UsrQualityTrac.Error_Amount   = AssignAmount;
 
       await UsrQualityTrac.Set_User_QualityTracking_Detail();
       setState(() {
         if (IsCorrect)
-
-
-        setState(() {
-          addedNumber = addedNumber +AssignAmount;
-
-        });
+          setState(() {
+            addedNumber = addedNumber + AssignAmount;
+            print('in add') ;
+          });
         else
           setState(() {
-            deleteNumber=deleteNumber +AssignAmount
-            ;
+            deleteNumber = deleteNumber + AssignAmount;
 
+            print('in minus');
           });
       });
-
-
-
     } else {
       AlertPopupDialog(
           context,
           PersonalCase.GetLable(ResourceKey.SaveErrorMessage),
           PersonalCase.GetLable(ResourceKey.MandatoryFields),
           ActionLable: PersonalCase.GetLable(ResourceKey.Okay));
-
     }
-
   }
 
   Widget HeaderPage(PersonalCase) => ListTile(
         title: HeaderTitle(PersonalCase.SelectedOrder.Order_Number,
             color: ArgonColors.header, FontSize: ArgonSize.Header2),
-        subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString(),style:TextStyle(fontSize:ArgonSize.Header6)),
+        subtitle: Text(PersonalCase.SelectedDepartment.Start_Date.toString(),
+            style: TextStyle(fontSize: ArgonSize.Header6)),
         dense: true,
         selected: true,
       );
 
-  Widget MainInformationBox(PersonalProvider PersonalCase) =>
-    showSmall == true ?InformationBoxSmall(icon: arrowIcon,height:60,function : (){
-      setState(() {
-        showSmall = !showSmall;
-        arrowIcon = Icons.arrow_upward;
-      });
-
-    },MainPage:Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(
-                flex: 2,
-                child: LableTitle(
-
-                        PersonalCase.GetLable(ResourceKey.Model))),
-
-
-            Expanded(
-                flex: 2,
-                child: LableTitle(PersonalCase.SelectedOrder!.Model_Name??'',
-                    color: ArgonColors.text)),
-          ],
-        ),
-
-      ],
-    )):  InformationBox(icon:arrowIcon,function : (){
-      setState(() {
-        showSmall = !showSmall;
-        arrowIcon = Icons.arrow_downward;
-
-      });
-    },MainPage:Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Row(
+  Widget MainInformationBox(PersonalProvider PersonalCase) => showSmall == true
+      ? InformationBoxSmall(
+          icon: arrowIcon,
+          height: 60,
+          function: () {
+            setState(() {
+              showSmall = !showSmall;
+              arrowIcon = Icons.arrow_upward;
+            });
+          },
+          MainPage: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Expanded(
-                  flex: 2,
-                  child: LableTitle(
-                      PersonalCase.GetLable(ResourceKey.Model))),
-
-
-              Expanded(
-                  flex: 2,
-                  child: LableTitle(PersonalCase.SelectedOrder!.Model_Name??'',
-                      color: ArgonColors.text)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                      flex: 2,
+                      child:
+                          LableTitle(PersonalCase.GetLable(ResourceKey.Model))),
+                  Expanded(
+                      flex: 2,
+                      child: LableTitle(
+                          PersonalCase.SelectedOrder!.Model_Name ?? '',
+                          color: ArgonColors.text)),
+                ],
+              ),
             ],
-          ),
-          SizedBox(height:8),
-
-          Row(
+          ))
+      : InformationBox(
+          icon: arrowIcon,
+          function: () {
+            setState(() {
+              showSmall = !showSmall;
+              arrowIcon = Icons.arrow_downward;
+            });
+          },
+          MainPage: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
             children: [
-              Expanded(
-                  flex: 2,
-                  child: LableTitle(
-                      '${PersonalCase.GetLable(ResourceKey.Sample_Amount)} / '
-                      '${PersonalCase.GetLable(ResourceKey.Fabric_TopNo)} ')),
-              Expanded(
-                  flex: 2,
-                  child: LableTitle(
-                      (PersonalCase.SelectedTracking!.Sample_Amount ?? 0)
-                          .toString(),
-                      color: ArgonColors.text)),
-              Expanded(
-                  flex: 2,
-                  child: LableTitle(PersonalCase.SelectedTracking!.Fabric_TopNo??'',
-                      color: ArgonColors.text)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                      flex: 2,
+                      child:
+                          LableTitle(PersonalCase.GetLable(ResourceKey.Model))),
+                  Expanded(
+                      flex: 2,
+                      child: LableTitle(
+                          PersonalCase.SelectedOrder!.Model_Name ?? '',
+                          color: ArgonColors.text)),
+                ],
+              ),
+              SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                      flex: 3,
+                      child: LableTitle(
+                          '${PersonalCase.GetLable(ResourceKey.Sample_Amount)} / '
+                          '${PersonalCase.GetLable(ResourceKey.Fabric_TopNo)} ')),
+                  Expanded(
+                      flex: 2,
+                      child: LableTitle(
+                          (PersonalCase.SelectedTracking!.Sample_Amount ?? 0)
+                              .toString(),
+                          color: ArgonColors.text)),
+                  Expanded(
+                      flex: 2,
+                      child: LableTitle(
+                          PersonalCase.SelectedTracking!.Fabric_TopNo ?? '',
+                          color: ArgonColors.text)),
+                ],
+              ),
+              SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                      flex: 3,
+                      child: LableTitle(
+                          '${PersonalCase.GetLable(ResourceKey.SizeName)} / '
+                          '${PersonalCase.GetLable(ResourceKey.ColorName)}')),
+                  Expanded(
+                      flex: 2,
+                      child: LableTitle(
+                          PersonalCase.SelectedTracking!.SizeName ?? '',
+                          color: ArgonColors.text)),
+                  Expanded(
+                      flex: 2,
+                      child: LableTitle(
+                          PersonalCase.SelectedTracking!.ColorName ?? '',
+                          color: ArgonColors.text)),
+                ],
+              ),
+              SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                      flex: 3,
+                      child: LableTitle(
+                          '${PersonalCase.GetLable(ResourceKey.PlanningAmount)} / '
+                          '${PersonalCase.GetLable(ResourceKey.OrderSizeColor_QTY)}')),
+                  Expanded(
+                      flex: 2,
+                      child: LableTitle(
+                          (PersonalCase.SelectedTracking!.SizeColor_QTY ?? 0)
+                              .toString(),
+                          color: ArgonColors.text)),
+                  Expanded(
+                      flex: 2,
+                      child: LableTitle(
+                          (PersonalCase.SelectedTracking!.OrderSizeColor_QTY ??
+                                  0)
+                              .toString(),
+                          color: ArgonColors.text)),
+                ],
+              )
             ],
-          ),
-          SizedBox(height:8),
-
-          Row(
-            children: [
-              Expanded(
-                  flex: 2,
-                  child: LableTitle(
-                      '${PersonalCase.GetLable(ResourceKey.SizeName)} / '
-                      '${PersonalCase.GetLable(ResourceKey.ColorName)}')),
-              Expanded(
-                  flex: 2,
-                  child: LableTitle(PersonalCase.SelectedTracking!.SizeName??'',
-                      color: ArgonColors.text)),
-              Expanded(
-                  flex: 2,
-                  child: LableTitle(PersonalCase.SelectedTracking!.ColorName??'',
-                      color: ArgonColors.text)),
-            ],
-          ),
-          SizedBox(height:8),
-
-          Row(
-            children: [
-              Expanded(
-                  flex: 2,
-                  child: LableTitle(
-                      '${PersonalCase.GetLable(ResourceKey.PlanningAmount)} / '
-                      '${PersonalCase.GetLable(ResourceKey.OrderSizeColor_QTY)}')),
-              Expanded(
-                  flex: 2,
-                  child: LableTitle(
-                      (PersonalCase.SelectedTracking!.SizeColor_QTY ?? 0)
-                          .toString(),
-                      color: ArgonColors.text)),
-              Expanded(
-                  flex: 2,
-                  child: LableTitle(
-                      (PersonalCase.SelectedTracking!.OrderSizeColor_QTY ?? 0)
-                          .toString(),
-                      color: ArgonColors.text)),
-            ],
-          )
-        ],
-      ));
+          ));
 
   Widget GroupLevel(PersonalProvider PersonalCase) => Container(
         padding: EdgeInsets.all(10),
@@ -244,13 +238,13 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
           mainAxisSize: MainAxisSize.max,
           children: [
             ExpandedLableTitle(PersonalCase.GetLable(ResourceKey.ErrorGroup),
-                IsCenter: true ,FontSize:ArgonSize.Header4),
+                IsCenter: true, FontSize: ArgonSize.Header4),
             ExpandedLableTitle(
                 PersonalCase.SelectedTracking!.Group_Name ??
                     PersonalCase.GetLable(ResourceKey.ALL),
                 color: ArgonColors.text,
                 IsCenter: true,
-                FontSize:ArgonSize.Header4),
+                FontSize: ArgonSize.Header4),
           ],
         ),
       );
@@ -261,7 +255,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
         children: [
           Expanded(
               child: Container(
-                height: getScreenHeight()/2.5,
+            height: getScreenHeight() / 2.5,
             child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
@@ -278,7 +272,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
           )),
           Expanded(
               child: Container(
-                       height: getScreenHeight()/2.5,
+            height: getScreenHeight() / 2.5,
             child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
@@ -296,102 +290,82 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
         ],
       );
 
-
-  Widget inputWidget (PersonalProvider PersonalCase) =>    BoxMainContainer(Childrens: <Widget>[
-    Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
+  Widget inputWidget(PersonalProvider PersonalCase) =>
+      BoxMainContainer(Childrens: <Widget>[
+        Column(
           children: [
-            Expanded(
-              flex:2,
-              child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                    flex: 2,
+                    child: CircularIconWithNumber(
+                      icon: FontAwesomeIcons.plus,
+                      backGroundColor: ArgonColors.primary,
+                      iconColor: Colors.black,
+                      size: ArgonSize.IconSize,
+                      bubbleHeight: ArgonSize.WidthSmall / 1.3,
+                      bubbleWidth: ArgonSize.WidthSmall / 1.3,
+                      bubbleText: addedNumber.toString(),
+                      bubbleTextSize: ArgonSize.Header7,
+                      bubbleBgColor: Colors.blue,
+                      function: () async {
+                       await RegisterSampeAmount(PersonalCase, true);
 
+                       // print('Presss')
+                      },
+                    )
 
-              CircularIconWithNumber(
-                  icon: FontAwesomeIcons.plus,
-                  backGroundColor: ArgonColors.primary,
-                  iconColor: Colors.white,
-                  size:   ArgonSize.IconSize,
-                  bubbleHeight: ArgonSize.WidthSmall/1.5,
-                  bubbleWidth: ArgonSize.WidthSmall/1.5,
-                  bubbleText: addedNumber.toString(),
-                  bubbleTextSize :ArgonSize.Header7 ,
-                  bubbleBgColor:Colors.blue,
-                  function: () async {
-                    await RegisterSampeAmount(PersonalCase, true);
-
-                  },
-              )
-
-              //BlinkAnimation()
-            ),
-            Expanded(
-
-              child: Padding(
-                child: SpinBox(
-                  max: 999999,
-                  textStyle:TextStyle(fontSize:ArgonSize.Header3),
-                  value: 1,
-                  onChanged: (value) {
-                    AssignAmount = value.toInt();
-                    print('${AssignAmount}');
-                  },
+                    //BlinkAnimation()
+                    ),
+                Expanded(
+                  child: Padding(
+                    child: SpinBox(
+                      max: 999999,
+                      textStyle: TextStyle(fontSize: ArgonSize.Header3),
+                      value: 1,
+                      onChanged: (value) {
+                        AssignAmount = value.toInt();
+                        print('${AssignAmount}');
+                      },
+                    ),
+                    padding: const EdgeInsets.all(16),
+                  ),
+                  flex: 5,
                 ),
-                padding: const EdgeInsets.all(16),
-              ),
-              flex: 5,
+                Expanded(
+                    flex: 2,
+                    child: CircularIconWithNumber(
+                      icon: FontAwesomeIcons.minus,
+                      backGroundColor: ArgonColors.error,
+                      iconColor: Colors.white,
+                      size: ArgonSize.IconSize,
+                      bubbleHeight: ArgonSize.WidthSmall / 1.3,
+                      bubbleWidth: ArgonSize.WidthSmall / 1.3,
+                      bubbleText: deleteNumber.toString(),
+                      bubbleTextSize: ArgonSize.Header7,
+                      bubbleBgColor: Colors.red[900]!,
+                      function: () async {
+                        await RegisterSampeAmount(PersonalCase, false);
+                      },
+                    )),
+              ],
             ),
-            Expanded(
-              flex:2,
-              child:
-              // IconInsideCircle(
-              //     icon: FontAwesomeIcons.minus,
-              //     backGroundColor: Colors.red,
-              //     color: Colors.white,
-              //     iconSize: ArgonSize.IconSize,
-              //     size: ArgonSize.IconSize,
-              //     function: () async {
-              //       await RegisterSampeAmount(PersonalCase, false);
-              //
-              //     }),
-
-              CircularIconWithNumber(
-                icon: FontAwesomeIcons.minus,
-                backGroundColor:ArgonColors.error,
-                iconColor: Colors.white,
-                size:   ArgonSize.IconSize,
-                bubbleHeight: ArgonSize.WidthSmall/1.5,
-                bubbleWidth: ArgonSize.WidthSmall/1.5,
-                bubbleText: deleteNumber.toString(),
-                bubbleTextSize :ArgonSize.Header7 ,
-                bubbleBgColor:Colors.red[900]!,
-                function: () async {
-            await RegisterSampeAmount(PersonalCase, false);
-
-                },
-              )
-            ),
-
-
+            SizedBox(height: ArgonSize.Padding6),
+            StandardButton(
+                ForColor: ArgonColors.white,
+                BakColor: ArgonColors.myGreen,
+                FontSize: ArgonSize.Header3,
+                Lable: PersonalCase.GetLable(ResourceKey.CloseSample),
+                OnTap: () async {
+                  // await PersonalCase.SelectedTracking.CloseTanifSample();
+                  // Navigator.pop(context, "Okay");
+                  showAlertDialog(context, PersonalCase);
+                })
           ],
         ),
-        SizedBox(height:ArgonSize.Padding6),
-        StandardButton(
-            ForColor: ArgonColors.white,
-            BakColor: ArgonColors.myGreen,
-            FontSize: ArgonSize.Header3,
-            Lable: PersonalCase.GetLable(ResourceKey.CloseSample),
-            OnTap: () async {
-              // await PersonalCase.SelectedTracking.CloseTanifSample();
-              // Navigator.pop(context, "Okay");
-              showAlertDialog(context,PersonalCase);
-            })
-      ],
-    ),
-
-  ]);
+      ]);
 
   @override
   Widget build(BuildContext context) {
@@ -399,7 +373,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 
     return Scaffold(
       appBar: DetailBar(
-          Title: PersonalCase.SelectedTest!.Test_Name??'',
+          Title: PersonalCase.SelectedTest!.Test_Name ?? '',
           PersonalCase: PersonalCase,
           OnTap: () {
             Navigator.pop(context);
@@ -414,7 +388,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
               MainInformationBox(PersonalCase),
               GroupLevel(PersonalCase),
               AxisItem(PersonalCase),
-              inputWidget (PersonalCase)
+              inputWidget(PersonalCase)
             ]);
           } else if (IntiteStatus == 0)
             return Center(child: CircularProgressIndicator());
@@ -430,31 +404,32 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
     );
   }
 }
-showAlertDialog(BuildContext context,PersonalProvider PersonalCase) {
 
+showAlertDialog(BuildContext context, PersonalProvider PersonalCase) {
   // set up the buttons
   Widget remindButton = TextButton(
-    child: Text(PersonalCase.GetLable(ResourceKey.Okay),style:TextStyle(fontSize:ArgonSize.Header4)),
-    onPressed:  () {
+    child: Text(PersonalCase.GetLable(ResourceKey.Okay),
+        style: TextStyle(fontSize: ArgonSize.Header4)),
+    onPressed: () {
       Navigator.of(context).pop();
       Navigator.of(context).pop();
-
     },
   );
   Widget cancelButton = TextButton(
-    child: Text(PersonalCase.GetLable(ResourceKey.Cancel),style:TextStyle(fontSize:ArgonSize.Header4)),
-    onPressed:  () {
+    child: Text(PersonalCase.GetLable(ResourceKey.Cancel),
+        style: TextStyle(fontSize: ArgonSize.Header4)),
+    onPressed: () {
       Navigator.of(context).pop();
     },
   );
-
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
     contentPadding: EdgeInsets.all(ArgonSize.HeightMedium),
-
-    title: Text(PersonalCase.GetLable(ResourceKey.Notice),style:TextStyle(fontSize:ArgonSize.Header3)),
-    content: Text(PersonalCase.GetLable(ResourceKey.ClosePageConfirmation),style:TextStyle(fontSize:ArgonSize.Header4)),
+    title: Text(PersonalCase.GetLable(ResourceKey.Notice),
+        style: TextStyle(fontSize: ArgonSize.Header3)),
+    content: Text(PersonalCase.GetLable(ResourceKey.ClosePageConfirmation),
+        style: TextStyle(fontSize: ArgonSize.Header4)),
     actions: [
       remindButton,
       cancelButton,

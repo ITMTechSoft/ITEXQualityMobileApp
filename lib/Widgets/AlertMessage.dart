@@ -6,19 +6,19 @@ AlertPopupDialog(BuildContext context, String title, String Message,
   showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-            title: LableTitle(title, color: ArgonColors.warning),
+            title: LableTitle(title, color: ArgonColors.warning,FontSize: ArgonSize.Header4),
             content: Container(
               width: getScreenWidth() * 0.8,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[LableTitle(Message, FontSize: 10)],
+                children: <Widget>[LableTitle(Message, FontSize: ArgonSize.Header5)],
               ),
             ),
             actions: <Widget>[
               TextButton(
                 child: Text(ActionLable,
-                    style: TextStyle(fontSize: ArgonSize.Header5)),
+                    style: TextStyle(fontSize: ArgonSize.Header4)),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

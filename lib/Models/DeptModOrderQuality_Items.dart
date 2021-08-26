@@ -5,7 +5,7 @@ import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 
 class DeptModOrderQuality_ItemsBLL {
   //#region Properties
-  int Id = 0 ;
+  int? Id ;
   int? DeptModelOrder_QualityTest_Id;
   int? Group_Id;
   String? Item_Name;

@@ -292,8 +292,7 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                 onTap: () async {
                   var UserQuality = new User_QualityTracking_DetailBLL();
                   UserQuality.Quality_Items_Id = CaseProvider.FirstQuality!.Id;
-                  UserQuality.QualityDept_ModelOrder_Tracking_Id =
-                      CaseProvider.QualityTracking!.Id;
+                  UserQuality.QualityDept_ModelOrder_Tracking_Id = CaseProvider.QualityTracking!.Id;
                   UserQuality.Amount = 1;
                   UserQuality.IsRecycle = _switchValue;
                   int CheckStatus =
@@ -345,7 +344,8 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                     bubbleHeight: ArgonSize.WidthSmall / 2,
                     bubbleWidth: ArgonSize.WidthSmall / 2,
                     bubbleText: warning_massage.toString(),
-                    bubbleTextSize: ArgonSize.Header7)
+                    bubbleTextSize: ArgonSize.Header7,
+                    bubbleBgColor: Colors.red[900]!)
                 : Container(width: 0, height: 0),
           );
         } else if (IntiteStatus == 0)

@@ -34,7 +34,8 @@ DetailBar(
         required BuildContext context,
         bool showIcon = true}) =>
     new AppBar(
-      toolbarHeight: ArgonSize.WidthMedium,
+      toolbarHeight  : ArgonSize.WidthMedium,
+      backgroundColor: ArgonColors.primary,
       leading: IconButton(
         icon: Icon(Icons.arrow_back,
             color: Colors.white, size: ArgonSize.Header3),

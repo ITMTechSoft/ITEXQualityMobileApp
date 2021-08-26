@@ -300,7 +300,7 @@ class CircularIconWithNumber extends StatelessWidget {
       this.bubbleHeight ,
       this.bubbleText ,
       this.bubbleTextSize ,
-      this.bubbleBgColor = ArgonColors.myGreen,
+      this.bubbleBgColor = ArgonColors.inputError,
       this.function,
       })
       : super(key: key);
@@ -310,25 +310,30 @@ class CircularIconWithNumber extends StatelessWidget {
     return Column(
       children: [
         GestureDetector(
-          onTap: function??(){},
-          child: Container(
-            child: Stack(children: [
-              IconInsideCircle(
-                  icon: icon,
-                  backGroundColor: backGroundColor,
-                  color: Colors.white,
-                  iconSize: iconSize??ArgonSize.IconSize,
-                  size: size),
-              Positioned(
-                  child: CircleShape(
-                      color:  bubbleBgColor,
-                      text:   bubbleText??'',
-                      width:  bubbleWidth??ArgonSize.WidthSmall,
-                      height: bubbleHeight??ArgonSize.HeightSmall,
-                      fontSize: bubbleTextSize??ArgonSize.Header5),
-                  top: 0,
-                  right: 0),
-            ]),
+          onTap: function??(){
+            print('inside the function ');
+          },
+          child: AbsorbPointer(
+            child: Container(
+              child: Stack(
+            children: [
+                IconInsideCircle(
+                    icon: icon,
+                    backGroundColor: backGroundColor,
+                    color: Colors.white,
+                    iconSize: iconSize??ArgonSize.IconSize,
+                    size: size),
+                Positioned(
+                    child: CircleShape(
+                        color:   bubbleBgColor,
+                        text :   bubbleText??'',
+                        width:  bubbleWidth??ArgonSize.WidthSmall,
+                        height: bubbleHeight??ArgonSize.HeightSmall,
+                        fontSize: bubbleTextSize??ArgonSize.Header5),
+                    top: 0,
+                    right: 0),
+              ]),
+            ),
           ),
         ),
       ],

@@ -18,7 +18,7 @@ class Model_Order_ControlBLL {
   int? Order_Id;
   int? Matrix_Control_Amount;
   int? Employee_Matrix_Amount;
-  int QualityDept_ModelOrder_Tracking_Id;
+  int  QualityDept_ModelOrder_Tracking_Id;
 
   //#endregion
 
@@ -26,52 +26,52 @@ class Model_Order_ControlBLL {
 
       {
         required this.Control_Type,
-         this.OrderSizeColorDetail_Id,
+        this.OrderSizeColorDetail_Id,
         required  this.QualityDept_ModelOrder_Tracking_Id}) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
-    this.Quality_Items_Id = json['Quality_Items_Id'];
-    this.Control_Type = json['Control_Type'];
-    this.OrderSizeColorDetail_Id = json['OrderSizeColorDetail_Id'];
-    this.Order_Id = json['Order_Id'];
-    this.Matrix_Control_Amount  = json['Matrix_Control_Amount'];
-    this.Employee_Matrix_Amount = json['Employee_Matrix_Amount'];
+    this.Quality_Items_Id = json['Quality_Items_Id']==null?0:json['Quality_Items_Id'];
+    this.Control_Type =    json['Control_Type']==null?0:json['Control_Type'];
+    this.OrderSizeColorDetail_Id = json['OrderSizeColorDetail_Id']==null?0:json['OrderSizeColorDetail_Id'];
+    this.Order_Id = json['Order_Id'] == null?0:json['Order_Id'];
+    this.Matrix_Control_Amount  = json['Matrix_Control_Amount'] == null? 0:  json['Matrix_Control_Amount'];
+    this.Employee_Matrix_Amount = json['Employee_Matrix_Amount']== null? 0:  json['Employee_Matrix_Amount'];
     this.QualityDept_ModelOrder_Tracking_Id =
-        json['QualityDept_ModelOrder_Tracking_Id'];
+    json['QualityDept_ModelOrder_Tracking_Id']==null?0 :json['QualityDept_ModelOrder_Tracking_Id'];
   }
 
   Model_Order_ControlBLL.fromJson(Map<String, dynamic> json)
-      : Quality_Items_Id = json['Quality_Items_Id'],
-        Control_Type = json['Control_Type'],
-        OrderSizeColorDetail_Id = json['OrderSizeColorDetail_Id'],
-        Order_Id = json['Order_Id'],
-        Matrix_Control_Amount = json['Matrix_Control_Amount'],
-        Employee_Matrix_Amount = json['Employee_Matrix_Amount'],
+      : Quality_Items_Id =     json['Quality_Items_Id']==null?0:json['Quality_Items_Id'],
+        Control_Type     =     json['Control_Type']==null?0:json['Control_Type'],
+        OrderSizeColorDetail_Id = json['OrderSizeColorDetail_Id']==null?0:json['OrderSizeColorDetail_Id'],
+        Order_Id = json['Order_Id'] == null?0:json['Order_Id'],
+        Matrix_Control_Amount  = json['Matrix_Control_Amount'] == null? 0:  json['Matrix_Control_Amount'],
+        Employee_Matrix_Amount = json['Employee_Matrix_Amount']== null? 0:  json['Employee_Matrix_Amount'],
         QualityDept_ModelOrder_Tracking_Id =
-            json['QualityDept_ModelOrder_Tracking_Id'];
+        json['QualityDept_ModelOrder_Tracking_Id']==null?0 :json['QualityDept_ModelOrder_Tracking_Id'];
 
   Map<String, dynamic> toJson() => {
-        'Quality_Items_Id': Quality_Items_Id,
-        'Control_Type': Control_Type,
-        'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id,
-        'Order_Id': Order_Id,
-        'Matrix_Control_Amount': Matrix_Control_Amount,
-        'Employee_Matrix_Amount': Employee_Matrix_Amount,
-        'QualityDept_ModelOrder_Tracking_Id':
-            QualityDept_ModelOrder_Tracking_Id,
-      };
+    'Quality_Items_Id': Quality_Items_Id,
+    'Control_Type': Control_Type,
+    'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id,
+    'Order_Id': Order_Id,
+    'Matrix_Control_Amount': Matrix_Control_Amount,
+    'Employee_Matrix_Amount': Employee_Matrix_Amount,
+    'QualityDept_ModelOrder_Tracking_Id':
+    QualityDept_ModelOrder_Tracking_Id,
+  };
 
   Map<String, String> toPost() => {
-        'Quality_Items_Id': Quality_Items_Id.toString(),
-        'Control_Type': Control_Type,
-        'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id.toString(),
-        'Order_Id': Order_Id.toString(),
-        'Matrix_Control_Amount': Matrix_Control_Amount.toString(),
-        'Employee_Matrix_Amount': Employee_Matrix_Amount.toString(),
-        'QualityDept_ModelOrder_Tracking_Id':
-            QualityDept_ModelOrder_Tracking_Id.toString(),
-      };
+    'Quality_Items_Id': Quality_Items_Id.toString(),
+    'Control_Type': Control_Type,
+    'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id.toString(),
+    'Order_Id': Order_Id.toString(),
+    'Matrix_Control_Amount': Matrix_Control_Amount.toString(),
+    'Employee_Matrix_Amount': Employee_Matrix_Amount.toString(),
+    'QualityDept_ModelOrder_Tracking_Id':
+    QualityDept_ModelOrder_Tracking_Id.toString(),
+  };
 
   //#endregion
 
@@ -98,6 +98,7 @@ class Model_Order_ControlBLL {
       };
       var url = Uri.parse(
           SharedPref.GetWebApiUrl(WebApiMethod.Get_Model_Order_Control));
+
       var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
