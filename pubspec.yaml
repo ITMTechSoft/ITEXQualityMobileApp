@@ -30,6 +30,8 @@ dependencies:
   path_provider: ^2.0.2
   pdf_render: ^1.0.12
   flutter_html: ^2.1.1
+  html: ^0.15.0
+
   flutter_launcher_icons: ^0.9.1
   intl: ^0.17.0
   flutter_spinbox: ^0.5.4

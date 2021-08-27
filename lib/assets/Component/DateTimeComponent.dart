@@ -18,11 +18,11 @@ class DateTimePicker extends StatefulWidget {
 
   DateTimePicker(
       {required this.SelectedDateFunction,
-        this.FirstDate = 2020,
-        this.LastDate = 2090,
-        this.DateFormat = '',
-        this.dateMode = DateMode.normal,
-        this.dateChoices = DateChoices.date ,
+        this.FirstDate   = 2020,
+        this.LastDate    = 2090,
+        this.DateFormat  = '',
+        this.dateMode    = DateMode.normal,
+        this.dateChoices = DateChoices.date,
         required this.SelectedDate});
 
   @override
@@ -30,7 +30,7 @@ class DateTimePicker extends StatefulWidget {
 }
 
 class _DateTimePickerState extends State<DateTimePicker> {
-  //DateTime  SelectedDate = DateTime.now();
+  DateTime  SelectedDate = DateTime.now();
   TimeOfDay? SelectedTime = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
 
 
@@ -65,7 +65,9 @@ class _DateTimePickerState extends State<DateTimePicker> {
           switch (widget.dateChoices) {
             case DateChoices.date:
               {
+                print('inside the function ') ;
                 await _openDatePicker(context);
+                print('after the function') ;
                 widget.DateFormat = "yyyy/MM/dd";
               }
               break;
@@ -124,14 +126,21 @@ class _DateTimePickerState extends State<DateTimePicker> {
       initialDate: widget.SelectedDate ?? DateTime.now(),
       firstDate: new DateTime(DateTime.now().year),
       lastDate:  new DateTime(widget.LastDate),
-    ))!;
+    ))??DateTime.now();
 
-    if (widget.SelectedDate != null)
+    if (widget.SelectedDate != null) {
+
       setState(() {
+
         widget.SelectedDateFunction(widget.SelectedDate);
       });
+    }
     else
-      widget.SelectedDate = DateTime.now();
+      {
+        widget.SelectedDate = DateTime.now();
+
+      }
+
   }
 
   /// CHOOSE TIME

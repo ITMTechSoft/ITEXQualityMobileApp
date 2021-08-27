@@ -98,8 +98,8 @@ class Standard_Input extends StatelessWidget {
             hintStyle: TextStyle(
               color: ArgonColors.black.withOpacity(0.3),
             ),
-            // suffixIcon: suffixIcon ?? Container(),
-            // prefixIcon: prefixIcon ?? Container(),
+            suffixIcon: suffixIcon ?? Container(width:0,height:0),
+            prefixIcon: prefixIcon ?? Container(width:0,height:0),
             suffixIconConstraints: BoxConstraints(
               minWidth: ArgonSize.WidthMedium,
               minHeight: ArgonSize.WidthMedium,

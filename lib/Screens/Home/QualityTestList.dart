@@ -53,7 +53,7 @@ class _QualityTestListState extends State<QualityTestList> {
           title: PersonalCase.GetLable(ResourceKey.WarrningMessage),
           Children: [
             LableTitle(PersonalCase.GetLable(ResourceKey.PleaseCheckCriteria),
-                FontSize: 10),
+                FontSize: ArgonSize.Header5),
           ],
           FirstActionLable: PersonalCase.GetLable(ResourceKey.Okay),
 

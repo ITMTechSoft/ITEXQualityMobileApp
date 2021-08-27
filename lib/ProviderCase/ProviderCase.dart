@@ -43,7 +43,7 @@ class PersonalProvider with ChangeNotifier {
   Future<bool> loadSharedPrefs() async {
     try {
 
-      IsLoading = true;
+      IsLoading   = true;
 
       bool Status = await _UserPref!.initiateAppPrefernce();
        await GetGlobalization(SharedPref.SelLanguage!.Id);

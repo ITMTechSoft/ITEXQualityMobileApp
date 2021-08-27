@@ -53,7 +53,6 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
   }
 
   Future RegisterSampeAmount(PersonalCase, bool IsCorrect) async {
-    print('test');
     int ActionStatus = 0;
     if (XAxias.Id == null) ActionStatus = 1;
 
@@ -78,13 +77,11 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
         if (IsCorrect)
           setState(() {
             addedNumber = addedNumber + AssignAmount;
-            print('in add') ;
           });
         else
           setState(() {
             deleteNumber = deleteNumber + AssignAmount;
 
-            print('in minus');
           });
       });
     } else {
@@ -110,31 +107,39 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
           icon: arrowIcon,
           height: 60,
           function: () {
-            setState(() {
-              showSmall = !showSmall;
-              arrowIcon = Icons.arrow_upward;
-            });
+            // setState(() {
+            //   showSmall = !showSmall;
+            //   arrowIcon = Icons.arrow_upward;
+            // });
           },
-          MainPage: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                      flex: 2,
-                      child:
-                          LableTitle(PersonalCase.GetLable(ResourceKey.Model))),
-                  Expanded(
-                      flex: 2,
-                      child: LableTitle(
-                          PersonalCase.SelectedOrder!.Model_Name ?? '',
-                          color: ArgonColors.text)),
-                ],
-              ),
-            ],
+          MainPage: GestureDetector(
+            onTap:(){
+              setState(() {
+                showSmall = !showSmall;
+                arrowIcon = Icons.arrow_upward;
+              });
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                        flex: 2,
+                        child:
+                            LableTitle(PersonalCase.GetLable(ResourceKey.Model))),
+                    Expanded(
+                        flex: 2,
+                        child: LableTitle(
+                            PersonalCase.SelectedOrder!.Model_Name ?? '',
+                            color: ArgonColors.text)),
+                  ],
+                ),
+              ],
+            ),
           ))
       : InformationBox(
           icon: arrowIcon,

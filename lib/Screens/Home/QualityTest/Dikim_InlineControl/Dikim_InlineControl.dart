@@ -83,7 +83,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
         ListTile(
           title: HeaderTitle(
 
-                  getScreenWidth().toString(),
+              PersonalCase.SelectedOrder!.Order_Number??'',
               color: ArgonColors.header,
               FontSize: ArgonSize.Header3),
           subtitle: Text(DateFormat("yyyy/MM/dd HH:mm")
@@ -109,7 +109,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                           flex:3,
                           child: CustomButton(
                               height: ArgonSize.HeightSmall,
-                              width:ArgonSize.WidthSmall,
+                              width:ArgonSize.WidthSmall1,
                               textSize:ArgonSize.Header4,
                               value:
                               PersonalCase.GetLable(ResourceKey.ControlValid),
@@ -120,13 +120,16 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                         ),
                         Expanded(
                         flex:4,
-                          child: DateTimePicker(
+                          child:
+
+
+                          DateTimePicker(
                               SelectedDate: DateTime.now(),
-                              SelectedDateFunction: (DateTime SelectedTime ) {
-                            setState(() {
-                              SelectedDate = SelectedTime;
-                            });
-                          }),
+                              SelectedDateFunction:
+                                  (DateTime SelectedTime) {
+                                    SelectedDate = SelectedTime;
+                              },
+                             ),
                         ),
                       ]
                     ):
@@ -134,13 +137,13 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                         mainAxisAlignment:MainAxisAlignment.spaceEvenly,
                         children:[
 
-                          DateTimePicker( SelectedDate: DateTime.now(),
-                              SelectedDateFunction: (DateTime SelectedTime) {
-
-                            setState(() {
+                          DateTimePicker(
+                            SelectedDate: DateTime.now(),
+                            SelectedDateFunction:
+                                (DateTime SelectedTime) {
                               SelectedDate = SelectedTime;
-                            });
-                          }),
+                            },
+                          ),
                           CustomButton(
                               height: ArgonSize.HeightSmall,
                               width :ArgonSize.WidthSmall,

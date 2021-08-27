@@ -3,6 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:itex_soft_qualityapp/Models/Criteria_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
+import 'package:html/parser.dart' show parse;
 
 class Criteria_Test extends StatefulWidget {
   @override
@@ -39,8 +40,13 @@ class _Criteria_TestState extends State<Criteria_Test> {
     return Critiera;
   }
 
-
   @override
+  void initState() {
+    super.initState();
+    var document = parse('<body>Hello world! <a href="www.html5rocks.com">HTML5 rocks!') ;
+    print(parse.toString());
+
+  }@override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
@@ -66,20 +72,30 @@ class _Criteria_TestState extends State<Criteria_Test> {
             future: LoginFunction(PersonalCase),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
+                var document = parse(
+                    snapshot.data!.HTML_Data??'');
+                print(document.outerHtml);
                 return SingleChildScrollView(
                   child: Column(
                     children: [
                       !IsUserApproved
                           ? Container()
                           : Container(),
-                      new Container(
-                          child: new Column(
-                            children: <Widget>[
-                              Html(
-                                data: snapshot.data!.HTML_Data   ?? "",
-                              ),
-                            ],
-                          )),
+                        new Container(
+                            child: new Column(
+                              children: <Widget>[
+                                Html(
+                                  data: snapshot.data!.HTML_Data  ?? "",
+                                  style: {
+                                  'p': Style(margin: EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 8)),
+                                  },
+                                ),
+
+                            //   Text( parse(snapshot.data!.HTML_Data ).outerHtml)
+
+
+                              ],
+                            )),
 
                     ],
                   ),

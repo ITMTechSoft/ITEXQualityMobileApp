@@ -21,10 +21,10 @@ class SharedPref {
   }
 
   Future<String> ReadFromString(String Key) async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    final SharedPreferences? preferences = await SharedPreferences.getInstance();
 
     /// TODO : CHANGE THE '' TO TEST VALUE
-    String res = preferences.getString(Key) ?? '';
+    String res = preferences!.getString(Key) ?? '';
     print('User Data Model Retrived1 ' + res.toString());
     return res;
   }
@@ -47,7 +47,7 @@ class SharedPref {
   /// TODO : DO THIS FUNCTION NEED TO RETURN FUTURE<BOOL> ?
   initiateAppPrefernce() async {
     try {
-      ServerIp = await ReadFromString("ServerIp");
+      ServerIp   = await ReadFromString("ServerIp");
       ServerPort = await ReadFromString("PortServer");
 
       /// TODO HERE IT SHOULD NOT LOAD USERNAME AND PASSWORD

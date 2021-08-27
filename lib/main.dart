@@ -22,13 +22,12 @@ class ITMTechSoftQuality extends StatefulWidget {
 }
 
 class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
-  PersonalProvider PersonalCase = new PersonalProvider();
-  SubCaseProvider CaseProvider = new SubCaseProvider();
+  PersonalProvider PersonalCase  = new PersonalProvider();
+  SubCaseProvider  CaseProvider  = new SubCaseProvider();
   bool IsLoading = false;
 
   Future<bool> LoadingSharedPreference(PersonalProvider PersonalCase) async {
     return await PersonalCase.loadSharedPrefs();
-
   }
 
   @override
@@ -44,7 +43,7 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
       return TargetItem;
     }
 
-    return FutureBuilder(
+    return FutureBuilder<bool>(
         future: LoadingSharedPreference(PersonalCase),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           return MultiProvider(
@@ -57,7 +56,7 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
                 : MaterialApp(
                     debugShowCheckedModeBanner: false,
                     theme: themeNotifier.GetTheme(),
-                    home: RetVal(true),
+                    home: RetVal(snapshot.data!),
                     routes: <String, WidgetBuilder>{
                       '/login': (BuildContext context) => new LoginPages(),
                       '/main': (BuildContext context) => new MainActivity(),
