@@ -62,6 +62,7 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
               theme: themeNotifier.GetTheme(),
               home:
                 Scaffold(
+
                   body:
                   Center(child: CircularProgressIndicator())
                 )
