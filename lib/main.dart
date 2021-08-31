@@ -24,14 +24,14 @@ class ITMTechSoftQuality extends StatefulWidget {
 class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
   PersonalProvider PersonalCase  = new PersonalProvider();
   SubCaseProvider  CaseProvider  = new SubCaseProvider();
-  bool IsLoading = false;
+  bool IsLoading = true;
 
   Future<bool> LoadingSharedPreference(PersonalProvider PersonalCase) async {
 
     bool value = await PersonalCase.loadSharedPrefs()  ;
 
-    // if ( value)
-    //   IsLoading= false;
+    if ( value!=null)
+      IsLoading= false;
     return await PersonalCase.loadSharedPrefs();
   }
 
@@ -57,9 +57,19 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
               ChangeNotifierProvider.value(value: CaseProvider)
             ],
             child: IsLoading
-                ?
+                ?MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: themeNotifier.GetTheme(),
+              home:
+                Scaffold(
+                  body:
+                  Center(child: CircularProgressIndicator())
+                )
 
-            Center(child: CircularProgressIndicator())
+
+            )
+
+          //  Center(child: CircularProgressIndicator())
                 : MaterialApp(
                     debugShowCheckedModeBanner: false,
                     theme: themeNotifier.GetTheme(),

@@ -181,8 +181,8 @@ double getScreenWidth() {
   return screenWidth;
 }
 double getScreenHeight() {
-//  double screenHeight = SizeConfig.screenHeight!;
-  double screenHeight = 1000;
+  double screenHeight = SizeConfig.screenHeight!;
+  //double screenHeight = 1000;
 
   return screenHeight;
 }
