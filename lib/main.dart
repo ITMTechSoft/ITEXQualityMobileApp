@@ -24,9 +24,14 @@ class ITMTechSoftQuality extends StatefulWidget {
 class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
   PersonalProvider PersonalCase  = new PersonalProvider();
   SubCaseProvider  CaseProvider  = new SubCaseProvider();
-  bool IsLoading = false;
+  bool IsLoading = true;
 
   Future<bool> LoadingSharedPreference(PersonalProvider PersonalCase) async {
+
+    bool value =await PersonalCase.loadSharedPrefs()  ;
+
+    if ( value)
+      IsLoading= false;
     return await PersonalCase.loadSharedPrefs();
   }
 
