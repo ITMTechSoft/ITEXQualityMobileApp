@@ -17,7 +17,6 @@ class OperationBLL {
   double? OperationToplamSTD;
   String? ArticalNO;
   String? OperationVideo;
-  //Uint8List OperationImage;
   double? Thread_length;
   double? Bobin_Number;
   String? OperationVideoFileName;
@@ -298,10 +297,6 @@ class OperationBLL {
       };
       var response = await http.get(
           SharedPref.GetWebApiUri(WebApiMethod.Get_ModelOrderOperation,qParams));
-
-      print(SharedPref.GetWebApiUrl(WebApiMethod.Get_ModelOrderOperation) +
-          "?DeptModelOrder_QualityTest_Id=" +
-          DeptModelOrder_QualityTest_Id.toString());
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

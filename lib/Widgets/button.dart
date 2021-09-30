@@ -63,12 +63,14 @@ Widget ButtonWithNumber({
   Widget? bottomLeft,
   Widget? image,
   bool orientation = false,
+  Function()? OnTap
 }) {
-  return Container(
-      width: buttonWidth,
-      height: buttonHegiht,
-      child: Stack(children: [
-        CustomContainer(
+    return InkWell(
+    child: Container(
+        width: buttonWidth,
+        height: buttonHegiht,
+        child: Stack(children: [
+          CustomContainer(
             width : buttonWidth??ArgonSize.WidthBig,
             height: buttonHegiht??ArgonSize.HeightBig,
             text: text,
@@ -80,7 +82,9 @@ Widget ButtonWithNumber({
             topLeft:     topLeft??  Container(),
             bottomRight: bottomRight??Container(),
             bottomLeft:  bottomLeft??Container(),),
-      ]));
+        ])),
+    onTap: OnTap,
+  );
 }
 
 Widget IconInsideCircle(

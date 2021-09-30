@@ -1,4 +1,7 @@
 enum WebApiMethod{
+  SetFull_User_QualityTracking_Detail,
+  Delete_QualityInlineError,
+  Set_QualityInlineError,
   Get_ModelOrderSizes_CuttingControl,
   DeletePastal_Cutting_Parti,
   Get_Pastal_Cutting_Parti,
@@ -54,7 +57,8 @@ enum WebApiMethod{
   Get_StitchQuality_Items,
   Delete_User_QualityTracking_Detail,
   Get_UserQualityTasnifControl ,
-  Set_RecycleUserQualityTasnifControlRec
+  Set_RecycleUserQualityTasnifControlRec,
+  Get_DikimInlineQuality_Items
 }
 
 

@@ -416,27 +416,16 @@ class QualityDept_ModelOrder_TrackingBLL {
       GetOrCreate_QualityDept_ModelOrder_Tracking(
           int Employee_Id, int DeptModelOrder_QualityTest_Id,
           {int OrderSizeColorDetail_Id = 0, int ModelOrderSizes_Id = 0,int Pastal_Cutting_Parti_Id = 0}) async {
-    var Item = new QualityDept_ModelOrder_TrackingBLL();
-    Item.Employee_Id = Employee_Id;
-    Item.DeptModelOrder_QualityTest_Id = DeptModelOrder_QualityTest_Id;
-    Item.OrderSizeColorDetail_Id = OrderSizeColorDetail_Id;
-    Item.ModelOrderSizes_Id = ModelOrderSizes_Id;
-    Item.Pastal_Cutting_Parti_Id = Pastal_Cutting_Parti_Id;
+
 
     try {
-      // final String url = SharedPref.GetWebApiUrl(
-      //     WebApiMethod.GetOrCreate_QualityDept_ModelOrder_Tracking);
-      //
-      // var response = await http.post(url,
-      //     headers: <String, String>{
-      //       'Content-Type': 'application/json; charset=UTF-8',
-      //     },
-      //     body: jsonEncode(Item.toPost()));
-      //
-      // //    String Val = jsonEncode(Item.toPost());
-      // //  print(Val);
 
-
+      var Item = new QualityDept_ModelOrder_TrackingBLL();
+      Item.Employee_Id = Employee_Id;
+      Item.DeptModelOrder_QualityTest_Id = DeptModelOrder_QualityTest_Id;
+      Item.OrderSizeColorDetail_Id = OrderSizeColorDetail_Id;
+      Item.ModelOrderSizes_Id = ModelOrderSizes_Id;
+      Item.Pastal_Cutting_Parti_Id = Pastal_Cutting_Parti_Id;
 
       String val = jsonEncode(Item.toPost());
       Map<String, String> headers = {
@@ -457,18 +446,6 @@ class QualityDept_ModelOrder_TrackingBLL {
   Future<QualityDept_ModelOrder_TrackingBLL?>
       Create_QualityDept_ModelOrder_Tracking() async {
     try {
-      // final String url = SharedPref.GetWebApiUrl(
-      //     WebApiMethod.Create_QualityDept_ModelOrder_Tracking);
-      //
-      // var response = await http.post(url,
-      //     headers: <String, String>{
-      //       'Content-Type': 'application/json; charset=UTF-8',
-      //     },
-      //     body: jsonEncode(toPost()));
-      //
-      // String Val = jsonEncode(toPost());
-      // print(Val);
-
 
       String val = jsonEncode(this.toPost());
       Map<String, String> headers = {

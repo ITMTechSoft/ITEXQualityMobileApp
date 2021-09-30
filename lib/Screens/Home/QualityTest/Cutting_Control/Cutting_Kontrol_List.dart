@@ -1,49 +1,108 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinbox/flutter_spinbox.dart';
+
 import 'package:itex_soft_qualityapp/Models/DeptModOrderQuality_Items.dart';
+import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
-import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
+import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
+import 'package:itex_soft_qualityapp/Widgets/TopBar.dart';
+import 'package:itex_soft_qualityapp/Widgets/Utils/Loadding.dart';
+import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
+import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
-class Cutting_Kontrol_List extends StatefulWidget {
+class Cutting_PastalControl extends StatefulWidget {
   @override
-  _Cutting_Kontrol_ListState createState() => _Cutting_Kontrol_ListState();
+  _Cutting_PastalControlState createState() => _Cutting_PastalControlState();
 }
 
-class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
-  @override
+class _Cutting_PastalControlState extends State<Cutting_PastalControl> {
   int IntiteStatus = 0;
 
-  Future<List<DeptModOrderQuality_ItemsBLL>?> LoadingCutttingControl(
+  List<DeptModOrderQuality_ItemsBLL>? Quality_Item;
+  int SampleAmount = 0;
+  int ErrorAmount = 0;
+  int Percentage = 0;
+
+  CalculateHeader() {
+    SampleAmount = 0;
+    ErrorAmount = 0;
+    Quality_Item!.forEach((element) {
+      SampleAmount += element.Amount ?? 0;
+      ErrorAmount += element.Error_Amount ?? 0;
+    });
+    Percentage = 0;
+    if ((SampleAmount ?? 0) > 0)
+      Percentage = ((ErrorAmount * 100) / SampleAmount).ceil();
+  }
+
+  Future<bool> LoadingCutttingControl(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
-    List<DeptModOrderQuality_ItemsBLL>? Criteria =
+    Quality_Item =
         await DeptModOrderQuality_ItemsBLL.Get_DeptModOrderQuality_Items(
             PersonalCase.GetCurrentUser().Id,
             PersonalCase.SelectedTest!.Id,
             PersonalCase.SelectedSize!.Id,
             CaseProvider.SelectedPastal!.Id);
 
-    if (Criteria != null) {
+    if (Quality_Item != null) {
       IntiteStatus = 1;
-      Criteria.forEach((element) {
-        element.QualityDept_ModelOrder_Tracking_Id =
-            PersonalCase.SelectedTracking!.Id;
-        element.Employee_Id = PersonalCase.GetCurrentUser().Id;
-        element.DeptModelOrder_QualityTest_Id = PersonalCase.SelectedTest!.Id;
-        element.ModelOrderSizes_Id = PersonalCase.SelectedSize!.Id;
-      });
-      return Criteria;
+      CalculateHeader();
+      return true;
     } else {
       IntiteStatus = -1;
     }
-    return null;
+    return false;
   }
 
+  DeptModOrderQuality_ItemsBLL? SelectedItem;
+  double IncrementVal = 1;
+  double FarkVal = 0;
+
+  Future<bool> CorrentVal(PersonalProvider PersonalCase) async {
+    if (SelectedItem != null) {
+      var UserQuality = new User_QualityTracking_DetailBLL();
+      UserQuality.Correct_Amount = IncrementVal.toInt();
+      UserQuality.QualityDept_ModelOrder_Tracking_Id =
+          PersonalCase.SelectedTracking!.Id;
+      UserQuality.Create_Date = DateTime.now();
+      UserQuality.Xaxis_QualityItem_Id = SelectedItem!.Id;
+      bool? Check = await UserQuality.SetFull_User_QualityTracking_Detail();
+
+      if (Check == null) return false;
+    } else {
+      AlertPopupDialog(
+          context,
+          PersonalCase.GetLable(ResourceKey.WarrningMessage),
+          PersonalCase.GetLable(ResourceKey.PleaseChooseValue),
+          ActionLable: PersonalCase.GetLable(ResourceKey.Okay));
+    }
+    return true;
+  }
+
+  Future<bool> ErrorVal(PersonalProvider PersonalCase) async {
+    if (SelectedItem != null) {
+      var UserQuality = new User_QualityTracking_DetailBLL();
+      UserQuality.Error_Amount = IncrementVal.toInt();
+      UserQuality.QualityDept_ModelOrder_Tracking_Id =
+          PersonalCase.SelectedTracking!.Id;
+      UserQuality.Create_Date = DateTime.now();
+      UserQuality.Xaxis_QualityItem_Id = SelectedItem!.Id;
+      UserQuality.Pastal_Fark = FarkVal;
+      bool? Check = await UserQuality.SetFull_User_QualityTracking_Detail();
+      if (Check == null) return false;
+    } else {
+      AlertPopupDialog(
+          context,
+          PersonalCase.GetLable(ResourceKey.WarrningMessage),
+          PersonalCase.GetLable(ResourceKey.PleaseChooseValue),
+          ActionLable: PersonalCase.GetLable(ResourceKey.Okay));
+    }
+    return true;
+  }
+
+  /// Pastal Header Test
   Widget AraControlHeader(PersonalProvider PersonalCase) {
-    int Percentage = 0;
-    if ((PersonalCase.SelectedTracking!.Sample_Amount ?? 0) > 0)
-      Percentage = ((PersonalCase.SelectedTracking!.Error_Amount! * 100) /
-              PersonalCase.SelectedTracking!.Sample_Amount!)
-          .ceil();
     return Container(
       padding: EdgeInsets.all(15),
       margin: EdgeInsets.all(15),
@@ -72,7 +131,7 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
                       LableTitle(PersonalCase.GetLable(ResourceKey.SizeName))),
               Expanded(
                   child: LableTitle(
-                      PersonalCase.SelectedSize!.SizeParam_StringVal??'',
+                      PersonalCase.SelectedSize!.SizeParam_StringVal ?? '',
                       color: ArgonColors.text)),
               Expanded(
                 flex: 2,
@@ -80,9 +139,7 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
                     LableTitle(PersonalCase.GetLable(ResourceKey.TotalControl)),
               ),
               Expanded(
-                child: LableTitle(
-                    (PersonalCase.SelectedTracking!.Sample_Amount ?? 0)
-                        .toString(),
+                child: LableTitle(SampleAmount.toString(),
                     color: ArgonColors.text),
               )
             ],
@@ -94,9 +151,7 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
                   child: LableTitle(
                       PersonalCase.GetLable(ResourceKey.ErrorAmount))),
               Expanded(
-                  child: LableTitle(
-                      (PersonalCase.SelectedTracking!.Error_Amount ?? 0)
-                          .toString(),
+                  child: LableTitle(ErrorAmount.toString(),
                       color: ArgonColors.text)),
               Expanded(
                 flex: 2,
@@ -114,130 +169,192 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
     );
   }
 
-  Widget AraControlCard(DeptModOrderQuality_ItemsBLL Item, Function Execute,
-      PersonalProvider PersonalCase) {
-    TextEditingController InputVal = new TextEditingController();
-    return Card(
-      shadowColor: ArgonColors.black,
-      elevation: 10,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
+  /// List Items
+  Widget ListHeader(PersonalProvider PersonalCase) => Container(
+        padding: EdgeInsets.all(ArgonSize.Padding7),
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                    flex: 3,
-                    child: LableTitle(
-                        PersonalCase.GetLable(ResourceKey.ControlAxaisName))),
-                Expanded(
-                    flex: 2,
-                    child: LableTitle(
-                        PersonalCase.GetLable(ResourceKey.ControlAmount))),
-                Expanded(
-                    flex: 2,
-                    child: LableTitle(
-                        PersonalCase.GetLable(ResourceKey.ControlError)))
-              ],
-            ),
-            SizedBox(height: ArgonSize.Padding6),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                    flex: 3,
-                    child: Center(
-                      child:
-                          LableTitle(Item.Item_Name??'', color: ArgonColors.text),
-                    )),
-                Expanded(
-                    flex: 2,
-                    child: Center(
-                      child: LableTitle((Item.Amount ?? 0).toString(),
-                          color: ArgonColors.text),
-                    )),
-                Expanded(
-                    flex: 2,
-                    child: Center(
-                      child: LableTitle((Item.Error_Amount ?? 0).toString(),
-                          color: ArgonColors.text),
-                    ))
-              ],
-            ),
-            SizedBox(height: ArgonSize.Padding4),
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: CustomButton(
-                      value: PersonalCase.GetLable(ResourceKey.Saglim),
-                      backGroundColor: ArgonColors.primary,
-                      width: getScreenWidth() / 2,
-                      height: ArgonSize.WidthSmall1,
-                      function: () async {
-                        int DelValue = int.tryParse(InputVal.text) ?? 1;
-                        var NewItem =
-                            await Item.CorrectSpecificAmount(DelValue);
-                        if (NewItem != null) Item = NewItem;
-                        PersonalCase.SelectedTracking!.Sample_Amount = PersonalCase.SelectedTracking!.Sample_Amount??0+1;
-
-                        Execute();
-                      }),
-                ),
-                SizedBox(width: 20),
-                Expanded(
-                    flex: 2,
-                    child: Input_Form(
-                      InputHeight: ArgonSize.WidthSmall1,
-                      controller: InputVal,
-                      KType: TextInputType.number,
-                    )),
-                SizedBox(width: 20),
-                Expanded(
-                  flex: 2,
-                  child: CustomButton(
-                      value: PersonalCase.GetLable(ResourceKey.Error),
-                      backGroundColor: ArgonColors.myRed,
-                      width: getScreenWidth() / 2,
-                      height: ArgonSize.WidthSmall1,
-                      function: () async {
-                        int DelValue = int.tryParse(InputVal.text) ?? 1;
-                        var NewItem = await Item.ErrorSpecificAmount(DelValue);
-                        if (NewItem != null) Item = NewItem;
-                        PersonalCase.SelectedTracking!.Sample_Amount = PersonalCase.SelectedTracking!.Sample_Amount??0+1;
-                        PersonalCase.SelectedTracking!.Error_Amount  =  PersonalCase.SelectedTracking!.Error_Amount??0+1;
-                        Execute();
-                      }),
-                ),
-              ],
-            )
+            Expanded(
+                flex: 6,
+                child: LableTitle(
+                    PersonalCase.GetLable(ResourceKey.ControlAxaisName),
+                    FontSize: ArgonSize.Header4)),
+            Expanded(
+                flex: 2,
+                child: LableTitle(
+                    PersonalCase.GetLable(ResourceKey.ControlAmount),
+                    FontSize: ArgonSize.Header4)),
+            Expanded(
+                flex: 2,
+                child: LableTitle(
+                    PersonalCase.GetLable(ResourceKey.ControlError),
+                    FontSize: ArgonSize.Header4))
           ],
         ),
-      ),
-    );
+      );
+
+  Widget ListItem(DeptModOrderQuality_ItemsBLL Item) => Container(
+        padding: EdgeInsets.all(ArgonSize.Padding7),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+                flex: 6,
+                child: LableTitle(Item.Item_Name ?? '',
+                    color: ArgonColors.text, FontSize: ArgonSize.Header4)),
+            Expanded(
+                flex: 2,
+                child: Center(
+                  child: LableTitle((Item.Amount ?? 0).toString(),
+                      color: ArgonColors.text, FontSize: ArgonSize.Header4),
+                )),
+            Expanded(
+                flex: 2,
+                child: Center(
+                  child: LableTitle((Item.Error_Amount ?? 0).toString(),
+                      color: ArgonColors.text, FontSize: ArgonSize.Header4),
+                ))
+          ],
+        ),
+      );
+
+  Widget ActionItems(PersonalProvider PersonalCase) => Container(
+        padding: EdgeInsets.all(ArgonSize.Padding7),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: CustomButton(
+                  value: PersonalCase.GetLable(ResourceKey.Saglim),
+                  backGroundColor: ArgonColors.primary,
+                  width: getScreenWidth() / 2,
+                  height: ArgonSize.HeightVeryBig,
+                  function: () async {
+                    bool Check = await CorrentVal(PersonalCase);
+                    if (Check) {
+                      setState(() {
+                        IncrementVal = 1;
+                        FarkVal = 0.0;
+                      });
+                    }
+                  }),
+            ),
+            SizedBox(width: 20),
+            Expanded(
+                flex: 2,
+                child: Column(
+                  children: [
+                    LableTitle(PersonalCase.GetLable(ResourceKey.Amount)),
+                    SpinBox(
+                      max: 1000,
+                      min: 0,
+                      textStyle: TextStyle(fontSize: ArgonSize.Header3),
+                      value: IncrementVal,
+                      incrementIcon: Icon(
+                        Icons.add_circle,
+                        color: ArgonColors.myBlue,
+                        size: ArgonSize.IconSizeMedium,
+                      ),
+                      decrementIcon: Icon(
+                        Icons.remove_circle,
+                        color: ArgonColors.myRed,
+                        size: ArgonSize.IconSizeMedium,
+                      ),
+                      onChanged: (value) {
+                        IncrementVal = value;
+                      },
+                    ),
+                    SizedBox(
+                      height: ArgonSize.Padding7,
+                    ),
+                    LableTitle(PersonalCase.GetLable(ResourceKey.Fark)),
+                    SpinBox(
+                      max: 1000,
+                      min: -1000,
+                      step: 0.5,
+                      decimals: 1,
+                      textStyle: TextStyle(fontSize: ArgonSize.Header3),
+                      value: FarkVal,
+                      incrementIcon: Icon(
+                        Icons.add_circle,
+                        color: ArgonColors.myBlue,
+                        size: ArgonSize.IconSizeMedium,
+                      ),
+                      decrementIcon: Icon(
+                        Icons.remove_circle,
+                        color: ArgonColors.myRed,
+                        size: ArgonSize.IconSizeMedium,
+                      ),
+                      onChanged: (value) {
+                        FarkVal = value;
+                      },
+                    ),
+                  ],
+                )),
+            SizedBox(width: 20),
+            Expanded(
+              flex: 1,
+              child: CustomButton(
+                  value: PersonalCase.GetLable(ResourceKey.Error),
+                  backGroundColor: ArgonColors.myRed,
+                  width: getScreenWidth() / 2,
+                  height: ArgonSize.HeightVeryBig,
+                  function: () async {
+                    bool Check = await ErrorVal(PersonalCase);
+                    if (Check) {
+                      setState(() {
+                        IncrementVal = 1;
+                        FarkVal = 0.0;
+                      });
+                    }
+                  }),
+            ),
+          ],
+        ),
+      );
+
+  ///
+
+  Color IsSelected(DeptModOrderQuality_ItemsBLL Item) {
+    bool CheckVal =
+        (SelectedItem != null ? (SelectedItem!.Id == Item.Id) : false);
+    if (CheckVal) return ArgonColors.myYellow;
+
+    return ArgonColors.white;
   }
 
-  Widget AraKontrolList(snapshot, PersonalProvider PersonalCase) {
+  Widget PastalList(
+      PersonalProvider PersonalCase, SubCaseProvider CaseProvider) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
-      child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          primary: false,
-          shrinkWrap: true,
-          itemCount: snapshot.data.length,
-          itemBuilder: (context, int i) {
-            return AraControlCard(snapshot.data[i], () async {
-              //await PersonalCase.UpdateInformation();
-              setState(() {
-                //  PersonalCase.SelectedTracking.
-              });
-            }, PersonalCase);
-          }),
+      child: BoxMaterialCard(
+        Childrens: [
+          ListHeader(PersonalCase),
+          ListView.builder(
+              scrollDirection: Axis.vertical,
+              primary: false,
+              shrinkWrap: true,
+              itemCount: Quality_Item!.length,
+              itemBuilder: (context, int i) {
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      SelectedItem = Quality_Item![i];
+                    });
+                  },
+                  child: Card(
+                      color: IsSelected(Quality_Item![i]),
+                      shadowColor: ArgonColors.black,
+                      elevation: 10,
+                      child: ListItem(Quality_Item![i])),
+                );
+              }),
+          ActionItems(PersonalCase),
+        ],
+      ),
     );
   }
 
@@ -245,49 +362,37 @@ class _Cutting_Kontrol_ListState extends State<Cutting_Kontrol_List> {
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     final CaseProvider = Provider.of<SubCaseProvider>(context);
-
     return Scaffold(
-      appBar: DetailBar(
-          Title: PersonalCase.SelectedTest!.Test_Name ?? '',
-          PersonalCase: PersonalCase,
-          OnTap: () {
-            CaseProvider.ReloadAction();
-            Navigator.pop(context);
-          },
-          context: context),
-      body: ListView(children: [
-        ListTile(
-          title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number ?? '',
-              color: ArgonColors.header, FontSize: ArgonSize.Header2),
-          subtitle: Text(
-              PersonalCase.SelectedDepartment!.Start_Date.toString() ,
-              style: TextStyle(fontSize: ArgonSize.Header6)),
-          dense: true,
-          selected: true,
-        ),
-        FutureBuilder(
-          future: LoadingCutttingControl(PersonalCase, CaseProvider),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    AraControlHeader(PersonalCase),
-                    AraKontrolList(snapshot, PersonalCase)
-                  ]);
-            } else if (IntiteStatus == 0)
-              return Center(child: CircularProgressIndicator());
-            else
-              return ErrorPage(
-                  ActionName: PersonalCase.GetLable(ResourceKey.Loading),
-                  MessageError:
-                      PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
-                  DetailError: PersonalCase.GetLable(
-                      ResourceKey.InvalidNetWorkConnection));
-          },
-        )
-      ]),
+      appBar: ScreenAppBar(PersonalCase, context, CloseAction: () {
+        CaseProvider.ReloadAction();
+      }),
+      body: ListView(
+        children: [
+          ListTile(
+            title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number ?? '',
+                color: ArgonColors.header, FontSize: ArgonSize.Header2),
+            subtitle: Text(
+                PersonalCase.SelectedDepartment!.Start_Date.toString(),
+                style: TextStyle(fontSize: ArgonSize.Header6)),
+            dense: true,
+            selected: true,
+          ),
+          FutureBuilder<bool>(
+              future: LoadingCutttingControl(PersonalCase, CaseProvider),
+              builder: (context, snapshot) {
+                if (snapshot.hasData)
+                  return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        AraControlHeader(PersonalCase),
+                        PastalList(PersonalCase, CaseProvider)
+                      ]);
+                else
+                  return LoadingContainer(IntiteStatus: IntiteStatus);
+              })
+        ],
+      ),
     );
   }
 }

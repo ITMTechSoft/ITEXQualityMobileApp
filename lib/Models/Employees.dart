@@ -159,7 +159,7 @@ class EmployeesBLL {
 
       var url = Uri.parse(
           SharedPref.GetWebApiUrl(WebApiMethod.Get_Version, WebApiDomain: "api/MaksitusTable"));
-      var response = await http.get(url).timeout(Duration(seconds: 3),
+      var response = await http.get(url).timeout(Duration(seconds: 70),
           onTimeout: () {
         LoginMessage = "SERVER CAN'T BE REACHED";
         throw TimeoutException(

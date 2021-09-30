@@ -7,6 +7,7 @@ import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:provider/provider.dart';
 import 'Preferences/SetupApplications.dart';
 import 'Screens/Wrapper.dart';
+import 'Utility/TakeImageCamera.dart';
 import 'assets/Themes/SystemTheme.dart';
 
 void main() => runApp(

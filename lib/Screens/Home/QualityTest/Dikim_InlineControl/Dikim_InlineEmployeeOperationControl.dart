@@ -1,18 +1,22 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_spinbox/flutter_spinbox.dart';
-import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:itex_soft_qualityapp/Models/DeptModOrderQuality_Items.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
+import 'package:itex_soft_qualityapp/Utility/TakeImageCamera.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
+import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
+import 'package:itex_soft_qualityapp/Widgets/Utils/Loadding.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 
 class Dikim_InlineEmployeeOperationControl extends StatefulWidget {
-  User_QualityTracking_DetailBLL? EmployeeOperation;
   bool IsDirect;
 
-  Dikim_InlineEmployeeOperationControl({required this.EmployeeOperation,this.IsDirect = true});
+  Dikim_InlineEmployeeOperationControl({this.IsDirect = true});
 
   @override
   _Dikim_InlineEmployeeOperationControlState createState() =>
@@ -22,10 +26,29 @@ class Dikim_InlineEmployeeOperationControl extends StatefulWidget {
 class _Dikim_InlineEmployeeOperationControlState
     extends State<Dikim_InlineEmployeeOperationControl> {
   int IntiteStatus = 0;
-  int AssignAmount = 1;
 
-  Future<bool> LoadingOpenPage() async {
-    bool IsOkay = await widget.EmployeeOperation!.Start_DikimInlineProcess();
+  /// Screen Bar App
+  PreferredSizeWidget ScreenAppBar(PersonalProvider PersonalCase) {
+    return DetailBar(
+        Title: PersonalCase.SelectedTest!.Test_Name ?? '',
+        PersonalCase: PersonalCase,
+        OnTap: () {
+          Navigator.pop(context);
+        },
+        context: context);
+  }
+
+  /// Loading Page After Rendering
+  Future<bool> InitiateInlineProcess(SubCaseProvider CaseProvider) async {
+    bool IsOkay =
+        await CaseProvider.EmployeeOperation!.Start_DikimInlineProcess();
+    CaseProvider.QualityItemList =
+        await DeptModOrderQuality_ItemsBLL.Get_DikimInlineQuality_Items(
+            CaseProvider.EmployeeOperation!.DeptModelOrder_QualityTest_Id,
+            CaseProvider.EmployeeOperation!.Id);
+
+    CaseProvider.EmployeeOperation!.Error_Amount =
+        CaseProvider.Get_SumQualityItemList();
 
     if (IsOkay) {
       IntiteStatus = 1;
@@ -36,12 +59,12 @@ class _Dikim_InlineEmployeeOperationControlState
     return false;
   }
 
-  void OnCloseCurrentWidget(CaseProvider){
+  /// Closing Function to back into Start page
+  void OnCloseCurrentWidget(CaseProvider) {
     CaseProvider.ReloadAction();
-    if(widget.IsDirect)
+    if (widget.IsDirect)
       Navigator.pop(context);
-    else
-    {
+    else {
       int Counter = 0;
       Navigator.of(context).popUntil((route) {
         return Counter++ == 2;
@@ -49,127 +72,51 @@ class _Dikim_InlineEmployeeOperationControlState
     }
   }
 
-  Widget MainPageAction(PersonalProvider PersonalCase,SubCaseProvider CaseProvider) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        BoxMainContainer(
-          Childrens: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                HeaderLable('${PersonalCase.GetLable(ResourceKey.Order_Number)} / ' '${PersonalCase.GetLable(ResourceKey.Operation_Name)}' ,Flex:3 ),
-                TableLable(PersonalCase.SelectedOrder!.Order_Number??'',Flex:2),
-                TableLable(widget.EmployeeOperation!.Operation_Name.toString(),Flex:2),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                HeaderLable('${PersonalCase.GetLable(ResourceKey.Employee_Name)} / ' '${PersonalCase.GetLable(ResourceKey.Sample_Amount)}' , Flex:3),
-                TableLable(widget.EmployeeOperation!.Inline_Employee_Name??'',Flex:2),
-                TableLable((widget.EmployeeOperation!.Amount ?? 0).toString(),Flex:2),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                HeaderLable('${PersonalCase.GetLable(ResourceKey.Error_Amount)} / ' '${PersonalCase.GetLable(ResourceKey.Correct_Amount)}' , Flex:3),
-                TableLable(
-                    (widget.EmployeeOperation!.Error_Amount ?? 0).toString(), Flex:2),
-                TableLable(
-                    (widget.EmployeeOperation!.Correct_Amount ?? 0).toString(), Flex:2),
-              ],
-            ),
-          ],
-        ),
-        BoxMainContainer(Childrens: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                flex:3,
-                  child: CustomButton(
-                      backGroundColor: ArgonColors.inputSuccess,
-                      textSize: ArgonSize.Header5,
-                      height: ArgonSize.HeightSmall1,
-                      value: PersonalCase.GetLable(ResourceKey.Correct_Amount),
-                      function: () async {
-                        bool Check = await widget.EmployeeOperation!
-                            .Assign_EmployeeControlAmount(AssignAmount, "C");
-
-                        if (Check) setState(() {});
-
-                      })),
-              Expanded(
-
-                child: Padding(
-                  child: SpinBox(
-                    max: 999999,
-
-                    textStyle:TextStyle(fontSize:ArgonSize.Header3),
-                    value: 1,
-                    onChanged: (value) {
-                      AssignAmount = value.toInt();
-                    },
-                  ),
-                  padding: const EdgeInsets.all(16),
-                ),
-                flex: 5,
-              ),
-              Expanded(
-                flex:3,
-
-                  child: CustomButton(
-                      backGroundColor: ArgonColors.error,
-                      textSize: ArgonSize.Header5,
-                      height: ArgonSize.HeightSmall1,
-                      width :ArgonSize.WidthSmall1,
-                      value: PersonalCase.GetLable(ResourceKey.Error_Amount),
-                      function: () async {
-                        bool Check = await widget.EmployeeOperation!
-                            .Assign_EmployeeControlAmount(AssignAmount, "E");
-                        if (Check) setState(() {});
-                      })),
-            ],
-          ),
-          SizedBox(
-            height: ArgonSize.Padding2,
-          ),
-          CustomButton(
-            width: getScreenWidth()/3,
-
-              height: ArgonSize.HeightMedium,
-              textSize: ArgonSize.Header4,
-
-              value: PersonalCase.GetLable(ResourceKey.CloseControl),
-              backGroundColor: ArgonColors.primary,
-              function: () async {
-                widget.EmployeeOperation!.Order_Id =
-                    PersonalCase.SelectedOrder!.Order_Id;
-                var Check = await widget.EmployeeOperation!
-                    .CloseEmployeeOperationControlRound();
-                if (Check) {
-                  OnCloseCurrentWidget(CaseProvider);
-                } else {
-                  AlertPopupDialog(
-                      context,
-                      PersonalCase.GetLable(ResourceKey.SaveErrorMessage),
-                      PersonalCase.GetLable(ResourceKey.InvalidAction),
-                      ActionLable: PersonalCase.GetLable(ResourceKey.Okay));
-                }
-              })
-        ]),
-      ],
-    );
+  Future CloseInlineOperation(
+      PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
+    int SampleAmount = PersonalCase.SelectedTest!.Sample_No ?? 0;
+    if (SampleAmount <= CaseProvider.GetTotalAmount() || SampleAmount == 0) {
+      CaseProvider.EmployeeOperation!.Order_Id =
+          PersonalCase.SelectedOrder!.Order_Id;
+      var Check = await CaseProvider.EmployeeOperation!
+          .CloseEmployeeOperationControlRound();
+      if (Check) {
+        OnCloseCurrentWidget(CaseProvider);
+      } else {
+        AlertPopupDialog(
+            context,
+            PersonalCase.GetLable(ResourceKey.SaveErrorMessage),
+            PersonalCase.GetLable(ResourceKey.InvalidAction),
+            ActionLable: PersonalCase.GetLable(ResourceKey.Okay));
+      }
+    } else {
+      AlertPopupDialog(context, PersonalCase.GetLable(ResourceKey.Invalid),
+          PersonalCase.GetLable(ResourceKey.CompleteSampleAmount),
+          ActionLable: PersonalCase.GetLable(ResourceKey.Okay));
+    }
   }
 
-  String Lable = "";
+  /// Closing Control Button
+  ClosingControl(PersonalProvider PersonalCase, SubCaseProvider CaseProvider) =>
+      Container(
+        margin: EdgeInsets.all(ArgonSize.Padding5),
+        child: CustomButton(
+            width: getScreenWidth() ,
+            height: ArgonSize.HeightSmall1,
+            textSize: ArgonSize.Header2,
+            value: PersonalCase.GetLable(ResourceKey.CloseControl),
+            backGroundColor: ArgonColors.primary,
+            function: () async {
+              await CloseInlineOperation(PersonalCase, CaseProvider);
+            }),
+      );
+
+  /// Main Page After Loading List
+  Widget MainPageStructure(PersonalCase, CaseProvider) => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [ClosingControl(PersonalCase, CaseProvider), InlineProcess()],
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -177,39 +124,241 @@ class _Dikim_InlineEmployeeOperationControlState
     final CaseProvider = Provider.of<SubCaseProvider>(context);
 
     return Scaffold(
-      appBar: DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
-        Navigator.pop(context);
-      },
-          context:  context
+      appBar: ScreenAppBar(PersonalCase),
+      body: ListView(
+        children: [
+          FutureBuilder(
+              future: InitiateInlineProcess(CaseProvider),
+              builder: (context, snapshot) {
+                if (snapshot.hasData)
+                  return MainPageStructure(PersonalCase, CaseProvider);
+                else
+                  return LoadingContainer(IntiteStatus: IntiteStatus);
+              })
+        ],
       ),
-      body: ListView(children: [
-        ListTile(
-          title: HeaderTitle(
+    );
+  }
+}
 
-                  PersonalCase.SelectedOrder!.Order_Number??'',
-              color: ArgonColors.header,
-              FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString(),style:TextStyle(fontSize:ArgonSize.Header6)),
-          dense: true,
-          selected: true,
+class InlineProcess extends StatefulWidget {
+  InlineProcess();
+
+  @override
+  _InlineProcessState createState() => _InlineProcessState();
+}
+
+class _InlineProcessState extends State<InlineProcess> {
+  bool _IsDeletedVal = false;
+  late File _image;
+
+  /// Header Which Display Data
+  Widget Header(PersonalProvider PersonalCase, SubCaseProvider CaseProvider) =>
+      BoxMainContainer(
+        Childrens: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              HeaderLable(
+                  '${PersonalCase.GetLable(ResourceKey.Order_Number)} / '
+                  '${PersonalCase.GetLable(ResourceKey.Operation_Name)}',
+                  Flex: 3),
+              TableLable(PersonalCase.SelectedOrder!.Order_Number ?? '',
+                  Flex: 2),
+              TableLable(
+                  CaseProvider.EmployeeOperation!.Operation_Name.toString(),
+                  Flex: 2),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              HeaderLable(
+                  '${PersonalCase.GetLable(ResourceKey.Employee_Name)} / '
+                  '${PersonalCase.GetLable(ResourceKey.Sample_Amount)}',
+                  Flex: 3),
+              TableLable(
+                  CaseProvider.EmployeeOperation!.Inline_Employee_Name ?? '',
+                  Flex: 2),
+              TableLable(CaseProvider.GetTotalAmount().toString(), Flex: 2),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              HeaderLable(
+                  '${PersonalCase.GetLable(ResourceKey.Error_Amount)} / '
+                  '${PersonalCase.GetLable(ResourceKey.Correct_Amount)}',
+                  Flex: 3),
+              TableLable(
+                  (CaseProvider.EmployeeOperation!.Error_Amount ?? 0)
+                      .toString(),
+                  Flex: 2),
+              TableLable(
+                  (CaseProvider.EmployeeOperation!.Correct_Amount ?? 0)
+                      .toString(),
+                  Flex: 2),
+            ],
+          ),
+        ],
+      );
+
+  /// Quality Items List
+  Widget QualityItem(
+          PersonalProvider PersonalCase, SubCaseProvider CaseProvider) =>
+      BoxMaterialCard(Childrens: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 5,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(ArgonSize.Padding0, 0, 0, 0),
+                  child: ButtonWithNumber(
+                      btnBgColor: ArgonColors.inputSuccess,
+                      textSize: ArgonSize.Header,
+                      buttonWidth: getScreenWidth(),
+                      buttonHegiht: ArgonSize.HeightBig,
+                      text: PersonalCase.GetLable(ResourceKey.Correct_Amount),
+                      topRight: CircleShape(
+                          text:
+                              (CaseProvider.EmployeeOperation!.Correct_Amount ??
+                                      0)
+                                  .toString(),
+                          width: ArgonSize.WidthSmall,
+                          height: ArgonSize.WidthSmall,
+                          fontSize: ArgonSize.Header3),
+                      bottomLeft: _IsDeletedVal == true
+                          ? IconInsideCircle(
+                              iconSize: getScreenWidth() > 1100
+                                  ? ArgonSize.Header6
+                                  : ArgonSize.Header6,
+                              size: getScreenWidth() > 1000
+                                  ? ArgonSize.Padding6
+                                  : ArgonSize.Padding6,
+                              icon: FontAwesomeIcons.minus,
+                              color: Colors.white,
+                              backGroundColor: Colors.red)
+                          : Container(width: 0, height: 0),
+                      OnTap: () async {
+                        int AssignVal = 1;
+                        if (_IsDeletedVal) AssignVal = -1;
+
+                        if (_IsDeletedVal &&
+                            CaseProvider.EmployeeOperation!.Correct_Amount! <=
+                                0) AssignVal = 0;
+                        bool Check = await CaseProvider.EmployeeOperation!
+                            .Assign_EmployeeControlAmount(AssignVal);
+                        if (Check) setState(() {});
+                      }),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: RadioSwitch(
+                  Lable: PersonalCase.GetLable(ResourceKey.Delete),
+                  fontSize: ArgonSize.Header5,
+                  SwitchValue: _IsDeletedVal,
+                  OnTap: (value) {
+                    setState(() {
+                      _IsDeletedVal = value;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
-        FutureBuilder(
-          future: LoadingOpenPage(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return MainPageAction(PersonalCase,CaseProvider);
-            } else if (IntiteStatus == 0)
-              return Center(child: CircularProgressIndicator());
-            else
-              return ErrorPage(
-                  ActionName: PersonalCase.GetLable(ResourceKey.Loading),
-                  MessageError:
-                      PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
-                  DetailError: PersonalCase.GetLable(
-                      ResourceKey.InvalidNetWorkConnection));
-          },
-        )
-      ]),
+        SizedBox(height: ArgonSize.Padding4),
+        GridView.count(
+          crossAxisSpacing: 2,
+          mainAxisSpacing: 3,
+          shrinkWrap: true,
+          primary: false,
+          childAspectRatio: getScreenWidth() > 500 ? 3 / 1.7 : 7 / 6,
+          crossAxisCount: 3,
+          children:
+              List.generate(CaseProvider.QualityItemList!.length, (index) {
+            return GestureDetector(
+              onTap: () async {
+                String? Image64;
+                if (_IsDeletedVal == false &&
+                    (CaseProvider.QualityItemList![index].IsTakeImage ??
+                        false)) {
+                  Image64 = await TakeImageFromCamera();
+                }
+
+                bool check = await CaseProvider.QualityItemList![index]
+                    .Set_QualityInlineError(CaseProvider.EmployeeOperation!.Id,
+                        IsDelete: _IsDeletedVal, Image: Image64);
+                if (check)
+                  setState(() {
+                    CaseProvider.EmployeeOperation!.Error_Amount =
+                        CaseProvider.Get_SumQualityItemList();
+                  });
+              },
+              child: InlineErrorButton(
+                  CaseProvider.QualityItemList![index], index),
+            );
+          }),
+        ),
+      ]);
+
+  /// button to Delete Data
+  Widget InlineErrorButton(DeptModOrderQuality_ItemsBLL item, int Index) {
+    return ButtonWithNumber(
+      text: item.Item_Name!,
+      buttonWidth: getScreenWidth() / 3,
+      buttonHegiht: getScreenHeight() / 6,
+      btnBgColor: ArgonColors.myOrange,
+      textSize: ArgonSize.Header3,
+      topRight: CircleShape(
+          text: (item.Amount ?? 0).toString(),
+          width: ArgonSize.WidthSmall,
+          height: ArgonSize.WidthSmall,
+          fontSize: ArgonSize.Header5),
+      textColor: ArgonColors.myBlue,
+      bottomLeft: _IsDeletedVal == true
+          ? IconInsideCircle(
+              iconSize: getScreenWidth() > 1100
+                  ? ArgonSize.Header6
+                  : ArgonSize.Header6,
+              size: getScreenWidth() > 1000
+                  ? ArgonSize.Padding6
+                  : ArgonSize.Padding6,
+              icon: FontAwesomeIcons.minus,
+              color: Colors.white,
+              backGroundColor: Colors.red)
+          : Container(width: 0, height: 0),
+      topLeft: item.IsTakeImage == true
+          ? IconInsideCircle(
+              iconSize: getScreenWidth() > 1100
+                  ? ArgonSize.Padding2
+                  : ArgonSize.Padding7,
+              size: getScreenWidth() > 1000
+                  ? ArgonSize.Padding2
+                  : ArgonSize.Padding7,
+              icon: FontAwesomeIcons.camera,
+              color: Colors.white,
+              backGroundColor: Colors.deepPurple)
+          : Container(width: 0, height: 0),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final PersonalCase = Provider.of<PersonalProvider>(context);
+    final CaseProvider = Provider.of<SubCaseProvider>(context);
+    return Column(
+      children: [
+        Header(PersonalCase, CaseProvider),
+        QualityItem(PersonalCase, CaseProvider)
+      ],
     );
   }
 }

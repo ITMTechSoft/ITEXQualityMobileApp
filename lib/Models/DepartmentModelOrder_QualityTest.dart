@@ -18,10 +18,14 @@ class DepartmentModelOrder_QualityTestBLL {
   int? Department_Id;
   bool? IsValidateRequired;
   bool? IsAutoMail;
+  int? Sample_No;
 
   //#endregion
 
-  DepartmentModelOrder_QualityTestBLL({required this.Id,required this.QualityTest_Id,required this.QualityDept_ModelOrder_Id}) {}
+  DepartmentModelOrder_QualityTestBLL(
+      {required this.Id,
+      required this.QualityTest_Id,
+      required this.QualityDept_ModelOrder_Id}) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -36,6 +40,7 @@ class DepartmentModelOrder_QualityTestBLL {
     this.Entity_Order = json['Entity_Order'];
     this.Test_Name = json['Test_Name'];
     this.Order_Id = json['Order_Id'];
+    this.Sample_No = json['Sample_No'];
     this.Department_Id = json['Department_Id'];
     this.IsValidateRequired = json['IsValidateRequired'];
     this.IsAutoMail = json['IsAutoMail'];
@@ -54,6 +59,7 @@ class DepartmentModelOrder_QualityTestBLL {
         Entity_Order = json['Entity_Order'],
         Test_Name = json['Test_Name'],
         Order_Id = json['Order_Id'],
+        Sample_No = json['Sample_No'],
         Department_Id = json['Department_Id'],
         IsValidateRequired = json['IsValidateRequired'],
         IsAutoMail = json['IsAutoMail'];
@@ -71,6 +77,7 @@ class DepartmentModelOrder_QualityTestBLL {
         'Department_Id': Department_Id,
         'IsValidateRequired': IsValidateRequired,
         'IsAutoMail': IsAutoMail,
+        'Sample_No': Sample_No,
       };
 
   Map<String, String> toPost() => {
@@ -81,8 +88,9 @@ class DepartmentModelOrder_QualityTestBLL {
         'EndDate': EndDate.toString(),
         'IsMandatory': IsMandatory.toString(),
         'Entity_Order': Entity_Order.toString(),
-        'Test_Name': Test_Name??'',
+        'Test_Name': Test_Name ?? '',
         'Order_Id': Order_Id.toString(),
+        'Sample_No': Sample_No.toString(),
         'Department_Id': Department_Id.toString(),
         'IsValidateRequired': IsValidateRequired.toString(),
         'IsAutoMail': IsAutoMail.toString(),
@@ -95,13 +103,11 @@ class DepartmentModelOrder_QualityTestBLL {
           int QualityDept_ModelOrder_Id) async {
     List<DepartmentModelOrder_QualityTestBLL>? ItemList;
     try {
-
-
-      Map<String,String> qParams = {
-        'QualityDept_ModelOrder_Id':QualityDept_ModelOrder_Id.toString()
+      Map<String, String> qParams = {
+        'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
-              WebApiMethod.Get_DepartmentModelOrder_QualityTest,qParams));
+          WebApiMethod.Get_DepartmentModelOrder_QualityTest, qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
@@ -133,13 +139,12 @@ class DepartmentModelOrder_QualityTestBLL {
       //     },
       //     body: jsonEncode(Item.toPost()));
 
-
       String val = jsonEncode(Item.toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      var url = Uri.parse(
-          SharedPref.GetWebApiUrl(WebApiMethod.Set_ValidatQualityCriticalQualityTest));
+      var url = Uri.parse(SharedPref.GetWebApiUrl(
+          WebApiMethod.Set_ValidatQualityCriticalQualityTest));
       var response = await http.post(url, body: val, headers: headers);
 
       if (response.statusCode == 200) {
@@ -151,8 +156,6 @@ class DepartmentModelOrder_QualityTestBLL {
     }
     return false;
   }
-
-
 
   Future<bool> IsUserApprovedBefore({required int Employee_Id}) async {
     try {
@@ -170,7 +173,6 @@ class DepartmentModelOrder_QualityTestBLL {
       //     },
       //     body: jsonEncode(Item.toPost()));
 
-
       String val = jsonEncode(Item.toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -180,8 +182,7 @@ class DepartmentModelOrder_QualityTestBLL {
       var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         Item.LoadFromJson(json.decode(response.body));
-        if (Item.ApprovalDate != null)
-          return true;
+        if (Item.ApprovalDate != null) return true;
       }
     } catch (e) {
       print(e);

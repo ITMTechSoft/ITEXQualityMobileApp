@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:itex_soft_qualityapp/Models/Inline_QualityErrors.dart';
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 
 class DeptModOrderQuality_ItemsBLL {
   //#region Properties
-  int? Id ;
+  int? Id;
+
   int? DeptModelOrder_QualityTest_Id;
   int? Group_Id;
   String? Item_Name;
@@ -16,6 +18,7 @@ class DeptModOrderQuality_ItemsBLL {
   int? QualityTest_Id;
   int? QualityDept_ModelOrder_Id;
   bool? IsMandatory;
+  bool? IsTakeImage;
   String? Group_Name;
   int? Amount;
   int? Correct_Amount;
@@ -41,6 +44,7 @@ class DeptModOrderQuality_ItemsBLL {
     this.QualityTest_Id = json['QualityTest_Id'];
     this.QualityDept_ModelOrder_Id = json['QualityDept_ModelOrder_Id'];
     this.IsMandatory = json['IsMandatory'];
+    this.IsTakeImage = json['IsTakeImage'];
     this.Group_Name = json['Group_Name'];
     this.Amount = json['Amount'];
     this.Correct_Amount = json['Correct_Amount'];
@@ -63,6 +67,7 @@ class DeptModOrderQuality_ItemsBLL {
         QualityTest_Id = json['QualityTest_Id'],
         QualityDept_ModelOrder_Id = json['QualityDept_ModelOrder_Id'],
         IsMandatory = json['IsMandatory'],
+        IsTakeImage = json['IsTakeImage'],
         Group_Name = json['Group_Name'],
         Amount = json['Amount'],
         Correct_Amount = json['Correct_Amount'],
@@ -84,6 +89,7 @@ class DeptModOrderQuality_ItemsBLL {
         'QualityTest_Id': QualityTest_Id,
         'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id,
         'IsMandatory': IsMandatory,
+        'IsTakeImage': IsTakeImage,
         'Group_Name': Group_Name,
         'Amount': Amount,
         'Correct_Amount': Correct_Amount,
@@ -101,12 +107,13 @@ class DeptModOrderQuality_ItemsBLL {
         'DeptModelOrder_QualityTest_Id':
             DeptModelOrder_QualityTest_Id.toString(),
         'Group_Id': Group_Id.toString(),
-        'Item_Name': Item_Name??'',
+        'Item_Name': Item_Name ?? '',
         'Item_Level': Item_Level.toString(),
         'Entity_Order': Entity_Order.toString(),
         'QualityTest_Id': QualityTest_Id.toString(),
         'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),
         'IsMandatory': IsMandatory.toString(),
+        'IsTakeImage' : IsTakeImage.toString(),
         'Group_Name': Group_Name ?? '',
         'Amount': Amount.toString(),
         'Correct_Amount': Correct_Amount.toString(),
@@ -131,7 +138,7 @@ class DeptModOrderQuality_ItemsBLL {
     List<DeptModOrderQuality_ItemsBLL>? ItemList;
     try {
       Map<String, String> qParams = {
-        'Employee_Id=': Employee_Id.toString(),
+        'Employee_Id': Employee_Id.toString(),
         'DeptModelOrder_QualityTest_Id':
             DeptModelOrder_QualityTest_Id.toString(),
         'ModelOrderSizes_Id': ModelOrderSizes_Id.toString(),
@@ -156,7 +163,7 @@ class DeptModOrderQuality_ItemsBLL {
 
   static Future<List<DeptModOrderQuality_ItemsBLL>?>
       Get_DeptModOrderQualityTest_Items(
-          int DeptModelOrder_QualityTest_Id) async {
+          int? DeptModelOrder_QualityTest_Id) async {
     List<DeptModOrderQuality_ItemsBLL>? ItemList;
     try {
       Map<String, String> qParams = {
@@ -186,18 +193,6 @@ class DeptModOrderQuality_ItemsBLL {
     this.Error_Amount = 0;
 
     try {
-      // final String url =
-      //     SharedPref.GetWebApiUrl(WebApiMethod.Set_DeptModOrderQualityItems);
-      //
-      // String val = jsonEncode(this.toPost());
-      // var response = await http.post(url,
-      //     headers: <String, String>{
-      //       'Content-Type': 'application/json; charset=UTF-8',
-      //     },
-      //     body: jsonEncode(this.toPost()));
-
-
-
       String val = jsonEncode(this.toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -223,19 +218,6 @@ class DeptModOrderQuality_ItemsBLL {
     this.Error_Amount = EnterValue;
 
     try {
-      // final String url =
-      //     SharedPref.GetWebApiUrl(WebApiMethod.Set_DeptModOrderQualityItems);
-      //
-      // String val = jsonEncode(this.toPost());
-      //
-      // //  print(val);
-      // var response = await http.post(url,
-      //     headers: <String, String>{
-      //       'Content-Type': 'application/json; charset=UTF-8',
-      //     },
-      //     body: jsonEncode(this.toPost()));
-
-
       String val = jsonEncode(this.toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -280,6 +262,59 @@ class DeptModOrderQuality_ItemsBLL {
     }
 
     return ItemList;
+  }
+
+  static Get_DikimInlineQuality_Items(int? DeptModelOrder_QualityTest_Id,
+      int User_QualityTracking_Detail_Id) async {
+    List<DeptModOrderQuality_ItemsBLL>? ItemList;
+    try {
+      Map<String, String> qParams = {
+        'DeptModelOrder_QualityTest_Id':
+            DeptModelOrder_QualityTest_Id.toString(),
+        'User_QualityTracking_Detail_Id':
+            User_QualityTracking_Detail_Id.toString()
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_DikimInlineQuality_Items, qParams));
+
+      //  print(response.request);
+
+      if (response.statusCode == 200) {
+        ItemList = (json.decode(response.body) as List)
+            .map((i) => DeptModOrderQuality_ItemsBLL.fromJson(i))
+            .toList();
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return ItemList;
+  }
+
+  Future<bool> Set_QualityInlineError(
+      int User_QualityTracking_Detail_Id, {bool IsDelete =false,String? Image}) async {
+    try {
+      var InlineError = new Inline_QualityErrors(
+          Quality_Items_Id: this.Id,
+          User_QualityTracking_Detail_Id: User_QualityTracking_Detail_Id,
+          Quality_Image: Image);
+      bool Check = false;
+      if (IsDelete) {
+        if (this.Amount! > 0) {
+          Check = await InlineError.Delete_QualityInlineError();
+          if (Check) this.Amount = this.Amount! - 1;
+        } else
+          Check = true;
+      } else {
+        Check = await InlineError.Set_QualityInlineError();
+        if (Check) this.Amount = this.Amount! + 1;
+      }
+
+      return Check;
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+    return false;
   }
 //#endregion
 

@@ -104,7 +104,7 @@ class _MeasureItem_ControlState
                       Lable: PersonalCase.GetLable(ResourceKey.Correct_Amount),
                       OnTap: () async {
                         bool Check = await widget.EmployeeOperation
-                            .Assign_EmployeeControlAmount(AssignAmount, "C");
+                            .Assign_EmployeeControlAmount(AssignAmount);
 
                         if (Check) setState(() {});
 
@@ -133,7 +133,7 @@ class _MeasureItem_ControlState
                       Lable: PersonalCase.GetLable(ResourceKey.Error_Amount),
                       OnTap: () async {
                         bool Check = await widget.EmployeeOperation
-                            .Assign_EmployeeControlAmount(AssignAmount, "E");
+                            .Assign_EmployeeControlAmount(AssignAmount);
                         if (Check) setState(() {});
                       })),
             ],

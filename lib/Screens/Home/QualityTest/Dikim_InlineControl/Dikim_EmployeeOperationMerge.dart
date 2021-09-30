@@ -110,6 +110,8 @@ class _Dikim_EmployeeOperationMergeState
 
                           UserQuality = await UserQuality
                               .GenerateInlineEmployeeOperation();
+
+                          CaseProvider.EmployeeOperation = UserQuality;
                           if (UserQuality!.Id > 0) {
                             CaseProvider.ReloadAction();
                             Navigator.push(
@@ -117,7 +119,6 @@ class _Dikim_EmployeeOperationMergeState
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         Dikim_InlineEmployeeOperationControl(
-                                          EmployeeOperation: UserQuality,
                                           IsDirect: false,
                                         )));
                           }

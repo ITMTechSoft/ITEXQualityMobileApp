@@ -36,7 +36,7 @@ class _Cutting_ControlState extends State<Cutting_Control> {
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
       appBar: DetailBar(
-          Title: PersonalCase.SelectedTest!.Test_Name??'',
+          Title: PersonalCase.SelectedTest!.Test_Name ?? '',
           PersonalCase: PersonalCase,
           OnTap: () {
             Navigator.pop(context);
@@ -44,9 +44,10 @@ class _Cutting_ControlState extends State<Cutting_Control> {
           context: context),
       body: ListView(children: [
         ListTile(
-          title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
+          title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number ?? '',
               color: ArgonColors.header, FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()),
+          subtitle:
+              Text(PersonalCase.SelectedDepartment!.Start_Date.toString()),
           dense: true,
           selected: true,
         ),

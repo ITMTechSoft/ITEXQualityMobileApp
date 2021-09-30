@@ -10,6 +10,7 @@ class ArgonColors {
   static const Color myGreen = Color.fromRGBO(33, 155, 84, 1.0);
   static const Color myYellow = Color.fromRGBO(233 , 237, 82, 1.0);
   static const Color myRed = Color.fromRGBO(237  , 82, 82, 1.0);
+  static const Color LigthRed = Color.fromRGBO(109, 64, 64, 1.0);
   static const Color myBlue = Color.fromRGBO(2  , 8, 74, 1.0);
   static const Color myVinous = Color.fromRGBO(74  , 2, 2, 1.0);
   static const Color myOrange = Color.fromRGBO(	255, 199, 114, 1.0);
@@ -87,6 +88,8 @@ class ArgonSize{
   static double WidthVeryBig     = getAdaptiveTextSize(90);
   static double HeightVeryBig    = getAdaptiveTextSize(90);
 
+  static double ImageHeight    = getAdaptiveTextSize(160);
+
   static double WidthBig     = getAdaptiveTextSize(70);
   static double HeightBig    = getAdaptiveTextSize(70);
 
@@ -116,8 +119,9 @@ class ArgonSize{
 
   static double Padding4 = getAdaptiveTextSize(14);
   static double Padding5  = getAdaptiveTextSize(10);
+  static double Padding7  = getAdaptiveTextSize(12);
   static double Padding6  = getAdaptiveTextSize(8);
-
+  static double Padding0  = getAdaptiveTextSize(50);
 
   static double RadioSwitchValue =  getAdaptiveTextSize(0.8);
 

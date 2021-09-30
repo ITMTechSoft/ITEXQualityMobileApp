@@ -79,7 +79,7 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
                             context,
                             MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    Cutting_Kontrol_List()));
+                                    Cutting_PastalControl()));
                       },
                       Items: snapshot.data!,
                       Headers: <Widget>[

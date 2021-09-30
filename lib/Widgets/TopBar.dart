@@ -1,6 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/Utility/constants.dart';
+
+import 'ApplicationBars.dart';
 
 class TopBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
@@ -97,4 +100,17 @@ class _TopBarState extends State<TopBar> {
       ),
     );
   }
+}
+
+
+PreferredSizeWidget ScreenAppBar(PersonalProvider PersonalCase ,context,  {Function()? CloseAction}) {
+  return DetailBar(
+      Title: PersonalCase.SelectedTest!.Test_Name ?? '',
+      PersonalCase: PersonalCase,
+      OnTap: () {
+        if(CloseAction !=null)
+          CloseAction();
+        Navigator.pop(context);
+      },
+      context: context);
 }

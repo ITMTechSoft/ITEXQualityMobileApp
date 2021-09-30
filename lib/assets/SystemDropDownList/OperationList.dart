@@ -67,7 +67,9 @@ class _Operation_ListState extends State<Operation_List> {
 
           itemCount: FilterListItem.length,
           itemBuilder: (context, int i) {
-            return DropDownBox(ItemName: FilterListItem[i].Operation_Name??'',
+            return DropDownBox(
+                ItemName: FilterListItem[i].Operation_Name??'',
+                IsCritical: FilterListItem[i].IsCriticalControl??false,
                 OnTap: (){
                   widget.OnClickItems!(FilterListItem[i]);
                   setState(() {

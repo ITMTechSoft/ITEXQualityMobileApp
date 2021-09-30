@@ -26,12 +26,12 @@ Widget DepartmentCard(Employee_DepartmentBLL Item, Function() OnTap) {
         child: ListTile(
           onTap: OnTap,
           title: Text(
-            Item.Depart_Name??'',
+            Item.Depart_Name ?? '',
             style:
                 TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.text),
           ),
           subtitle: Text(
-            Item.Depart_Name??'',
+            Item.Depart_Name ?? '',
             style: TextStyle(fontSize: ArgonSize.Header4),
           ),
         ),
@@ -40,7 +40,10 @@ Widget DepartmentCard(Employee_DepartmentBLL Item, Function() OnTap) {
   );
 }
 
-Widget OneItem({required String ItemName,required String ItemValue,required Function() OnTap}) {
+Widget OneItem(
+    {required String ItemName,
+    required String ItemValue,
+    required Function() OnTap}) {
   return Container(
     height: ArgonSize.HeightBig,
     width: ArgonSize.WidthBig,
@@ -75,7 +78,8 @@ class OrderCard extends StatelessWidget {
   final QualityDepartment_ModelOrderBLL Item;
   final Function() OnTap;
 
-  const OrderCard({Key? key,required this.Item,required this.OnTap}) : super(key: key);
+  const OrderCard({Key? key, required this.Item, required this.OnTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -113,8 +117,12 @@ class OrderCard extends StatelessWidget {
   }
 }
 
-Widget CuttingPastalControl(PersonalProvider PersonalCase, DeptModOrderQuality_ItemsBLL Item,
-    Function() Approve, Function() Reject, Function() ReOpenAction) {
+Widget CuttingPastalControl(
+    PersonalProvider PersonalCase,
+    DeptModOrderQuality_ItemsBLL Item,
+    Function() Approve,
+    Function() Reject,
+    Function() ReOpenAction) {
   /// EDIT BUTTON
   Widget editButton = Row(children: [
     Expanded(flex: 1, child: Container()),
@@ -217,7 +225,7 @@ Widget CuttingPastalControl(PersonalProvider PersonalCase, DeptModOrderQuality_I
     mainAxisSize: MainAxisSize.max,
     children: [
       SizedBox(height: ArgonSize.Padding6),
-      LableTitle(Item.Item_Name??'',
+      LableTitle(Item.Item_Name ?? '',
           color: ArgonColors.text, FontSize: ArgonSize.Header4),
       SizedBox(height: ArgonSize.Padding3),
       ActionControl,
@@ -235,8 +243,8 @@ Widget CuttingPastalControl(PersonalProvider PersonalCase, DeptModOrderQuality_I
   );
 }
 
-Widget TansifControlList( PersonalProvider PersonalCase,
-   QualityDept_ModelOrder_TrackingBLL Item, Function() OnTap) {
+Widget TansifControlList(PersonalProvider PersonalCase,
+    QualityDept_ModelOrder_TrackingBLL Item, Function() OnTap) {
   Widget FinishStatus = ClipOval(
     child: Icon(
       Icons.check_circle_rounded,
@@ -271,7 +279,7 @@ Widget TansifControlList( PersonalProvider PersonalCase,
                   color: ArgonColors.text, IsCenter: true)),
           Expanded(
               flex: 2,
-              child: LableTitle(Item.SizeName??'',
+              child: LableTitle(Item.SizeName ?? '',
                   color: ArgonColors.text, IsCenter: true)),
         ],
       ),
@@ -305,7 +313,6 @@ Widget TansifControlList( PersonalProvider PersonalCase,
               child: LableTitle(
                   '${PersonalCase.GetLable(ResourceKey.OrderSizeColor_QTY)} / '
                   '${PersonalCase.GetLable(ResourceKey.Sample_Amount)}')),
-
           Expanded(
               flex: 2,
               child: LableTitle((Item.OrderSizeColor_QTY ?? 0).toString(),
@@ -353,11 +360,10 @@ Widget TansifControlList( PersonalProvider PersonalCase,
 Widget TasnifCorrectionList(BuildContext context, PersonalProvider PersonalCase,
     User_QualityTracking_DetailBLL Item, Function function) {
   int AssignAmount = 1;
-  int recycleAmount = Item.Recycle_Amount==null ?0:Item.Recycle_Amount!;
-  int val=Item.Error_Amount!-recycleAmount;
+  int recycleAmount = Item.Recycle_Amount == null ? 0 : Item.Recycle_Amount!;
+  int val = Item.Error_Amount! - recycleAmount;
   User_QualityTracking_DetailBLL user_QualityTracking_DetailBLL =
       new User_QualityTracking_DetailBLL();
-
 
   Widget MainRow = Column(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -376,10 +382,7 @@ Widget TasnifCorrectionList(BuildContext context, PersonalProvider PersonalCase,
               flex: 2,
               child: LableTitle(Item.Employee_Name.toString(),
                   color: ArgonColors.text, IsCenter: true)),
-
-          Expanded(
-              flex: 1,
-              child: Container()),
+          Expanded(flex: 1, child: Container()),
         ],
       ),
       SizedBox(height: 8),
@@ -389,9 +392,9 @@ Widget TasnifCorrectionList(BuildContext context, PersonalProvider PersonalCase,
         children: [
           Expanded(
               flex: 3,
-              child:
-                  LableTitle('${PersonalCase.GetLable(ResourceKey.Xaxis_QualityItem)} / '
-                      '${PersonalCase.GetLable(ResourceKey.Yaxis_QualityItem)}')),
+              child: LableTitle(
+                  '${PersonalCase.GetLable(ResourceKey.Xaxis_QualityItem)} / '
+                  '${PersonalCase.GetLable(ResourceKey.Yaxis_QualityItem)}')),
           Expanded(
               flex: 2,
               child: LableTitle((Item.XAxis_Item_Name ?? 0).toString(),
@@ -424,43 +427,47 @@ Widget TasnifCorrectionList(BuildContext context, PersonalProvider PersonalCase,
           height: ArgonSize.WidthSmall,
           textSize: ArgonSize.Header5,
           value: PersonalCase.GetLable(ResourceKey.Recycle),
-          backGroundColor:Item.Recycle_Amount != Item.Error_Amount ? ArgonColors.primary:ArgonColors.myGrey,
-          function: ()async {
-            Item.Recycle_Amount != Item.Error_Amount?
-              AlertPopupDialogWithAction(context:context,
-                  messageColor: Colors.black,
-                  title: PersonalCase.GetLable(
-                      ResourceKey.Recycle_Amount),
-                  Children: <Widget>[
+          backGroundColor: Item.Recycle_Amount != Item.Error_Amount
+              ? ArgonColors.primary
+              : ArgonColors.myGrey,
+          function: () async {
+            Item.Recycle_Amount != Item.Error_Amount
+                ? AlertPopupDialogWithAction(
+                    context: context,
+                    messageColor: Colors.black,
+                    title: PersonalCase.GetLable(ResourceKey.Recycle_Amount),
+                    Children: <Widget>[
+                      SpinBox(
+                        max: val.toDouble() < 1 ? 1 : val.toDouble(),
+                        min: 1,
+                        textStyle: TextStyle(fontSize: ArgonSize.Header3),
+                        value: 1,
+                        onChanged: (value) {
+                          AssignAmount = value.toInt();
+                          print('${AssignAmount}');
 
-                    SpinBox(
-                      max: val.toDouble()<1?1:val.toDouble(),
-                      min: 1,
-                      textStyle: TextStyle(fontSize: ArgonSize.Header3),
-                      value: 1,
-                      onChanged: (value) {
-                        AssignAmount = value.toInt();
-                        print('${AssignAmount}');
+                          print(value);
+                        },
+                      ),
+                    ],
+                    FirstActionLable: PersonalCase.GetLable(ResourceKey.Okay),
+                    SecondActionLable:
+                        PersonalCase.GetLable(ResourceKey.Cancel),
+                    OnFirstAction: () async {
+                      Item.Recycle_Amount = AssignAmount;
+                      Item.Recycle_Employee_Id =
+                          PersonalCase.GetCurrentUser().Id;
+                      bool? result =
+                          await Item.Set_RecycleUserQualityTasnifControlRec(
+                              Item);
+                      if (result == true)
+                        function();
+                      else
+                        print('some thing wrong');
 
-                        print(value);
-                      },
-                    ),
-                  ],
-                  FirstActionLable: PersonalCase.GetLable(ResourceKey.Okay),
-                  SecondActionLable: PersonalCase.GetLable(ResourceKey.Cancel),
-                  OnFirstAction: () async {
-                    Item.Recycle_Amount = AssignAmount;
-                    Item.Recycle_Employee_Id = PersonalCase.GetCurrentUser().Id;
-                    bool? result =
-                    await Item.Set_RecycleUserQualityTasnifControlRec(Item);
-                    if (result == true)
-                      function();
-                    else
-                      print('some thing wrong');
-
-                    Navigator.pop(context);
-                  }):
-            print('equal');
+                      Navigator.pop(context);
+                    })
+                : print('equal');
           }),
     ],
   );
@@ -503,12 +510,12 @@ Widget CuttingModelOrderMatrix(
               children: [
                 Expanded(
                     child: Center(
-                  child: LableTitle(Item.SizeParam_StringVal??'',
+                  child: LableTitle(Item.SizeParam_StringVal ?? '',
                       color: ArgonColors.text),
                 )),
                 Expanded(
                     child: Center(
-                  child: LableTitle(Item.ColorParam_StringVal??'',
+                  child: LableTitle(Item.ColorParam_StringVal ?? '',
                       color: ArgonColors.text),
                 )),
                 Expanded(
@@ -556,12 +563,12 @@ Widget TasnifModelOrderMatrix(
               children: [
                 Expanded(
                     child: Center(
-                  child: LableTitle(Item.SizeParam_StringVal??'',
+                  child: LableTitle(Item.SizeParam_StringVal ?? '',
                       color: ArgonColors.text),
                 )),
                 Expanded(
                     child: Center(
-                  child: LableTitle(Item.ColorParam_StringVal??'',
+                  child: LableTitle(Item.ColorParam_StringVal ?? '',
                       color: ArgonColors.text),
                 )),
                 Expanded(
@@ -607,7 +614,7 @@ Widget QualityAxisItem(DeptModOrderQuality_ItemsBLL Item,
         color: SelectedColor,
         padding: EdgeInsets.all(5),
         margin: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
-        child: LableTitle(Item.Item_Name??'', color: SelectedTextColor),
+        child: LableTitle(Item.Item_Name ?? '', color: SelectedTextColor),
       ),
     ),
   );
@@ -661,7 +668,6 @@ Widget TableColumn(
           ],
         ),
       ));
-
 }
 
 Widget RowColumn(
@@ -688,7 +694,10 @@ class TableBodyGList<T> extends StatefulWidget {
   Function(int) OnClickItems;
   List<Widget> Headers;
 
-  TableBodyGList({required this.Headers,required this.Items, required this.OnClickItems(int)});
+  TableBodyGList(
+      {required this.Headers,
+      required this.Items,
+      required this.OnClickItems(int)});
 
   @override
   _TableBodyGListState createState() => _TableBodyGListState();
@@ -740,7 +749,8 @@ class Tb_InlineDikimList extends StatefulWidget {
   Function OnClickItems;
   List<Widget> Headers;
 
-  Tb_InlineDikimList({required this.Headers,required this.Items, required this.OnClickItems});
+  Tb_InlineDikimList(
+      {required this.Headers, required this.Items, required this.OnClickItems});
 
   @override
   _Tb_InlineDikimListState createState() => _Tb_InlineDikimListState();
@@ -853,7 +863,10 @@ Widget BoxColorWithText(String Lable, Color SelectedColor,
 }
 
 Widget StatusWidget(
-    {required IconData icon,required String text,required Color backGroundColor,required Color iconColor}) {
+    {required IconData icon,
+    required String text,
+    required Color backGroundColor,
+    required Color iconColor}) {
   return Row(children: [
     IconInsideCircle(
         icon: icon,
@@ -894,32 +907,41 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.Pending),
             ArgonColors.Pending,
-            Width: 100,
-            Height: 50);
+            Width: ArgonSize.ImageHeight,
+            Height: 50,
+            FontSize: ArgonSize.Header4);
       case 1:
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.Success),
             ArgonColors.Success,
-            Width: 100,
+            Width: ArgonSize.ImageHeight,
             Height: 50,
+            FontSize: ArgonSize.Header4,
             FontColor: ArgonColors.white);
       case 2:
         return BoxColorWithText(
-            widget.PersonalCase.GetLable(ResourceKey.UnderCheck),
-            ArgonColors.UnderCheck,
-            Width: 100,
-            Height: 50);
+          widget.PersonalCase.GetLable(ResourceKey.UnderCheck),
+          ArgonColors.UnderCheck,
+          Width: ArgonSize.ImageHeight,
+          Height: 50,
+          FontSize: ArgonSize.Header4,
+        );
       case 3:
         return BoxColorWithText(
             widget.PersonalCase.GetLable(ResourceKey.Invalid),
             ArgonColors.Invalid,
-            Width: 100,
+            Width: ArgonSize.ImageHeight,
             Height: 50,
+            FontSize: ArgonSize.Header4,
             FontColor: ArgonColors.white);
     }
     return BoxColorWithText(
-        widget.PersonalCase.GetLable(ResourceKey.Pending), ArgonColors.Pending,
-        Width: 100, Height: 50);
+      widget.PersonalCase.GetLable(ResourceKey.Pending),
+      ArgonColors.Pending,
+      Width: ArgonSize.ImageHeight,
+      Height: 50,
+      FontSize: ArgonSize.Header4,
+    );
   }
 
   Widget RoundControl(
@@ -974,7 +996,7 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
                             ),
                             flex: 2),
                         Expanded(
-                            child: LableTitle(Item.Operation_Name??'',
+                            child: LableTitle(Item.Operation_Name ?? '',
                                 color: ArgonColors.text, IsCenter: true),
                             flex: 2),
                         Expanded(
@@ -1068,8 +1090,13 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
 }
 
 /// Employee List Filter
-Widget DropDownBox({required String ItemName,required Function() OnTap, bool IsSelected = false}) {
+Widget DropDownBox(
+    {required String ItemName,
+    bool IsCritical = false,
+    required Function() OnTap,
+    bool IsSelected = false}) {
   return Card(
+      color: IsCritical ? ArgonColors.myRed : ArgonColors.white,
       shadowColor: ArgonColors.black,
       elevation: 1,
       //   margin: EdgeInsets.all(1),

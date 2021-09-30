@@ -35,6 +35,8 @@ class _QualityItemsListState extends State<QualityItemsList> {
         await Quality_ItemsBLL.Get_Quality_Items_WithValue(widget.GroupType,
             PersonalCase.GetCurrentUser().Id, CaseProvider.ModelOrderMatrix!.Id);
 
+    Critiera = Critiera!.where((element) => element.Item_Level == 0).toList();
+
     if (Critiera != null) {
       IntiteStatus = 1;
       return Critiera;

@@ -23,13 +23,3 @@ Widget kBackBtn = Icon(
   Icons.arrow_back_ios,
   // color: Colors.black54,
 );
-
-kBuzyPage({Color color = Colors.white}) {
-  return Align(
-    alignment: Alignment.center,
-    child: SpinKitThreeBounce(
-      color: color ?? Colors.white,
-      size: 20.0,
-    ),
-  );
-}

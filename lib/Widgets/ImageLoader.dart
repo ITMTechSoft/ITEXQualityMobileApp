@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 
 class ImageLoader extends StatefulWidget {
@@ -16,7 +17,7 @@ class _ImageLoaderState extends State<ImageLoader> {
 
   Widget GetImage(String  base64Image){
     final _byteImage = Base64Decoder().convert(base64Image);
-    return Image.memory(_byteImage);
+    return Image.memory(_byteImage,height: ArgonSize.ImageHeight,width: ArgonSize.WidthVeryBig,);
   }
 
   @override

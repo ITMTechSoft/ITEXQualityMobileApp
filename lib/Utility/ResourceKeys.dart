@@ -1,4 +1,6 @@
 enum ResourceKey{
+  Amount,
+  CompleteSampleAmount,
   Pastel_Laying,
   CuttingDate,
   GenerateNewParti,

@@ -102,7 +102,8 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    getScreenWidth()>400 ?    Row(
+                    getScreenWidth()>400 ?
+                    Row(
                       mainAxisAlignment:MainAxisAlignment.spaceAround,
                       children:[
                         Expanded(
@@ -132,8 +133,7 @@ class _Accessory_ControlState extends State<Dikim_InlineControl> {
                              ),
                         ),
                       ]
-                    ):
-                    Column(
+                    ):Column(
                         mainAxisAlignment:MainAxisAlignment.spaceEvenly,
                         children:[
 

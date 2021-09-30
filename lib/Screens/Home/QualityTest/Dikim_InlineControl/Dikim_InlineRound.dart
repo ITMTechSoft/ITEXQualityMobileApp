@@ -117,7 +117,10 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                                   OnFirstAction: () async {
                                 await widget.RoundItem.CloseDikimInlineTur();
                                 CaseProvider.ReloadAction();
-                                Navigator.pop(context);
+                                int Counter = 0;
+                                Navigator.of(context).popUntil((route) {
+                                  return Counter++ == 2;
+                                });
                               });
                             }),
                       ],
@@ -128,14 +131,14 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                       OnClickItems: (int Index) {
                         if (snapshot.data![Index].CheckStatus ==
                             DikimInlineStatus.Open.index)
+                          {
+                            CaseProvider.EmployeeOperation = snapshot.data![Index];
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    Dikim_InlineEmployeeOperationControl(
-                                        EmployeeOperation:
-                                            snapshot.data![Index]),
-                              ));
+                                    Dikim_InlineEmployeeOperationControl(),
+                              ));}
                       },
                     ),
                   ],
