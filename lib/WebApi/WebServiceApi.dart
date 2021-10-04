@@ -1,4 +1,5 @@
 enum WebApiMethod{
+  Get_RecycleSizeList,
   SetFull_User_QualityTracking_Detail,
   Delete_QualityInlineError,
   Set_QualityInlineError,

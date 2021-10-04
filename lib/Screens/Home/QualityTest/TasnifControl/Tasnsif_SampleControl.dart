@@ -8,6 +8,8 @@ import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
+import 'package:itex_soft_qualityapp/Widgets/TopBar.dart';
+import 'package:itex_soft_qualityapp/Widgets/Utils/Loadding.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 
@@ -63,14 +65,15 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 
     if (ActionStatus == 0) {
       var UsrQualityTrac = User_QualityTracking_DetailBLL();
-      UsrQualityTrac.QualityDept_ModelOrder_Tracking_Id = PersonalCase.SelectedTracking.Id;
+      UsrQualityTrac.QualityDept_ModelOrder_Tracking_Id =
+          PersonalCase.SelectedTracking.Id;
       UsrQualityTrac.Create_Date = DateTime.now();
       UsrQualityTrac.Xaxis_QualityItem_Id = XAxias.Id;
       UsrQualityTrac.Yaxis_QualityItem_Id = YAxias.Id;
       if (IsCorrect)
         UsrQualityTrac.Correct_Amount = AssignAmount;
       else
-        UsrQualityTrac.Error_Amount   = AssignAmount;
+        UsrQualityTrac.Error_Amount = AssignAmount;
 
       await UsrQualityTrac.Set_User_QualityTracking_Detail();
       setState(() {
@@ -81,7 +84,6 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
         else
           setState(() {
             deleteNumber = deleteNumber + AssignAmount;
-
           });
       });
     } else {
@@ -113,7 +115,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
             // });
           },
           MainPage: GestureDetector(
-            onTap:(){
+            onTap: () {
               setState(() {
                 showSmall = !showSmall;
                 arrowIcon = Icons.arrow_upward;
@@ -129,8 +131,8 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                   children: [
                     Expanded(
                         flex: 2,
-                        child:
-                            LableTitle(PersonalCase.GetLable(ResourceKey.Model))),
+                        child: LableTitle(
+                            PersonalCase.GetLable(ResourceKey.Model))),
                     Expanded(
                         flex: 2,
                         child: LableTitle(
@@ -316,9 +318,9 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                       bubbleTextSize: ArgonSize.Header7,
                       bubbleBgColor: Colors.blue,
                       function: () async {
-                       await RegisterSampeAmount(PersonalCase, true);
+                        await RegisterSampeAmount(PersonalCase, true);
 
-                       // print('Presss')
+                        // print('Presss')
                       },
                     )
 
@@ -377,13 +379,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
 
     return Scaffold(
-      appBar: DetailBar(
-          Title: PersonalCase.SelectedTest!.Test_Name ?? '',
-          PersonalCase: PersonalCase,
-          OnTap: () {
-            Navigator.pop(context);
-          },
-          context: context),
+      appBar: ScreenAppBar(PersonalCase, context),
       body: FutureBuilder(
         future: LoadingOpenPage(PersonalCase),
         builder: (context, snapshot) {
@@ -395,15 +391,8 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
               AxisItem(PersonalCase),
               inputWidget(PersonalCase)
             ]);
-          } else if (IntiteStatus == 0)
-            return Center(child: CircularProgressIndicator());
-          else
-            return ErrorPage(
-                ActionName: PersonalCase.GetLable(ResourceKey.Loading),
-                MessageError:
-                    PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
-                DetailError: PersonalCase.GetLable(
-                    ResourceKey.InvalidNetWorkConnection));
+          } else
+            return LoadingContainer(IntiteStatus: IntiteStatus);
         },
       ),
     );
@@ -411,13 +400,21 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 }
 
 showAlertDialog(BuildContext context, PersonalProvider PersonalCase) {
+  String HeaderMessage = PersonalCase.GetLable(ResourceKey.Notice);
+  String MessageDetail = PersonalCase.GetLable(ResourceKey.ClosePageConfirmation);
   // set up the buttons
   Widget remindButton = TextButton(
     child: Text(PersonalCase.GetLable(ResourceKey.Okay),
         style: TextStyle(fontSize: ArgonSize.Header4)),
-    onPressed: () {
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
+    onPressed: () async {
+      bool Check = await PersonalCase.SelectedTracking!.CloseTanifSample();
+      if(Check){
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      }else{
+        MessageDetail = PersonalCase.GetLable(ResourceKey.SaveErrorMessage);
+      }
+
     },
   );
   Widget cancelButton = TextButton(
@@ -431,9 +428,9 @@ showAlertDialog(BuildContext context, PersonalProvider PersonalCase) {
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
     contentPadding: EdgeInsets.all(ArgonSize.HeightMedium),
-    title: Text(PersonalCase.GetLable(ResourceKey.Notice),
+    title: Text(HeaderMessage,
         style: TextStyle(fontSize: ArgonSize.Header3)),
-    content: Text(PersonalCase.GetLable(ResourceKey.ClosePageConfirmation),
+    content: Text(MessageDetail,
         style: TextStyle(fontSize: ArgonSize.Header4)),
     actions: [
       remindButton,
