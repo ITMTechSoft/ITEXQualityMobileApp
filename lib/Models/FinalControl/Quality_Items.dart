@@ -19,6 +19,12 @@ class Quality_ItemsBLL {
   String? Group_Name;
   String? Group_Type;
   int? Amount;
+  bool? IsSewingMachine;
+  bool? IsTakeImage;
+  int? Minor;
+  int? Major;
+  String? Description;
+  String? Test_Name;
 
   //#endregion
 
@@ -38,6 +44,12 @@ class Quality_ItemsBLL {
     this.LastUpdateDate = json['LastUpdateDate']==null? null: DateTime.parse(json['LastUpdateDate']);
     this.CreatedBy = json['CreatedBy'];
     this.LastUpdateBy = json['LastUpdateBy'];
+    this.IsSewingMachine = json['IsSewingMachine'];
+    this.IsTakeImage = json['IsTakeImage'];
+    this.Minor = json['Minor'];
+    this.Major = json['Major'];
+    this.Description = json['Description'];
+    this.Test_Name = json['Test_Name'];
     this.Group_Name = json['Group_Name'];
     this.Group_Type = json['Group_Type'];
     this.Amount = json['Amount'];
@@ -55,9 +67,14 @@ class Quality_ItemsBLL {
         LastUpdateDate = json['LastUpdateDate']==null? null:  DateTime.parse(json['LastUpdateDate']),
         CreatedBy = json['CreatedBy'],
         LastUpdateBy = json['LastUpdateBy'],
+        IsSewingMachine = json['IsSewingMachine'],
+        IsTakeImage = json['IsTakeImage'],
+        Minor = json['Minor'],
+        Major = json['Major'],
+        Description = json['Description'],
         Group_Name = json['Group_Name'],
         Group_Type = json['Group_Type'],
-         Amount = json['Amount'];
+        Amount = json['Amount'];
 
   Map<String, dynamic> toJson() => {
     'Id': Id,
@@ -70,8 +87,15 @@ class Quality_ItemsBLL {
     'LastUpdateDate': LastUpdateDate,
     'CreatedBy': CreatedBy,
     'LastUpdateBy': LastUpdateBy,
+    'IsSewingMachine': IsSewingMachine,
+    'IsTakeImage': IsTakeImage,
+    'Minor': Minor,
+    'Major': Major,
+    'Description': Description,
+    'Test_Name': Test_Name,
     'Group_Name': Group_Name,
     'Group_Type': Group_Type,
+
 
   };
 
@@ -88,6 +112,11 @@ class Quality_ItemsBLL {
     'LastUpdateDate': LastUpdateDate.toString(),
     'CreatedBy': CreatedBy.toString(),
     'LastUpdateBy': LastUpdateBy.toString(),
+    'IsSewingMachine': IsSewingMachine.toString(),
+    'IsTakeImage': IsTakeImage.toString(),
+    'Minor': Minor.toString(),
+    'Major': Major.toString(),
+    'Description': Description.toString(),
     'Group_Name': Group_Name??'',
     'Group_Type': Group_Type??'',
 
@@ -100,14 +129,16 @@ class Quality_ItemsBLL {
   //#region GetWebApiUrl
 
   static Future<List<Quality_ItemsBLL>?> Get_Quality_Items_WithValue(
-      String GroupType,int Employee_Id,int Matrix_Id) async {
+      String GroupType,int Employee_Id,int Matrix_Id,{int QualityTest_Id = 0,int QualityDept_ModelOrder_Tracking_Id = 0}) async {
     List<Quality_ItemsBLL>? ItemList;
     try {
 
       Map<String,String > qParams = {
         'GroupType':GroupType,
         'Employee_Id':Employee_Id.toString() ,
-        'OrderSizeColorDetail_Id': Matrix_Id.toString()
+        'OrderSizeColorDetail_Id': Matrix_Id.toString(),
+        'QualityTest_Id' : QualityTest_Id.toString(),
+        'QualityDept_ModelOrder_Tracking_Id' :QualityDept_ModelOrder_Tracking_Id.toString()
       };
       var response = await http.get(
           SharedPref.GetWebApiUri(WebApiMethod.Get_Quality_Items_WithValue,qParams)
@@ -173,6 +204,8 @@ class Quality_ItemsBLL {
 
     return Item;
   }
+
+  void InsertQualityItem() {}
 
 //#endregion
 

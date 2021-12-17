@@ -29,7 +29,7 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
 
   Future<bool> LoadingSharedPreference(PersonalProvider PersonalCase) async {
 
-    bool value = await PersonalCase.loadSharedPrefs()  ;
+    bool value = await PersonalCase.loadSharedPrefs();
 
     if ( value!=null)
       IsLoading= false;

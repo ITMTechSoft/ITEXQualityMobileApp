@@ -75,6 +75,7 @@ class ArgonSize{
   static  double Header1 = getAdaptiveTextSize(30);
   static  double Header2 = getAdaptiveTextSize(25);
   static  double Header3 = getAdaptiveTextSize(20);
+  static  double Header35 = getAdaptiveTextSize(18);
   static  double Header4 = getAdaptiveTextSize(15);
   static  double Header5 = getAdaptiveTextSize(12);
   static  double Header6 = getAdaptiveTextSize(10);

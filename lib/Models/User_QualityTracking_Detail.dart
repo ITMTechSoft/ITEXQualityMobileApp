@@ -41,6 +41,7 @@ class User_QualityTracking_DetailBLL {
   int? Inline_Employee_Id;
   String? Operation_Name;
   bool? IsRecycle;
+  int? Size_Measurement_Allowance_Id;
   double? Real_Measure;
   double? Pastal_Fark;
 
@@ -48,6 +49,8 @@ class User_QualityTracking_DetailBLL {
   String? ControlType;
   int? Order_Id;
   int? Size_Id;
+
+  String? Image64;
 
   //#endregion
 
@@ -106,6 +109,7 @@ class User_QualityTracking_DetailBLL {
     this.Inline_Employee_Id = json['Inline_Employee_Id'];
     this.Inline_Employee_Name = json['Inline_Employee_Name'];
     this.Operation_Name = json['Operation_Name'];
+    this.Size_Measurement_Allowance_Id = json['Size_Measurement_Allowance_Id'];
     this.Real_Measure = json['Real_Measure'];
     this.Pastal_Fark = json['Pastal_Fark'];
   }
@@ -155,6 +159,7 @@ class User_QualityTracking_DetailBLL {
         Group_Id = json['Group_Id'],
         Employee_Name = json['Employee_Name'],
         Inline_Employee_Name = json['Inline_Employee_Name'],
+        Size_Measurement_Allowance_Id = json['Size_Measurement_Allowance_Id'],
         Inline_Employee_Id = json['Inline_Employee_Id'],
         Operation_Name = json['Operation_Name'],
         Real_Measure = json['Real_Measure'],
@@ -200,9 +205,11 @@ class User_QualityTracking_DetailBLL {
     'Operation_Name': Operation_Name,
     'StartDate': StartDate,
     'EndDate': EndDate,
+    'Size_Measurement_Allowance_Id': Size_Measurement_Allowance_Id,
     'Real_Measure': Real_Measure,
     'Pastal_Fark': Pastal_Fark,
     'Size_Id' : Size_Id,
+    'Image64': Image64??''
   };
 
   Map<String, String> toPost() => {
@@ -227,6 +234,7 @@ class User_QualityTracking_DetailBLL {
     'Reject_Note': Reject_Note ?? '',
     'Correct_Amount': Correct_Amount.toString(),
     'Error_Amount': Error_Amount.toString(),
+    'Size_Measurement_Allowance_Id': Size_Measurement_Allowance_Id.toString(),
     'Employee_Id': Employee_Id.toString(),
     'DeptModelOrder_QualityTest_Id':
     DeptModelOrder_QualityTest_Id.toString(),
@@ -253,6 +261,8 @@ class User_QualityTracking_DetailBLL {
     'Real_Measure': Real_Measure.toString(),
     'Pastal_Fark': Pastal_Fark.toString(),
     'Size_Id' : Size_Id.toString(),
+    'Image64': Image64??''
+
   };
 
   //#endregion
@@ -508,6 +518,41 @@ class User_QualityTracking_DetailBLL {
       print(Excpetion);
     }
   }
+
+  Future<bool> Set_QualityAQLError() async{
+    try {
+      String val = jsonEncode(this.toPost());
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_UserQualityAQLControl));
+      var response = await http.post(url, body: val, headers: headers);
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
+  Future<bool> Set_Size_Measurement_Allowance() async{
+    try {
+      String val = jsonEncode(this.toPost());
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_Size_Measurement_Allowance));
+      var response = await http.post(url, body: val, headers: headers);
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
 //#endregion
 
 }

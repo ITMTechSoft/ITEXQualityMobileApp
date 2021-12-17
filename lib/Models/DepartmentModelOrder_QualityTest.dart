@@ -19,6 +19,9 @@ class DepartmentModelOrder_QualityTestBLL {
   bool? IsValidateRequired;
   bool? IsAutoMail;
   int? Sample_No;
+  String? Accept_Level;
+  String? Level_Code;
+  String? Depart_Name;
 
   //#endregion
 
@@ -58,6 +61,9 @@ class DepartmentModelOrder_QualityTestBLL {
         IsMandatory = json['IsMandatory'],
         Entity_Order = json['Entity_Order'],
         Test_Name = json['Test_Name'],
+        Accept_Level = json['Accept_Level'],
+        Level_Code = json['Level_Code'],
+        Depart_Name = json['Depart_Name'],
         Order_Id = json['Order_Id'],
         Sample_No = json['Sample_No'],
         Department_Id = json['Department_Id'],
@@ -73,6 +79,9 @@ class DepartmentModelOrder_QualityTestBLL {
         'IsMandatory': IsMandatory,
         'Entity_Order': Entity_Order,
         'Test_Name': Test_Name,
+        'Accept_Level': Accept_Level,
+        'Level_Code': Level_Code,
+        'Depart_Name': Depart_Name,
         'Order_Id': Order_Id,
         'Department_Id': Department_Id,
         'IsValidateRequired': IsValidateRequired,
@@ -89,6 +98,9 @@ class DepartmentModelOrder_QualityTestBLL {
         'IsMandatory': IsMandatory.toString(),
         'Entity_Order': Entity_Order.toString(),
         'Test_Name': Test_Name ?? '',
+        'Accept_Level': Accept_Level ?? '',
+        'Level_Code': Level_Code ?? '',
+        'Depart_Name': Depart_Name ?? '',
         'Order_Id': Order_Id.toString(),
         'Sample_No': Sample_No.toString(),
         'Department_Id': Department_Id.toString(),
@@ -121,23 +133,13 @@ class DepartmentModelOrder_QualityTestBLL {
     return ItemList;
   }
 
-  Future<bool> SetValidationAction({required int Employee_Id}) async {
+  Future<bool> SetValidationAction(int? Employee_Id) async {
     try {
       var Item = new QualityDept_ModelOrder_TrackingBLL();
       Item.Employee_Id = Employee_Id;
       Item.DeptModelOrder_QualityTest_Id = this.Id;
       //  Item.Id = 0;
       Item.ApprovalDate = new DateTime.now();
-
-      // final String url = SharedPref.GetWebApiUrl(
-      //     WebApiMethod.Set_ValidatQualityCriticalQualityTest);
-      //
-      // String val = jsonEncode(Item.toPost());
-      // var response = await http.post(url,
-      //     headers: <String, String>{
-      //       'Content-Type': 'application/json; charset=UTF-8',
-      //     },
-      //     body: jsonEncode(Item.toPost()));
 
       String val = jsonEncode(Item.toPost());
       Map<String, String> headers = {
@@ -162,16 +164,6 @@ class DepartmentModelOrder_QualityTestBLL {
       var Item = new QualityDept_ModelOrder_TrackingBLL();
       Item.Employee_Id = Employee_Id;
       Item.DeptModelOrder_QualityTest_Id = this.Id;
-
-      // final String url =
-      //     SharedPref.GetWebApiUrl(WebApiMethod.IsUserApprovedCriteriaBefore);
-      //
-      // String val = jsonEncode(Item.toPost());
-      // var response = await http.post(url,
-      //     headers: <String, String>{
-      //       'Content-Type': 'application/json; charset=UTF-8',
-      //     },
-      //     body: jsonEncode(Item.toPost()));
 
       String val = jsonEncode(Item.toPost());
       Map<String, String> headers = {

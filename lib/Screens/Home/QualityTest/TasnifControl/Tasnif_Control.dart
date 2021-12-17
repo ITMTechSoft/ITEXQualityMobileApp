@@ -33,29 +33,7 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
     return null;
   }
 
-  Widget GetTansifControlList(
-    context, PersonalCase, snapshot) {
-    return ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        primary: false,
-        itemCount: snapshot.data.length,
-        itemBuilder: (context, int i) {
-          return TansifControlList(PersonalCase, snapshot.data[i], () async {
-            PersonalCase.SelectedTracking = snapshot.data[i];
-            if(PersonalCase.SelectedTracking.Status == ControlStatus.TansifControlOpenStatus) {
-              var value = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          Tasnsif_SampleControl()));
-              setState(() {
-                print(value);
-              });
-            }
-          });
-        });
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -160,5 +138,32 @@ class _Tasnif_ControlState extends State<Tasnif_Control> {
         )
       ]),
     );
+  }
+
+  Widget GetTansifControlList(
+      context, PersonalCase, snapshot) {
+    return ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        primary: false,
+        itemCount: snapshot.data.length,
+        itemBuilder: (context, int i) {
+          return TansifControlList(
+              PersonalCase,
+              snapshot.data[i],
+                  () async {
+            PersonalCase.SelectedTracking = snapshot.data[i];
+            if(PersonalCase.SelectedTracking.Status == ControlStatus.TansifControlOpenStatus) {
+              var value = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          Tasnsif_SampleControl()));
+              setState(() {
+                print(value);
+              });
+            }
+          });
+        });
   }
 }

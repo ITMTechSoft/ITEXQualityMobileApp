@@ -1,4 +1,10 @@
 enum WebApiMethod{
+  Get_AQLOrderSizeColorDetails,
+  Set_Size_Measurement_Allowance,
+  Set_UserQualityAQLControl,
+  Get_Size_Measurement_Allowance,
+  Generate_QualityModelOrder_Tracking,
+  Get_AQLModelOrderTracking,
   Get_RecycleSizeList,
   SetFull_User_QualityTracking_Detail,
   Delete_QualityInlineError,

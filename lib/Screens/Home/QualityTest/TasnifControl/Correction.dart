@@ -213,7 +213,7 @@ class _CorrectionListState extends State<CorrectionList> {
             width: getScreenWidth() * 0.3,
             height: ArgonSize.WidthSmall,
             textSize: ArgonSize.Header5,
-            value: PersonalCase.GetLable(ResourceKey.Recycle),
+            value: PersonalCase.GetLable(ResourceKey.Correction),
             backGroundColor: Item.Recycle_Amount != Item.Error_Amount
                 ? ArgonColors.primary
                 : ArgonColors.myGrey,

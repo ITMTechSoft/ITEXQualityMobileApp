@@ -6,7 +6,7 @@ import 'User_QualityTracking_Detail.dart';
 
 class QualityDept_ModelOrder_TrackingBLL {
   //#region Properties
-  int Id= 0;
+  int Id = 0;
   int? Employee_Id;
   int? DeptModelOrder_QualityTest_Id;
   int? OrderSizeColorDetail_Id;
@@ -41,11 +41,11 @@ class QualityDept_ModelOrder_TrackingBLL {
   String? Group_Name;
   String? SizeName;
   String? ColorName;
-
+  int? AQL_Major;
+  int? AQL_Minor;
   //#endregion
 
-
-  QualityDept_ModelOrder_TrackingBLL(){}
+  QualityDept_ModelOrder_TrackingBLL() {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -56,11 +56,11 @@ class QualityDept_ModelOrder_TrackingBLL {
     this.Accessory_ModelOrder_Id = json['Accessory_ModelOrder_Id'];
     this.Plan_Daily_Production_Id = json['Plan_Daily_Production_Id'];
     this.StartDate =
-        json['StartDate'] == null ? null : DateTime.parse(json['StartDate']);
+    json['StartDate'] == null ? null : DateTime.parse(json['StartDate']);
     this.EndDate =
-        json['EndDate'] == null ? null : DateTime.parse(json['EndDate']);
+    json['EndDate'] == null ? null : DateTime.parse(json['EndDate']);
     this.ReadDate =
-        json['ReadDate'] == null ? null : DateTime.parse(json['ReadDate']);
+    json['ReadDate'] == null ? null : DateTime.parse(json['ReadDate']);
     this.ApprovalDate = json['ApprovalDate'] == null
         ? null
         : DateTime.parse(json['ApprovalDate']);
@@ -73,6 +73,8 @@ class QualityDept_ModelOrder_TrackingBLL {
     this.SampleNo = json['SampleNo'];
     this.ModelOrderSizes_Id = json['ModelOrderSizes_Id'];
     this.Pastal_Cutting_Parti_Id = json['Pastal_Cutting_Parti_Id'];
+    this.AQL_Major = json['AQL_Major'];
+    this.AQL_Minor = json['AQL_Minor'];
     this.Employee_Name = json['Employee_Name'];
     this.QualityTest_Id = json['QualityTest_Id'];
     this.QualityDept_ModelOrder_Id = json['QualityDept_ModelOrder_Id'];
@@ -102,9 +104,9 @@ class QualityDept_ModelOrder_TrackingBLL {
             ? null
             : DateTime.parse(json['StartDate']),
         EndDate =
-            json['EndDate'] == null ? null : DateTime.parse(json['EndDate']),
+        json['EndDate'] == null ? null : DateTime.parse(json['EndDate']),
         ReadDate =
-            json['ReadDate'] == null ? null : DateTime.parse(json['ReadDate']),
+        json['ReadDate'] == null ? null : DateTime.parse(json['ReadDate']),
         ApprovalDate = json['ApprovalDate'] == null
             ? null
             : DateTime.parse(json['ApprovalDate']),
@@ -117,6 +119,8 @@ class QualityDept_ModelOrder_TrackingBLL {
         SampleNo = json['SampleNo'],
         ModelOrderSizes_Id = json['ModelOrderSizes_Id'],
         Pastal_Cutting_Parti_Id = json['Pastal_Cutting_Parti_Id'],
+        AQL_Major = json['AQL_Major'],
+        AQL_Minor = json['AQL_Minor'],
         Employee_Name = json['Employee_Name'],
         QualityTest_Id = json['QualityTest_Id'],
         QualityDept_ModelOrder_Id = json['QualityDept_ModelOrder_Id'],
@@ -135,97 +139,101 @@ class QualityDept_ModelOrder_TrackingBLL {
         ColorName = json['ColorName'];
 
   Map<String, dynamic> toJson() => {
-        'Id': Id,
-        'Employee_Id': Employee_Id,
-        'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id,
-        'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id,
-        'Accessory_ModelOrder_Id': Accessory_ModelOrder_Id,
-        'Plan_Daily_Production_Id': Plan_Daily_Production_Id,
-        'StartDate': StartDate,
-        'EndDate': EndDate,
-        'ReadDate': ReadDate,
-        'ApprovalDate': ApprovalDate,
-        'Correct_Amount': Correct_Amount,
-        'Error_Amount': Error_Amount,
-        'Sample_Amount': Sample_Amount,
-        'QualityItem_Group_Id': QualityItem_Group_Id,
-        'Fabric_TopNo': Fabric_TopNo,
-        'Status': Status,
-        'SampleNo': SampleNo,
-        'ModelOrderSizes_Id': ModelOrderSizes_Id,
-        'Pastal_Cutting_Parti_Id': Pastal_Cutting_Parti_Id,
-        'Employee_Name': Employee_Name,
-        'QualityTest_Id': QualityTest_Id,
-        'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id,
-        'Order_Id': Order_Id,
-        'Size_Id': Size_Id,
-        'Color_Id': Color_Id,
-        'PlanSizeColor_QTY': PlanSizeColor_QTY,
-        'OrderSizeColor_QTY': OrderSizeColor_QTY,
-        'SizeColor_QTY': SizeColor_QTY,
-        'Accessory_Id': Accessory_Id,
-        'Quantity': Quantity,
-        'Checks_Quantity': Checks_Quantity,
-        'IsSupplierAutoEmail': IsSupplierAutoEmail,
-        'Group_Name': Group_Name,
-        'SizeName': SizeName,
-        'ColorName': ColorName,
-      };
+    'Id': Id,
+    'Employee_Id': Employee_Id,
+    'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id,
+    'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id,
+    'Accessory_ModelOrder_Id': Accessory_ModelOrder_Id,
+    'Plan_Daily_Production_Id': Plan_Daily_Production_Id,
+    'StartDate': StartDate,
+    'EndDate': EndDate,
+    'ReadDate': ReadDate,
+    'ApprovalDate': ApprovalDate,
+    'Correct_Amount': Correct_Amount,
+    'Error_Amount': Error_Amount,
+    'Sample_Amount': Sample_Amount,
+    'QualityItem_Group_Id': QualityItem_Group_Id,
+    'Fabric_TopNo': Fabric_TopNo,
+    'Status': Status,
+    'SampleNo': SampleNo,
+    'ModelOrderSizes_Id': ModelOrderSizes_Id,
+    'Pastal_Cutting_Parti_Id': Pastal_Cutting_Parti_Id,
+    'AQL_Major': AQL_Major,
+    'AQL_Minor': AQL_Minor,
+    'Employee_Name': Employee_Name,
+    'QualityTest_Id': QualityTest_Id,
+    'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id,
+    'Order_Id': Order_Id,
+    'Size_Id': Size_Id,
+    'Color_Id': Color_Id,
+    'PlanSizeColor_QTY': PlanSizeColor_QTY,
+    'OrderSizeColor_QTY': OrderSizeColor_QTY,
+    'SizeColor_QTY': SizeColor_QTY,
+    'Accessory_Id': Accessory_Id,
+    'Quantity': Quantity,
+    'Checks_Quantity': Checks_Quantity,
+    'IsSupplierAutoEmail': IsSupplierAutoEmail,
+    'Group_Name': Group_Name,
+    'SizeName': SizeName,
+    'ColorName': ColorName,
+  };
 
   Map<String, String> toPost() => {
-        'Id': Id.toString(),
-        'Employee_Id': Employee_Id.toString(),
-        'DeptModelOrder_QualityTest_Id':
-            DeptModelOrder_QualityTest_Id.toString(),
-        'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id.toString(),
-        'Accessory_ModelOrder_Id': Accessory_ModelOrder_Id.toString(),
-        'Plan_Daily_Production_Id': Plan_Daily_Production_Id.toString(),
-        'StartDate': StartDate.toString(),
-        'EndDate': EndDate.toString(),
-        'ReadDate': ReadDate.toString(),
-        'ApprovalDate': ApprovalDate.toString(),
-        'Correct_Amount': Correct_Amount.toString(),
-        'Error_Amount': Error_Amount.toString(),
-        'Sample_Amount': Sample_Amount.toString(),
-        'QualityItem_Group_Id': QualityItem_Group_Id.toString(),
-        'Fabric_TopNo': Fabric_TopNo??'',
-        'Status': Status.toString(),
-        'SampleNo': SampleNo.toString(),
-        'ModelOrderSizes_Id': ModelOrderSizes_Id.toString(),
-        'Pastal_Cutting_Parti_Id': Pastal_Cutting_Parti_Id.toString(),
-        'Employee_Name': Employee_Name??'',
-        'QualityTest_Id': QualityTest_Id.toString(),
-        'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),
-        'Order_Id': Order_Id.toString(),
-        'Size_Id': Size_Id.toString(),
-        'Color_Id': Color_Id.toString(),
-        'PlanSizeColor_QTY': PlanSizeColor_QTY.toString(),
-        'OrderSizeColor_QTY': OrderSizeColor_QTY.toString(),
-        'SizeColor_QTY': SizeColor_QTY.toString(),
-        'Accessory_Id': Accessory_Id.toString(),
-        'Quantity': Quantity.toString(),
-        'Checks_Quantity': Checks_Quantity.toString(),
-        'IsSupplierAutoEmail': IsSupplierAutoEmail.toString(),
-        'Group_Name': Group_Name??'',
-        'SizeName': SizeName??'',
-        'ColorName': ColorName??'',
-      };
+    'Id': Id.toString(),
+    'Employee_Id': Employee_Id.toString(),
+    'DeptModelOrder_QualityTest_Id':
+    DeptModelOrder_QualityTest_Id.toString(),
+    'OrderSizeColorDetail_Id': OrderSizeColorDetail_Id.toString(),
+    'Accessory_ModelOrder_Id': Accessory_ModelOrder_Id.toString(),
+    'Plan_Daily_Production_Id': Plan_Daily_Production_Id.toString(),
+    'StartDate': StartDate.toString(),
+    'EndDate': EndDate.toString(),
+    'ReadDate': ReadDate.toString(),
+    'ApprovalDate': ApprovalDate.toString(),
+    'Correct_Amount': Correct_Amount.toString(),
+    'Error_Amount': Error_Amount.toString(),
+    'Sample_Amount': Sample_Amount.toString(),
+    'QualityItem_Group_Id': QualityItem_Group_Id.toString(),
+    'Fabric_TopNo': Fabric_TopNo ?? '',
+    'Status': Status.toString(),
+    'SampleNo': SampleNo.toString(),
+    'ModelOrderSizes_Id': ModelOrderSizes_Id.toString(),
+    'Pastal_Cutting_Parti_Id': Pastal_Cutting_Parti_Id.toString(),
+    'AQL_Major': AQL_Major.toString(),
+    'AQL_Minor': AQL_Minor.toString(),
+    'Employee_Name': Employee_Name ?? '',
+    'QualityTest_Id': QualityTest_Id.toString(),
+    'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),
+    'Order_Id': Order_Id.toString(),
+    'Size_Id': Size_Id.toString(),
+    'Color_Id': Color_Id.toString(),
+    'PlanSizeColor_QTY': PlanSizeColor_QTY.toString(),
+    'OrderSizeColor_QTY': OrderSizeColor_QTY.toString(),
+    'SizeColor_QTY': SizeColor_QTY.toString(),
+    'Accessory_Id': Accessory_Id.toString(),
+    'Quantity': Quantity.toString(),
+    'Checks_Quantity': Checks_Quantity.toString(),
+    'IsSupplierAutoEmail': IsSupplierAutoEmail.toString(),
+    'Group_Name': Group_Name ?? '',
+    'SizeName': SizeName ?? '',
+    'ColorName': ColorName ?? '',
+  };
 
   //#endregion
 
   //#region GetWebApiUrl
   static Future<List<QualityDept_ModelOrder_TrackingBLL>?>
-      Get_QualityDept_ModelOrder_Tracking(
-          int Order_Id, int DeptModelOrder_QualityTest_Id) async {
+  Get_QualityDept_ModelOrder_Tracking(
+      int Order_Id, int DeptModelOrder_QualityTest_Id) async {
     List<QualityDept_ModelOrder_TrackingBLL>? ItemList;
     try {
-
-      Map<String,String> qParams = {
+      Map<String, String> qParams = {
         'Order_Id': Order_Id.toString(),
-        'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id.toString()
+        'DeptModelOrder_QualityTest_Id':
+        DeptModelOrder_QualityTest_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
-              WebApiMethod.Get_Quality_ModelOrder_Tracking,qParams));
+          WebApiMethod.Get_Quality_ModelOrder_Tracking, qParams));
 
       // print(response.request);
       if (response.statusCode == 200) {
@@ -241,10 +249,10 @@ class QualityDept_ModelOrder_TrackingBLL {
   }
 
   static Future<List<QualityDept_ModelOrder_TrackingBLL>?>
-      GetInlineDikim_QualityDept_ModelOrder_Tracking(
-          { required int Employee_Id,
-            required int DeptModelOrder_QualityTest_Id,
-            required DateTime SelectDate}) async {
+  GetInlineDikim_QualityDept_ModelOrder_Tracking(
+      {required int Employee_Id,
+        required int DeptModelOrder_QualityTest_Id,
+        required DateTime SelectDate}) async {
     List<QualityDept_ModelOrder_TrackingBLL>? ItemList;
     try {
       var Tracking = new QualityDept_ModelOrder_TrackingBLL();
@@ -252,24 +260,42 @@ class QualityDept_ModelOrder_TrackingBLL {
       Tracking.DeptModelOrder_QualityTest_Id = DeptModelOrder_QualityTest_Id;
       Tracking.StartDate = SelectDate;
 
-      // final String url = SharedPref.GetWebApiUrl(
-      //     WebApiMethod.GetInlineDikim_QualityDept_ModelOrder_Tracking);
-      //
-      // print(url);
-      // print(jsonEncode(Tracking.toPost()));
-      // var response = await http.post(url,
-      //     headers: <String, String>{
-      //       'Content-Type': 'application/json; charset=UTF-8',
-      //     },
-      //     body: jsonEncode(Tracking.toPost()));
+      String val = jsonEncode(Tracking.toPost());
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(SharedPref.GetWebApiUrl(
+          WebApiMethod.GetInlineDikim_QualityDept_ModelOrder_Tracking));
+      var response = await http.post(url, body: val, headers: headers);
 
+      if (response.statusCode == 200) {
+        ItemList = (json.decode(response.body) as List)
+            .map((i) => QualityDept_ModelOrder_TrackingBLL.fromJson(i))
+            .toList();
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return ItemList;
+  }
+
+  static Future<List<QualityDept_ModelOrder_TrackingBLL>?>
+  Get_AQLModelOrderTracking(
+      {int Employee_Id = 0, int OrderSizeColorDetail_Id = 0,int DeptModelOrder_QualityTest_Id = 0}) async {
+    List<QualityDept_ModelOrder_TrackingBLL>? ItemList;
+    try {
+      var Tracking = new QualityDept_ModelOrder_TrackingBLL();
+      Tracking.DeptModelOrder_QualityTest_Id = DeptModelOrder_QualityTest_Id;
+      Tracking.Employee_Id = Employee_Id;
+      Tracking.OrderSizeColorDetail_Id = OrderSizeColorDetail_Id;
 
       String val = jsonEncode(Tracking.toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      var url = Uri.parse(
-          SharedPref.GetWebApiUrl(WebApiMethod.GetInlineDikim_QualityDept_ModelOrder_Tracking));
+      var url = Uri.parse(SharedPref.GetWebApiUrl(
+          WebApiMethod.Get_AQLModelOrderTracking));
       var response = await http.post(url, body: val, headers: headers);
 
       if (response.statusCode == 200) {
@@ -300,13 +326,12 @@ class QualityDept_ModelOrder_TrackingBLL {
       //     },
       //     body: jsonEncode(Item.toPost()));
 
-
       String val = jsonEncode(Item.toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      var url = Uri.parse(
-          SharedPref.GetWebApiUrl(WebApiMethod.Set_ReadQualityCriticalQualityTest));
+      var url = Uri.parse(SharedPref.GetWebApiUrl(
+          WebApiMethod.Set_ReadQualityCriticalQualityTest));
       var response = await http.post(url, body: val, headers: headers);
 
       if (response.statusCode == 200) {
@@ -334,13 +359,12 @@ class QualityDept_ModelOrder_TrackingBLL {
       //     },
       //     body: jsonEncode(toPost()));
 
-
       String val = jsonEncode(this.toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      var url = Uri.parse(
-          SharedPref.GetWebApiUrl(WebApiMethod.Set_CuttingOrderSizeColorDetails));
+      var url = Uri.parse(SharedPref.GetWebApiUrl(
+          WebApiMethod.Set_CuttingOrderSizeColorDetails));
       var response = await http.post(url, body: val, headers: headers);
 
       if (response.statusCode == 200) {
@@ -366,13 +390,12 @@ class QualityDept_ModelOrder_TrackingBLL {
       //     },
       //     body: jsonEncode(toPost()));
 
-
       String val = jsonEncode(this.toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      var url = Uri.parse(
-          SharedPref.GetWebApiUrl(WebApiMethod.Set_TasnifOrderSizeColorDetails));
+      var url = Uri.parse(SharedPref.GetWebApiUrl(
+          WebApiMethod.Set_TasnifOrderSizeColorDetails));
       var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         // Item.LoadFromJson(json.decode(response.body));
@@ -413,13 +436,12 @@ class QualityDept_ModelOrder_TrackingBLL {
   }
 
   static Future<QualityDept_ModelOrder_TrackingBLL?>
-      GetOrCreate_QualityDept_ModelOrder_Tracking(
-          int Employee_Id, int DeptModelOrder_QualityTest_Id,
-          {int OrderSizeColorDetail_Id = 0, int ModelOrderSizes_Id = 0,int Pastal_Cutting_Parti_Id = 0}) async {
-
-
+  GetOrCreate_QualityDept_ModelOrder_Tracking(
+      int Employee_Id, int DeptModelOrder_QualityTest_Id,
+      {int OrderSizeColorDetail_Id = 0,
+        int ModelOrderSizes_Id = 0,
+        int Pastal_Cutting_Parti_Id = 0}) async {
     try {
-
       var Item = new QualityDept_ModelOrder_TrackingBLL();
       Item.Employee_Id = Employee_Id;
       Item.DeptModelOrder_QualityTest_Id = DeptModelOrder_QualityTest_Id;
@@ -431,8 +453,8 @@ class QualityDept_ModelOrder_TrackingBLL {
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      var url = Uri.parse(
-          SharedPref.GetWebApiUrl(WebApiMethod.GetOrCreate_QualityDept_ModelOrder_Tracking));
+      var url = Uri.parse(SharedPref.GetWebApiUrl(
+          WebApiMethod.GetOrCreate_QualityDept_ModelOrder_Tracking));
       var response = await http.post(url, body: val, headers: headers);
 
       if (response.statusCode == 200) {
@@ -444,43 +466,26 @@ class QualityDept_ModelOrder_TrackingBLL {
   }
 
   Future<QualityDept_ModelOrder_TrackingBLL?>
-      Create_QualityDept_ModelOrder_Tracking() async {
+  Create_QualityDept_ModelOrder_Tracking() async {
     try {
-
       String val = jsonEncode(this.toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      var url = Uri.parse(
-          SharedPref.GetWebApiUrl(WebApiMethod.Create_QualityDept_ModelOrder_Tracking));
+      var url = Uri.parse(SharedPref.GetWebApiUrl(
+          WebApiMethod.Create_QualityDept_ModelOrder_Tracking));
       var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         LoadFromJson(json.decode(response.body));
         return this;
-
       }
     } catch (e) {}
     return null;
   }
 
   Future<QualityDept_ModelOrder_TrackingBLL?>
-      Generate_DikimInline_Tracking() async {
+  Generate_DikimInline_Tracking() async {
     try {
-      // final String url =
-      //     SharedPref.GetWebApiUrl(WebApiMethod.Generate_DikimInline_Tracking);
-      //
-      // String Val = jsonEncode(toPost());
-      // print(Val);
-      // print(url);
-      //
-      // var response = await http.post(url,
-      //     headers: <String, String>{
-      //       'Content-Type': 'application/json; charset=UTF-8',
-      //     },
-      //     body: jsonEncode(toPost()));
-
-
-
       String val = jsonEncode(toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -497,6 +502,24 @@ class QualityDept_ModelOrder_TrackingBLL {
     return null;
   }
 
+  Future<QualityDept_ModelOrder_TrackingBLL?>
+  Generate_QualityModelOrder_Tracking() async {
+    try {
+      String val = jsonEncode(toPost());
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Generate_QualityModelOrder_Tracking));
+      var response = await http.post(url, body: val, headers: headers);
+      print(url);
+      if (response.statusCode == 200) {
+        LoadFromJson(json.decode(response.body));
+        return this;
+      }
+    } catch (e) {}
+    return null;
+  }
   static Future<bool> CuttingPastal_ApproveRejectItem(
       User_QualityTracking_DetailBLL Item) async {
     try {
@@ -514,13 +537,12 @@ class QualityDept_ModelOrder_TrackingBLL {
 
       //   var RetItem = new DeptModOrderQuality_ItemsBLL();
 
-
       String val = jsonEncode(Item.toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      var url = Uri.parse(
-          SharedPref.GetWebApiUrl(WebApiMethod.CuttingPastal_ApproveRejectItem));
+      var url = Uri.parse(SharedPref.GetWebApiUrl(
+          WebApiMethod.CuttingPastal_ApproveRejectItem));
       var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         //RetItem.LoadFromJson(json.decode(response.body));
@@ -547,7 +569,6 @@ class QualityDept_ModelOrder_TrackingBLL {
       //
       // //   var RetItem = new DeptModOrderQuality_ItemsBLL();
 
-
       String val = jsonEncode(Item.toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -566,12 +587,12 @@ class QualityDept_ModelOrder_TrackingBLL {
 
   Future<bool> CloseTanifSample() async {
     try {
-      Map<String,String> qParams = {
-        'QualityDept_ModelOrder_Tracking_Id':Id.toString()
+      Map<String, String> qParams = {
+        'QualityDept_ModelOrder_Tracking_Id': Id.toString()
       };
 
       var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Set_CloseTanifSample,qParams));
+          SharedPref.GetWebApiUri(WebApiMethod.Set_CloseTanifSample, qParams));
 
       if (response.statusCode == 200) {
         return true;
@@ -585,14 +606,12 @@ class QualityDept_ModelOrder_TrackingBLL {
 
   Future<bool> CloseDikimInlineTur() async {
     try {
-
-
-      Map<String,String> qParams = {
-        'QualityDept_ModelOrder_Tracking_Id':Id.toString()
+      Map<String, String> qParams = {
+        'QualityDept_ModelOrder_Tracking_Id': Id.toString()
       };
 
       var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.CloseDikimInlineTur,qParams));
+          SharedPref.GetWebApiUri(WebApiMethod.CloseDikimInlineTur, qParams));
 
       if (response.statusCode == 200) {
         return true;
@@ -603,6 +622,7 @@ class QualityDept_ModelOrder_TrackingBLL {
 
     return false;
   }
+
 //#endregion
 
 }

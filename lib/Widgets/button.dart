@@ -159,22 +159,25 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width??getScreenWidth()/2,
-      height: height,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: backGroundColor, // background
-          onPrimary: Colors.white, // foreground
+    return Container(
+      margin: EdgeInsets.all(10),
+      child:SizedBox(
+        width: width??getScreenWidth()/2,
+        height: height,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: backGroundColor, // background
+            onPrimary: Colors.white, // foreground
+          ),
+          onPressed: function,
+          child: CustomText(
+            text: value,
+            size: textSize ?? ArgonSize.Header4,
+            color: textColor,
+            fontWeight: FontWeight.w800,
+          ),
         ),
-        onPressed: function,
-        child: CustomText(
-          text: value,
-          size: textSize ?? ArgonSize.Header4,
-          color: textColor,
-          fontWeight: FontWeight.w800,
-        ),
-      ),
+      )
     );
   }
 }
@@ -219,13 +222,14 @@ class CustomContainer extends StatelessWidget {
             width: width,
             height: height,
             /// TODO: REPLACE THE STATIC NUMBER WITH VALUE FROM ARGONSIZE
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(8),
             child: Container(
               width: width,
               height: height,
+
               decoration: BoxDecoration(
                 ///TODO: AND HERE
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(10),
                 color: backGroundColor, // background
               ),
               child: Padding(
@@ -239,12 +243,15 @@ class CustomContainer extends StatelessWidget {
                     image ,
                     Expanded(
                       flex: 1,
-                      child: Center(
-                        child: CustomText(
-                          text: text,
-                          size: textSize,
-                          color: textColor,
-                          fontWeight: FontWeight.w800,
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        child: Center(
+                          child: CustomText(
+                            text: text,
+                            size: textSize,
+                            color: textColor,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       ),
                     ),

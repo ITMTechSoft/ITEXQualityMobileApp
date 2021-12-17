@@ -4,6 +4,7 @@ import 'package:itex_soft_qualityapp/Models/Criteria_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:html/parser.dart' show parse;
+import 'package:itex_soft_qualityapp/Widgets/TimerButton.dart';
 
 class Criteria_Test extends StatefulWidget {
   @override
@@ -79,7 +80,28 @@ class _Criteria_TestState extends State<Criteria_Test> {
                   child: Column(
                     children: [
                       !IsUserApproved
-                          ? Container()
+                          ? TimerButton(
+                        label:
+                        PersonalCase.GetLable(ResourceKey.Validation),
+                        activeTextStyle: TextStyle(
+                          fontSize: ArgonSize.WidthSmall,
+                          color: ArgonColors.white,
+                        ),
+                        disabledTextStyle: TextStyle(
+                            fontSize: ArgonSize.WidthSmall,
+                            color: ArgonColors.white),
+                        timeOutInSeconds: WaitSYC > 0 ? WaitSYC : 1,
+                        onPressed: () async {
+                          bool IsValidated = await PersonalCase
+                              .SelectedTest!
+                              .SetValidationAction(
+                              PersonalCase.GetCurrentUser().Id);
+                          if (IsValidated) Navigator.pop(context);
+                        },
+                        buttonType: ButtonType.RaisedButton,
+                        disabledColor: Colors.amberAccent,
+                        color: ArgonColors.myLightBlue,
+                      )
                           : Container(),
                         new Container(
                             child: new Column(

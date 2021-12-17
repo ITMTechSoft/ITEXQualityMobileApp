@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
-Widget InformationBox({required Widget MainPage,required Function() function , required IconData icon}) {
+Widget  InformationBox({required Widget MainPage,required Function() function ,  IconData? icon}) {
 
   return Stack(
     children:[

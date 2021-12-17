@@ -32,7 +32,7 @@ class _Cutting_PastalControlState extends State<Cutting_PastalControl> {
       ErrorAmount += element.Error_Amount ?? 0;
     });
     Percentage = 0;
-    if ((SampleAmount ?? 0) > 0)
+    if ((SampleAmount) > 0)
       Percentage = ((ErrorAmount * 100) / SampleAmount).ceil();
   }
 
@@ -236,8 +236,8 @@ class _Cutting_PastalControlState extends State<Cutting_PastalControl> {
                     bool Check = await CorrentVal(PersonalCase);
                     if (Check) {
                       setState(() {
-                        IncrementVal = 1;
-                        FarkVal = 0.0;
+                      //  IncrementVal = 1;
+                      //  FarkVal = 0.0;
                       });
                     }
                   }),
@@ -306,8 +306,8 @@ class _Cutting_PastalControlState extends State<Cutting_PastalControl> {
                     bool Check = await ErrorVal(PersonalCase);
                     if (Check) {
                       setState(() {
-                        IncrementVal = 1;
-                        FarkVal = 0.0;
+                       // IncrementVal = 1;
+                       // FarkVal = 0.0;
                       });
                     }
                   }),

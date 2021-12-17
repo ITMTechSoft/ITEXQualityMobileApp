@@ -37,7 +37,6 @@ dependencies:
   flutter_spinbox: ^0.6.0
   mask_text_input_formatter: ^2.0.0
 
-
   flutter:
     sdk: flutter
 

@@ -81,6 +81,7 @@ class _OrderListState extends State<OrderList> {
                       ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
+                          primary: false,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, int i) {
                             return OrderCard(Item:snapshot.data![i], OnTap:() {

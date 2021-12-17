@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Models/DepartmentModelOrder_QualityTest.dart';
+import 'package:itex_soft_qualityapp/Screens/Home/QualityTest/AQLControl/AQL_Control.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
@@ -112,6 +113,10 @@ class _QualityTestListState extends State<QualityTestList> {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => OrderSize_Matrix()));
         break;
+      case 11:
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AQL_Control()));
+        break;
     }
   }
 
@@ -120,7 +125,6 @@ class _QualityTestListState extends State<QualityTestList> {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     return Scaffold(
       appBar:
-
       DetailBar(Title: PersonalCase.GetLable(ResourceKey.QualityTests),PersonalCase: PersonalCase, OnTap:() {
         Navigator.pop(context);
       },
@@ -130,7 +134,11 @@ class _QualityTestListState extends State<QualityTestList> {
         future: LoadEmployeeOrders(PersonalCase),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView(children: <Widget>[
+            return ListView(
+                shrinkWrap: true,
+                primary: false,
+
+                children: <Widget>[
               Container(
                   margin: EdgeInsets.all(ArgonSize.MainMargin),
                   child: Column(
@@ -153,6 +161,7 @@ class _QualityTestListState extends State<QualityTestList> {
                       ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
+                          primary: false,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, int i) {
                             return OneItem(

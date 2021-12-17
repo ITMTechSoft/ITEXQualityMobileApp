@@ -28,11 +28,18 @@ class OrderSizeColorDetailsBLL {
 
   bool? IsChecked;
 
-  int?ControlAmount;
-  int?Remain_Value;
+  int? ControlAmount;
+  int? Remain_Value;
+
+  int? AQLColorSize_Sample;
+  int? Sample_No;
+  int? AQL_Major;
+  int? AQL_Minor;
+  int? Sample_Amount;
+
+
 
   //#endregion
-
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -61,6 +68,12 @@ class OrderSizeColorDetailsBLL {
     this.SizeEntityOrder = json['SizeEntityOrder'];
     this.ColorParam_StringVal = json['ColorParam_StringVal'];
     this.ColorEntityOrder = json['ColorEntityOrder'];
+
+    this.AQLColorSize_Sample = json['AQLColorSize_Sample'];
+    this.Sample_No = json['Sample_No'];
+    this.AQL_Major = json['AQL_Major'];
+    this.AQL_Minor = json['AQL_Minor'];
+    this.Sample_Amount = json['Sample_Amount'];
   }
 
   OrderSizeColorDetailsBLL.fromJson(Map<String, dynamic> json)
@@ -87,7 +100,12 @@ class OrderSizeColorDetailsBLL {
         SizeParam_StringVal = json['SizeParam_StringVal'],
         SizeEntityOrder = json['SizeEntityOrder'],
         ColorParam_StringVal = json['ColorParam_StringVal'],
-        ColorEntityOrder = json['ColorEntityOrder'];
+        ColorEntityOrder = json['ColorEntityOrder'],
+        AQLColorSize_Sample = json['AQLColorSize_Sample'],
+        Sample_No = json['Sample_No'],
+        AQL_Major = json['AQL_Major'],
+        AQL_Minor = json['AQL_Minor'],
+        Sample_Amount = json['Sample_Amount'];
 
   Map<String, dynamic> toJson() => {
         'Id': Id,
@@ -109,7 +127,12 @@ class OrderSizeColorDetailsBLL {
         'SizeParam_StringVal': SizeParam_StringVal,
         'SizeEntityOrder': SizeEntityOrder,
         'ColorParam_StringVal': ColorParam_StringVal,
-        'ColorEntityOrder': ColorEntityOrder
+        'ColorEntityOrder': ColorEntityOrder,
+        'AQLColorSize_Sample': AQLColorSize_Sample,
+        'Sample_No': Sample_No,
+        'AQL_Major': AQL_Major,
+        'AQL_Minor': AQL_Minor,
+        'Sample_Amount': Sample_Amount
       };
 
   Map<String, String> toPost() => {
@@ -132,7 +155,12 @@ class OrderSizeColorDetailsBLL {
         'SizeParam_StringVal': SizeParam_StringVal.toString(),
         'SizeEntityOrder': SizeEntityOrder.toString(),
         'ColorParam_StringVal': ColorParam_StringVal.toString(),
-        'ColorEntityOrder': ColorEntityOrder.toString()
+        'ColorEntityOrder': ColorEntityOrder.toString(),
+        'AQLColorSize_Sample': AQLColorSize_Sample.toString(),
+        'Sample_No': Sample_No.toString(),
+        'AQL_Major': AQL_Major.toString(),
+        'AQL_Minor': AQL_Minor.toString(),
+        'Sample_Amount': Sample_Amount.toString()
       };
 
   //#endregion
@@ -142,14 +170,35 @@ class OrderSizeColorDetailsBLL {
       int Order_id) async {
     List<OrderSizeColorDetailsBLL>? ItemList;
     try {
-
-      Map<String,String> qParams = {
-        'Order_id':Order_id.toString()
-      };
-      var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Get_OrderSizeColorDetails,qParams));
+      Map<String, String> qParams = {'Order_id': Order_id.toString()};
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_OrderSizeColorDetails, qParams));
 
       // print(response.request.toString());
+      if (response.statusCode == 200) {
+        ItemList = (json.decode(response.body) as List)
+            .map((i) => OrderSizeColorDetailsBLL.fromJson(i))
+            .toList();
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return ItemList;
+  }
+
+  static Future<List<OrderSizeColorDetailsBLL>?> Get_AQLOrderSizeColorDetails(
+      {int Order_Id = 0, int DeptModelOrder_QualityTest_Id = 0}) async {
+    List<OrderSizeColorDetailsBLL>? ItemList;
+    try {
+      Map<String, String> qParams = {
+        'Order_id': Order_Id.toString(),
+        'DeptModelOrder_QualityTest_Id':
+            DeptModelOrder_QualityTest_Id.toString()
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_AQLOrderSizeColorDetails, qParams));
+
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
             .map((i) => OrderSizeColorDetailsBLL.fromJson(i))

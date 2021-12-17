@@ -225,8 +225,7 @@ Widget CuttingPastalControl(
     mainAxisSize: MainAxisSize.max,
     children: [
       SizedBox(height: ArgonSize.Padding6),
-      LableTitle(Item.Item_Name ?? '',
-          color: ArgonColors.text, FontSize: ArgonSize.Header4),
+      LableTitle(Item.Item_Name ?? '',color: ArgonColors.text, FontSize: ArgonSize.Header4),
       SizedBox(height: ArgonSize.Padding3),
       ActionControl,
       SizedBox(height: ArgonSize.Padding6),

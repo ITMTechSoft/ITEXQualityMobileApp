@@ -17,6 +17,8 @@ class QualityDepartment_ModelOrderBLL {
   String? Order_Number;
   String? Depart_Name;
   String? Model_Name;
+  String? Customer_Name;
+
 
   //#endregion
 
@@ -39,6 +41,7 @@ class QualityDepartment_ModelOrderBLL {
     this.Order_Number = json['Order_Number'];
     this.Depart_Name = json['Depart_Name'];
     this.Model_Name = json['Model_Name'];
+    this.Customer_Name = json['Customer_Name'];
   }
 
   QualityDepartment_ModelOrderBLL.fromJson(Map<String, dynamic> json)
@@ -57,7 +60,8 @@ class QualityDepartment_ModelOrderBLL {
         Quantity = json['Quantity'],
         Order_Number = json['Order_Number'],
         Depart_Name = json['Depart_Name'],
-        Model_Name = json['Model_Name'];
+        Model_Name = json['Model_Name'],
+        Customer_Name = json['Customer_Name'];
 
   Map<String, dynamic> toJson() => {
         'Id': Id,
@@ -72,6 +76,7 @@ class QualityDepartment_ModelOrderBLL {
         'Quantity': Quantity,
         'Order_Number': Order_Number,
         'Depart_Name': Depart_Name,
+        'Customer_Name': Customer_Name,
       };
 
   Map<String, String> toPost() => {
@@ -87,7 +92,7 @@ class QualityDepartment_ModelOrderBLL {
         'Quantity': Quantity.toString(),
         'Order_Number': Order_Number!,
         'Depart_Name': Depart_Name.toString(),
-
+    'Customer_Name': Customer_Name.toString(),
       };
 
   //#endregion

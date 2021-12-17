@@ -5,6 +5,7 @@ import 'package:itex_soft_qualityapp/Utility/constants.dart';
 
 import 'ApplicationBars.dart';
 
+/*
 class TopBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final Widget child;
@@ -80,7 +81,7 @@ class _TopBarState extends State<TopBar> {
                           child: FittedBox(
                             fit: BoxFit.fitWidth,
                             child: Text(
-                              widget.title!,
+                              widget.title??"",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 25,
@@ -101,7 +102,7 @@ class _TopBarState extends State<TopBar> {
     );
   }
 }
-
+*/
 
 PreferredSizeWidget ScreenAppBar(PersonalProvider PersonalCase ,context,  {Function()? CloseAction}) {
   return DetailBar(

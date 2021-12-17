@@ -5,6 +5,7 @@ import 'package:itex_soft_qualityapp/Models/FinalControl/Quality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
+import 'package:itex_soft_qualityapp/Utility/TakeImageCamera.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
 import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
@@ -62,6 +63,18 @@ class _QualityItemsListState extends State<QualityItemsList> {
         UserQuality.Amount = -1;
       else
         UserQuality.Amount = 1;
+
+      String? Image64;
+      if (_IsDeletedVal == false &&
+          (CaseProvider.QualityItemList![index].IsTakeImage ??
+              false)) {
+        Image64 = await TakeImageFromCamera();
+      }
+
+      bool check = await CaseProvider.QualityItemList![index]
+          .Set_QualityInlineError(CaseProvider.EmployeeOperation!.Id,
+          IsDelete: _IsDeletedVal, Image: Image64);
+
 
       int CheckStatus = await UserQuality.Set_UserQualityFinalControl();
       switch (CheckStatus) {
