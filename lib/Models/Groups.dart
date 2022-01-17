@@ -17,7 +17,6 @@ class GroupsBLL {
 
   //#endregion
 
-
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
     this.Groups_id = json['Groups_id'];
@@ -26,41 +25,33 @@ class GroupsBLL {
     this.Group_Type = json['Group_Type'];
     this.Group_Description = json['Group_Description'];
     this.Group_Code = json['Group_Code'];
-
   }
 
-  GroupsBLL.fromJson(Map<String, dynamic> json):
-        Groups_id = json['Groups_id'],
+  GroupsBLL.fromJson(Map<String, dynamic> json)
+      : Groups_id = json['Groups_id'],
         Source_Id = json['Source_Id'],
         Group_Name = json['Group_Name'],
         Group_Type = json['Group_Type'],
         Group_Description = json['Group_Description'],
         Group_Code = json['Group_Code'];
 
-
   Map<String, dynamic> toJson() => {
-    'Groups_id': Groups_id,
-    'Source_Id': Source_Id,
-    'Group_Name': Group_Name,
-    'Group_Type': Group_Type,
-    'Group_Description': Group_Description,
-    'Group_Code': Group_Code,
-
-  };
+        'Groups_id': Groups_id,
+        'Source_Id': Source_Id,
+        'Group_Name': Group_Name,
+        'Group_Type': Group_Type,
+        'Group_Description': Group_Description,
+        'Group_Code': Group_Code,
+      };
 
   Map<String, String> toPost() => {
-
-
-    'Groups_id': Groups_id.toString(),
-    'Source_Id': Source_Id.toString(),
-    'Group_Name': Group_Name??'',
-    'Group_Type': Group_Type??'',
-    'Group_Description': Group_Description??'',
-    'Group_Code': Group_Code??'',
-
-  };
-
-
+        'Groups_id': Groups_id.toString(),
+        'Source_Id': Source_Id.toString(),
+        'Group_Name': Group_Name ?? '',
+        'Group_Type': Group_Type ?? '',
+        'Group_Description': Group_Description ?? '',
+        'Group_Code': Group_Code ?? '',
+      };
 
   //#endregion
 
@@ -69,11 +60,13 @@ class GroupsBLL {
       int DeptModelOrder_QualityTest_Id) async {
     List<GroupsBLL>? ItemList;
     try {
-      Map<String,String> qParams = {
-        'DeptModelOrder_QualityTest_Id':DeptModelOrder_QualityTest_Id.toString()
+      Map<String, String> qParams = {
+        'DeptModelOrder_QualityTest_Id':
+            DeptModelOrder_QualityTest_Id.toString()
       };
-      var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Get_TasnifControlGroups,qParams) );
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_TasnifControlGroups,
+          Paramters: qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
@@ -88,7 +81,4 @@ class GroupsBLL {
   }
 //#endregion
 
-
-
 }
-

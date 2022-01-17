@@ -8,11 +8,13 @@ import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 
 class EmployeesBLL {
   //#region Properties
-  int Id = 0 ;
+  int Id = 0;
+
   String? Employee_Name;
   String? Employee_Barcode;
   int? Depart_id;
- // Uint8List? Employee_Image;
+
+  // Uint8List? Employee_Image;
   int? Job_title_id;
   bool? WorkerStatus;
   String? Card_Code;
@@ -52,7 +54,7 @@ class EmployeesBLL {
         Employee_Name = json['Employee_Name'],
         Employee_Barcode = json['Employee_Barcode'],
         Depart_id = json['Depart_id'],
-     //   Employee_Image = json['Employee_Image'],
+        //   Employee_Image = json['Employee_Image'],
         Job_title_id = json['Job_title_id'],
         WorkerStatus = json['WorkerStatus'],
         Card_Code = json['Card_Code'],
@@ -64,64 +66,51 @@ class EmployeesBLL {
         LoginMessage = json['LoginMessage'];
 
   Map<String, dynamic> toJson() => {
-    'Id': Id,
-    'Employee_Name': Employee_Name,
-    'Employee_Barcode': Employee_Barcode,
-    'Depart_id': Depart_id,
-    //'Employee_Image': Employee_Image,
-    'Job_title_id': Job_title_id,
-    'WorkerStatus': WorkerStatus,
-    'Card_Code': Card_Code,
-    'Emp_Type_id': Emp_Type_id,
-    'Employee_Password': Employee_Password,
-    'Employee_User': Employee_User,
-    'Line_Id': Line_Id,
-    'ValidUser': ValidUser,
-    'LoginMessage': LoginMessage,
-  };
+        'Id': Id,
+        'Employee_Name': Employee_Name,
+        'Employee_Barcode': Employee_Barcode,
+        'Depart_id': Depart_id,
+        //'Employee_Image': Employee_Image,
+        'Job_title_id': Job_title_id,
+        'WorkerStatus': WorkerStatus,
+        'Card_Code': Card_Code,
+        'Emp_Type_id': Emp_Type_id,
+        'Employee_Password': Employee_Password,
+        'Employee_User': Employee_User,
+        'Line_Id': Line_Id,
+        'ValidUser': ValidUser,
+        'LoginMessage': LoginMessage,
+      };
 
   Map<String, String> toPost() => {
-    'Id': this.Id.toString(),
-    'Employee_Name': this.Employee_Name??'',
-    'Employee_Barcode': this.Employee_Barcode??'',
-    'Depart_id': this.Depart_id.toString(),
-    //'Employee_Image': this.Employee_Image.toString(),
-    'Job_title_id': this.Job_title_id.toString(),
-    'WorkerStatus': this.WorkerStatus.toString(),
-    'Card_Code': this.Card_Code??'',
-    'Emp_Type_id': this.Emp_Type_id.toString(),
-    'Employee_Password': this.Employee_Password??'',
-    'Employee_User': this.Employee_User??'',
-    'Line_Id': this.Line_Id.toString(),
-    'ValidUser': this.ValidUser.toString(),
-    'LoginMessage': this.LoginMessage.toString(),
-  };
+        'Id': this.Id.toString(),
+        'Employee_Name': this.Employee_Name ?? '',
+        'Employee_Barcode': this.Employee_Barcode ?? '',
+        'Depart_id': this.Depart_id.toString(),
+        //'Employee_Image': this.Employee_Image.toString(),
+        'Job_title_id': this.Job_title_id.toString(),
+        'WorkerStatus': this.WorkerStatus.toString(),
+        'Card_Code': this.Card_Code ?? '',
+        'Emp_Type_id': this.Emp_Type_id.toString(),
+        'Employee_Password': this.Employee_Password ?? '',
+        'Employee_User': this.Employee_User ?? '',
+        'Line_Id': this.Line_Id.toString(),
+        'ValidUser': this.ValidUser.toString(),
+        'LoginMessage': this.LoginMessage.toString(),
+      };
 
 //#endregion
 
   //#region login Methods
   Future<void> login() async {
     try {
-      // final String url =
-      // SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection);
-      // print(url.toString());
-      // var response = await http.post(
-      //   url,
-      //   headers: <String, String>{
-      //     'Content-Type': 'application/json; charset=UTF-8',
-      //   },
-      //   body: jsonEncode(
-      //     toPost(),
-      //   ),
-      // );
-
 
       String val = jsonEncode(toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      var url = Uri.parse(
-          SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection));
+      var url =
+          Uri.parse(SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection));
       var response = await http.post(url, body: val, headers: headers);
 
       if (response.statusCode == 200) {
@@ -139,52 +128,36 @@ class EmployeesBLL {
   }
 
   /// CHECK IF IP AND PORT ARE CORRECT
-  Future<String> CheckIP() async {
-
-
+  Future<bool> CheckIP() async {
     try {
-      // final String url = SharedPref.GetWebApiUrl(WebApiMethod.Get_Version,
-      //     WebApiDomain: "api/MaksitusTable");
-      // print(url.toString());
-      //
-      //
-      // var response = await http.get(url).timeout(const Duration(seconds: 70),
-      //     onTimeout: () {
-      //       LoginMessage = "SERVER CAN'T BE REACHED";
-      //
-      //       throw TimeoutException(
-      //           'The connection has timed out, Please try again!');
-      //     });
-
-
-      var url = Uri.parse(
-          SharedPref.GetWebApiUrl(WebApiMethod.Get_Version, WebApiDomain: "api/MaksitusTable"));
-      var response = await http.get(url).timeout(Duration(seconds: 70),
-          onTimeout: () {
+      var url = Uri.parse(SharedPref.GetWebApiUrl(WebApiMethod.Get_Version,
+          WebApiDomain: "api/MaksitusTable"));
+      var response =
+          await http.get(url).timeout(Duration(seconds: 30), onTimeout: () {
         LoginMessage = "SERVER CAN'T BE REACHED";
         throw TimeoutException(
             'The connection has timed out, Please try again!');
       });
       if (response.statusCode == 200) {
         print(response.body);
-        return "True";
+        return true;
       } else {
-        return "False";
+        return false;
       }
     } catch (e) {
       print(e);
     }
-    return "False";
+    return false;
   }
 
   /// TODO: WHAT IS THE DIFFERENCE BETWEEN LOGIN AND SIGNIN
   Sign_In(String UserName, String Password) async {
     EmployeesBLL CheckUserLogin =
-    new EmployeesBLL(Employee_User: UserName, Employee_Password: Password);
+        new EmployeesBLL(Employee_User: UserName, Employee_Password: Password);
     Map data = {'User': CheckUserLogin};
 
-    var url = Uri.parse( SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection));
-
+    var url =
+        Uri.parse(SharedPref.GetWebApiUrl(WebApiMethod.CheckUserConnection));
 
     var response = await http.post(url, body: data);
 
@@ -201,14 +174,12 @@ class EmployeesBLL {
   static Future<List<EmployeesBLL>?> Get_Employees() async {
     List<EmployeesBLL>? ItemList;
     try {
+      Map<String, String> qParams = {};
 
-      Map<String,String> qParams = {
-      };
+      var response =
+          await http.get(SharedPref.GetWebApiUri(WebApiMethod.Get_Employees));
 
-      var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Get_Employees,qParams));
-
-      print(  SharedPref.GetWebApiUrl(WebApiMethod.Get_Employees));
+      print(SharedPref.GetWebApiUrl(WebApiMethod.Get_Employees));
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
             .map((i) => EmployeesBLL.fromJson(i))
@@ -221,16 +192,14 @@ class EmployeesBLL {
     return ItemList;
   }
 
-  static Future<List<EmployeesBLL>?> Get_EmployeesByOperation(int Operation_Id) async {
+  static Future<List<EmployeesBLL>?> Get_EmployeesByOperation(
+      int Operation_Id) async {
     List<EmployeesBLL>? ItemList;
     try {
-
-      Map<String,String> qParams = {
-        'Operation_Id':Operation_Id.toString()
-      };
-      var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Get_EmployeesByOperation,qParams));
-
+      Map<String, String> qParams = {'Operation_Id': Operation_Id.toString()};
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_EmployeesByOperation,
+          Paramters: qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

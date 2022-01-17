@@ -60,7 +60,7 @@ class SharedPref {
 
 
         if (ServerIp!.isNotEmpty || ServerPort!.isNotEmpty)
-          return true;
+            return true;
         else {
           return false;
         }
@@ -78,7 +78,7 @@ class SharedPref {
   }
 
   static Uri GetWebApiUri(
-      WebApiMethod MethodName, Map<String, dynamic> Paramters) {
+      WebApiMethod MethodName, {Map<String, dynamic>? Paramters}) {
     String path = "/api/Quality/" + MethodName.toString().split('.').last;
 
     Uri target;

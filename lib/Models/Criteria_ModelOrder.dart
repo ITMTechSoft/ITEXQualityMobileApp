@@ -17,8 +17,9 @@ class Criteria_ModelOrderBLL {
 
   //#endregion
 
-  Criteria_ModelOrderBLL({required  this.Id,
-  required this.DeptModelOrder_QualityTest_Id});
+  Criteria_ModelOrderBLL(
+      {required this.Id, required this.DeptModelOrder_QualityTest_Id});
+
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
     this.Id = json['Id'];
@@ -34,31 +35,26 @@ class Criteria_ModelOrderBLL {
       : Id = json['Id'],
         DeptModelOrder_QualityTest_Id = json['DeptModelOrder_QualityTest_Id'],
         IsMandatory = json['IsMandatory'],
-
         HTML_Data = json['HTML_Data'],
         QualityTest_Id = json['QualityTest_Id'],
         WaitTimeSNY = json['WaitTimeSNY'],
         QualityDept_ModelOrder_Id = json['QualityDept_ModelOrder_Id'];
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         'Id': Id,
         'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id,
         'IsMandatory': IsMandatory,
-
         'HTML_Data': HTML_Data,
         'QualityTest_Id': QualityTest_Id,
         'WaitTimeSNY': WaitTimeSNY,
         'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id,
       };
 
-  Map<String, String> toPost() =>
-      {
+  Map<String, String> toPost() => {
         'Id': Id.toString(),
         'DeptModelOrder_QualityTest_Id':
-        DeptModelOrder_QualityTest_Id.toString(),
+            DeptModelOrder_QualityTest_Id.toString(),
         'IsMandatory': IsMandatory.toString(),
-
         'HTML_Data': HTML_Data.toString(),
         'WaitTimeSNY': WaitTimeSNY.toString(),
         'QualityTest_Id': QualityTest_Id.toString(),
@@ -70,15 +66,16 @@ class Criteria_ModelOrderBLL {
   //#region GetWebApiUrl
   static Future<Criteria_ModelOrderBLL?> Get_Criteria_ModelOrder(
       int DeptModelOrder_QualityTest_Id) async {
-    Criteria_ModelOrderBLL? Item = new Criteria_ModelOrderBLL(Id:0,DeptModelOrder_QualityTest_Id:0);
+    Criteria_ModelOrderBLL? Item =
+        new Criteria_ModelOrderBLL(Id: 0, DeptModelOrder_QualityTest_Id: 0);
     try {
       Map<String, String> qParams = {
-        'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id.toString(),
+        'DeptModelOrder_QualityTest_Id':
+            DeptModelOrder_QualityTest_Id.toString(),
       };
-      var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Get_Criteria_ModelOrder,qParams)
-      );
-
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_Criteria_ModelOrder,
+          Paramters: qParams));
 
       if (response.statusCode == 200) {
         Item.LoadFromJson(json.decode(response.body));

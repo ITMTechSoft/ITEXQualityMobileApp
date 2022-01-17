@@ -608,7 +608,9 @@ class _TableBodyGListState extends State<TableBodyGList> {
                         TableLable(widget.Items[i].Accessory, Flex: 2),
                         TableLable((widget.Items[i].Quantity ?? 0).toString()),
                         TableLable(
-                            (widget.Items[i].Checks_Quantity ?? 0).toString()),
+                            (widget.Items[i].Correct_Amount ?? 0).toString()),
+                        TableLable(
+                            (widget.Items[i].Error_Amount ?? 0).toString()),
                       ], IsSelectedItem: SelectedIndex == i),
                     );
                   }))

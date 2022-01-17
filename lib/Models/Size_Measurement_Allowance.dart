@@ -113,7 +113,7 @@ class Size_Measurement_AllowanceBLL {
       };
 
       var response = await http.get(SharedPref.GetWebApiUri(
-          WebApiMethod.Get_Size_Measurement_Allowance, qParams));
+          WebApiMethod.Get_Size_Measurement_Allowance, Paramters: qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

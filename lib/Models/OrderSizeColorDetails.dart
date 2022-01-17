@@ -37,8 +37,6 @@ class OrderSizeColorDetailsBLL {
   int? AQL_Minor;
   int? Sample_Amount;
 
-
-
   //#endregion
 
   //#region Json Mapping
@@ -73,6 +71,8 @@ class OrderSizeColorDetailsBLL {
     this.Sample_No = json['Sample_No'];
     this.AQL_Major = json['AQL_Major'];
     this.AQL_Minor = json['AQL_Minor'];
+    this.ControlAmount = json['ControlAmount'];
+    this.Remain_Value = json['Remain_Value'];
     this.Sample_Amount = json['Sample_Amount'];
   }
 
@@ -105,6 +105,8 @@ class OrderSizeColorDetailsBLL {
         Sample_No = json['Sample_No'],
         AQL_Major = json['AQL_Major'],
         AQL_Minor = json['AQL_Minor'],
+        ControlAmount = json['ControlAmount'],
+        Remain_Value = json['Remain_Value'],
         Sample_Amount = json['Sample_Amount'];
 
   Map<String, dynamic> toJson() => {
@@ -172,9 +174,35 @@ class OrderSizeColorDetailsBLL {
     try {
       Map<String, String> qParams = {'Order_id': Order_id.toString()};
       var response = await http.get(SharedPref.GetWebApiUri(
-          WebApiMethod.Get_OrderSizeColorDetails, qParams));
+          WebApiMethod.Get_OrderSizeColorDetails,
+          Paramters: qParams));
 
       // print(response.request.toString());
+      if (response.statusCode == 200) {
+        ItemList = (json.decode(response.body) as List)
+            .map((i) => OrderSizeColorDetailsBLL.fromJson(i))
+            .toList();
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return ItemList;
+  }
+
+  static Future<List<OrderSizeColorDetailsBLL>?> Get_FinalOrderSizeColorDetails(
+      {int Order_Id = 0, int DeptModelOrder_QualityTest_Id = 0}) async {
+    List<OrderSizeColorDetailsBLL>? ItemList;
+    try {
+      Map<String, String> qParams = {
+        'Order_id': Order_Id.toString(),
+        'DeptModelOrder_QualityTest_Id':
+        DeptModelOrder_QualityTest_Id.toString()
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_FinalOrderSizeColorDetails,
+          Paramters: qParams));
+
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
             .map((i) => OrderSizeColorDetailsBLL.fromJson(i))
@@ -197,7 +225,8 @@ class OrderSizeColorDetailsBLL {
             DeptModelOrder_QualityTest_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
-          WebApiMethod.Get_AQLOrderSizeColorDetails, qParams));
+          WebApiMethod.Get_AQLOrderSizeColorDetails,
+          Paramters: qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

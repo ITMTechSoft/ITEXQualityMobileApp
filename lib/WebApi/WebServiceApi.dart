@@ -1,4 +1,5 @@
 enum WebApiMethod{
+  Get_FinalOrderSizeColorDetails,
   Get_AQLOrderSizeColorDetails,
   Set_Size_Measurement_Allowance,
   Set_UserQualityAQLControl,

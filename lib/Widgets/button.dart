@@ -93,10 +93,11 @@ Widget IconInsideCircle(
     double? iconSize,
     Color backGroundColor = ArgonColors.primary,
     double size = 13,
-    Function()? function}) {
+    Function()? function,
+    bool  IsShowUp=true}) {
   return GestureDetector(
     onTap: function ?? () {},
-    child: Container(
+    child: IsShowUp == true ? Container(
       padding: EdgeInsets.all(size),
       margin: EdgeInsets.only(left: 0),
       decoration: BoxDecoration(
@@ -108,7 +109,7 @@ Widget IconInsideCircle(
         size: iconSize ?? ArgonSize.IconSize,
         color: color,
       ),
-    ),
+    ) : Container(width: 0, height: 0),
   );
 }
 

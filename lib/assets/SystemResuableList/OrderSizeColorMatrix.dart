@@ -30,11 +30,11 @@ class _OrderSizeColorMatrixState extends State<OrderSizeColorMatrix> {
         children: <Widget>[
           HeaderColumn(
             children: <Widget>[
-              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.SizeName)),
-              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.ColorName)),
-              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.SizeColor_QTY)),
-              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.ControlAmount)),
-              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.Remain_Value)),
+              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.SizeName),Flex: 1),
+              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.ColorName),Flex: 1),
+              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.SizeColor_QTY),Flex: 1),
+              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.ControlAmount),Flex: 1),
+              HeaderLable(widget.PersonalCase!.GetLable(ResourceKey.Remain_Value),Flex: 1),
             ]
           ),
           SingleChildScrollView(
@@ -53,11 +53,11 @@ class _OrderSizeColorMatrixState extends State<OrderSizeColorMatrix> {
                         });
                       },
                       child: TableColumn(children: [
-                        TableLable(widget.Items![i].SizeParam_StringVal??''),
-                        TableLable(widget.Items![i].ColorParam_StringVal??''),
-                        LableInteger(widget.Items![i].SizeColor_QTY),
-                        LableInteger(widget.Items![i].ControlAmount),
-                        LableInteger(widget.Items![i].Remain_Value),
+                        TableLable(widget.Items![i].SizeParam_StringVal??'',Flex: 1),
+                        TableLable(widget.Items![i].ColorParam_StringVal??'',Flex: 1),
+                        LableInteger(widget.Items![i].SizeColor_QTY,Flex: 1),
+                        LableInteger(widget.Items![i].ControlAmount,Flex: 1),
+                        LableInteger(widget.Items![i].Remain_Value,Flex: 1),
                       ], IsSelectedItem: SelectedIndex == i),
                     );
                   }))

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:itex_soft_qualityapp/Models/DeptModOrderQuality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
+import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
 import 'package:itex_soft_qualityapp/Widgets/TopBar.dart';
 import 'package:itex_soft_qualityapp/Widgets/Utils/Loadding.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
@@ -23,6 +25,7 @@ class _Cutting_PastalControlState extends State<Cutting_PastalControl> {
   int SampleAmount = 0;
   int ErrorAmount = 0;
   int Percentage = 0;
+  bool _IsDeletedVal = false;
 
   CalculateHeader() {
     SampleAmount = 0;
@@ -177,10 +180,26 @@ class _Cutting_PastalControlState extends State<Cutting_PastalControl> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-                flex: 6,
-                child: LableTitle(
-                    PersonalCase.GetLable(ResourceKey.ControlAxaisName),
-                    FontSize: ArgonSize.Header4)),
+              flex: 1,
+              child: RadioSwitch(
+                Lable: PersonalCase.GetLable(ResourceKey.Delete),
+                fontSize: ArgonSize.Header5,
+                SwitchValue: _IsDeletedVal,
+                OnTap: (value) {
+                  setState(() {
+                    _IsDeletedVal = value;
+                  });
+                },
+              ),
+            ),
+            Expanded(
+              flex: 6,
+              child: Container(
+                  margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                  child: LableTitle(
+                      PersonalCase.GetLable(ResourceKey.ControlAxaisName),
+                      FontSize: ArgonSize.Header4)),
+            ),
             Expanded(
                 flex: 2,
                 child: LableTitle(
@@ -190,7 +209,7 @@ class _Cutting_PastalControlState extends State<Cutting_PastalControl> {
                 flex: 2,
                 child: LableTitle(
                     PersonalCase.GetLable(ResourceKey.ControlError),
-                    FontSize: ArgonSize.Header4))
+                    FontSize: ArgonSize.Header4)),
           ],
         ),
       );
@@ -227,20 +246,28 @@ class _Cutting_PastalControlState extends State<Cutting_PastalControl> {
           children: [
             Expanded(
               flex: 1,
-              child: CustomButton(
-                  value: PersonalCase.GetLable(ResourceKey.Saglim),
-                  backGroundColor: ArgonColors.primary,
-                  width: getScreenWidth() / 2,
-                  height: ArgonSize.HeightVeryBig,
-                  function: () async {
+              child: ButtonWithNumber(
+                  text: PersonalCase.GetLable(ResourceKey.Saglim),
+                  btnBgColor: ArgonColors.primary,
+                  textColor: ArgonColors.white,
+                  buttonWidth: getScreenWidth() / 2,
+                  buttonHegiht: getScreenHeight() / 6,
+                  OnTap: () async {
                     bool Check = await CorrentVal(PersonalCase);
                     if (Check) {
                       setState(() {
-                      //  IncrementVal = 1;
-                      //  FarkVal = 0.0;
+                        //  IncrementVal = 1;
+                        //  FarkVal = 0.0;
                       });
                     }
-                  }),
+                  },
+                  bottomRight: IconInsideCircle(
+                      IsShowUp: _IsDeletedVal,
+                      iconSize: ArgonSize.Header5,
+                      size: ArgonSize.Padding5,
+                      icon: FontAwesomeIcons.minus,
+                      color: Colors.white,
+                      backGroundColor: Colors.red)),
             ),
             SizedBox(width: 20),
             Expanded(
@@ -297,20 +324,28 @@ class _Cutting_PastalControlState extends State<Cutting_PastalControl> {
             SizedBox(width: 20),
             Expanded(
               flex: 1,
-              child: CustomButton(
-                  value: PersonalCase.GetLable(ResourceKey.Error),
-                  backGroundColor: ArgonColors.myRed,
-                  width: getScreenWidth() / 2,
-                  height: ArgonSize.HeightVeryBig,
-                  function: () async {
+              child: ButtonWithNumber(
+                  text: PersonalCase.GetLable(ResourceKey.Error),
+                  btnBgColor: ArgonColors.myRed,
+                  textColor: ArgonColors.white,
+                  buttonWidth: getScreenWidth() / 2,
+                  buttonHegiht: getScreenHeight() / 6,
+                  OnTap: () async {
                     bool Check = await ErrorVal(PersonalCase);
                     if (Check) {
                       setState(() {
-                       // IncrementVal = 1;
-                       // FarkVal = 0.0;
+                        // IncrementVal = 1;
+                        // FarkVal = 0.0;
                       });
                     }
-                  }),
+                  },
+                  bottomRight: IconInsideCircle(
+                      IsShowUp: _IsDeletedVal,
+                      iconSize: ArgonSize.Header5,
+                      size: ArgonSize.Padding5,
+                      icon: FontAwesomeIcons.minus,
+                      color: Colors.white,
+                      backGroundColor: Colors.red)),
             ),
           ],
         ),

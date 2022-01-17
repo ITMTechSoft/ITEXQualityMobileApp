@@ -5,19 +5,15 @@ import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/CardRow.dart';
-import 'package:itex_soft_qualityapp/Widgets/HeaderPage.dart';
 import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
-import 'package:itex_soft_qualityapp/assets/SystemResuableList/OrderSizeColorMatrix.dart';
+import 'Steps/Size_SampleControl.dart';
 
-import 'Steps/AQL_ModelOrderMatrix.dart';
-import 'Steps/AQL_SampleControl.dart';
-
-class AQL_Control extends StatefulWidget {
+class Size_Control extends StatefulWidget {
   @override
-  _AQL_ControlState createState() => _AQL_ControlState();
+  _Size_ControlState createState() => _Size_ControlState();
 }
 
-class _AQL_ControlState extends State<AQL_Control> {
+class _Size_ControlState extends State<Size_Control> {
   int IntiteStatus = 0;
   DepartmentModelOrder_QualityTestBLL? DeptModOrderQualityTest;
 
@@ -73,26 +69,13 @@ class _AQL_ControlState extends State<AQL_Control> {
               LabelFex: 4),
           SizedBox(height: 8),
           CardRow(
-              PersonalCase.GetLable(ResourceKey.Acceptable_Level),
-              PersonalCase.GetLable(ResourceKey.Inspection_Level),
-              PersonalCase.SelectedTest!.Accept_Level ?? '',
-              PersonalCase.SelectedTest!.Level_Code ?? '',
-              LabelFex: 4),
-          SizedBox(height: 8),
-          CardRow(
               PersonalCase.GetLable(ResourceKey.PlanningAmount),
-              PersonalCase.GetLable(ResourceKey.AQL_Sample),
-              (PersonalCase.SelectedOrder!.Quantity ?? 0).toString(),
-              (PersonalCase.SelectedTest!.Sample_No ?? 0).toString(),
-              LabelFex: 4),
-          SizedBox(height: 8),
-          CardRow(
               PersonalCase.GetLable(ResourceKey.Check_Sample),
-              PersonalCase.GetLable(ResourceKey.Major),
+              (PersonalCase.SelectedOrder!.Quantity ?? 0).toString(),
               (GetDetailTotal("Sample")).toString(),
-              (GetDetailTotal("Major")).toString(),
               LabelFex: 4),
           SizedBox(height: 8),
+
         ],
       ));
 
@@ -158,7 +141,7 @@ class _AQL_ControlState extends State<AQL_Control> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        AQL_SampleControl()));
+                        Size_SampleControl()));
             setState(() {
               print(value);
             });
@@ -194,24 +177,11 @@ class _AQL_ControlState extends State<AQL_Control> {
             LabelFex: 4),
         SizedBox(height: 8),
         CardRow(
-            PersonalCase.GetLable(ResourceKey.Quantity),
+
             PersonalCase.GetLable(ResourceKey.SizeColor_QTY),
-            (Item.PlanSizeColor_QTY ?? 0).toString(),
-            (Item.SizeColor_QTY ?? 0).toString(),
-            LabelFex: 4),
-        SizedBox(height: 8),
-        CardRow(
-            PersonalCase.GetLable(ResourceKey.AQL_Sample),
             PersonalCase.GetLable(ResourceKey.Check_Sample),
-            (Item.AQLColorSize_Sample ?? 0).toString(),
+            (Item.SizeColor_QTY ?? 0).toString(),
             (Item.Sample_Amount ?? 0).toString(),
-            LabelFex: 4),
-        SizedBox(height: 8),
-        CardRow(
-            PersonalCase.GetLable(ResourceKey.Major),
-            PersonalCase.GetLable(ResourceKey.Minor),
-            (Item.AQL_Major ?? 0).toString(),
-            (Item.AQL_Minor ?? 0).toString(),
             LabelFex: 4),
       ],
     );

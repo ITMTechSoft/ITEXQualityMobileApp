@@ -86,7 +86,7 @@ class Pastal_Cutting_PartiBLL {
         'Order_Id':Order_Id.toString()
       };
       var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Get_Pastal_Cutting_Parti, qParams));
+          SharedPref.GetWebApiUri(WebApiMethod.Get_Pastal_Cutting_Parti, Paramters: qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

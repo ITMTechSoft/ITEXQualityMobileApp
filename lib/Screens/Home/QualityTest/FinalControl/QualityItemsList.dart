@@ -30,6 +30,8 @@ class _QualityItemsListState extends State<QualityItemsList> {
   bool _KeepPage = false;
   bool _IsDeletedVal = false;
 
+
+
   Future<List<Quality_ItemsBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
     List<Quality_ItemsBLL>? Critiera =
@@ -64,16 +66,20 @@ class _QualityItemsListState extends State<QualityItemsList> {
       else
         UserQuality.Amount = 1;
 
-      String? Image64;
-      if (_IsDeletedVal == false &&
-          (CaseProvider.QualityItemList![index].IsTakeImage ??
-              false)) {
-        Image64 = await TakeImageFromCamera();
-      }
+  /*    if(CaseProvider.QualityItemList !=null)
+        {
+          String? Image64;
+          if (_IsDeletedVal == false &&
+              (CaseProvider.QualityItemList![index].IsTakeImage ??
+                  false)) {
+            Image64 = await TakeImageFromCamera();
+          }
 
-      bool check = await CaseProvider.QualityItemList![index]
-          .Set_QualityInlineError(CaseProvider.EmployeeOperation!.Id,
-          IsDelete: _IsDeletedVal, Image: Image64);
+          bool check = await CaseProvider.QualityItemList![index]
+              .Set_QualityInlineError(CaseProvider.EmployeeOperation!.Id,
+              IsDelete: _IsDeletedVal, Image: Image64);
+        }
+*/
 
 
       int CheckStatus = await UserQuality.Set_UserQualityFinalControl();
@@ -176,15 +182,15 @@ class _QualityItemsListState extends State<QualityItemsList> {
                         text: snapshot.data![index].Item_Name!,
                         buttonWidth: getScreenWidth()/2,
                         buttonHegiht: getScreenHeight()/6,
-                        btnBgColor: selectedList.contains(index)
-                            ? ArgonColors.myLightGreen
-                            : ArgonColors.myOrange,
-                        textSize: ArgonSize.Header4,
+                        textColor: Color(snapshot.data![index].Font_Color??2315255808),
+                        btnBgColor: Color(snapshot.data![index].Item_Hex_Color?? -2519964),
+                        textSize: (snapshot.data![index].Font_Size ?? ArgonSize.Header4).toDouble(),
                         topRight: CircleShape(
                             text: (snapshot.data![index].Amount ?? 0).toString(),
                             width: ArgonSize.WidthSmall,
                             height: ArgonSize.WidthSmall,
-                            fontSize: ArgonSize.Header5
+                            fontSize: ArgonSize.Header4,
+                            color : Color(snapshot.data![index].Circle_Color??4278204558)
                         ),
                         bottomLeft: _IsDeletedVal == true
                             ? IconInsideCircle(

@@ -13,9 +13,9 @@ import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 
 class PersonalProvider with ChangeNotifier {
-  EmployeesBLL ?  _CurrentUser;
+  EmployeesBLL? _CurrentUser;
   Employee_DepartmentBLL? SelectedDepartment;
-  QualityDepartment_ModelOrderBLL?     SelectedOrder;
+  QualityDepartment_ModelOrderBLL? SelectedOrder;
   DepartmentModelOrder_QualityTestBLL? SelectedTest;
   OrderSizeColorDetailsBLL? SelectedMatrix;
   QualityDept_ModelOrder_TrackingBLL? SelectedTracking;
@@ -42,30 +42,31 @@ class PersonalProvider with ChangeNotifier {
 
   Future<bool> loadSharedPrefs() async {
     try {
-
-      IsLoading   = true;
+      IsLoading = true;
 
       bool Status = await _UserPref!.initiateAppPrefernce();
-       await GetGlobalization(SharedPref.SelLanguage!.Id);
-        print('the language is ${SharedPref.SelLanguage!.Id}') ;
-      if (Status) {
 
+      if (Status) {
         _CurrentUser!.Employee_User = SharedPref.UserName!;
         _CurrentUser!.Employee_Password = SharedPref.UserPassword!;
+        Status = await _CurrentUser!.CheckIP();
 
-        await _CurrentUser!.login();
+        if (Status) {
+          await _CurrentUser!.login();
 
-        if (_CurrentUser!.ValidUser!) {
-          notifyListeners();
+          if (_CurrentUser!.ValidUser!) {
+            await GetGlobalization(SharedPref.SelLanguage!.Id);
+            print('the language is ${SharedPref.SelLanguage!.Id}');
+            notifyListeners();
+          }
+          IsLoading = false;
+        } else {
+          _CurrentUser!.LoginMessage = "Error in the port or ip ";
         }
-        IsLoading = false;
-      } else {
-        _CurrentUser!.LoginMessage = "Error in the port or ip ";
       }
 
       return Status;
-    } catch (Excepetion) {
-    }
+    } catch (Excepetion) {}
 
     return false;
   }
@@ -74,7 +75,7 @@ class PersonalProvider with ChangeNotifier {
     await _CurrentUser!.login();
 
     if (_CurrentUser!.ValidUser == true) {
-      SharedPref.UserName     = _CurrentUser!.Employee_User;
+      SharedPref.UserName = _CurrentUser!.Employee_User;
       SharedPref.UserPassword = _CurrentUser!.Employee_Password;
 
       SharedPref.SavePrefernce("UserName", _CurrentUser!.Employee_User);
@@ -85,19 +86,15 @@ class PersonalProvider with ChangeNotifier {
   }
 
   Future<bool> SetupAndLogin() async {
-    String test = await _CurrentUser!.CheckIP();
-    await GetGlobalization(SharedPref.SelLanguage!.Id);
-
-
-    if (test == "True") {
-
+    bool IsConnected = await _CurrentUser!.CheckIP();
+    if (IsConnected) {
+      await GetGlobalization(SharedPref.SelLanguage!.Id);
       await SharedPref.SetupAndSave();
 
       return true;
     } else {
       return false;
     }
-
   }
 
   UpdateInformation() async {
@@ -109,14 +106,13 @@ class PersonalProvider with ChangeNotifier {
   }
 
   void Logout() {
-
     /// TODO : I should not do all that just
     // _CurrentUser.Employee_Name = "";
     // _CurrentUser.Employee_Password = "";
     // SharedPref.UserName = "";
     // SharedPref.UserPassword = "";
     _CurrentUser!.Logout();
-    print ('logout');
+    print('logout');
 
     SharedPref.SavePrefernce('UserName', '');
     SharedPref.SavePrefernce('UserPassword', '');
@@ -126,9 +122,11 @@ class PersonalProvider with ChangeNotifier {
 
   String GetLable(ResourceKey KeyRes) {
     if (GlobalKeys != null && GlobalKeys!.length > 0) {
-      var GetResournce = GlobalKeys!.where(
-          (element) => element.ResKey == KeyRes.toShortString()).toList();
-      if (GetResournce.length > 0) return GetResournce.first.ResourceValue??'';
+      var GetResournce = GlobalKeys!
+          .where((element) => element.ResKey == KeyRes.toShortString())
+          .toList();
+      if (GetResournce.length > 0)
+        return GetResournce.first.ResourceValue ?? '';
     }
 
     return KeyRes.toShortString();

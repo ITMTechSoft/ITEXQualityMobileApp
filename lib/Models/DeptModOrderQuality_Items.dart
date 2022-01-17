@@ -113,7 +113,7 @@ class DeptModOrderQuality_ItemsBLL {
         'QualityTest_Id': QualityTest_Id.toString(),
         'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),
         'IsMandatory': IsMandatory.toString(),
-        'IsTakeImage' : IsTakeImage.toString(),
+        'IsTakeImage': IsTakeImage.toString(),
         'Group_Name': Group_Name ?? '',
         'Amount': Amount.toString(),
         'Correct_Amount': Correct_Amount.toString(),
@@ -145,7 +145,8 @@ class DeptModOrderQuality_ItemsBLL {
         'Pastal_Cutting_Parti_Id': Pastal_Cutting_Parti_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
-          WebApiMethod.Get_DeptModOrderQuality_Items, qParams));
+          WebApiMethod.Get_DeptModOrderQuality_Items,
+          Paramters: qParams));
 
       //  print(response.request);
 
@@ -171,7 +172,8 @@ class DeptModOrderQuality_ItemsBLL {
             DeptModelOrder_QualityTest_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
-          WebApiMethod.Get_DeptModOrderQualityTest_Items, qParams));
+          WebApiMethod.Get_DeptModOrderQualityTest_Items,
+          Paramters: qParams));
 
       //  print(response.request);
 
@@ -248,7 +250,8 @@ class DeptModOrderQuality_ItemsBLL {
             DeptModelOrder_QualityTest_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
-          WebApiMethod.Get_CuttingPastalQuality_Items, qParams));
+          WebApiMethod.Get_CuttingPastalQuality_Items,
+          Paramters: qParams));
 
       //  print(response.request);
 
@@ -275,7 +278,8 @@ class DeptModOrderQuality_ItemsBLL {
             User_QualityTracking_Detail_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
-          WebApiMethod.Get_DikimInlineQuality_Items, qParams));
+          WebApiMethod.Get_DikimInlineQuality_Items,
+          Paramters: qParams));
 
       //  print(response.request);
 
@@ -291,8 +295,8 @@ class DeptModOrderQuality_ItemsBLL {
     return ItemList;
   }
 
-  Future<bool> Set_QualityInlineError(
-      int User_QualityTracking_Detail_Id, {bool IsDelete =false,String? Image}) async {
+  Future<bool> Set_QualityInlineError(int User_QualityTracking_Detail_Id,
+      {bool IsDelete = false, String? Image}) async {
     try {
       var InlineError = new Inline_QualityErrors(
           Quality_Items_Id: this.Id,

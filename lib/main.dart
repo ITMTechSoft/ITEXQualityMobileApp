@@ -23,17 +23,15 @@ class ITMTechSoftQuality extends StatefulWidget {
 }
 
 class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
-  PersonalProvider PersonalCase  = new PersonalProvider();
-  SubCaseProvider  CaseProvider  = new SubCaseProvider();
+  PersonalProvider PersonalCase = new PersonalProvider();
+  SubCaseProvider CaseProvider = new SubCaseProvider();
   bool IsLoading = true;
 
   Future<bool> LoadingSharedPreference(PersonalProvider PersonalCase) async {
-
     bool value = await PersonalCase.loadSharedPrefs();
 
-    if ( value!=null)
-      IsLoading= false;
-    return await PersonalCase.loadSharedPrefs();
+    if (value != null) IsLoading = false;
+    return value;
   }
 
   @override
@@ -58,20 +56,13 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
               ChangeNotifierProvider.value(value: CaseProvider)
             ],
             child: IsLoading
-                ?MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: themeNotifier.GetTheme(),
-              home:
-                Scaffold(
+                ? MaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    theme: themeNotifier.GetTheme(),
+                    home: Scaffold(
+                        body: Center(child: CircularProgressIndicator())))
 
-                  body:
-                  Center(child: CircularProgressIndicator())
-                )
-
-
-            )
-
-          //  Center(child: CircularProgressIndicator())
+                //  Center(child: CircularProgressIndicator())
                 : MaterialApp(
                     debugShowCheckedModeBanner: false,
                     theme: themeNotifier.GetTheme(),
@@ -79,7 +70,6 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
                     routes: <String, WidgetBuilder>{
                       '/login': (BuildContext context) => new LoginPages(),
                       '/main': (BuildContext context) => new MainActivity(),
-
                     },
                   ),
           );

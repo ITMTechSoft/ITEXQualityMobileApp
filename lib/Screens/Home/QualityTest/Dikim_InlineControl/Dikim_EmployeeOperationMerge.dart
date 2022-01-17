@@ -29,18 +29,31 @@ class _Dikim_EmployeeOperationMergeState
   EmployeesBLL? SelectedEmployee;
   OperationBLL? SelectedOperation;
 
-  Future<List<OperationBLL>?> LoadingOpenPage(PersonalProvider PersonalCase) async {
-    OperationList =
-        await OperationBLL.Get_Operation(PersonalCase.SelectedTest!.Id);
-    OperatorList = await EmployeesBLL.Get_Employees();
+  Exception? MainExciption;
 
-    if (OperationList != null && OperatorList != null) {
-      IntiteStatus = 1;
+  Future<List<OperationBLL>?> LoadingOpenPage(
+      PersonalProvider PersonalCase) async {
+    try {
+      OperationList =
+      await OperationBLL.Get_Operation(PersonalCase.SelectedTest!.Id);
+      OperatorList = await EmployeesBLL.Get_Employees();
+
+      if (OperationList != null && OperatorList != null) {
+        IntiteStatus = 1;
+        return OperationList;
+      } else {
+        if (OperationList == null)
+          IntiteStatus = -2;
+        else if (OperatorList == null)
+          IntiteStatus = -3;
+        else
+          IntiteStatus = -1;
+      }
       return OperationList;
-    } else {
+    } catch (MainExciption) {
       IntiteStatus = -1;
     }
-    return OperationList;
+    return null;
   }
 
   @override
@@ -48,19 +61,19 @@ class _Dikim_EmployeeOperationMergeState
     final PersonalCase = Provider.of<PersonalProvider>(context);
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
-      appBar: DetailBar(Title:PersonalCase.SelectedTest!.Test_Name??'',PersonalCase: PersonalCase, OnTap:() {
-        Navigator.pop(context);
-      },
-          context:  context
-      ),
+      appBar: DetailBar(
+          Title: PersonalCase.SelectedTest!.Test_Name ?? '',
+          PersonalCase: PersonalCase,
+          OnTap: () {
+            Navigator.pop(context);
+          },
+          context: context),
       body: ListView(children: [
         ListTile(
-          title: HeaderTitle(
-
-                  PersonalCase.SelectedOrder!.Order_Number??'',
-              color: ArgonColors.header,
-              FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()),
+          title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number ?? '',
+              color: ArgonColors.header, FontSize: ArgonSize.Header2),
+          subtitle:
+              Text(PersonalCase.SelectedDepartment!.Start_Date.toString()),
           dense: true,
           selected: true,
         ),
@@ -76,7 +89,7 @@ class _Dikim_EmployeeOperationMergeState
                           child: Employee_List(
                         PersonalCase: PersonalCase,
                         Items: OperatorList!,
-                        OnClickItems:  (EmployeesBLL SelectedItem) {
+                        OnClickItems: (EmployeesBLL SelectedItem) {
                           SelectedEmployee = SelectedItem;
                         },
                       )),
@@ -128,13 +141,25 @@ class _Dikim_EmployeeOperationMergeState
               );
             } else if (IntiteStatus == 0)
               return Center(child: CircularProgressIndicator());
-            else
-              return ErrorPage(
-                  ActionName: PersonalCase.GetLable(ResourceKey.Loading),
-                  MessageError:
-                      PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
-                  DetailError: PersonalCase.GetLable(
-                      ResourceKey.InvalidNetWorkConnection));
+            else {
+              if (IntiteStatus == -2)
+                return ErrorPage(
+                    ActionName: PersonalCase.GetLable(ResourceKey.OrderDataMissing),
+                    MessageError: PersonalCase.GetLable(ResourceKey.OperationInformationMissed),
+                    );
+              else if (IntiteStatus == -3)
+                return ErrorPage(
+                    ActionName: PersonalCase.GetLable(ResourceKey.OrderDataMissing),
+                    MessageError: PersonalCase.GetLable(
+                        ResourceKey.EmployeeInformationMissed));
+              else
+                return ErrorPage(
+                    ActionName: PersonalCase.GetLable(ResourceKey.Loading),
+                    MessageError: PersonalCase.GetLable(
+                        ResourceKey.ErrorWhileLoadingData),
+                    DetailError: PersonalCase.GetLable(
+                        ResourceKey.InvalidNetWorkConnection));
+            }
           },
         )
       ]),

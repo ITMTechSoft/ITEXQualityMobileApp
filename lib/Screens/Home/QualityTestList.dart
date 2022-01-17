@@ -7,6 +7,7 @@ import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 import 'package:itex_soft_qualityapp/QualityTestImports.dart';
 import 'QualityTest/Cutting_Control/Cutting_Control.dart';
 import 'QualityTest/MeasurementControl/OrderSizeMatrix.dart';
+import 'QualityTest/SizeControl/Size_Control.dart';
 
 class QualityTestList extends StatefulWidget {
   @override
@@ -111,7 +112,7 @@ class _QualityTestListState extends State<QualityTestList> {
         break;
       case 10:
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => OrderSize_Matrix()));
+            MaterialPageRoute(builder: (context) => Size_Control()));
         break;
       case 11:
         Navigator.push(context,

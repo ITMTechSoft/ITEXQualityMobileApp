@@ -17,8 +17,10 @@ class ArgonColors {
   static const Color myLightBlue = Color.fromRGBO(	63, 81, 181,1.0);
   static const Color myLightRed = Color.fromRGBO(  212, 53, 58,1.0);
   static const Color myLightGreen = Color.fromRGBO(    0, 207, 108,0.5);
-  static const Color myBlue2 = Color.fromRGBO(    0, 56, 142,1);
+  static const Color myBlue2 = Color.fromRGBO(    0, 56, 142, 1.0);
   static const Color myRed2 = Color.fromRGBO(     200, 8, 21,1);
+  
+
 
 
   static const Color myGrey = Color.fromRGBO(124  , 124, 124, 1.0);
@@ -72,6 +74,7 @@ class ArgonSize{
   static const double normal = 13;
 
   //TEXT
+  static  double BigHeader = getAdaptiveTextSize(50);
   static  double Header1 = getAdaptiveTextSize(30);
   static  double Header2 = getAdaptiveTextSize(25);
   static  double Header3 = getAdaptiveTextSize(20);
@@ -93,6 +96,8 @@ class ArgonSize{
 
   static double WidthBig     = getAdaptiveTextSize(70);
   static double HeightBig    = getAdaptiveTextSize(70);
+
+  static double HeightXMedium    = getAdaptiveTextSize(60);
 
   static double WidthMedium  = getAdaptiveTextSize(50);
   static double HeightMedium = getAdaptiveTextSize(50);

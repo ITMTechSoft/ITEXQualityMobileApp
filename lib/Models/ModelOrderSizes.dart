@@ -104,12 +104,10 @@ class ModelOrderSizesBLL {
       int Order_Id) async {
     List<ModelOrderSizesBLL>? ItemList;
     try {
-
-      Map<String,String> qParams = {
-        'Order_Id':Order_Id.toString()
-      };
-      var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Get_ModelOrderSizes,qParams));
+      Map<String, String> qParams = {'Order_Id': Order_Id.toString()};
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_ModelOrderSizes,
+          Paramters: qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
@@ -125,7 +123,7 @@ class ModelOrderSizesBLL {
 
   static Future<List<ModelOrderSizesBLL>?> Get_ModelOrderSizes_CuttingControl(
       int Order_Id, int DeptModelOrder_QualityTest_Id) async {
-    List<ModelOrderSizesBLL>? ItemList ;
+    List<ModelOrderSizesBLL>? ItemList;
     try {
       Map<String, String> qParams = {
         'Order_Id': Order_Id.toString(),
@@ -133,7 +131,8 @@ class ModelOrderSizesBLL {
             DeptModelOrder_QualityTest_Id.toString(),
       };
       var response = await http.get(SharedPref.GetWebApiUri(
-          WebApiMethod.Get_ModelOrderSizes_CuttingControl, qParams));
+          WebApiMethod.Get_ModelOrderSizes_CuttingControl,
+          Paramters: qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

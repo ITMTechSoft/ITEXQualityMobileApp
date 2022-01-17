@@ -77,8 +77,8 @@ class BoxMaterialCard extends StatelessWidget {
           left: 5,
         )
             : Container(
-          width: 0,
-          height: 0,
+          width: 5,
+          height: 5,
         ),
         bottomLeft != null
             ? Positioned(
@@ -90,12 +90,12 @@ class BoxMaterialCard extends StatelessWidget {
         bottomRight != null
             ? Positioned(
           child: bottomRight!,
-          bottom: 5,
-          right: 5,
+          bottom: 15,
+          right: 15,
         )
             : Container(
-          width: 5,
-          height: 5,
+          width: 15,
+          height: 15,
         ),
       ],
     );

@@ -18,8 +18,9 @@ class _Dikim_LastControlState extends State<Dikim_LastControl> {
   Future<List<OrderSizeColorDetailsBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
     List<OrderSizeColorDetailsBLL>? Critiera =
-        await OrderSizeColorDetailsBLL.Get_OrderSizeColorDetails(
-            PersonalCase.SelectedOrder!.Order_Id);
+        await OrderSizeColorDetailsBLL.Get_FinalOrderSizeColorDetails(
+            Order_Id :  PersonalCase.SelectedOrder!.Order_Id,
+            DeptModelOrder_QualityTest_Id :PersonalCase.SelectedTest!.Id );
 
     if (Critiera != null) {
       IntiteStatus = 1;

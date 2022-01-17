@@ -79,19 +79,6 @@ class Model_Order_ControlBLL {
   Future<List<Model_Order_ControlBLL>?> Get_Model_Order_Control() async {
     List<Model_Order_ControlBLL>? ItemList;
     try {
-      // final String url =
-      //     SharedPref.GetWebApiUrl(WebApiMethod.Get_Model_Order_Control);
-      //
-      // var response = await http.post(url,
-      //     headers: <String, String>{
-      //       'Content-Type': 'application/json; charset=UTF-8',
-      //     },
-      //     body: jsonEncode(toPost()));
-      //
-      // print(url);
-      // print(jsonEncode(toPost()));
-
-
       String val = jsonEncode(this.toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',

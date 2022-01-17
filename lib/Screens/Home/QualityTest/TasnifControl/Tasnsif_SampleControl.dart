@@ -109,10 +109,10 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
           icon: arrowIcon,
           height: 60,
           function: () {
-            // setState(() {
-            //   showSmall = !showSmall;
-            //   arrowIcon = Icons.arrow_upward;
-            // });
+             setState(() {
+               showSmall = !showSmall;
+               arrowIcon = Icons.arrow_upward;
+             });
           },
           MainPage: GestureDetector(
             onTap: () {

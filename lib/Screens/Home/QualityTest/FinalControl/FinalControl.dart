@@ -12,6 +12,7 @@ import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/Widgets/ImageLoader.dart';
 import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
+import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
 import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
@@ -26,6 +27,8 @@ class FinalControl extends StatefulWidget {
 class _FinalControlState extends State<FinalControl> {
   int IntiteStatus = 0;
   ModelOrder_MatrixBLL? ModelOrder;
+  bool OnePageShow = false;
+  IconData arrowIcon = Icons.arrow_downward;
 
   Future<bool> LoadingOpenPage(SubCaseProvider CaseProvider) async {
     ModelOrder = await ModelOrder_MatrixBLL.Get_ModelOrder_Matrix(
@@ -45,13 +48,12 @@ class _FinalControlState extends State<FinalControl> {
     return await ModelOrder!.GetModelOrderImage() ?? '';
   }
 
-  Widget ProductDetail(
+  Widget BoxHeaderInfo(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) {
-    return BoxMaterialCard(
-      paddingVertical:
-          getScreenHeight() > 1200 ? ArgonSize.Header3 : ArgonSize.Header4,
-      Childrens: <Widget>[
-        Row(
+    return InformationBox(
+      height: OnePageShow ? ArgonSize.HeightXMedium : null,
+      MainPage: SingleChildScrollView(
+        child: Row(
           children: [
             Expanded(
               flex: 2,
@@ -60,9 +62,6 @@ class _FinalControlState extends State<FinalControl> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   ImageLoader(LoadingImage: GetModelImage()),
-                  SizedBox(
-                    height: 10,
-                  ),
                   LableTitle(ModelOrder!.Model_Name ?? '',
                       FontSize: ArgonSize.Header5)
                 ],
@@ -133,8 +132,14 @@ class _FinalControlState extends State<FinalControl> {
                   ]),
             ),
           ],
-        )
-      ],
+        ),
+      ),
+      function: () {
+        setState(() {
+          OnePageShow = !OnePageShow;
+        });
+      },
+      icon: OnePageShow ? Icons.arrow_downward : Icons.arrow_upward,
     );
   }
 
@@ -150,6 +155,7 @@ class _FinalControlState extends State<FinalControl> {
             Title: PersonalCase.SelectedTest!.Test_Name ?? '',
             PersonalCase: PersonalCase,
             OnTap: () {
+              CaseProvider.ReloadAction();
               Navigator.pop(context);
             },
             context: context),
@@ -161,15 +167,12 @@ class _FinalControlState extends State<FinalControl> {
                 if (snapshot.hasData) {
                   return Column(
                     children: [
-                      Container(
-                          child: ProductDetail(PersonalCase, CaseProvider)),
-                      Container(
-                        child: ProductFirstQuality(
-                          FirstQualityInfo: new Model_Order_ControlBLL(
-                              Control_Type: GroupType.FirstQuality,
-                              QualityDept_ModelOrder_Tracking_Id:
-                                  CaseProvider.QualityTracking!.Id),
-                        ),
+                      BoxHeaderInfo(PersonalCase, CaseProvider),
+                      ProductFirstQuality(
+                        FirstQualityInfo: new Model_Order_ControlBLL(
+                            Control_Type: GroupType.FirstQuality,
+                            QualityDept_ModelOrder_Tracking_Id:
+                                CaseProvider.QualityTracking!.Id),
                       ),
                       Container(
                         child: Row(
@@ -224,6 +227,7 @@ class ProductFirstQuality extends StatefulWidget {
 
 class _ProductFirstQualityState extends State<ProductFirstQuality> {
   bool _switchValue = false;
+  bool _IsDelete = false;
   Model_Order_ControlBLL? Critiera;
   int IntiteStatus = 0;
   int warning_massage = 0;
@@ -244,6 +248,36 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
     return true;
   }
 
+  OnFirstQualityTap(PersonalCase, CaseProvider) async {
+    var UserQuality = new User_QualityTracking_DetailBLL();
+    UserQuality.Quality_Items_Id = CaseProvider.FirstQuality!.Id;
+    UserQuality.QualityDept_ModelOrder_Tracking_Id =
+        CaseProvider.QualityTracking!.Id;
+    if (_IsDelete)
+      UserQuality.Amount = -1;
+    else
+      UserQuality.Amount = 1;
+    UserQuality.IsRecycle = _switchValue;
+    int CheckStatus = await UserQuality.Set_UserQualityFinalControl();
+    switch (CheckStatus) {
+      case 0:
+        setState(() {});
+        break;
+      case 1:
+        AlertPopupDialog(
+            context,
+            PersonalCase.GetLable(ResourceKey.WarrningMessage),
+            PersonalCase.GetLable(ResourceKey.YouCanotExceedPlanAmount));
+        break;
+      case -1:
+        AlertPopupDialog(
+            context,
+            PersonalCase.GetLable(ResourceKey.WarrningMessage),
+            PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData));
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
@@ -261,7 +295,7 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
               Row(
                 children: [
                   Expanded(
-                    flex: 2,
+                    flex: 1,
                     child: RadioSwitch(
                       Lable: PersonalCase.GetLable(ResourceKey.RecycleReturn),
                       fontSize: ArgonSize.Header5,
@@ -274,7 +308,7 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                     ),
                   ),
                   Expanded(
-                      flex: 4,
+                      flex: 3,
                       child: CustomText(
                         text: PersonalCase.GetLable(
                             ResourceKey.Quality_FirstQuality),
@@ -283,40 +317,21 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                       )),
                   Expanded(
                     flex: 1,
-                    child: Container(),
+                    child: RadioSwitch(
+                      Lable: PersonalCase.GetLable(ResourceKey.Delete),
+                      fontSize: ArgonSize.Header5,
+                      SwitchValue: _IsDelete,
+                      OnTap: (value) {
+                        setState(() {
+                          _IsDelete = value;
+                        });
+                      },
+                    ),
                   )
                 ],
               ),
               SizedBox(height: ArgonSize.Padding4),
               GestureDetector(
-                onTap: () async {
-                  var UserQuality = new User_QualityTracking_DetailBLL();
-                  UserQuality.Quality_Items_Id = CaseProvider.FirstQuality!.Id;
-                  UserQuality.QualityDept_ModelOrder_Tracking_Id = CaseProvider.QualityTracking!.Id;
-                  UserQuality.Amount = 1;
-                  UserQuality.IsRecycle = _switchValue;
-                  int CheckStatus =
-                      await UserQuality.Set_UserQualityFinalControl();
-                  switch (CheckStatus) {
-                    case 0:
-                      setState(() {});
-                      break;
-                    case 1:
-                      AlertPopupDialog(
-                          context,
-                          PersonalCase.GetLable(ResourceKey.WarrningMessage),
-                          PersonalCase.GetLable(
-                              ResourceKey.YouCanotExceedPlanAmount));
-                      break;
-                    case -1:
-                      AlertPopupDialog(
-                          context,
-                          PersonalCase.GetLable(ResourceKey.WarrningMessage),
-                          PersonalCase.GetLable(
-                              ResourceKey.ErrorWhileLoadingData));
-                      break;
-                  }
-                },
                 child: ButtonWithNumber(
                   text: (widget.FirstQualityInfo.Employee_Matrix_Amount ?? 0)
                       .toString(),
@@ -324,7 +339,7 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                   buttonWidth: getScreenWidth(),
                   buttonHegiht: getScreenHeight() / 8,
                   btnBgColor: ArgonColors.myGreen,
-                  textSize: ArgonSize.Header1,
+                  textSize: ArgonSize.BigHeader,
                   topLeft: CircleShape(
                     text: (widget.FirstQualityInfo.Matrix_Control_Amount ?? 0)
                         .toString(),
@@ -333,9 +348,12 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                     fontSize: ArgonSize.Header4,
                   ),
                 ),
+                onTap: () async {
+                  await OnFirstQualityTap(PersonalCase, CaseProvider);
+                },
               ),
             ],
-            topRight: warning_massage != 1
+            topRight: warning_massage > 0
                 ? CircularIconWithNumber(
                     icon: FontAwesomeIcons.exclamation,
                     backGroundColor: Colors.red,
@@ -346,6 +364,14 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
                     bubbleText: warning_massage.toString(),
                     bubbleTextSize: ArgonSize.Header7,
                     bubbleBgColor: Colors.red[900]!)
+                : Container(width: 0, height: 0),
+            bottomRight: _IsDelete == true
+                ? IconInsideCircle(
+                    icon: FontAwesomeIcons.minus,
+                    iconSize: ArgonSize.Header3,
+                    size: ArgonSize.Header5,
+                    color: Colors.white,
+                    backGroundColor: Colors.red)
                 : Container(width: 0, height: 0),
           );
         } else if (IntiteStatus == 0)
@@ -430,14 +456,16 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
                     );
                   },
                   child: ButtonWithNumber(
-                    text: (widget.SecondQualityInfo.Employee_Matrix_Amount ?? 0).toString(),
+                    text: (widget.SecondQualityInfo.Employee_Matrix_Amount ?? 0)
+                        .toString(),
                     textColor: Colors.black,
                     buttonWidth: getScreenWidth() / 2,
                     buttonHegiht: getScreenHeight() / 10,
                     btnBgColor: ArgonColors.myOrange,
-                    textSize: ArgonSize.Header3,
+                    textSize: ArgonSize.Header1,
                     topLeft: CircleShape(
-                        text: (widget.SecondQualityInfo.Matrix_Control_Amount ??0)
+                        text: (widget.SecondQualityInfo.Matrix_Control_Amount ??
+                                0)
                             .toString(),
                         width: ArgonSize.Header1,
                         height: ArgonSize.Header1,
@@ -561,7 +589,7 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
                     buttonWidth: getScreenWidth() / 2,
                     buttonHegiht: getScreenHeight() / 10,
                     btnBgColor: ArgonColors.myYellow,
-                    textSize: ArgonSize.Header3,
+                    textSize: ArgonSize.Header1,
 
                     ///TODO : DO THE NUMBERS IN CIRCLE
                     topLeft: CircleShape(

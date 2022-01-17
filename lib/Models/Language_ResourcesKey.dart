@@ -24,9 +24,7 @@ class Language_ResourcesKeyBLL {
 
   //#endregion
 
-  Language_ResourcesKeyBLL({required this.Id, required this.Language_Id}) {
-
-  }
+  Language_ResourcesKeyBLL({required this.Id, required this.Language_Id}) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -34,8 +32,11 @@ class Language_ResourcesKeyBLL {
     this.Language_Id = json['Language_Id'];
     this.ResourcesKey_Id = json['ResourcesKey_Id'];
     this.ResourceValue = json['ResourceValue'];
-    this.CreateDate = json['CreateDate']==null? null: DateTime.parse(json['CreateDate']);
-    this.LastUpdateDate = json['LastUpdateDate']==null? null: DateTime.parse(json['LastUpdateDate']);
+    this.CreateDate =
+        json['CreateDate'] == null ? null : DateTime.parse(json['CreateDate']);
+    this.LastUpdateDate = json['LastUpdateDate'] == null
+        ? null
+        : DateTime.parse(json['LastUpdateDate']);
     this.CreatedBy = json['CreatedBy'];
     this.LastUpdateBy = json['LastUpdateBy'];
     this.Groups_id = json['Groups_id'];
@@ -46,16 +47,19 @@ class Language_ResourcesKeyBLL {
     this.ResourceType = json['ResourceType'];
     this.CultureName = json['CultureName'];
     this.ResKey = json['ResKey'];
-
   }
 
-  Language_ResourcesKeyBLL.fromJson(Map<String, dynamic> json):
-        Id = json['Id'],
+  Language_ResourcesKeyBLL.fromJson(Map<String, dynamic> json)
+      : Id = json['Id'],
         Language_Id = json['Language_Id'],
         ResourcesKey_Id = json['ResourcesKey_Id'],
         ResourceValue = json['ResourceValue'],
-        CreateDate = json['CreateDate']==null? null:  DateTime.parse(json['CreateDate']),
-        LastUpdateDate = json['LastUpdateDate']==null? null:  DateTime.parse(json['LastUpdateDate']),
+        CreateDate = json['CreateDate'] == null
+            ? null
+            : DateTime.parse(json['CreateDate']),
+        LastUpdateDate = json['LastUpdateDate'] == null
+            ? null
+            : DateTime.parse(json['LastUpdateDate']),
         CreatedBy = json['CreatedBy'],
         LastUpdateBy = json['LastUpdateBy'],
         Groups_id = json['Groups_id'],
@@ -67,50 +71,43 @@ class Language_ResourcesKeyBLL {
         CultureName = json['CultureName'],
         ResKey = json['ResKey'];
 
-
   Map<String, dynamic> toJson() => {
-    'Id': Id,
-    'Language_Id': Language_Id,
-    'ResourcesKey_Id': ResourcesKey_Id,
-    'ResourceValue': ResourceValue,
-    'CreateDate': CreateDate,
-    'LastUpdateDate': LastUpdateDate,
-    'CreatedBy': CreatedBy,
-    'LastUpdateBy': LastUpdateBy,
-    'Groups_id': Groups_id,
-    'MoveId': MoveId,
-    'ResourceCode': ResourceCode,
-    'ResourceName': ResourceName,
-    'ResourceDesc': ResourceDesc,
-    'ResourceType': ResourceType,
-    'CultureName': CultureName,
-    'ResKey': ResKey,
-
-  };
+        'Id': Id,
+        'Language_Id': Language_Id,
+        'ResourcesKey_Id': ResourcesKey_Id,
+        'ResourceValue': ResourceValue,
+        'CreateDate': CreateDate,
+        'LastUpdateDate': LastUpdateDate,
+        'CreatedBy': CreatedBy,
+        'LastUpdateBy': LastUpdateBy,
+        'Groups_id': Groups_id,
+        'MoveId': MoveId,
+        'ResourceCode': ResourceCode,
+        'ResourceName': ResourceName,
+        'ResourceDesc': ResourceDesc,
+        'ResourceType': ResourceType,
+        'CultureName': CultureName,
+        'ResKey': ResKey,
+      };
 
   Map<String, String> toPost() => {
-
-
-    'Id': Id.toString(),
-    'Language_Id': Language_Id.toString(),
-    'ResourcesKey_Id': ResourcesKey_Id.toString(),
-    'ResourceValue': ResourceValue??'',
-    'CreateDate': CreateDate.toString(),
-    'LastUpdateDate': LastUpdateDate.toString(),
-    'CreatedBy': CreatedBy.toString(),
-    'LastUpdateBy': LastUpdateBy.toString(),
-    'Groups_id': Groups_id.toString(),
-    'MoveId': MoveId.toString(),
-    'ResourceCode': ResourceCode??'',
-    'ResourceName': ResourceName??'',
-    'ResourceDesc': ResourceDesc??'',
-    'ResourceType': ResourceType??'',
-    'CultureName': CultureName??'',
-    'ResKey': ResKey??'',
-
-  };
-
-
+        'Id': Id.toString(),
+        'Language_Id': Language_Id.toString(),
+        'ResourcesKey_Id': ResourcesKey_Id.toString(),
+        'ResourceValue': ResourceValue ?? '',
+        'CreateDate': CreateDate.toString(),
+        'LastUpdateDate': LastUpdateDate.toString(),
+        'CreatedBy': CreatedBy.toString(),
+        'LastUpdateBy': LastUpdateBy.toString(),
+        'Groups_id': Groups_id.toString(),
+        'MoveId': MoveId.toString(),
+        'ResourceCode': ResourceCode ?? '',
+        'ResourceName': ResourceName ?? '',
+        'ResourceDesc': ResourceDesc ?? '',
+        'ResourceType': ResourceType ?? '',
+        'CultureName': CultureName ?? '',
+        'ResKey': ResKey ?? '',
+      };
 
   //#endregion
 
@@ -119,14 +116,10 @@ class Language_ResourcesKeyBLL {
       int Language_Id) async {
     List<Language_ResourcesKeyBLL>? ItemList;
     try {
-
-
-      Map<String,String> qParams = {
-        'Language_Id':Language_Id.toString()
-      };
-      var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Get_Language_ResourcesKey,qParams)
-      );
+      Map<String, String> qParams = {'Language_Id': Language_Id.toString()};
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_Language_ResourcesKey,
+          Paramters: qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
@@ -141,7 +134,4 @@ class Language_ResourcesKeyBLL {
   }
 //#endregion
 
-
-
 }
-

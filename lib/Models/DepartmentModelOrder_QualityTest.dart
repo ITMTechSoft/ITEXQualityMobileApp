@@ -119,7 +119,8 @@ class DepartmentModelOrder_QualityTestBLL {
         'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
-          WebApiMethod.Get_DepartmentModelOrder_QualityTest, qParams));
+          WebApiMethod.Get_DepartmentModelOrder_QualityTest,
+          Paramters: qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

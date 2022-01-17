@@ -30,6 +30,7 @@ Widget LableTitle(String Title,
       child: Center(
         child: Text(
           Title != null ? Title.toUpperCase() : "",
+          textAlign: IsCenter ?TextAlign.center: TextAlign.left,
           style: TextStyle(
             fontSize: FontSize == null ? ArgonSize.Header5 : FontSize,
             fontWeight: FontWeight.bold,
@@ -55,14 +56,15 @@ Widget LableInteger(int? Value,
     bool IsCenter = false,
     int Flex = 1}) {
   Widget TextValue(String TextVal) => new Text(
-        TextVal,
-        style: TextStyle(
-          fontSize: FontSize ?? ArgonSize.Header5,
-          fontWeight: FontWeight.bold,
-          color: color == null ? ArgonColors.Title : color,
+    TextVal,
+    textAlign: TextAlign.right,
+    style: TextStyle(
+      fontSize: FontSize ?? ArgonSize.Header5,
+      fontWeight: FontWeight.bold,
+      color: color == null ? ArgonColors.Title : color,
 
-        ),
-      );
+    ),
+  );
 
   Widget Child = TextValue((Value ?? 0).toString());
   if (IsCenter)

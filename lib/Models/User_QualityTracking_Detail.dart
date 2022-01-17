@@ -279,7 +279,7 @@ class User_QualityTracking_DetailBLL {
         'Quality_Items_Id': Quality_Items_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
-          WebApiMethod.Get_User_QualityTracking_Detail, qParams));
+          WebApiMethod.Get_User_QualityTracking_Detail, Paramters: qParams));
 
       print(response.request);
       if (response.statusCode == 200) {
@@ -483,7 +483,7 @@ class User_QualityTracking_DetailBLL {
         'Size_Id' : Size_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
-          WebApiMethod.Get_UserQualityTasnifControl, qParams));
+          WebApiMethod.Get_UserQualityTasnifControl, Paramters: qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)

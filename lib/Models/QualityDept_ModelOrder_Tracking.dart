@@ -233,7 +233,7 @@ class QualityDept_ModelOrder_TrackingBLL {
         DeptModelOrder_QualityTest_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
-          WebApiMethod.Get_Quality_ModelOrder_Tracking, qParams));
+          WebApiMethod.Get_Quality_ModelOrder_Tracking, Paramters: qParams));
 
       // print(response.request);
       if (response.statusCode == 200) {
@@ -592,7 +592,7 @@ class QualityDept_ModelOrder_TrackingBLL {
       };
 
       var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Set_CloseTanifSample, qParams));
+          SharedPref.GetWebApiUri(WebApiMethod.Set_CloseTanifSample, Paramters: qParams));
 
       if (response.statusCode == 200) {
         return true;
@@ -611,7 +611,7 @@ class QualityDept_ModelOrder_TrackingBLL {
       };
 
       var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.CloseDikimInlineTur, qParams));
+          SharedPref.GetWebApiUri(WebApiMethod.CloseDikimInlineTur, Paramters: qParams));
 
       if (response.statusCode == 200) {
         return true;

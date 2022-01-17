@@ -99,8 +99,11 @@ class OperationBLL {
     this.Department_Id = json['Department_Id'];
     this.Material_Type_Id = json['Material_Type_Id'];
     this.ModelCosting_Id = json['ModelCosting_Id'];
-    this.CreateDate = json['CreateDate']==null? null: DateTime.parse(json['CreateDate']);
-    this.LastUpdateDate = json['LastUpdateDate']==null? null: DateTime.parse(json['LastUpdateDate']);
+    this.CreateDate =
+        json['CreateDate'] == null ? null : DateTime.parse(json['CreateDate']);
+    this.LastUpdateDate = json['LastUpdateDate'] == null
+        ? null
+        : DateTime.parse(json['LastUpdateDate']);
     this.CreatedBy = json['CreatedBy'];
     this.LastUpdateBy = json['LastUpdateBy'];
     this.IsBulkType = json['IsBulkType'];
@@ -114,11 +117,10 @@ class OperationBLL {
     this.Depart_Name = json['Depart_Name'];
     this.Material_Name = json['Material_Name'];
     this.Tool_Name = json['Tool_Name'];
-
   }
 
-  OperationBLL.fromJson(Map<String, dynamic> json):
-        Operation_Id = json['Operation_Id'],
+  OperationBLL.fromJson(Map<String, dynamic> json)
+      : Operation_Id = json['Operation_Id'],
         Operationl_Code = json['Operationl_Code'],
         Operation_Description = json['Operation_Description'],
         Operation_Name = json['Operation_Name'],
@@ -154,8 +156,12 @@ class OperationBLL {
         Department_Id = json['Department_Id'],
         Material_Type_Id = json['Material_Type_Id'],
         ModelCosting_Id = json['ModelCosting_Id'],
-        CreateDate = json['CreateDate']==null? null:  DateTime.parse(json['CreateDate']),
-        LastUpdateDate = json['LastUpdateDate']==null? null:  DateTime.parse(json['LastUpdateDate']),
+        CreateDate = json['CreateDate'] == null
+            ? null
+            : DateTime.parse(json['CreateDate']),
+        LastUpdateDate = json['LastUpdateDate'] == null
+            ? null
+            : DateTime.parse(json['LastUpdateDate']),
         CreatedBy = json['CreatedBy'],
         LastUpdateBy = json['LastUpdateBy'],
         IsBulkType = json['IsBulkType'],
@@ -170,133 +176,128 @@ class OperationBLL {
         Material_Name = json['Material_Name'],
         Tool_Name = json['Tool_Name'];
 
-
   Map<String, dynamic> toJson() => {
-    'Operation_Id': Operation_Id,
-    'Operationl_Code': Operationl_Code,
-    'Operation_Description': Operation_Description,
-    'Operation_Name': Operation_Name,
-    'Operation_Groups': Operation_Groups,
-    'Machine_id': Machine_id,
-    'OperationToplamSTD': OperationToplamSTD,
-    'ArticalNO': ArticalNO,
-    'OperationVideo': OperationVideo,
-   // 'OperationImage': OperationImage,
-    'Thread_length': Thread_length,
-    'Bobin_Number': Bobin_Number,
-    'OperationVideoFileName': OperationVideoFileName,
-    'HandTMU': HandTMU,
-    'HandMin': HandMin,
-    'HandTolerStd': HandTolerStd,
-    'MachineTMU': MachineTMU,
-    'MachineMin': MachineMin,
-    'MachineTolStd': MachineTolStd,
-    'Oper_Target': Oper_Target,
-    'Machine_ErrorPossible': Machine_ErrorPossible,
-    'Total_SweingLength': Total_SweingLength,
-    'OperTMU': OperTMU,
-    'Hour_Target': Hour_Target,
-    'Machine_Number': Machine_Number,
-    'Model_Operation_Barcode': Model_Operation_Barcode,
-    'Oper_Sequence': Oper_Sequence,
-    'Model_id': Model_id,
-    'Real_Amount': Real_Amount,
-    'StitchesUsedFrequently_Id': StitchesUsedFrequently_Id,
-    'StitchThreadLength': StitchThreadLength,
-    'NeedleThread': NeedleThread,
-    'LooperThread': LooperThread,
-    'Department_Id': Department_Id,
-    'Material_Type_Id': Material_Type_Id,
-    'ModelCosting_Id': ModelCosting_Id,
-    'CreateDate': CreateDate,
-    'LastUpdateDate': LastUpdateDate,
-    'CreatedBy': CreatedBy,
-    'LastUpdateBy': LastUpdateBy,
-    'IsBulkType': IsBulkType,
-    'BulkAdet': BulkAdet,
-    'Stitch_Tool_Id': Stitch_Tool_Id,
-    'Source_Id': Source_Id,
-    'IsCriticalControl': IsCriticalControl,
-    'Group_Name': Group_Name,
-    'Machine_name': Machine_name,
-    'Model_Name': Model_Name,
-    'Depart_Name': Depart_Name,
-    'Material_Name': Material_Name,
-    'Tool_Name': Tool_Name,
-
-  };
+        'Operation_Id': Operation_Id,
+        'Operationl_Code': Operationl_Code,
+        'Operation_Description': Operation_Description,
+        'Operation_Name': Operation_Name,
+        'Operation_Groups': Operation_Groups,
+        'Machine_id': Machine_id,
+        'OperationToplamSTD': OperationToplamSTD,
+        'ArticalNO': ArticalNO,
+        'OperationVideo': OperationVideo,
+        // 'OperationImage': OperationImage,
+        'Thread_length': Thread_length,
+        'Bobin_Number': Bobin_Number,
+        'OperationVideoFileName': OperationVideoFileName,
+        'HandTMU': HandTMU,
+        'HandMin': HandMin,
+        'HandTolerStd': HandTolerStd,
+        'MachineTMU': MachineTMU,
+        'MachineMin': MachineMin,
+        'MachineTolStd': MachineTolStd,
+        'Oper_Target': Oper_Target,
+        'Machine_ErrorPossible': Machine_ErrorPossible,
+        'Total_SweingLength': Total_SweingLength,
+        'OperTMU': OperTMU,
+        'Hour_Target': Hour_Target,
+        'Machine_Number': Machine_Number,
+        'Model_Operation_Barcode': Model_Operation_Barcode,
+        'Oper_Sequence': Oper_Sequence,
+        'Model_id': Model_id,
+        'Real_Amount': Real_Amount,
+        'StitchesUsedFrequently_Id': StitchesUsedFrequently_Id,
+        'StitchThreadLength': StitchThreadLength,
+        'NeedleThread': NeedleThread,
+        'LooperThread': LooperThread,
+        'Department_Id': Department_Id,
+        'Material_Type_Id': Material_Type_Id,
+        'ModelCosting_Id': ModelCosting_Id,
+        'CreateDate': CreateDate,
+        'LastUpdateDate': LastUpdateDate,
+        'CreatedBy': CreatedBy,
+        'LastUpdateBy': LastUpdateBy,
+        'IsBulkType': IsBulkType,
+        'BulkAdet': BulkAdet,
+        'Stitch_Tool_Id': Stitch_Tool_Id,
+        'Source_Id': Source_Id,
+        'IsCriticalControl': IsCriticalControl,
+        'Group_Name': Group_Name,
+        'Machine_name': Machine_name,
+        'Model_Name': Model_Name,
+        'Depart_Name': Depart_Name,
+        'Material_Name': Material_Name,
+        'Tool_Name': Tool_Name,
+      };
 
   Map<String, String> toPost() => {
-
-
-    'Operation_Id': Operation_Id.toString(),
-    'Operationl_Code': Operationl_Code??'',
-    'Operation_Description': Operation_Description??'',
-    'Operation_Name': Operation_Name??'',
-    'Operation_Groups': Operation_Groups.toString(),
-    'Machine_id': Machine_id.toString(),
-    'OperationToplamSTD': OperationToplamSTD.toString(),
-    'ArticalNO': ArticalNO??'',
-    'OperationVideo': OperationVideo??'',
-    //'OperationImage': OperationImage.toString(),
-    'Thread_length': Thread_length.toString(),
-    'Bobin_Number': Bobin_Number.toString(),
-    'OperationVideoFileName': OperationVideoFileName??'',
-    'HandTMU': HandTMU.toString(),
-    'HandMin': HandMin.toString(),
-    'HandTolerStd': HandTolerStd.toString(),
-    'MachineTMU': MachineTMU.toString(),
-    'MachineMin': MachineMin.toString(),
-    'MachineTolStd': MachineTolStd.toString(),
-    'Oper_Target': Oper_Target.toString(),
-    'Machine_ErrorPossible': Machine_ErrorPossible.toString(),
-    'Total_SweingLength': Total_SweingLength.toString(),
-    'OperTMU': OperTMU.toString(),
-    'Hour_Target': Hour_Target.toString(),
-    'Machine_Number': Machine_Number.toString(),
-    'Model_Operation_Barcode': Model_Operation_Barcode??'',
-    'Oper_Sequence': Oper_Sequence.toString(),
-    'Model_id': Model_id.toString(),
-    'Real_Amount': Real_Amount.toString(),
-    'StitchesUsedFrequently_Id': StitchesUsedFrequently_Id.toString(),
-    'StitchThreadLength': StitchThreadLength.toString(),
-    'NeedleThread': NeedleThread.toString(),
-    'LooperThread': LooperThread.toString(),
-    'Department_Id': Department_Id.toString(),
-    'Material_Type_Id': Material_Type_Id.toString(),
-    'ModelCosting_Id': ModelCosting_Id.toString(),
-    'CreateDate': CreateDate.toString(),
-    'LastUpdateDate': LastUpdateDate.toString(),
-    'CreatedBy': CreatedBy.toString(),
-    'LastUpdateBy': LastUpdateBy.toString(),
-    'IsBulkType': IsBulkType.toString(),
-    'BulkAdet': BulkAdet.toString(),
-    'Stitch_Tool_Id': Stitch_Tool_Id.toString(),
-    'Source_Id': Source_Id??'',
-    'IsCriticalControl': IsCriticalControl.toString(),
-    'Group_Name': Group_Name??'',
-    'Machine_name': Machine_name??'',
-    'Model_Name': Model_Name??'',
-    'Depart_Name': Depart_Name??'',
-    'Material_Name': Material_Name??'',
-    'Tool_Name': Tool_Name??'',
-
-  };
-
-
+        'Operation_Id': Operation_Id.toString(),
+        'Operationl_Code': Operationl_Code ?? '',
+        'Operation_Description': Operation_Description ?? '',
+        'Operation_Name': Operation_Name ?? '',
+        'Operation_Groups': Operation_Groups.toString(),
+        'Machine_id': Machine_id.toString(),
+        'OperationToplamSTD': OperationToplamSTD.toString(),
+        'ArticalNO': ArticalNO ?? '',
+        'OperationVideo': OperationVideo ?? '',
+        //'OperationImage': OperationImage.toString(),
+        'Thread_length': Thread_length.toString(),
+        'Bobin_Number': Bobin_Number.toString(),
+        'OperationVideoFileName': OperationVideoFileName ?? '',
+        'HandTMU': HandTMU.toString(),
+        'HandMin': HandMin.toString(),
+        'HandTolerStd': HandTolerStd.toString(),
+        'MachineTMU': MachineTMU.toString(),
+        'MachineMin': MachineMin.toString(),
+        'MachineTolStd': MachineTolStd.toString(),
+        'Oper_Target': Oper_Target.toString(),
+        'Machine_ErrorPossible': Machine_ErrorPossible.toString(),
+        'Total_SweingLength': Total_SweingLength.toString(),
+        'OperTMU': OperTMU.toString(),
+        'Hour_Target': Hour_Target.toString(),
+        'Machine_Number': Machine_Number.toString(),
+        'Model_Operation_Barcode': Model_Operation_Barcode ?? '',
+        'Oper_Sequence': Oper_Sequence.toString(),
+        'Model_id': Model_id.toString(),
+        'Real_Amount': Real_Amount.toString(),
+        'StitchesUsedFrequently_Id': StitchesUsedFrequently_Id.toString(),
+        'StitchThreadLength': StitchThreadLength.toString(),
+        'NeedleThread': NeedleThread.toString(),
+        'LooperThread': LooperThread.toString(),
+        'Department_Id': Department_Id.toString(),
+        'Material_Type_Id': Material_Type_Id.toString(),
+        'ModelCosting_Id': ModelCosting_Id.toString(),
+        'CreateDate': CreateDate.toString(),
+        'LastUpdateDate': LastUpdateDate.toString(),
+        'CreatedBy': CreatedBy.toString(),
+        'LastUpdateBy': LastUpdateBy.toString(),
+        'IsBulkType': IsBulkType.toString(),
+        'BulkAdet': BulkAdet.toString(),
+        'Stitch_Tool_Id': Stitch_Tool_Id.toString(),
+        'Source_Id': Source_Id ?? '',
+        'IsCriticalControl': IsCriticalControl.toString(),
+        'Group_Name': Group_Name ?? '',
+        'Machine_name': Machine_name ?? '',
+        'Model_Name': Model_Name ?? '',
+        'Depart_Name': Depart_Name ?? '',
+        'Material_Name': Material_Name ?? '',
+        'Tool_Name': Tool_Name ?? '',
+      };
 
   //#endregion
 
   //#region GetWebApiUrl
-  static Future<List<OperationBLL>?> Get_Operation(int DeptModelOrder_QualityTest_Id) async {
+  static Future<List<OperationBLL>?> Get_Operation(
+      int DeptModelOrder_QualityTest_Id) async {
     List<OperationBLL>? ItemList;
     try {
-
-      Map<String,String> qParams = {
-        'DeptModelOrder_QualityTest_Id':DeptModelOrder_QualityTest_Id.toString()
+      Map<String, String> qParams = {
+        'DeptModelOrder_QualityTest_Id':
+            DeptModelOrder_QualityTest_Id.toString()
       };
-      var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Get_ModelOrderOperation,qParams));
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_ModelOrderOperation,
+          Paramters: qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
@@ -311,7 +312,4 @@ class OperationBLL {
   }
 //#endregion
 
-
-
 }
-

@@ -1,4 +1,7 @@
 enum ResourceKey{
+  EmployeeInformationMissed,
+  OperationInformationMissed,
+  OrderDataMissing,
   AQL_Tolerance,
   Real_Measure,
   Measure_Fark,

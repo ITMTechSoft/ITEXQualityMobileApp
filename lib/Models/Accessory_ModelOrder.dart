@@ -8,23 +8,24 @@ import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 
 class Accessory_ModelOrderBLL {
   //#region Properties
-  int Id =0;
+  int Id = 0;
   int? DeptModelOrder_QualityTest_Id;
-  int Accessory_Id =0;
-  int Quantity =0;
-  int? Checks_Quantity;
+  int Accessory_Id = 0;
+  int Quantity = 0;
+  int? Correct_Amount;
+  int? Error_Amount;
   bool? IsSupplierAutoEmail;
   int? Entity_Order;
   int? QualityDept_ModelOrder_Id;
   String? Accessory;
   String? Group_Name;
+
   //#endregion
 
   Accessory_ModelOrderBLL() {
     this.Id = 0;
     this.Accessory_Id = 0;
     this.Quantity = 0;
-
   }
 
   //#region Json Mapping
@@ -33,7 +34,8 @@ class Accessory_ModelOrderBLL {
     this.DeptModelOrder_QualityTest_Id = json['DeptModelOrder_QualityTest_Id'];
     this.Accessory_Id = json['Accessory_Id'];
     this.Quantity = json['Quantity'];
-    this.Checks_Quantity = json['Checks_Quantity'];
+    this.Correct_Amount = json['Correct_Amount'];
+    this.Error_Amount = json['Error_Amount'];
     this.IsSupplierAutoEmail = json['IsSupplierAutoEmail'];
     this.Entity_Order = json['Entity_Order'];
     this.QualityDept_ModelOrder_Id = json['QualityDept_ModelOrder_Id'];
@@ -41,64 +43,63 @@ class Accessory_ModelOrderBLL {
     this.Group_Name = json['Group_Name'];
   }
 
-  Accessory_ModelOrderBLL.fromJson(Map<String, dynamic> json):
-        Id = json['Id'],
+  Accessory_ModelOrderBLL.fromJson(Map<String, dynamic> json)
+      : Id = json['Id'],
         DeptModelOrder_QualityTest_Id = json['DeptModelOrder_QualityTest_Id'],
         Accessory_Id = json['Accessory_Id'],
         Quantity = json['Quantity'],
-        Checks_Quantity = json['Checks_Quantity'],
+        Correct_Amount = json['Correct_Amount'],
+        Error_Amount= json['Error_Amount'],
         IsSupplierAutoEmail = json['IsSupplierAutoEmail'],
         Entity_Order = json['Entity_Order'],
         QualityDept_ModelOrder_Id = json['QualityDept_ModelOrder_Id'],
         Accessory = json['Accessory'],
         Group_Name = json['Group_Name'];
 
-
   Map<String, dynamic> toJson() => {
-    'Id': Id,
-    'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id,
-    'Accessory_Id': Accessory_Id,
-    'Quantity': Quantity,
-    'Checks_Quantity': Checks_Quantity,
-    'IsSupplierAutoEmail': IsSupplierAutoEmail,
-    'Entity_Order': Entity_Order,
-    'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id,
-    'Accessory': Accessory,
-    'Group_Name': Group_Name,
-
-  };
+        'Id': Id,
+        'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id,
+        'Accessory_Id': Accessory_Id,
+        'Quantity': Quantity,
+        'Correct_Amount': Correct_Amount,
+        'Error_Amount' : Error_Amount,
+        'IsSupplierAutoEmail': IsSupplierAutoEmail,
+        'Entity_Order': Entity_Order,
+        'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id,
+        'Accessory': Accessory,
+        'Group_Name': Group_Name,
+      };
 
   Map<String, String> toPost() => {
-
-
-    'Id': Id.toString(),
-    'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id.toString(),
-    'Accessory_Id': Accessory_Id.toString(),
-    'Quantity': Quantity.toString(),
-    'Checks_Quantity': Checks_Quantity.toString(),
-    'IsSupplierAutoEmail': IsSupplierAutoEmail.toString(),
-    'Entity_Order': Entity_Order.toString(),
-    'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),
-    'Accessory': Accessory??'',
-    'Group_Name': Group_Name??'',
-
-  };
-
-
+        'Id': Id.toString(),
+        'DeptModelOrder_QualityTest_Id':
+            DeptModelOrder_QualityTest_Id.toString(),
+        'Accessory_Id': Accessory_Id.toString(),
+        'Quantity': Quantity.toString(),
+        'Correct_Amount': Correct_Amount.toString(),
+        'Error_Amount' : Error_Amount.toString(),
+        'IsSupplierAutoEmail': IsSupplierAutoEmail.toString(),
+        'Entity_Order': Entity_Order.toString(),
+        'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),
+        'Accessory': Accessory ?? '',
+        'Group_Name': Group_Name ?? '',
+      };
 
   //#endregion
 
   //#region GetWebApiUrl
-  static Future<List<Accessory_ModelOrderBLL>?> Get_Accessory_ModelOrder({int DeptModelOrder_QualityTest_Id = 0}) async {
+  static Future<List<Accessory_ModelOrderBLL>?> Get_Accessory_ModelOrder(
+      {int DeptModelOrder_QualityTest_Id = 0}) async {
     List<Accessory_ModelOrderBLL>? ItemList;
     try {
-
       Map<String, String> qParams = {
-        'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id.toString(),
+        'DeptModelOrder_QualityTest_Id':
+            DeptModelOrder_QualityTest_Id.toString(),
       };
 
-      var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Get_Accessory_ModelOrder,qParams) );
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_Accessory_ModelOrder,
+          Paramters: qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
@@ -112,12 +113,6 @@ class Accessory_ModelOrderBLL {
     return ItemList;
   }
 
-
-
-
 //#endregion
 
-
-
 }
-

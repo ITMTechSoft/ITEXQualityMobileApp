@@ -105,7 +105,7 @@ class QualityDepartment_ModelOrderBLL {
         'Department_Id':Department_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
-              WebApiMethod.Get_QualityDepartment_ModelOrder,qParams) );
+              WebApiMethod.Get_QualityDepartment_ModelOrder,Paramters: qParams) );
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
@@ -126,7 +126,7 @@ class QualityDepartment_ModelOrderBLL {
         'Order_Id':this.Order_Id.toString()
       };
       var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Get_ModelOrder_Image,qParams) );
+          SharedPref.GetWebApiUri(WebApiMethod.Get_ModelOrder_Image,Paramters: qParams) );
 
       if (response.statusCode == 200) {
         String Image = json.decode(response.body);

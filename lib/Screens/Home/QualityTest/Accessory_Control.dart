@@ -14,7 +14,9 @@ class Accessory_Control extends StatefulWidget {
 
 class _Accessory_ControlState extends State<Accessory_Control> {
   int IntiteStatus = 0;
-  int AssignAmount = 1;
+  int CorrectAmount = 0;
+  int ErrorAmount = 0;
+
 
   Future<List<Accessory_ModelOrderBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase) async {
@@ -49,7 +51,7 @@ class _Accessory_ControlState extends State<Accessory_Control> {
 
     return Scaffold(
       appBar: DetailBar(
-          Title: PersonalCase.SelectedTest!.Test_Name??'',
+          Title: PersonalCase.SelectedTest!.Test_Name ?? '',
           PersonalCase: PersonalCase,
           OnTap: () {
             Navigator.pop(context);
@@ -57,7 +59,7 @@ class _Accessory_ControlState extends State<Accessory_Control> {
           context: context),
       body: ListView(children: [
         ListTile(
-          title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
+          title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number ?? '',
               color: ArgonColors.header, FontSize: ArgonSize.Header2),
           subtitle: Text(
             PersonalCase.SelectedDepartment!.Start_Date.toString(),
@@ -78,6 +80,8 @@ class _Accessory_ControlState extends State<Accessory_Control> {
                     HeaderLable(PersonalCase.GetLable(ResourceKey.Quantity)),
                     HeaderLable(
                         PersonalCase.GetLable(ResourceKey.Checks_Quantity)),
+                    HeaderLable(
+                        PersonalCase.GetLable(ResourceKey.ErrorAmount)),
                   ],
                   Items: snapshot.data!,
                   OnClickItems: (Index) {
@@ -92,23 +96,45 @@ class _Accessory_ControlState extends State<Accessory_Control> {
                                   style: TextStyle(fontSize: ArgonSize.Header3),
                                 ),
                                 content: Container(
-
-                                  width: getScreenWidth() *0.7,
+                                  width: getScreenWidth() * 0.7,
                                   padding: EdgeInsets.all(ArgonSize.Padding1),
                                   child: new Column(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      SpinBox(
-                                        max: 999999,
-                                        textStyle: TextStyle(
-                                            fontSize: ArgonSize.Header2),
-                                        value: 1,
-                                        onChanged: (value) {
-                                          AssignAmount = value.toInt();
-                                        },
+                                      Column(
+                                        children: [
+                                          LableTitle(PersonalCase.GetLable(
+                                              ResourceKey.Correct_Amount)),
+                                          SpinBox(
+                                            max: 999999,
+                                            textStyle: TextStyle(
+                                                fontSize: ArgonSize.Header2),
+                                            value: 1,
+                                            onChanged: (value) {
+                                              CorrectAmount = value.toInt();
+                                            },
+                                          ),
+                                        ],
                                       ),
+                                      SizedBox(height: 20,),
+                                      Column(
+                                        children: [
+                                          LableTitle(PersonalCase.GetLable(
+                                              ResourceKey.Error_Amount)),
+                                          SpinBox(
+                                            max: 999999,
+                                            textStyle: TextStyle(
+                                                fontSize: ArgonSize.Header2),
+                                            value: 0,
+                                            onChanged: (value) {
+                                              ErrorAmount = value.toInt();
+                                            },
+                                          ),
+                                        ],
+                                      ),
+
                                       ActionMessage.isNotEmpty
                                           ? Text(ActionMessage)
                                           : SizedBox(
@@ -142,7 +168,9 @@ class _Accessory_ControlState extends State<Accessory_Control> {
                                       // Tracking.Sample_Amount = int.tryParse(
                                       //     AccessoryAmountController.text);
 
-                                      Tracking.Sample_Amount = AssignAmount;
+                                      Tracking.Sample_Amount = CorrectAmount + ErrorAmount;
+                                      Tracking.Correct_Amount = CorrectAmount;
+                                      Tracking.Error_Amount = ErrorAmount;
                                       Tracking.Employee_Id = Employee_Id;
                                       Tracking.Accessory_ModelOrder_Id =
                                           Item.Id;
@@ -157,7 +185,7 @@ class _Accessory_ControlState extends State<Accessory_Control> {
                                             ResourceKey.InvalidAction);
                                       else {
                                         //  AccessoryAmountController.text = "";
-                                        AssignAmount = 1;
+                                        ErrorAmount = CorrectAmount = 1;
                                         //Item.Checks_Quantity += Tracking.Sample_Amount;
                                         Navigator.of(context).pop();
                                         RefeshCurrent();
