@@ -28,7 +28,7 @@ class _MeasureSizeSample_ListState extends State<MeasureSizeSample_List> {
     await QualityDept_ModelOrder_TrackingBLL
         .GetInlineDikim_QualityDept_ModelOrder_Tracking(
         Employee_Id: PersonalCase.GetCurrentUser().Id,
-        DeptModelOrder_QualityTest_Id:1009,
+        DeptModelOrder_QualityTest_Id:PersonalCase.SelectedTest!.Id,
         SelectDate: SelectedDate);
 
     if (Criteria != null) {

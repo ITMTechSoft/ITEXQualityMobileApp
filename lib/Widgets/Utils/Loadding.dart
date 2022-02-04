@@ -21,6 +21,10 @@ class LoadingContainer extends StatelessWidget {
       MessageError: PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
       DetailError: PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
 
+  Widget GetMessage(String Header,String Message) => ErrorPage(
+      ActionName: Header,
+      MessageError: Message,);
+
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
@@ -29,6 +33,11 @@ class LoadingContainer extends StatelessWidget {
         return ErrorLoading(PersonalCase);
       case 0:
         return Loadding();
+      case -2:
+        return GetMessage(
+            PersonalCase.GetLable(ResourceKey.WarrningMessage),
+            PersonalCase.GetLable(ResourceKey.PleaseCompleteQualityTestBeforeStart)
+        );
       default:
         return Container();
     }

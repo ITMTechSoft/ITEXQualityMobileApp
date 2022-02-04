@@ -36,9 +36,65 @@ class _Criteria_TestState extends State<Criteria_Test> {
     if (Critiera != null) {
       IntiteStatus = 1;
     } else {
-      IntiteStatus = -1;
+      IntiteStatus = 1;
     }
     return Critiera;
+  }
+
+  Widget DocumentHtml(String? HtmlData ,PersonalProvider PersonalCase){
+    if(HtmlData == null || !HtmlData.isNotEmpty)
+      return ErrorPage(
+          ActionName: PersonalCase.GetLable(ResourceKey.CreteriaDataIsMissing),
+          MessageError: PersonalCase.GetLable(ResourceKey.PleaseEnterCreteriaDataIsMissing),);
+
+    else
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            !IsUserApproved
+                ? TimerButton(
+              label:
+              PersonalCase.GetLable(ResourceKey.Validation),
+              activeTextStyle: TextStyle(
+                fontSize: ArgonSize.WidthSmall,
+                color: ArgonColors.white,
+              ),
+              disabledTextStyle: TextStyle(
+                  fontSize: ArgonSize.WidthSmall,
+                  color: ArgonColors.white),
+              timeOutInSeconds: WaitSYC > 0 ? WaitSYC : 1,
+              onPressed: () async {
+                bool IsValidated = await PersonalCase
+                    .SelectedTest!
+                    .SetValidationAction(
+                    PersonalCase.GetCurrentUser().Id);
+                if (IsValidated) Navigator.pop(context);
+              },
+              buttonType: ButtonType.RaisedButton,
+              disabledColor: Colors.amberAccent,
+              color: ArgonColors.myLightBlue,
+            )
+                : Container(),
+            new Container(
+                child: new Column(
+                  children: <Widget>[
+                    Html(
+                      data: HtmlData ,
+                      style: {
+                        'p': Style(margin: EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 8)),
+                      },
+                    ),
+
+                    //   Text( parse(snapshot.data!.HTML_Data ).outerHtml)
+
+
+                  ],
+                )),
+
+          ],
+        ),
+      );
+
   }
 
   @override
@@ -50,6 +106,9 @@ class _Criteria_TestState extends State<Criteria_Test> {
   }@override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
+
+
+
 
     return Scaffold(
       appBar:
@@ -73,64 +132,14 @@ class _Criteria_TestState extends State<Criteria_Test> {
             future: LoginFunction(PersonalCase),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                var document = parse(
-                    snapshot.data!.HTML_Data??'');
-                print(document.outerHtml);
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      !IsUserApproved
-                          ? TimerButton(
-                        label:
-                        PersonalCase.GetLable(ResourceKey.Validation),
-                        activeTextStyle: TextStyle(
-                          fontSize: ArgonSize.WidthSmall,
-                          color: ArgonColors.white,
-                        ),
-                        disabledTextStyle: TextStyle(
-                            fontSize: ArgonSize.WidthSmall,
-                            color: ArgonColors.white),
-                        timeOutInSeconds: WaitSYC > 0 ? WaitSYC : 1,
-                        onPressed: () async {
-                          bool IsValidated = await PersonalCase
-                              .SelectedTest!
-                              .SetValidationAction(
-                              PersonalCase.GetCurrentUser().Id);
-                          if (IsValidated) Navigator.pop(context);
-                        },
-                        buttonType: ButtonType.RaisedButton,
-                        disabledColor: Colors.amberAccent,
-                        color: ArgonColors.myLightBlue,
-                      )
-                          : Container(),
-                        new Container(
-                            child: new Column(
-                              children: <Widget>[
-                                Html(
-                                  data: snapshot.data!.HTML_Data  ?? "",
-                                  style: {
-                                  'p': Style(margin: EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 8)),
-                                  },
-                                ),
-
-                            //   Text( parse(snapshot.data!.HTML_Data ).outerHtml)
-
-
-                              ],
-                            )),
-
-                    ],
-                  ),
-                );
+                // var document = parse(
+                //     snapshot.data!.HTML_Data??'');
+                // //print(document.outerHtml);
+                return DocumentHtml(snapshot.data!.HTML_Data,PersonalCase);
               } else if (IntiteStatus == 0)
                 return Center(child: CircularProgressIndicator());
               else
-                return ErrorPage(
-                    ActionName: PersonalCase.GetLable(ResourceKey.Loading),
-                    MessageError: PersonalCase.GetLable(
-                        ResourceKey.ErrorWhileLoadingData),
-                    DetailError: PersonalCase.GetLable(
-                        ResourceKey.InvalidNetWorkConnection));
+                return DocumentHtml(null,PersonalCase);
             },
           )
         ],

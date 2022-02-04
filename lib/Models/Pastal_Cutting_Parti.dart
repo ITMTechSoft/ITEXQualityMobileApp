@@ -15,6 +15,7 @@ class Pastal_Cutting_PartiBLL {
   int? Create_Employee_Id;
   String? Order_Number;
   String? Employee_Name;
+  String? Note;
 
   //#endregion
   Pastal_Cutting_PartiBLL(){}
@@ -31,7 +32,7 @@ class Pastal_Cutting_PartiBLL {
     this.Create_Employee_Id = json['Create_Employee_Id'];
     this.Order_Number = json['Order_Number'];
     this.Employee_Name = json['Employee_Name'];
-
+    this.Note = json['Note'];
   }
 
   Pastal_Cutting_PartiBLL.fromJson(Map<String, dynamic> json):
@@ -43,6 +44,7 @@ class Pastal_Cutting_PartiBLL {
         FabricRestingTime = json['FabricRestingTime'],
         Create_Employee_Id = json['Create_Employee_Id'],
         Order_Number = json['Order_Number'],
+        Note = json['Note'],
         Employee_Name = json['Employee_Name'];
 
 
@@ -56,7 +58,7 @@ class Pastal_Cutting_PartiBLL {
     'Create_Employee_Id': Create_Employee_Id,
     'Order_Number': Order_Number,
     'Employee_Name': Employee_Name,
-
+    'Note': Note,
   };
 
   Map<String, String> toPost() => {
@@ -71,7 +73,7 @@ class Pastal_Cutting_PartiBLL {
     'Create_Employee_Id': Create_Employee_Id.toString(),
     'Order_Number': Order_Number??'',
     'Employee_Name': Employee_Name??'',
-
+    'Note': Note??'',
   };
 
   //#endregion

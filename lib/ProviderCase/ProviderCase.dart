@@ -137,4 +137,8 @@ class PersonalProvider with ChangeNotifier {
         await Language_ResourcesKeyBLL.Get_Language_ResourcesKey(Language_Id);
     return true;
   }
+
+  ReloadFunction(){
+    notifyListeners();
+  }
 }

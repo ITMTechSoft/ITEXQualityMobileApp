@@ -84,8 +84,10 @@ class _OrderListState extends State<OrderList> {
                           primary: false,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, int i) {
-                            return OrderCard(Item:snapshot.data![i], OnTap:() {
+                            return OrderCard(Item:snapshot.data![i], OnTap:() async {
                               PersonalCase.SelectedOrder = snapshot.data![i];
+                              if(PersonalCase.SelectedOrder!.StartDate == null)
+                                await PersonalCase.SelectedOrder!.StartQualityDepartmentTest();
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

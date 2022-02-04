@@ -35,8 +35,11 @@ class _QualityItemsListState extends State<QualityItemsList> {
   Future<List<Quality_ItemsBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
     List<Quality_ItemsBLL>? Critiera =
-        await Quality_ItemsBLL.Get_Quality_Items_WithValue(widget.GroupType,
-            PersonalCase.GetCurrentUser().Id, CaseProvider.ModelOrderMatrix!.Id);
+        await Quality_ItemsBLL.Get_Quality_Items_WithValue(
+            widget.GroupType,
+            PersonalCase.GetCurrentUser().Id,
+            CaseProvider.ModelOrderMatrix!.Id,
+        QualityTest_Id: PersonalCase.SelectedTest!.QualityTest_Id);
 
     Critiera = Critiera!.where((element) => element.Item_Level == 0).toList();
 
@@ -66,21 +69,9 @@ class _QualityItemsListState extends State<QualityItemsList> {
       else
         UserQuality.Amount = 1;
 
-  /*    if(CaseProvider.QualityItemList !=null)
-        {
-          String? Image64;
-          if (_IsDeletedVal == false &&
-              (CaseProvider.QualityItemList![index].IsTakeImage ??
-                  false)) {
-            Image64 = await TakeImageFromCamera();
-          }
-
-          bool check = await CaseProvider.QualityItemList![index]
-              .Set_QualityInlineError(CaseProvider.EmployeeOperation!.Id,
-              IsDelete: _IsDeletedVal, Image: Image64);
-        }
-*/
-
+      if (_IsDeletedVal == false && (item.IsTakeImage ?? false)) {
+        UserQuality.Image64 = await TakeImageFromCamera();
+      }
 
       int CheckStatus = await UserQuality.Set_UserQualityFinalControl();
       switch (CheckStatus) {
@@ -192,7 +183,19 @@ class _QualityItemsListState extends State<QualityItemsList> {
                             fontSize: ArgonSize.Header4,
                             color : Color(snapshot.data![index].Circle_Color??4278204558)
                         ),
-                        bottomLeft: _IsDeletedVal == true
+                        bottomLeft: snapshot.data![index].IsTakeImage == true
+                            ? IconInsideCircle(
+                            iconSize: getScreenWidth() > 1100
+                                ? ArgonSize.Padding2
+                                : ArgonSize.Padding7,
+                            size: getScreenWidth() > 1000
+                                ? ArgonSize.Padding2
+                                : ArgonSize.Padding7,
+                            icon: FontAwesomeIcons.camera,
+                            color: Colors.white,
+                            backGroundColor: Colors.deepPurple)
+                            : Container(width: 0, height: 0),
+                        bottomRight: _IsDeletedVal == true
                             ? IconInsideCircle(
                             iconSize:getScreenWidth()>1100?ArgonSize.Header6:ArgonSize.Header6,
                             size: getScreenWidth()>1000?ArgonSize.Padding6:ArgonSize.Padding6,

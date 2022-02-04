@@ -65,7 +65,7 @@ class _Cutting_PastalControlState extends State<Cutting_PastalControl> {
   Future<bool> CorrentVal(PersonalProvider PersonalCase) async {
     if (SelectedItem != null) {
       var UserQuality = new User_QualityTracking_DetailBLL();
-      UserQuality.Correct_Amount = IncrementVal.toInt();
+      UserQuality.Correct_Amount = _IsDeletedVal?   (IncrementVal.toInt() * -1) :IncrementVal.toInt();
       UserQuality.QualityDept_ModelOrder_Tracking_Id =
           PersonalCase.SelectedTracking!.Id;
       UserQuality.Create_Date = DateTime.now();
@@ -86,7 +86,8 @@ class _Cutting_PastalControlState extends State<Cutting_PastalControl> {
   Future<bool> ErrorVal(PersonalProvider PersonalCase) async {
     if (SelectedItem != null) {
       var UserQuality = new User_QualityTracking_DetailBLL();
-      UserQuality.Error_Amount = IncrementVal.toInt();
+
+      UserQuality.Error_Amount = _IsDeletedVal?  (IncrementVal.toInt() * -1) :IncrementVal.toInt()  ;
       UserQuality.QualityDept_ModelOrder_Tracking_Id =
           PersonalCase.SelectedTracking!.Id;
       UserQuality.Create_Date = DateTime.now();
@@ -198,18 +199,18 @@ class _Cutting_PastalControlState extends State<Cutting_PastalControl> {
                   margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
                   child: LableTitle(
                       PersonalCase.GetLable(ResourceKey.ControlAxaisName),
-                      FontSize: ArgonSize.Header4)),
+                      FontSize: ArgonSize.Header5)),
             ),
             Expanded(
                 flex: 2,
                 child: LableTitle(
                     PersonalCase.GetLable(ResourceKey.ControlAmount),
-                    FontSize: ArgonSize.Header4)),
+                    FontSize: ArgonSize.Header5)),
             Expanded(
                 flex: 2,
                 child: LableTitle(
                     PersonalCase.GetLable(ResourceKey.ControlError),
-                    FontSize: ArgonSize.Header4)),
+                    FontSize: ArgonSize.Header5)),
           ],
         ),
       );
@@ -363,6 +364,7 @@ class _Cutting_PastalControlState extends State<Cutting_PastalControl> {
 
   Widget PastalList(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) {
+    if(Quality_Item!.length > 0)
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: BoxMaterialCard(
@@ -391,6 +393,13 @@ class _Cutting_PastalControlState extends State<Cutting_PastalControl> {
         ],
       ),
     );
+    else
+      return ErrorPage(
+          ActionName: PersonalCase.GetLable(ResourceKey.WarrningMessage),
+          MessageError:
+          PersonalCase.GetLable(ResourceKey.PleaseAddPastalControlErrors),
+          DetailError:
+          PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
   }
 
   @override

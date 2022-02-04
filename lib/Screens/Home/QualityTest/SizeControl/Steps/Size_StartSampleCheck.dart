@@ -10,6 +10,7 @@ import 'package:itex_soft_qualityapp/Utility/TakeImageCamera.dart';
 import 'package:itex_soft_qualityapp/Widgets/CardRow.dart';
 import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
 import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
+import 'package:itex_soft_qualityapp/Widgets/Utils/Loadding.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 
 class Size_StartSampleCheck extends StatefulWidget {
@@ -23,7 +24,6 @@ class _Size_StartSampleCheckState extends State<Size_StartSampleCheck> {
 
   bool _IsDeletedVal = false;
 
-
   List<Size_Measurement_AllowanceBLL>? MeasurementItemList;
 
   //#region Loading Data
@@ -35,10 +35,14 @@ class _Size_StartSampleCheckState extends State<Size_StartSampleCheck> {
           await Size_Measurement_AllowanceBLL.Get_Size_Measurement_Allowance(
               ModelOrderSize_Id: CaseProvider.ModelOrderMatrix!.Size_Id,
               DeptModelOrder_QualityTest_Id: PersonalCase.SelectedTest!.Id,
-              QualityDept_ModelOrder_Tracking_Id: CaseProvider.QualityTracking!.Id);
+              QualityDept_ModelOrder_Tracking_Id:
+                  CaseProvider.QualityTracking!.Id);
 
     if (MeasurementItemList != null) {
-      IntiteStatus = 1;
+      if (MeasurementItemList!.length > 0)
+        IntiteStatus = 1;
+      else
+        IntiteStatus = -2;
       return MeasurementItemList;
     } else {
       IntiteStatus = -1;
@@ -59,8 +63,6 @@ class _Size_StartSampleCheckState extends State<Size_StartSampleCheck> {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
@@ -75,19 +77,15 @@ class _Size_StartSampleCheckState extends State<Size_StartSampleCheck> {
             },
             context: context),
         body: ListView(
-          children: [
-            MeasurementControl(PersonalCase, CaseProvider)
-          ],
+          children: [MeasurementControl(PersonalCase, CaseProvider)],
         ));
   }
-
-
 
   Widget MeasurementControl(PersonalCase, CaseProvider) {
     return FutureBuilder(
         future: LoadingMeasurement(PersonalCase, CaseProvider),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
+          if (snapshot.hasData && IntiteStatus == 1) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
@@ -102,18 +100,9 @@ class _Size_StartSampleCheckState extends State<Size_StartSampleCheck> {
               ],
             );
           } else
-            if (IntiteStatus == 0)
-            return Center(child: CircularProgressIndicator());
-          else
-            return ErrorPage(
-                ActionName: PersonalCase.GetLable(ResourceKey.Loading),
-                MessageError:
-                    PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
-                DetailError: PersonalCase.GetLable(
-                    ResourceKey.InvalidNetWorkConnection));
+            return LoadingContainer(IntiteStatus: IntiteStatus);
         });
   }
-
 
   //#region Measurements
   Widget MeasurementInfoBox(
@@ -140,7 +129,6 @@ class _Size_StartSampleCheckState extends State<Size_StartSampleCheck> {
               "Sample  " +
                   (CaseProvider.QualityTracking!.SampleNo ?? 0).toString()),
           SizedBox(height: 8),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
@@ -267,7 +255,7 @@ class _Size_StartSampleCheckState extends State<Size_StartSampleCheck> {
                     child: Column(
                       children: [
                         LableTitle(PersonalCase.GetLable(ResourceKey.Status)),
-                        (Item.CheckStatus??0) == 0
+                        (Item.CheckStatus ?? 0) == 0
                             ? ClipOval(
                                 child: Icon(Icons.cancel_outlined,
                                     color: ArgonColors.myRed,

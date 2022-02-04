@@ -96,19 +96,97 @@ class _Dikim_InlineEmployeeOperationControlState
     }
   }
 
+  TextEditingController NoteController = new TextEditingController();
+
+  RegisterNotAlertDialog(BuildContext context, PersonalProvider PersonalCase,SubCaseProvider CaseProvider) {
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(PersonalCase.GetLable(ResourceKey.Note)),
+      content: Container(
+        width: getScreenWidth() * 0.7,
+        height: getScreenHeight() * 0.3,
+        decoration: BoxDecoration(border: Border.all(color: Colors.black54)),
+        child: TextFormField(
+          controller: NoteController,
+          keyboardType: TextInputType.multiline,
+          decoration: new InputDecoration(
+            prefixIcon: Padding(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 100),
+              child: Icon(Icons.event_note),
+            ),
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            contentPadding: EdgeInsets.all(10.0),
+          ),
+          minLines: 1,
+          maxLines: 10,
+        ),
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: Text(PersonalCase.GetLable(ResourceKey.Save),
+              style: TextStyle(fontSize: ArgonSize.Header3)),
+          onPressed: () async {
+           CaseProvider.EmployeeOperation!.Reject_Note = NoteController.text;
+            var Check = await CaseProvider.EmployeeOperation!
+                .UpdateEntity();
+            Navigator.of(context).pop();
+          },
+        ),
+        TextButton(
+          child: Text(PersonalCase.GetLable(ResourceKey.Cancel),
+              style: TextStyle(fontSize: ArgonSize.Header3)),
+          onPressed: () async {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   /// Closing Control Button
   ClosingControl(PersonalProvider PersonalCase, SubCaseProvider CaseProvider) =>
       Container(
-        margin: EdgeInsets.all(ArgonSize.Padding5),
-        child: CustomButton(
-            width: getScreenWidth() ,
-            height: ArgonSize.HeightSmall1,
-            textSize: ArgonSize.Header2,
-            value: PersonalCase.GetLable(ResourceKey.CloseControl),
-            backGroundColor: ArgonColors.primary,
-            function: () async {
-              await CloseInlineOperation(PersonalCase, CaseProvider);
-            }),
+        margin:
+            EdgeInsets.fromLTRB(ArgonSize.Padding6, 0, ArgonSize.Padding6, 0),
+        child: Row(
+          children: [
+            Expanded(
+                child: CustomButton(
+                    width: getScreenWidth(),
+                    height: ArgonSize.HeightSmall1,
+                    textSize: ArgonSize.Header2,
+                    value: PersonalCase.GetLable(ResourceKey.CloseControl),
+                    backGroundColor: ArgonColors.primary,
+                    function: () async {
+                      await CloseInlineOperation(PersonalCase, CaseProvider);
+                    })),
+            Container(
+              width: 15,
+            ),
+            Expanded(
+                child: CustomButton(
+                    width: getScreenWidth(),
+                    height: ArgonSize.HeightSmall1,
+                    textSize: ArgonSize.Header2,
+                    value: PersonalCase.GetLable(ResourceKey.Note),
+                    backGroundColor: ArgonColors.myYellow,
+                    function: () async {
+                      await RegisterNotAlertDialog(context, PersonalCase,CaseProvider);
+                    }))
+          ],
+        ),
       );
 
   /// Main Page After Loading List
@@ -122,7 +200,7 @@ class _Dikim_InlineEmployeeOperationControlState
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     final CaseProvider = Provider.of<SubCaseProvider>(context);
-
+    NoteController = new TextEditingController(text: CaseProvider.EmployeeOperation!.Reject_Note);
     return Scaffold(
       appBar: ScreenAppBar(PersonalCase),
       body: ListView(
@@ -163,7 +241,8 @@ class _InlineProcessState extends State<InlineProcess> {
               HeaderLable(
                   '${PersonalCase.GetLable(ResourceKey.Order_Number)} / '
                   '${PersonalCase.GetLable(ResourceKey.Operation_Name)}',
-                  Flex: 3),
+                  Flex: 3,
+                  IsCenter: false),
               TableLable(PersonalCase.SelectedOrder!.Order_Number ?? '',
                   Flex: 2),
               TableLable(
@@ -178,7 +257,8 @@ class _InlineProcessState extends State<InlineProcess> {
               HeaderLable(
                   '${PersonalCase.GetLable(ResourceKey.Employee_Name)} / '
                   '${PersonalCase.GetLable(ResourceKey.Sample_Amount)}',
-                  Flex: 3),
+                  Flex: 3,
+                  IsCenter: false),
               TableLable(
                   CaseProvider.EmployeeOperation!.Inline_Employee_Name ?? '',
                   Flex: 2),
@@ -192,7 +272,8 @@ class _InlineProcessState extends State<InlineProcess> {
               HeaderLable(
                   '${PersonalCase.GetLable(ResourceKey.Error_Amount)} / '
                   '${PersonalCase.GetLable(ResourceKey.Correct_Amount)}',
-                  Flex: 3),
+                  Flex: 3,
+                  IsCenter: false),
               TableLable(
                   (CaseProvider.EmployeeOperation!.Error_Amount ?? 0)
                       .toString(),

@@ -1,4 +1,10 @@
 enum ResourceKey{
+  PleaseAddPastalControlErrors,
+  PleaseCompleteQualityTestBeforeStart,
+  PleaseCompleteOrderMatrixData,
+  CreteriaDataIsMissing,
+  PleaseEnterCreteriaDataIsMissing,
+  ConfirmCloseDepartmentControl,
   EmployeeInformationMissed,
   OperationInformationMissed,
   OrderDataMissing,

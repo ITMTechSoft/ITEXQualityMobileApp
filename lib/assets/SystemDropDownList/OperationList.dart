@@ -38,7 +38,6 @@ class _Operation_ListState extends State<Operation_List> {
                 style: TextStyle(color: ArgonColors.Title, fontSize: ArgonSize.Header4,fontWeight:FontWeight.bold),
                 controller: SearchController,
                 decoration: new InputDecoration(
-
                     hintText: widget.PersonalCase.GetLable(ResourceKey.Search),
                     border: InputBorder.none),
                 onChanged: onSearchTextChanged,
@@ -58,7 +57,7 @@ class _Operation_ListState extends State<Operation_List> {
 
   Widget FilterList() {
     var FilterListItem = widget.Items.where((r) =>
-        r.Operation_Name!.toUpperCase().contains(SearchController.text.toUpperCase())).toList();
+        r.Operation_Name!.toLowerCase().contains(SearchController.text.toLowerCase())).toList();
     return SingleChildScrollView(
       child: ListView.builder(
           scrollDirection: Axis.vertical,

@@ -14,6 +14,7 @@ class DepartmentModelOrder_QualityTestBLL {
   bool? IsMandatory;
   int? Entity_Order;
   String? Test_Name;
+  String? QualityType;
   int? Order_Id;
   int? Department_Id;
   bool? IsValidateRequired;
@@ -42,6 +43,7 @@ class DepartmentModelOrder_QualityTestBLL {
     this.IsMandatory = json['IsMandatory'];
     this.Entity_Order = json['Entity_Order'];
     this.Test_Name = json['Test_Name'];
+    this.QualityType = json['QualityType'];
     this.Order_Id = json['Order_Id'];
     this.Sample_No = json['Sample_No'];
     this.Department_Id = json['Department_Id'];
@@ -61,6 +63,7 @@ class DepartmentModelOrder_QualityTestBLL {
         IsMandatory = json['IsMandatory'],
         Entity_Order = json['Entity_Order'],
         Test_Name = json['Test_Name'],
+        QualityType = json['QualityType'],
         Accept_Level = json['Accept_Level'],
         Level_Code = json['Level_Code'],
         Depart_Name = json['Depart_Name'],
@@ -79,6 +82,7 @@ class DepartmentModelOrder_QualityTestBLL {
         'IsMandatory': IsMandatory,
         'Entity_Order': Entity_Order,
         'Test_Name': Test_Name,
+    'QualityType': QualityType,
         'Accept_Level': Accept_Level,
         'Level_Code': Level_Code,
         'Depart_Name': Depart_Name,
@@ -98,6 +102,7 @@ class DepartmentModelOrder_QualityTestBLL {
         'IsMandatory': IsMandatory.toString(),
         'Entity_Order': Entity_Order.toString(),
         'Test_Name': Test_Name ?? '',
+    'QualityType': QualityType ?? '',
         'Accept_Level': Accept_Level ?? '',
         'Level_Code': Level_Code ?? '',
         'Depart_Name': Depart_Name ?? '',
@@ -180,6 +185,40 @@ class DepartmentModelOrder_QualityTestBLL {
     } catch (e) {
       print(e);
     }
+    return false;
+  }
+
+  Future<bool> CloseQualityDepartmentTest() async {
+    try {
+
+      Map<String, String> qParams = {
+        'DepartmentModelOrder_QualityTest_Id': Id.toString(),
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.CloseQualityDepartmentTest,
+          Paramters: qParams));
+      if (response.statusCode == 200) {
+        // Item.LoadFromJson(json.decode(response.body));
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
+  Future<bool> StartQualityDepartmentTest() async {
+    try {
+
+      Map<String, String> qParams = {
+        'DepartmentModelOrder_QualityTest_Id': Id.toString(),
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.StartQualityDepartmentTest,
+          Paramters: qParams));
+      if (response.statusCode == 200) {
+        // Item.LoadFromJson(json.decode(response.body));
+        return true;
+      }
+    } catch (e) {}
     return false;
   }
 //#endregion

@@ -31,7 +31,7 @@ class _RadioSwitchState extends State<RadioSwitch> {
         color: widget.LableColor!,
         size:widget. fontSize!,
       ),
-      SizedBox(height:10),
+      // SizedBox(height:10),
       Transform.scale(
           scale: ArgonSize.RadioSwitchValue,
           child: InkWell(

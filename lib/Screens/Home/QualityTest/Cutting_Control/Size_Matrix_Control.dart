@@ -21,7 +21,8 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
       PersonalProvider PersonalCase) async {
     List<ModelOrderSizesBLL>? Criteria =
         await ModelOrderSizesBLL.Get_ModelOrderSizes_CuttingControl(
-            PersonalCase.SelectedTest!.Order_Id!, PersonalCase.SelectedTest!.Id);
+            PersonalCase.SelectedTest!.Order_Id!,
+            PersonalCase.SelectedTest!.Id);
 
     if (Criteria != null) {
       IntiteStatus = 1;
@@ -38,7 +39,7 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
     final CaseProvider = Provider.of<SubCaseProvider>(context);
     return Scaffold(
       appBar: DetailBar(
-          Title: PersonalCase.SelectedTest!.Test_Name??'',
+          Title: PersonalCase.SelectedTest!.Test_Name ?? '',
           PersonalCase: PersonalCase,
           OnTap: () {
             Navigator.pop(context);
@@ -46,9 +47,10 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
           context: context),
       body: ListView(children: [
         ListTile(
-          title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number??'',
+          title: HeaderTitle(PersonalCase.SelectedOrder!.Order_Number ?? '',
               color: ArgonColors.header, FontSize: ArgonSize.Header2),
-          subtitle: Text(PersonalCase.SelectedDepartment!.Start_Date.toString()),
+          subtitle:
+              Text(PersonalCase.SelectedDepartment!.Start_Date.toString()),
           dense: true,
           selected: true,
         ),
@@ -92,7 +94,6 @@ class _Size_Matrix_ControlState extends State<Size_Matrix_Control> {
                             PersonalCase.GetLable(ResourceKey.Error_Amount),
                             Flex: 1),
                       ],
-
                     ),
                   ],
                 ),
@@ -118,7 +119,8 @@ class Size_Matrix_List extends StatefulWidget {
   Function OnClickItems;
   List<Widget> Headers;
 
-  Size_Matrix_List({required this.Headers, required this.Items,required this.OnClickItems});
+  Size_Matrix_List(
+      {required this.Headers, required this.Items, required this.OnClickItems});
 
   @override
   _Size_Matrix_ListState createState() => _Size_Matrix_ListState();
@@ -154,41 +156,52 @@ class _Size_Matrix_ListState extends State<Size_Matrix_List> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          HeaderColumn(
-            children: widget.Headers,
-          ),
-          SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  primary: false,
-                  shrinkWrap: true,
-                  itemCount: widget.Items.length,
-                  itemBuilder: (context, int i) {
-                    return InkWell(
-                      onTap: () {
-                        if (widget.OnClickItems != null) widget.OnClickItems(i);
-                        setState(() {
-                          SelectedIndex = i;
-                        });
-                      },
-                      child: TableColumn(children: [
-                        TableLable(
-                            widget.Items[i].SizeParam_StringVal.toString(),
-                            Flex: 1),
-                        TableLable(
-                            (widget.Items[i].Sample_Amount ?? 0).toString(),
-                            Flex: 1),
-                        TableLable(
-                            (widget.Items[i].Error_Amount ?? 0).toString(),
-                            Flex: 1),
-                      ], IsSelectedItem: SelectedIndex == i),
-                    );
-                  }))
-        ]);
+    final PersonalCase = Provider.of<PersonalProvider>(context);
+
+    if (widget.Items.length > 0)
+      return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            HeaderColumn(
+              children: widget.Headers,
+            ),
+            SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    primary: false,
+                    shrinkWrap: true,
+                    itemCount: widget.Items.length,
+                    itemBuilder: (context, int i) {
+                      return InkWell(
+                        onTap: () {
+                          if (widget.OnClickItems != null)
+                            widget.OnClickItems(i);
+                          setState(() {
+                            SelectedIndex = i;
+                          });
+                        },
+                        child: TableColumn(children: [
+                          TableLable(
+                              widget.Items[i].SizeParam_StringVal.toString(),
+                              Flex: 1),
+                          TableLable(
+                              (widget.Items[i].Sample_Amount ?? 0).toString(),
+                              Flex: 1),
+                          TableLable(
+                              (widget.Items[i].Error_Amount ?? 0).toString(),
+                              Flex: 1),
+                        ], IsSelectedItem: SelectedIndex == i),
+                      );
+                    }))
+          ]);
+    else
+      return ErrorPage(
+          ActionName: PersonalCase.GetLable(ResourceKey.WarrningMessage),
+          MessageError:
+              PersonalCase.GetLable(ResourceKey.PleaseCompleteOrderMatrixData),
+          DetailError:
+              PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
   }
 }

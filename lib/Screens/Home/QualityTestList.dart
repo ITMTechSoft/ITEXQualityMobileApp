@@ -46,6 +46,8 @@ class _QualityTestListState extends State<QualityTestList> {
       if (IsUserApproved!)
        {
          PersonalCase.SelectedTest = DataList[Index];
+         if(PersonalCase.SelectedTest!.StartDate == null)
+           await PersonalCase.SelectedTest!.StartQualityDepartmentTest();
          MandatoryCritieraAction(PersonalCase.SelectedTest!);
        }
       else {
@@ -73,48 +75,49 @@ class _QualityTestListState extends State<QualityTestList> {
   }
 
   void MandatoryCritieraAction(DepartmentModelOrder_QualityTestBLL TargetTest) {
-    switch (TargetTest.QualityTest_Id) {
-      case 1:
+
+    switch (TargetTest.QualityType) {
+      case "Criteria":
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Criteria_Test()));
         break;
-      case 2:
+      case "CutAmount":
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Cutting_Amount()));
         break;
-      case 3:
+      case "CutControl":
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => Cutting_Control()));
         break;
-      case 4:
+      case "CutPastal":
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Cutting_Pastal()));
         break;
-      case 5:
+      case "Tasnif_Control":
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Tasnif_Control()));
         break;
-      case 6:
+      case "Tasnif_Amount":
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Tasnif_Amount()));
         break;
-      case 7:
+      case "Accessory_Control":
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => Accessory_Control()));
         break;
-      case 8:
+      case "Dikim_InlineControl":
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => Dikim_InlineControl()));
         break;
-      case 9:
+      case "Dikim_LastControl":
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => Dikim_LastControl()));
         break;
-      case 10:
+      case "SizeControl":
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => Size_Control()));
         break;
-      case 11:
+      case "AQLKontrol":
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => AQL_Control()));
         break;
@@ -138,7 +141,6 @@ class _QualityTestListState extends State<QualityTestList> {
             return ListView(
                 shrinkWrap: true,
                 primary: false,
-
                 children: <Widget>[
               Container(
                   margin: EdgeInsets.all(ArgonSize.MainMargin),
@@ -157,6 +159,38 @@ class _QualityTestListState extends State<QualityTestList> {
                         dense: true,
                         selected: true,
                         tileColor: ArgonColors.Title,
+                      ),
+                      CustomButton(
+                        height: ArgonSize.WidthSmall1,
+                        width: getScreenWidth() / 2.5,
+                        textSize: ArgonSize.Header4,
+                        backGroundColor: ArgonColors.primary,
+                        value: PersonalCase.GetLable(ResourceKey.CloseControl),
+                        function: () async {
+
+                          AlertPopupDialogWithAction(
+                              context:context,
+                              title: PersonalCase.GetLable(ResourceKey.WarrningMessage),
+                              Children: [
+                                LableTitle(PersonalCase.GetLable(ResourceKey.ConfirmCloseDepartmentControl),
+                                    FontSize: ArgonSize.Header5),
+                              ],
+                              FirstActionLable: PersonalCase.GetLable(ResourceKey.Okay),
+
+                              SecondActionLable: PersonalCase.GetLable(ResourceKey.Cancel),
+                              OnFirstAction:() async{
+                                bool check = await PersonalCase.SelectedOrder!.CloseQualityDepartmentTest();
+                                if(check)
+                                {
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  PersonalCase.ReloadFunction();
+                                };
+                              }
+                          );
+
+
+                        },
                       ),
                       SizedBox(height: ArgonSize.Padding3),
                       ListView.builder(

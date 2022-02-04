@@ -68,8 +68,9 @@ class _Employee_ListState extends State<Employee_List> {
   }
 
   Widget FilterList() {
-    var FilterListItem = widget.Items.where((r) => r.Employee_Name!.toUpperCase()
-        .contains(SearchController.text.toUpperCase())).toList();
+    var FilterListItem = widget.Items.where((r) => r.Employee_Name!.toLowerCase()
+        .contains(SearchController.text.toLowerCase())).toList();
+
     return SingleChildScrollView(
       primary: true,
       scrollDirection: Axis.vertical,

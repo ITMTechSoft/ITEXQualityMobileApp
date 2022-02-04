@@ -19,10 +19,12 @@ class QualityDepartment_ModelOrderBLL {
   String? Model_Name;
   String? Customer_Name;
 
-
   //#endregion
 
-  QualityDepartment_ModelOrderBLL({required this.Id,required this.Order_Id , required this.Department_Id}) {}
+  QualityDepartment_ModelOrderBLL(
+      {required this.Id,
+      required this.Order_Id,
+      required this.Department_Id}) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -55,7 +57,6 @@ class QualityDepartment_ModelOrderBLL {
             json['EndDate'] == null ? null : DateTime.parse(json['EndDate']),
         IsValidateRequired = json['IsValidateRequired'],
         IsAutoMail = json['IsAutoMail'],
-
         Model_id = json['Model_id'],
         Quantity = json['Quantity'],
         Order_Number = json['Order_Number'],
@@ -71,7 +72,6 @@ class QualityDepartment_ModelOrderBLL {
         'EndDate': EndDate,
         'IsValidateRequired': IsValidateRequired,
         'IsAutoMail': IsAutoMail,
-
         'Model_id': Model_id,
         'Quantity': Quantity,
         'Order_Number': Order_Number,
@@ -87,12 +87,11 @@ class QualityDepartment_ModelOrderBLL {
         'EndDate': EndDate.toString(),
         'IsValidateRequired': IsValidateRequired.toString(),
         'IsAutoMail': IsAutoMail.toString(),
-
         'Model_id': Model_id.toString(),
         'Quantity': Quantity.toString(),
         'Order_Number': Order_Number!,
         'Depart_Name': Depart_Name.toString(),
-    'Customer_Name': Customer_Name.toString(),
+        'Customer_Name': Customer_Name.toString(),
       };
 
   //#endregion
@@ -101,11 +100,10 @@ class QualityDepartment_ModelOrderBLL {
   static Get_QualityDepartment_ModelOrder(int Department_Id) async {
     List<QualityDepartment_ModelOrderBLL>? ItemList;
     try {
-      Map<String,String> qParams = {
-        'Department_Id':Department_Id.toString()
-      };
+      Map<String, String> qParams = {'Department_Id': Department_Id.toString()};
       var response = await http.get(SharedPref.GetWebApiUri(
-              WebApiMethod.Get_QualityDepartment_ModelOrder,Paramters: qParams) );
+          WebApiMethod.Get_QualityDepartment_ModelOrder,
+          Paramters: qParams));
 
       if (response.statusCode == 200) {
         ItemList = (json.decode(response.body) as List)
@@ -118,15 +116,14 @@ class QualityDepartment_ModelOrderBLL {
 
     return ItemList;
   }
+
 //#endregion
   Future<String?> GetModelOrderImage() async {
     try {
-
-      Map<String,String> qParams = {
-        'Order_Id':this.Order_Id.toString()
-      };
-      var response = await http.get(
-          SharedPref.GetWebApiUri(WebApiMethod.Get_ModelOrder_Image,Paramters: qParams) );
+      Map<String, String> qParams = {'Order_Id': this.Order_Id.toString()};
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_ModelOrder_Image,
+          Paramters: qParams));
 
       if (response.statusCode == 200) {
         String Image = json.decode(response.body);
@@ -137,5 +134,39 @@ class QualityDepartment_ModelOrderBLL {
     }
 
     return null;
+  }
+
+  Future<bool> CloseQualityDepartmentTest() async {
+    try {
+
+      Map<String, String> qParams = {
+        'QualityDepartment_ModelOrder_Id': Id.toString(),
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.CloseQualityDepartmentTest,
+          Paramters: qParams));
+      if (response.statusCode == 200) {
+        // Item.LoadFromJson(json.decode(response.body));
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
+  Future<bool> StartQualityDepartmentTest() async {
+    try {
+
+      Map<String, String> qParams = {
+        'QualityDepartment_ModelOrder_Id': Id.toString(),
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.StartQualityDepartmentTest,
+          Paramters: qParams));
+      if (response.statusCode == 200) {
+        // Item.LoadFromJson(json.decode(response.body));
+        return true;
+      }
+    } catch (e) {}
+    return false;
   }
 }

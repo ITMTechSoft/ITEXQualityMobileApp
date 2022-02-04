@@ -8,6 +8,7 @@ import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
+import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
 import 'package:itex_soft_qualityapp/Widgets/TopBar.dart';
 import 'package:itex_soft_qualityapp/Widgets/Utils/Loadding.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
@@ -21,10 +22,13 @@ class Tasnsif_SampleControl extends StatefulWidget {
 class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
   int IntiteStatus = 0;
   int AssignAmount = 1;
-  int addedNumber = 0;
+  //int addedNumber = 0;
 
-  int deleteNumber = 0;
+  // int deleteNumber = 0;
+  bool _IsDeletedVal = false;
+  User_QualityTracking_DetailBLL ReasonVal = new User_QualityTracking_DetailBLL();
 
+  final TextEditingController NoteController = new TextEditingController();
   bool showSmall = true;
   IconData arrowIcon = Icons.arrow_downward;
   DeptModOrderQuality_ItemsBLL XAxias = new DeptModOrderQuality_ItemsBLL();
@@ -40,13 +44,18 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
             PersonalCase.SelectedTest!.Id);
 
     if (Criteria != null) {
-      IntiteStatus = 1;
       XAxsiasItems =
           Criteria.where((element) => element.Item_Level == ItemLevel.XAxis)
               .toList();
       YAxsiasItems =
           Criteria.where((element) => element.Item_Level == ItemLevel.YAxis)
               .toList();
+
+      if (XAxsiasItems!.length == 0 || YAxsiasItems!.length == 0)
+        IntiteStatus = -2;
+      else
+        IntiteStatus = 1;
+
       return Criteria;
     } else {
       IntiteStatus = -1;
@@ -70,21 +79,25 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
       UsrQualityTrac.Create_Date = DateTime.now();
       UsrQualityTrac.Xaxis_QualityItem_Id = XAxias.Id;
       UsrQualityTrac.Yaxis_QualityItem_Id = YAxias.Id;
+      UsrQualityTrac.Reject_Note = NoteController.text;
       if (IsCorrect)
-        UsrQualityTrac.Correct_Amount = AssignAmount;
+        UsrQualityTrac.Correct_Amount =
+            _IsDeletedVal ? (AssignAmount * -1) : AssignAmount;
       else
-        UsrQualityTrac.Error_Amount = AssignAmount;
+        UsrQualityTrac.Error_Amount =
+            _IsDeletedVal ? (AssignAmount * -1) : AssignAmount;
 
-      await UsrQualityTrac.Set_User_QualityTracking_Detail();
+       await UsrQualityTrac.Set_User_QualityTracking_Detail();
       setState(() {
-        if (IsCorrect)
+        ReasonVal = UsrQualityTrac;
+      /*  if (IsCorrect)
           setState(() {
-            addedNumber = addedNumber + AssignAmount;
+            addedNumber = addedNumber + (UsrQualityTrac.Correct_Amount ?? 0);
           });
         else
           setState(() {
-            deleteNumber = deleteNumber + AssignAmount;
-          });
+            deleteNumber = deleteNumber + (UsrQualityTrac.Error_Amount ?? 0);
+          });*/
       });
     } else {
       AlertPopupDialog(
@@ -109,10 +122,10 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
           icon: arrowIcon,
           height: 60,
           function: () {
-             setState(() {
-               showSmall = !showSmall;
-               arrowIcon = Icons.arrow_upward;
-             });
+            setState(() {
+              showSmall = !showSmall;
+              arrowIcon = Icons.arrow_upward;
+            });
           },
           MainPage: GestureDetector(
             onTap: () {
@@ -244,6 +257,19 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
+            Expanded(
+              flex: 1,
+              child: RadioSwitch(
+                Lable: PersonalCase.GetLable(ResourceKey.Delete),
+                fontSize: ArgonSize.Header5,
+                SwitchValue: _IsDeletedVal,
+                OnTap: (value) {
+                  setState(() {
+                    _IsDeletedVal = value;
+                  });
+                },
+              ),
+            ),
             ExpandedLableTitle(PersonalCase.GetLable(ResourceKey.ErrorGroup),
                 IsCenter: true, FontSize: ArgonSize.Header4),
             ExpandedLableTitle(
@@ -255,6 +281,25 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
           ],
         ),
       );
+
+  Future GetToplamAmount(PersonalProvider PersonalCase) async{
+    if(XAxias.Id !=null && YAxias.Id !=null)
+      {
+        ReasonVal = User_QualityTracking_DetailBLL();
+        ReasonVal.QualityDept_ModelOrder_Tracking_Id =  PersonalCase.SelectedTracking!.Id;
+        ReasonVal.Xaxis_QualityItem_Id = XAxias.Id;
+        ReasonVal.Yaxis_QualityItem_Id = YAxias.Id;
+        await ReasonVal.Get_CalcuatedTasnifControl();
+
+        setState(() {
+          if(ReasonVal == null)
+            ReasonVal = new User_QualityTracking_DetailBLL();
+
+        });
+
+
+      }
+  }
 
   Widget AxisItem(PersonalProvider PersonalCase) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -273,6 +318,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                       IsSeleted: (XAxias.Id == XAxsiasItems![i].Id), OnTap: () {
                     setState(() {
                       XAxias = XAxsiasItems![i];
+                      GetToplamAmount(PersonalCase);
                     });
                   });
                 }),
@@ -290,6 +336,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                       IsSeleted: YAxsiasItems![i].Id == YAxias.Id, OnTap: () {
                     setState(() {
                       YAxias = YAxsiasItems![i];
+                      GetToplamAmount(PersonalCase);
                     });
                   });
                 }),
@@ -314,7 +361,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                       size: ArgonSize.IconSize,
                       bubbleHeight: ArgonSize.WidthSmall / 1.3,
                       bubbleWidth: ArgonSize.WidthSmall / 1.3,
-                      bubbleText: addedNumber.toString(),
+                      bubbleText: (ReasonVal.Correct_Amount ?? 0).toString(),
                       bubbleTextSize: ArgonSize.Header7,
                       bubbleBgColor: Colors.blue,
                       function: () async {
@@ -350,7 +397,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
                       size: ArgonSize.IconSize,
                       bubbleHeight: ArgonSize.WidthSmall / 1.3,
                       bubbleWidth: ArgonSize.WidthSmall / 1.3,
-                      bubbleText: deleteNumber.toString(),
+                      bubbleText: (ReasonVal.Error_Amount ?? 0).toString(),
                       bubbleTextSize: ArgonSize.Header7,
                       bubbleBgColor: Colors.red[900]!,
                       function: () async {
@@ -360,19 +407,97 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
               ],
             ),
             SizedBox(height: ArgonSize.Padding6),
-            StandardButton(
-                ForColor: ArgonColors.white,
-                BakColor: ArgonColors.myGreen,
-                FontSize: ArgonSize.Header3,
-                Lable: PersonalCase.GetLable(ResourceKey.CloseSample),
-                OnTap: () async {
-                  // await PersonalCase.SelectedTracking.CloseTanifSample();
-                  // Navigator.pop(context, "Okay");
-                  showAlertDialog(context, PersonalCase);
-                })
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(child:  StandardButton(
+                    ForColor: ArgonColors.white,
+                    BakColor: ArgonColors.myGreen,
+                    FontSize: ArgonSize.Header3,
+                    Lable: PersonalCase.GetLable(ResourceKey.CloseSample),
+                    OnTap: () async {
+                      // await PersonalCase.SelectedTracking.CloseTanifSample();
+                      // Navigator.pop(context, "Okay");
+                      showAlertDialog(context, PersonalCase);
+                    })),
+                Container(width: ArgonSize.Padding1),
+                Expanded(child:  StandardButton(
+                    ForColor: ArgonColors.white,
+                    BakColor: ArgonColors.myYellow,
+                    FontSize: ArgonSize.Header3,
+                    Lable: PersonalCase.GetLable(ResourceKey.Note),
+                    OnTap: () async {
+                      RegisterNotAlertDialog(context, PersonalCase);
+                    })),
+              ],
+            )
+
           ],
         ),
       ]);
+
+  RegisterNotAlertDialog(BuildContext context, PersonalProvider PersonalCase) {
+
+
+
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(PersonalCase.GetLable(ResourceKey.Note)),
+      content: Container(
+        width: getScreenWidth() * 0.7,
+        height: getScreenHeight() * 0.3,
+        decoration: BoxDecoration(border: Border.all(color: Colors.black54)),
+        child:
+        TextFormField(
+          controller: NoteController,
+          keyboardType: TextInputType.multiline,
+          decoration: new InputDecoration(
+            prefixIcon: Padding(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 100),
+              child: Icon(Icons.event_note),
+            ),
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            contentPadding: EdgeInsets.all(10.0),
+          ),
+          minLines: 1,
+          maxLines: 10,
+        ),
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: Text(PersonalCase.GetLable(ResourceKey.Save),
+              style: TextStyle(fontSize: ArgonSize.Header3)),
+          onPressed: () async {
+            await RegisterSampeAmount(PersonalCase, true);
+            Navigator.of(context).pop();
+            NoteController.text ="";
+          },
+        ),
+        TextButton(
+          child: Text(PersonalCase.GetLable(ResourceKey.Cancel),
+              style: TextStyle(fontSize: ArgonSize.Header3)),
+          onPressed: () async {
+            NoteController.text = "";
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -383,7 +508,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
       body: FutureBuilder(
         future: LoadingOpenPage(PersonalCase),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
+          if (snapshot.hasData && IntiteStatus ==1) {
             return ListView(children: [
               HeaderPage(PersonalCase),
               MainInformationBox(PersonalCase),
@@ -401,20 +526,20 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
 
 showAlertDialog(BuildContext context, PersonalProvider PersonalCase) {
   String HeaderMessage = PersonalCase.GetLable(ResourceKey.Notice);
-  String MessageDetail = PersonalCase.GetLable(ResourceKey.ClosePageConfirmation);
+  String MessageDetail =
+      PersonalCase.GetLable(ResourceKey.ClosePageConfirmation);
   // set up the buttons
   Widget remindButton = TextButton(
     child: Text(PersonalCase.GetLable(ResourceKey.Okay),
         style: TextStyle(fontSize: ArgonSize.Header4)),
     onPressed: () async {
       bool Check = await PersonalCase.SelectedTracking!.CloseTanifSample();
-      if(Check){
+      if (Check) {
         Navigator.of(context).pop();
         Navigator.of(context).pop();
-      }else{
+      } else {
         MessageDetail = PersonalCase.GetLable(ResourceKey.SaveErrorMessage);
       }
-
     },
   );
   Widget cancelButton = TextButton(
@@ -428,10 +553,8 @@ showAlertDialog(BuildContext context, PersonalProvider PersonalCase) {
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
     contentPadding: EdgeInsets.all(ArgonSize.HeightMedium),
-    title: Text(HeaderMessage,
-        style: TextStyle(fontSize: ArgonSize.Header3)),
-    content: Text(MessageDetail,
-        style: TextStyle(fontSize: ArgonSize.Header4)),
+    title: Text(HeaderMessage, style: TextStyle(fontSize: ArgonSize.Header3)),
+    content: Text(MessageDetail, style: TextStyle(fontSize: ArgonSize.Header4)),
     actions: [
       remindButton,
       cancelButton,
@@ -446,3 +569,8 @@ showAlertDialog(BuildContext context, PersonalProvider PersonalCase) {
     },
   );
 }
+
+
+
+
+

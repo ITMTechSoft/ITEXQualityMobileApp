@@ -408,7 +408,8 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
           await widget.SecondQualityInfo.Get_Model_Order_Control();
 
       SecqStitch = await Quality_ItemsBLL.Get_StitchQuality_Items(
-          GroupType.SecondQuality);
+          GroupType: GroupType.SecondQuality,
+          QualityTest_Id:PersonalCase.SelectedTest!.QualityTest_Id);
 
       if (widget.SecondQualityInfo != null) {
         IntiteStatus = 1;
@@ -535,7 +536,8 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
           await widget.TamirQualityInfo.Get_Model_Order_Control();
 
       TamirStitch = await Quality_ItemsBLL.Get_StitchQuality_Items(
-          GroupType.TamirQuality);
+          GroupType : GroupType.TamirQuality,
+          QualityTest_Id:PersonalCase.SelectedTest!.QualityTest_Id);
 
       if (widget.TamirQualityInfo != null) {
         IntiteStatus = 1;

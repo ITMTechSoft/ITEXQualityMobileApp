@@ -12,10 +12,10 @@ import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 
 class Dikim_InlineControl extends StatefulWidget {
   @override
-  _Accessory_ControlState createState() => _Accessory_ControlState();
+  _Dikim_InlineControlState createState() => _Dikim_InlineControlState();
 }
 
-class _Accessory_ControlState extends State<Dikim_InlineControl> {
+class _Dikim_InlineControlState extends State<Dikim_InlineControl> {
 
 
   int IntiteStatus = 0;

@@ -110,10 +110,10 @@ Widget LableDateTime(DateTime TargetDate,
     );
 }
 
-Widget HeaderLable(String LableText, {double fontSize = 12, int Flex = 1}) {
+Widget HeaderLable(String LableText, {double fontSize = 12, int Flex = 1,bool IsCenter = true}) {
   return Expanded(
       flex: Flex,
-      child: LableTitle(LableText, FontSize: ArgonSize.Header5, IsCenter: true));
+      child: LableTitle(LableText, FontSize: ArgonSize.Header5, IsCenter: IsCenter));
 }
 
 Widget TableLable(String TableText, {int Flex = 1}) {

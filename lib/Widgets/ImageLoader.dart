@@ -16,8 +16,13 @@ class _ImageLoaderState extends State<ImageLoader> {
   int IntiteStatus = 0;
 
   Widget GetImage(String  base64Image){
-    final _byteImage = Base64Decoder().convert(base64Image);
-    return Image.memory(_byteImage,height: ArgonSize.ImageHeight,width: ArgonSize.WidthVeryBig,);
+    if(base64Image.isNotEmpty)
+      {
+        final _byteImage = Base64Decoder().convert(base64Image);
+        return Image.memory(_byteImage,height: ArgonSize.ImageHeight,width: ArgonSize.WidthVeryBig,);
+      }
+
+    return Icon(Icons.image);
   }
 
   @override

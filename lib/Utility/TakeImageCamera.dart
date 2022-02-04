@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 Future<String?> TakeImageFromCamera(
-    {double maxHeight = 150, double maxWidth = 150, int quality = 100}) async {
+    {double maxHeight = 250, double maxWidth = 250, int quality = 100}) async {
   final ImagePicker _picker = ImagePicker();
   XFile? imageFile = await _picker.pickImage(
     source: ImageSource.camera,

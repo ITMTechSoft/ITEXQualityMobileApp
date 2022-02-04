@@ -24,7 +24,7 @@ class Tasnif_NewSample extends StatefulWidget {
 
 class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
   int IntiteStatus = 0;
-  int AssignAmount = 1;
+  int AssignAmount = 0;
   final TextEditingController SampleAmountController =
       new TextEditingController();
   final TextEditingController KumnasNoController = new TextEditingController();
@@ -100,7 +100,7 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
           if (PersonalCase.SelectedMatrix == null) CheckItem = 1;
           //  var Sample = int.tryParse(SampleAmountController.text);
           var Sample = AssignAmount;
-          if (Sample == 0) CheckItem = 2;
+        //  if (Sample == 0) CheckItem = 2;
 
           if (CheckItem == 0) {
             var Item = QualityDept_ModelOrder_TrackingBLL();
@@ -239,7 +239,7 @@ class _Tasnif_NewSampleState extends State<Tasnif_NewSample> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    ControlAmount(PersonalCase),
+               //     ControlAmount(PersonalCase),
                     SizedBox(height: ArgonSize.Padding4),
                  //   ControlType(PersonalCase),
                     SizedBox(height: ArgonSize.Padding4),

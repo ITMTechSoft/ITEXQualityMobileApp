@@ -92,7 +92,7 @@ class _Dikim_InlineRoundState extends State<Dikim_InlineRound> {
                                           )));
                             }),
                         SizedBox(
-                          width: 50,
+                          width: ArgonSize.Header1,
                         ),
                         CustomButton(
                             width: getScreenWidth() / 2.5,

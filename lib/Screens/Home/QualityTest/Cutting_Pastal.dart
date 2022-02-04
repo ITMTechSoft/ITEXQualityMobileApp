@@ -21,6 +21,9 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
     List<DeptModOrderQuality_ItemsBLL>? Criteria =
         await DeptModOrderQuality_ItemsBLL.Get_CuttingPastalQuality_Items(
             PersonalCase.GetCurrentUser().Id, PersonalCase.SelectedTest!.Id);
+
+    Criteria = Criteria!.where((r) => r.Item_Name!.isNotEmpty).toList();
+
     if (Criteria != null) {
       PersonalCase.SelectedTracking = await QualityDept_ModelOrder_TrackingBLL
           .GetOrCreate_QualityDept_ModelOrder_Tracking(
@@ -34,6 +37,14 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
   }
 
   Widget GetCuttingPastalList(PersonalProvider PersonalCase, snapshot) {
+    if(snapshot.data.length == 0)
+      return ErrorPage(
+          ActionName: PersonalCase.GetLable(ResourceKey.WarrningMessage),
+          MessageError:
+          PersonalCase.GetLable(ResourceKey.PleaseCompleteQualityTestBeforeStart),
+          DetailError: PersonalCase.GetLable(
+              ResourceKey.InvalidNetWorkConnection));
+
     return ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,

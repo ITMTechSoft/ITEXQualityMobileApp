@@ -407,19 +407,6 @@ class QualityDept_ModelOrder_TrackingBLL {
 
   Future<bool> RegisterAccessoryAmount() async {
     try {
-      // final String url =
-      //     SharedPref.GetWebApiUrl(WebApiMethod.Set_RegisterCheckAmount);
-      //
-      // String Url = url.toString();
-      // String val = jsonEncode(toPost());
-      // print(Url);
-      // print(val);
-      // var response = await http.post(url,
-      //     headers: <String, String>{
-      //       'Content-Type': 'application/json; charset=UTF-8',
-      //     },
-      //     body: jsonEncode(toPost()));
-
       String val = jsonEncode(toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',

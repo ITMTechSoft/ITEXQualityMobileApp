@@ -196,10 +196,13 @@ class Quality_ItemsBLL {
   }
 
   static Future<Quality_ItemsBLL> Get_StitchQuality_Items(
-      String GroupType) async {
+      {int? QualityTest_Id,
+      required String GroupType}) async {
     Quality_ItemsBLL Item = new Quality_ItemsBLL();
     try {
-      Map<String, String> qParams = {'GType': GroupType};
+      Map<String, String> qParams = {
+        'GType': GroupType,
+        'QualityTest_Id' :QualityTest_Id.toString()};
       var response = await http.get(SharedPref.GetWebApiUri(
           WebApiMethod.Get_StitchQuality_Items,
           Paramters: qParams));

@@ -1,4 +1,8 @@
 enum WebApiMethod{
+  Update_UserQualityTracking_Detail,
+  Get_CalcuatedTasnifControl,
+  StartQualityDepartmentTest,
+  CloseQualityDepartmentTest,
   Get_FinalOrderSizeColorDetails,
   Get_AQLOrderSizeColorDetails,
   Set_Size_Measurement_Allowance,
