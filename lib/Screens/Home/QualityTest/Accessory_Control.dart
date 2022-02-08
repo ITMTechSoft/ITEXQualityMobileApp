@@ -63,6 +63,8 @@ class _Accessory_ControlState extends State<Accessory_Control> {
 
   showAlertDailog(
       PersonalProvider PersonalCase, Accessory_ModelOrderBLL? item,Function Refesh) {
+    final TextEditingController NoteController = new TextEditingController();
+
     showDialog(
         context: context,
         builder: (context) => StatefulBuilder(builder: (context, setState) {
@@ -120,6 +122,30 @@ class _Accessory_ControlState extends State<Accessory_Control> {
                           ),
                         ],
                       ),
+                      Container(
+                        width: getScreenWidth() * 0.7,
+                        height: getScreenHeight() * 0.3,
+                        decoration: BoxDecoration(border: Border.all(color: Colors.black54)),
+                        child:
+                        TextFormField(
+                          controller: NoteController,
+                          keyboardType: TextInputType.multiline,
+                          decoration: new InputDecoration(
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 100),
+                              child: Icon(Icons.event_note),
+                            ),
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.all(10.0),
+                          ),
+                          minLines: 1,
+                          maxLines: 10,
+                        ),
+                      ),
                       ActionMessage.isNotEmpty
                           ? Text(ActionMessage)
                           : SizedBox(
@@ -155,9 +181,9 @@ class _Accessory_ControlState extends State<Accessory_Control> {
                       Tracking.Employee_Id = Employee_Id;
                       Tracking.Accessory_ModelOrder_Id = item!.Id;
                       Tracking.DeptModelOrder_QualityTest_Id =
-                          item!.DeptModelOrder_QualityTest_Id!;
+                          item.DeptModelOrder_QualityTest_Id;
                       Tracking.ApprovalDate = DateTime.now();
-
+                      Tracking.Tracking_Note = NoteController.text;
                       bool Status = await Tracking.RegisterAccessoryAmount();
                       if (!Status)
                         ActionMessage =

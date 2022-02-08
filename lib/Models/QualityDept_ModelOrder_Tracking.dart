@@ -43,6 +43,7 @@ class QualityDept_ModelOrder_TrackingBLL {
   String? ColorName;
   int? AQL_Major;
   int? AQL_Minor;
+  String? Tracking_Note;
   //#endregion
 
   QualityDept_ModelOrder_TrackingBLL() {}
@@ -75,6 +76,7 @@ class QualityDept_ModelOrder_TrackingBLL {
     this.Pastal_Cutting_Parti_Id = json['Pastal_Cutting_Parti_Id'];
     this.AQL_Major = json['AQL_Major'];
     this.AQL_Minor = json['AQL_Minor'];
+    this.Tracking_Note = json['Tracking_Note'];
     this.Employee_Name = json['Employee_Name'];
     this.QualityTest_Id = json['QualityTest_Id'];
     this.QualityDept_ModelOrder_Id = json['QualityDept_ModelOrder_Id'];
@@ -136,7 +138,8 @@ class QualityDept_ModelOrder_TrackingBLL {
         IsSupplierAutoEmail = json['IsSupplierAutoEmail'],
         Group_Name = json['Group_Name'],
         SizeName = json['SizeName'],
-        ColorName = json['ColorName'];
+        ColorName = json['ColorName'],
+        Tracking_Note = json['Tracking_Note'];
 
   Map<String, dynamic> toJson() => {
     'Id': Id,
@@ -176,6 +179,8 @@ class QualityDept_ModelOrder_TrackingBLL {
     'Group_Name': Group_Name,
     'SizeName': SizeName,
     'ColorName': ColorName,
+    'Tracking_Note': Tracking_Note,
+
   };
 
   Map<String, String> toPost() => {
@@ -201,6 +206,7 @@ class QualityDept_ModelOrder_TrackingBLL {
     'Pastal_Cutting_Parti_Id': Pastal_Cutting_Parti_Id.toString(),
     'AQL_Major': AQL_Major.toString(),
     'AQL_Minor': AQL_Minor.toString(),
+    'Tracking_Note': Tracking_Note ?? '',
     'Employee_Name': Employee_Name ?? '',
     'QualityTest_Id': QualityTest_Id.toString(),
     'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),
