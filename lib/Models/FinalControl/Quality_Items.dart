@@ -143,6 +143,38 @@ class Quality_ItemsBLL {
 
   //#region GetWebApiUrl
 
+  static Future<List<Quality_ItemsBLL>?> GetDeptModOrderQualityWithValue(
+      String GroupType, int Employee_Id, int Matrix_Id,
+      {int QualityTest_Id = 0,
+        int QualityDept_ModelOrder_Tracking_Id = 0}) async {
+    List<Quality_ItemsBLL>? ItemList;
+    try {
+      Map<String, String> qParams = {
+        'GroupType': GroupType,
+        'Employee_Id': Employee_Id.toString(),
+        'OrderSizeColorDetail_Id': Matrix_Id.toString(),
+        'QualityTest_Id': QualityTest_Id.toString(),
+        'QualityDept_ModelOrder_Tracking_Id':
+        QualityDept_ModelOrder_Tracking_Id.toString()
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.GetDeptModOrderQualityWithValue,
+          Paramters: qParams));
+
+
+      if (response.statusCode == 200) {
+        ItemList = (json.decode(response.body) as List)
+            .map((i) => Quality_ItemsBLL.fromJson(i))
+            .toList();
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return ItemList;
+  }
+
+
   static Future<List<Quality_ItemsBLL>?> Get_Quality_Items_WithValue(
       String GroupType, int Employee_Id, int Matrix_Id,
       {int QualityTest_Id = 0,

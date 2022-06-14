@@ -4,6 +4,7 @@ import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
+import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/Widgets/CardRow.dart';
 import 'package:itex_soft_qualityapp/Widgets/HeaderPage.dart';
 import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
@@ -92,6 +93,39 @@ class _AQL_ControlState extends State<AQL_Control> {
               (GetDetailTotal("Sample")).toString(),
               (GetDetailTotal("Major")).toString(),
               LabelFex: 4),
+          SizedBox(height: 8),
+          CustomButton(
+            height: ArgonSize.WidthSmall1,
+            width: getScreenWidth() / 2.5,
+            textSize: ArgonSize.Header4,
+            backGroundColor: ArgonColors.primary,
+            value: PersonalCase.GetLable(ResourceKey.CloseControl),
+            function: () async {
+
+              AlertPopupDialogWithAction(
+                  context:context,
+                  title: PersonalCase.GetLable(ResourceKey.WarrningMessage),
+                  Children: [
+                    LableTitle(PersonalCase.GetLable(ResourceKey.ConfirmCloseDepartmentControl),
+                        FontSize: ArgonSize.Header5),
+                  ],
+                  FirstActionLable: PersonalCase.GetLable(ResourceKey.Okay),
+
+                  SecondActionLable: PersonalCase.GetLable(ResourceKey.Cancel),
+                  OnFirstAction:() async{
+                    bool check = await PersonalCase.SelectedTest!.CloseQualityDepartmentTest();
+                    if(check)
+                    {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      PersonalCase.ReloadFunction();
+                    };
+                  }
+              );
+
+
+            },
+          ),
           SizedBox(height: 8),
         ],
       ));

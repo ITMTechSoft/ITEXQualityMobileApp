@@ -31,7 +31,7 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
   Future<List<Quality_ItemsBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
     if (QualityItems == null)
-      QualityItems = await Quality_ItemsBLL.Get_Quality_Items_WithValue("ALL",
+      QualityItems = await Quality_ItemsBLL.GetDeptModOrderQualityWithValue("AQLT",
           PersonalCase.GetCurrentUser().Id, CaseProvider.ModelOrderMatrix!.Id,
           QualityTest_Id: PersonalCase.SelectedTest!.QualityTest_Id,
           QualityDept_ModelOrder_Tracking_Id: CaseProvider.QualityTracking!.Id);
@@ -269,11 +269,13 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
 
   Widget SampleList(
       context, PersonalCase, SubCaseProvider CaseProvider, snapshot) {
+
     Future OnTapQualityItem(Quality_ItemsBLL item, index) async {
       var UserQuality = new User_QualityTracking_DetailBLL();
       UserQuality.Quality_Items_Id = item.Id;
       UserQuality.QualityDept_ModelOrder_Tracking_Id =
           CaseProvider.QualityTracking!.Id;
+
 
       if (_IsDeletedVal)
         UserQuality.Amount = -1;

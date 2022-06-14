@@ -41,7 +41,7 @@ class _QualityItemsListState extends State<QualityItemsList> {
             CaseProvider.ModelOrderMatrix!.Id,
         QualityTest_Id: PersonalCase.SelectedTest!.QualityTest_Id);
 
-    Critiera = Critiera!.where((element) => element.Item_Level == 0).toList();
+   // Critiera = Critiera!.where((element) => element.Item_Level == 0).toList();
 
     if (Critiera != null) {
       IntiteStatus = 1;

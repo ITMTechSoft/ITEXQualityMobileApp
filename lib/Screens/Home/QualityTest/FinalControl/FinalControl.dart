@@ -30,12 +30,20 @@ class _FinalControlState extends State<FinalControl> {
   bool OnePageShow = false;
   IconData arrowIcon = Icons.arrow_downward;
 
-  Future<bool> LoadingOpenPage(SubCaseProvider CaseProvider) async {
+  Future<bool> LoadingOpenPage(SubCaseProvider CaseProvider,PersonalProvider PersonalCase) async {
     ModelOrder = await ModelOrder_MatrixBLL.Get_ModelOrder_Matrix(
         CaseProvider.ModelOrderMatrix!.Order_Id!,
         CaseProvider.ModelOrderMatrix!.Id);
-    var QualityList =
-        await Quality_ItemsBLL.Get_Quality_Items(GroupType.FirstQuality);
+  /*  var QualityList =
+        await Quality_ItemsBLL.Get_Quality_Items(
+            GroupType.FirstQuality);*/
+
+    var QualityList = await Quality_ItemsBLL.GetDeptModOrderQualityWithValue(GroupType.FirstQuality,
+        PersonalCase.GetCurrentUser().Id,
+        CaseProvider.ModelOrderMatrix!.Id,
+        QualityTest_Id: PersonalCase.SelectedTest!.QualityTest_Id,
+        QualityDept_ModelOrder_Tracking_Id: CaseProvider.QualityTracking!.Id);
+
     if (ModelOrder != null && QualityList != null) {
       IntiteStatus = 1;
       CaseProvider.FirstQuality = QualityList[0];
@@ -162,7 +170,7 @@ class _FinalControlState extends State<FinalControl> {
         body: ListView(
           children: [
             FutureBuilder(
-              future: LoadingOpenPage(CaseProvider),
+              future: LoadingOpenPage(CaseProvider,PersonalCase),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Column(

@@ -1,4 +1,5 @@
 enum WebApiMethod{
+  GetDeptModOrderQualityWithValue,
   Update_UserQualityTracking_Detail,
   Get_CalcuatedTasnifControl,
   StartQualityDepartmentTest,
