@@ -145,8 +145,11 @@ class Quality_ItemsBLL {
 
   static Future<List<Quality_ItemsBLL>?> GetDeptModOrderQualityWithValue(
       String GroupType, int Employee_Id, int Matrix_Id,
-      {int QualityTest_Id = 0,
-        int QualityDept_ModelOrder_Tracking_Id = 0}) async {
+      {
+        int QualityTest_Id = 0,
+        int QualityDept_ModelOrder_Tracking_Id = 0,
+        int DeptModelOrder_QualityTest_Id = 0,
+      }) async {
     List<Quality_ItemsBLL>? ItemList;
     try {
       Map<String, String> qParams = {
@@ -154,8 +157,8 @@ class Quality_ItemsBLL {
         'Employee_Id': Employee_Id.toString(),
         'OrderSizeColorDetail_Id': Matrix_Id.toString(),
         'QualityTest_Id': QualityTest_Id.toString(),
-        'QualityDept_ModelOrder_Tracking_Id':
-        QualityDept_ModelOrder_Tracking_Id.toString()
+        'QualityDept_ModelOrder_Tracking_Id': QualityDept_ModelOrder_Tracking_Id.toString(),
+        'DeptModelOrder_QualityTest_Id':DeptModelOrder_QualityTest_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
           WebApiMethod.GetDeptModOrderQualityWithValue,

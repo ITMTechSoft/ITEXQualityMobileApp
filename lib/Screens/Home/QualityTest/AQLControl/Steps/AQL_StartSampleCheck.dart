@@ -34,7 +34,8 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
       QualityItems = await Quality_ItemsBLL.GetDeptModOrderQualityWithValue("AQLT",
           PersonalCase.GetCurrentUser().Id, CaseProvider.ModelOrderMatrix!.Id,
           QualityTest_Id: PersonalCase.SelectedTest!.QualityTest_Id,
-          QualityDept_ModelOrder_Tracking_Id: CaseProvider.QualityTracking!.Id);
+          QualityDept_ModelOrder_Tracking_Id: CaseProvider.QualityTracking!.Id,
+          DeptModelOrder_QualityTest_Id : CaseProvider.QualityTracking!.DeptModelOrder_QualityTest_Id!);
 
     if (QualityItems != null) {
       IntiteStatus = 1;

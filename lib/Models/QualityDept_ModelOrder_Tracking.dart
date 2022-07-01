@@ -44,6 +44,9 @@ class QualityDept_ModelOrder_TrackingBLL {
   int? AQL_Major;
   int? AQL_Minor;
   String? Tracking_Note;
+  String? Country_Name;
+  String? Country_Code;
+  int? Group_Country_Id;
   //#endregion
 
   QualityDept_ModelOrder_TrackingBLL() {}
@@ -93,6 +96,9 @@ class QualityDept_ModelOrder_TrackingBLL {
     this.Group_Name = json['Group_Name'];
     this.SizeName = json['SizeName'];
     this.ColorName = json['ColorName'];
+    this.Country_Name = json['Country_Name'];
+    this.Group_Country_Id = json['Group_Country_Id'];
+    this.Country_Code = json['Country_Code'];
   }
 
   QualityDept_ModelOrder_TrackingBLL.fromJson(Map<String, dynamic> json)
@@ -139,6 +145,9 @@ class QualityDept_ModelOrder_TrackingBLL {
         Group_Name = json['Group_Name'],
         SizeName = json['SizeName'],
         ColorName = json['ColorName'],
+        Country_Name = json['Country_Name'],
+        Country_Code = json['Country_Code'],
+        Group_Country_Id = json['Group_Country_Id'],
         Tracking_Note = json['Tracking_Note'];
 
   Map<String, dynamic> toJson() => {
@@ -179,6 +188,9 @@ class QualityDept_ModelOrder_TrackingBLL {
     'Group_Name': Group_Name,
     'SizeName': SizeName,
     'ColorName': ColorName,
+    'Country_Name': Country_Name,
+    'Country_Code': Country_Code,
+    'Group_Country_Id': Group_Country_Id,
     'Tracking_Note': Tracking_Note,
 
   };
@@ -222,6 +234,9 @@ class QualityDept_ModelOrder_TrackingBLL {
     'IsSupplierAutoEmail': IsSupplierAutoEmail.toString(),
     'Group_Name': Group_Name ?? '',
     'SizeName': SizeName ?? '',
+    'Country_Name': Country_Name ?? '',
+    'Country_Code': Country_Code ?? '',
+    'Group_Country_Id': Group_Country_Id.toString(),
     'ColorName': ColorName ?? '',
   };
 
@@ -516,21 +531,7 @@ class QualityDept_ModelOrder_TrackingBLL {
   static Future<bool> CuttingPastal_ApproveRejectItem(
       User_QualityTracking_DetailBLL Item) async {
     try {
-      // final String url =
-      //     SharedPref.GetWebApiUrl(WebApiMethod.CuttingPastal_ApproveRejectItem);
-      //
-      // var response = await http.post(url,
-      //     headers: <String, String>{
-      //       'Content-Type': 'application/json; charset=UTF-8',
-      //     },
-      //     body: jsonEncode(Item.toPost()));
-
-      // String Val = jsonEncode(Item.toPost());
-      // print(Val);
-
-      //   var RetItem = new DeptModOrderQuality_ItemsBLL();
-
-      String val = jsonEncode(Item.toPost());
+        String val = jsonEncode(Item.toPost());
       Map<String, String> headers = {
         'Content-Type': 'application/json; charset=UTF-8',
       };
@@ -548,19 +549,6 @@ class QualityDept_ModelOrder_TrackingBLL {
   static Future<bool> CuttingPastal_ReOpenCheckItem(
       User_QualityTracking_DetailBLL Item) async {
     try {
-      // final String url =
-      //     SharedPref.GetWebApiUrl(WebApiMethod.CuttingPastal_ReOpenCheckItem);
-      //
-      // var response = await http.post(url,
-      //     headers: <String, String>{
-      //       'Content-Type': 'application/json; charset=UTF-8',
-      //     },
-      //     body: jsonEncode(Item.toPost()));
-      //
-      // // String Val = jsonEncode(Item.toPost());
-      // // print(url);
-      //
-      // //   var RetItem = new DeptModOrderQuality_ItemsBLL();
 
       String val = jsonEncode(Item.toPost());
       Map<String, String> headers = {
@@ -615,6 +603,24 @@ class QualityDept_ModelOrder_TrackingBLL {
 
     return false;
   }
+
+  Future<bool> UpdateEntity() async {
+    try {
+
+
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_UpdateQualityDept_ModelOrder_Tracking));
+      var response = await http.post(url, body: jsonEncode(toPost()), headers: headers);
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
 
 //#endregion
 

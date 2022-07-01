@@ -1,4 +1,8 @@
 enum WebApiMethod{
+  Set_UpdateQualityDept_ModelOrder_Tracking,
+  Get_SampleCheckQuality_Items,
+  Set_DepartmentModelOrder_QualityTest,
+  Get_GroupsBLL,
   GetDeptModOrderQualityWithValue,
   Update_UserQualityTracking_Detail,
   Get_CalcuatedTasnifControl,

@@ -1,7 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
@@ -66,6 +63,27 @@ class GroupsBLL {
       };
       var response = await http.get(SharedPref.GetWebApiUri(
           WebApiMethod.Get_TasnifControlGroups,
+          Paramters: qParams));
+
+      if (response.statusCode == 200) {
+        ItemList = (json.decode(response.body) as List)
+            .map((i) => GroupsBLL.fromJson(i))
+            .toList();
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return ItemList;
+  }
+
+  static Future<List<GroupsBLL>?> Get_GroupList(String GroupType) async {
+    List<GroupsBLL>? ItemList;
+    try {
+      Map<String, String> qParams = {'GroupType': GroupType};
+
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_GroupsBLL,
           Paramters: qParams));
 
       if (response.statusCode == 200) {

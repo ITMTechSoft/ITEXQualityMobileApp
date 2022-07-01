@@ -1,4 +1,6 @@
 enum ResourceKey{
+
+  CartoonAmount,
   PleaseAddPastalControlErrors,
   PleaseCompleteQualityTestBeforeStart,
   PleaseCompleteOrderMatrixData,

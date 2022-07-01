@@ -130,53 +130,6 @@ class _AQL_ControlState extends State<AQL_Control> {
         ],
       ));
 
-  @override
-  Widget build(BuildContext context) {
-    final PersonalCase = Provider.of<PersonalProvider>(context);
-    final CaseProvider = Provider.of<SubCaseProvider>(context);
-
-    return Scaffold(
-        appBar: DetailBar(
-            Title: PersonalCase.SelectedTest!.Test_Name ?? '',
-            PersonalCase: PersonalCase,
-            OnTap: () {
-              Navigator.pop(context);
-            },
-            context: context),
-        body: ListView(
-          children: [
-            FutureBuilder(
-              future: LoadingOpenPage(PersonalCase),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      MainInformationBox(PersonalCase),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: ArgonSize.Padding3),
-                        child: AQLModelOrderList(
-                            context, PersonalCase, CaseProvider, snapshot),
-                      )
-                    ],
-                  );
-                } else if (IntiteStatus == 0)
-                  return Center(child: CircularProgressIndicator());
-                else
-                  return ErrorPage(
-                      ActionName: PersonalCase.GetLable(ResourceKey.Loading),
-                      MessageError: PersonalCase.GetLable(
-                          ResourceKey.ErrorWhileLoadingData),
-                      DetailError: PersonalCase.GetLable(
-                          ResourceKey.InvalidNetWorkConnection));
-              },
-            ),
-          ],
-        ));
-  }
-
   Widget AQLModelOrderList(
       context, PersonalCase, SubCaseProvider CaseProvider, snapshot) {
     return ListView.builder(
@@ -186,17 +139,17 @@ class _AQL_ControlState extends State<AQL_Control> {
         itemCount: snapshot.data.length,
         itemBuilder: (context, int i) {
           return AQL_OrderSizeColorMatrix(PersonalCase, snapshot.data[i],
-              () async {
-              CaseProvider.ModelOrderMatrix = snapshot.data[i];
-            var value = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        AQL_SampleControl()));
-            setState(() {
-              print(value);
-            });
-          });
+                  () async {
+                CaseProvider.ModelOrderMatrix = snapshot.data[i];
+                var value = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            AQL_SampleControl()));
+                setState(() {
+                  print(value);
+                });
+              });
         });
   }
 
@@ -262,4 +215,52 @@ class _AQL_ControlState extends State<AQL_Control> {
       ),
     );
   }
+  @override
+  Widget build(BuildContext context) {
+    final PersonalCase = Provider.of<PersonalProvider>(context);
+    final CaseProvider = Provider.of<SubCaseProvider>(context);
+
+    return Scaffold(
+        appBar: DetailBar(
+            Title: PersonalCase.SelectedTest!.Test_Name ?? '',
+            PersonalCase: PersonalCase,
+            OnTap: () {
+              Navigator.pop(context);
+            },
+            context: context),
+        body: ListView(
+          children: [
+            FutureBuilder(
+              future: LoadingOpenPage(PersonalCase),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      MainInformationBox(PersonalCase),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: ArgonSize.Padding3),
+                        child: AQLModelOrderList(
+                            context, PersonalCase, CaseProvider, snapshot),
+                      )
+                    ],
+                  );
+                } else if (IntiteStatus == 0)
+                  return Center(child: CircularProgressIndicator());
+                else
+                  return ErrorPage(
+                      ActionName: PersonalCase.GetLable(ResourceKey.Loading),
+                      MessageError: PersonalCase.GetLable(
+                          ResourceKey.ErrorWhileLoadingData),
+                      DetailError: PersonalCase.GetLable(
+                          ResourceKey.InvalidNetWorkConnection));
+              },
+            ),
+          ],
+        ));
+  }
+
+
 }

@@ -267,6 +267,34 @@ class DeptModOrderQuality_ItemsBLL {
     return ItemList;
   }
 
+  static Future<List<DeptModOrderQuality_ItemsBLL>?>
+  Get_SampleCheckQuality_Items(
+      int QualityDept_ModelOrder_Tracking_Id, int DeptModelOrder_QualityTest_Id) async {
+    List<DeptModOrderQuality_ItemsBLL>? ItemList;
+    try {
+      Map<String, String> qParams = {
+        'QualityDept_ModelOrder_Tracking_Id': QualityDept_ModelOrder_Tracking_Id.toString(),
+        'DeptModelOrder_QualityTest_Id':
+        DeptModelOrder_QualityTest_Id.toString()
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_SampleCheckQuality_Items,
+          Paramters: qParams));
+
+      //  print(response.request);
+
+      if (response.statusCode == 200) {
+        ItemList = (json.decode(response.body) as List)
+            .map((i) => DeptModOrderQuality_ItemsBLL.fromJson(i))
+            .toList();
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return ItemList;
+  }
+
   static Get_DikimInlineQuality_Items(int? DeptModelOrder_QualityTest_Id,
       int User_QualityTracking_Detail_Id) async {
     List<DeptModOrderQuality_ItemsBLL>? ItemList;

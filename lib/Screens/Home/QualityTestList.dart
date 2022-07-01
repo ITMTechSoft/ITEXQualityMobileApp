@@ -7,6 +7,7 @@ import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 import 'package:itex_soft_qualityapp/QualityTestImports.dart';
 import 'QualityTest/Cutting_Control/Cutting_Control.dart';
 import 'QualityTest/MeasurementControl/OrderSizeMatrix.dart';
+import 'QualityTest/SampleCheck/SampleCheckList.dart';
 import 'QualityTest/SizeControl/Size_Control.dart';
 
 class QualityTestList extends StatefulWidget {
@@ -16,7 +17,7 @@ class QualityTestList extends StatefulWidget {
 
 class _QualityTestListState extends State<QualityTestList> {
   int IntiteStatus = 0;
-  bool? IsUserApproved ;
+  bool? IsUserApproved;
 
   Future<List<DepartmentModelOrder_QualityTestBLL>?> LoadEmployeeOrders(
       PersonalProvider PersonalCase) async {
@@ -43,30 +44,26 @@ class _QualityTestListState extends State<QualityTestList> {
     if (Critiera.length > 0 && DataList[Index].QualityTest_Id != 1) {
       IsUserApproved = await Critiera.first
           .IsUserApprovedBefore(Employee_Id: PersonalCase.GetCurrentUser().Id);
-      if (IsUserApproved!)
-       {
-         PersonalCase.SelectedTest = DataList[Index];
-         if(PersonalCase.SelectedTest!.StartDate == null)
-           await PersonalCase.SelectedTest!.StartQualityDepartmentTest();
-         MandatoryCritieraAction(PersonalCase.SelectedTest!);
-       }
-      else {
+      if (IsUserApproved!) {
+        PersonalCase.SelectedTest = DataList[Index];
+        if (PersonalCase.SelectedTest!.StartDate == null)
+          await PersonalCase.SelectedTest!.StartQualityDepartmentTest();
+        MandatoryCritieraAction(PersonalCase.SelectedTest!);
+      } else {
         PersonalCase.SelectedTest = Critiera.first;
         AlertPopupDialogWithAction(
-          context:context,
-          title: PersonalCase.GetLable(ResourceKey.WarrningMessage),
-          Children: [
-            LableTitle(PersonalCase.GetLable(ResourceKey.PleaseCheckCriteria),
-                FontSize: ArgonSize.Header5),
-          ],
-          FirstActionLable: PersonalCase.GetLable(ResourceKey.Okay),
-
-          SecondActionLable: PersonalCase.GetLable(ResourceKey.Cancel),
-            OnFirstAction:(){
-            Navigator.pop(context);
-            MandatoryCritieraAction(PersonalCase.SelectedTest!);
-            }
-        );
+            context: context,
+            title: PersonalCase.GetLable(ResourceKey.WarrningMessage),
+            Children: [
+              LableTitle(PersonalCase.GetLable(ResourceKey.PleaseCheckCriteria),
+                  FontSize: ArgonSize.Header5),
+            ],
+            FirstActionLable: PersonalCase.GetLable(ResourceKey.Okay),
+            SecondActionLable: PersonalCase.GetLable(ResourceKey.Cancel),
+            OnFirstAction: () {
+              Navigator.pop(context);
+              MandatoryCritieraAction(PersonalCase.SelectedTest!);
+            });
       }
     } else {
       PersonalCase.SelectedTest = DataList[Index];
@@ -75,7 +72,6 @@ class _QualityTestListState extends State<QualityTestList> {
   }
 
   void MandatoryCritieraAction(DepartmentModelOrder_QualityTestBLL TargetTest) {
-
     switch (TargetTest.QualityType) {
       case "Criteria":
         Navigator.push(
@@ -92,6 +88,10 @@ class _QualityTestListState extends State<QualityTestList> {
       case "CutPastal":
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Cutting_Pastal()));
+        break;
+      case "SampleCheckList":
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => SampleCheckList()));
         break;
       case "Tasnif_Control":
         Navigator.push(
@@ -114,12 +114,12 @@ class _QualityTestListState extends State<QualityTestList> {
             MaterialPageRoute(builder: (context) => Dikim_LastControl()));
         break;
       case "SizeControl":
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => Size_Control()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Size_Control()));
         break;
       case "AQLKontrol":
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AQL_Control()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AQL_Control()));
         break;
     }
   }
@@ -128,20 +128,19 @@ class _QualityTestListState extends State<QualityTestList> {
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
     return Scaffold(
-      appBar:
-      DetailBar(Title: PersonalCase.GetLable(ResourceKey.QualityTests),PersonalCase: PersonalCase, OnTap:() {
-        Navigator.pop(context);
-      },
-          context:  context
-      ),
-      body: FutureBuilder<List<DepartmentModelOrder_QualityTestBLL>?> (
+      appBar: DetailBar(
+          Title: PersonalCase.GetLable(ResourceKey.QualityTests),
+          PersonalCase: PersonalCase,
+          OnTap: () {
+            Navigator.pop(context);
+          },
+          context: context),
+      body: FutureBuilder<List<DepartmentModelOrder_QualityTestBLL>?>(
         future: LoadEmployeeOrders(PersonalCase),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView(
-                shrinkWrap: true,
-                primary: false,
-                children: <Widget>[
+            return ListView(shrinkWrap: true, primary: false, children: <
+                Widget>[
               Container(
                   margin: EdgeInsets.all(ArgonSize.MainMargin),
                   child: Column(
@@ -167,29 +166,30 @@ class _QualityTestListState extends State<QualityTestList> {
                         backGroundColor: ArgonColors.primary,
                         value: PersonalCase.GetLable(ResourceKey.CloseControl),
                         function: () async {
-
                           AlertPopupDialogWithAction(
-                              context:context,
-                              title: PersonalCase.GetLable(ResourceKey.WarrningMessage),
+                              context: context,
+                              title: PersonalCase.GetLable(
+                                  ResourceKey.WarrningMessage),
                               Children: [
-                                LableTitle(PersonalCase.GetLable(ResourceKey.ConfirmCloseDepartmentControl),
+                                LableTitle(
+                                    PersonalCase.GetLable(ResourceKey
+                                        .ConfirmCloseDepartmentControl),
                                     FontSize: ArgonSize.Header5),
                               ],
-                              FirstActionLable: PersonalCase.GetLable(ResourceKey.Okay),
-
-                              SecondActionLable: PersonalCase.GetLable(ResourceKey.Cancel),
-                              OnFirstAction:() async{
-                                bool check = await PersonalCase.SelectedOrder!.CloseQualityDepartmentTest();
-                                if(check)
-                                {
+                              FirstActionLable:
+                                  PersonalCase.GetLable(ResourceKey.Okay),
+                              SecondActionLable:
+                                  PersonalCase.GetLable(ResourceKey.Cancel),
+                              OnFirstAction: () async {
+                                bool check = await PersonalCase.SelectedOrder!
+                                    .CloseQualityDepartmentTest();
+                                if (check) {
                                   Navigator.pop(context);
                                   Navigator.pop(context);
                                   PersonalCase.ReloadFunction();
-                                };
-                              }
-                          );
-
-
+                                }
+                                ;
+                              });
                         },
                       ),
                       SizedBox(height: ArgonSize.Padding3),

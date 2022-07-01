@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
@@ -23,13 +24,14 @@ class DepartmentModelOrder_QualityTestBLL {
   String? Accept_Level;
   String? Level_Code;
   String? Depart_Name;
+  int? ControlAmount;
 
   //#endregion
 
   DepartmentModelOrder_QualityTestBLL(
       {required this.Id,
-      required this.QualityTest_Id,
-      required this.QualityDept_ModelOrder_Id}) {}
+        required this.QualityTest_Id,
+        required this.QualityDept_ModelOrder_Id}) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
@@ -37,9 +39,9 @@ class DepartmentModelOrder_QualityTestBLL {
     this.QualityTest_Id = json['QualityTest_Id'];
     this.QualityDept_ModelOrder_Id = json['QualityDept_ModelOrder_Id'];
     this.StartDate =
-        json['StartDate'] == null ? null : DateTime.parse(json['StartDate']);
+    json['StartDate'] == null ? null : DateTime.parse(json['StartDate']);
     this.EndDate =
-        json['EndDate'] == null ? null : DateTime.parse(json['EndDate']);
+    json['EndDate'] == null ? null : DateTime.parse(json['EndDate']);
     this.IsMandatory = json['IsMandatory'];
     this.Entity_Order = json['Entity_Order'];
     this.Test_Name = json['Test_Name'];
@@ -49,6 +51,7 @@ class DepartmentModelOrder_QualityTestBLL {
     this.Department_Id = json['Department_Id'];
     this.IsValidateRequired = json['IsValidateRequired'];
     this.IsAutoMail = json['IsAutoMail'];
+    this.ControlAmount = json['ControlAmount'];
   }
 
   DepartmentModelOrder_QualityTestBLL.fromJson(Map<String, dynamic> json)
@@ -59,7 +62,7 @@ class DepartmentModelOrder_QualityTestBLL {
             ? null
             : DateTime.parse(json['StartDate']),
         EndDate =
-            json['EndDate'] == null ? null : DateTime.parse(json['EndDate']),
+        json['EndDate'] == null ? null : DateTime.parse(json['EndDate']),
         IsMandatory = json['IsMandatory'],
         Entity_Order = json['Entity_Order'],
         Test_Name = json['Test_Name'],
@@ -71,53 +74,56 @@ class DepartmentModelOrder_QualityTestBLL {
         Sample_No = json['Sample_No'],
         Department_Id = json['Department_Id'],
         IsValidateRequired = json['IsValidateRequired'],
+        ControlAmount = json['ControlAmount'],
         IsAutoMail = json['IsAutoMail'];
 
   Map<String, dynamic> toJson() => {
-        'Id': Id,
-        'QualityTest_Id': QualityTest_Id,
-        'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id,
-        'StartDate': StartDate,
-        'EndDate': EndDate,
-        'IsMandatory': IsMandatory,
-        'Entity_Order': Entity_Order,
-        'Test_Name': Test_Name,
+    'Id': Id,
+    'QualityTest_Id': QualityTest_Id,
+    'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id,
+    'StartDate': StartDate,
+    'EndDate': EndDate,
+    'IsMandatory': IsMandatory,
+    'Entity_Order': Entity_Order,
+    'Test_Name': Test_Name,
     'QualityType': QualityType,
-        'Accept_Level': Accept_Level,
-        'Level_Code': Level_Code,
-        'Depart_Name': Depart_Name,
-        'Order_Id': Order_Id,
-        'Department_Id': Department_Id,
-        'IsValidateRequired': IsValidateRequired,
-        'IsAutoMail': IsAutoMail,
-        'Sample_No': Sample_No,
-      };
+    'Accept_Level': Accept_Level,
+    'Level_Code': Level_Code,
+    'Depart_Name': Depart_Name,
+    'Order_Id': Order_Id,
+    'Department_Id': Department_Id,
+    'IsValidateRequired': IsValidateRequired,
+    'IsAutoMail': IsAutoMail,
+    'Sample_No': Sample_No,
+    'ControlAmount': ControlAmount,
+  };
 
   Map<String, String> toPost() => {
-        'Id': Id.toString(),
-        'QualityTest_Id': QualityTest_Id.toString(),
-        'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),
-        'StartDate': StartDate.toString(),
-        'EndDate': EndDate.toString(),
-        'IsMandatory': IsMandatory.toString(),
-        'Entity_Order': Entity_Order.toString(),
-        'Test_Name': Test_Name ?? '',
+    'Id': Id.toString(),
+    'QualityTest_Id': QualityTest_Id.toString(),
+    'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),
+    'StartDate': StartDate.toString(),
+    'EndDate': EndDate.toString(),
+    'IsMandatory': IsMandatory.toString(),
+    'Entity_Order': Entity_Order.toString(),
+    'Test_Name': Test_Name ?? '',
     'QualityType': QualityType ?? '',
-        'Accept_Level': Accept_Level ?? '',
-        'Level_Code': Level_Code ?? '',
-        'Depart_Name': Depart_Name ?? '',
-        'Order_Id': Order_Id.toString(),
-        'Sample_No': Sample_No.toString(),
-        'Department_Id': Department_Id.toString(),
-        'IsValidateRequired': IsValidateRequired.toString(),
-        'IsAutoMail': IsAutoMail.toString(),
-      };
+    'Accept_Level': Accept_Level ?? '',
+    'Level_Code': Level_Code ?? '',
+    'Depart_Name': Depart_Name ?? '',
+    'Order_Id': Order_Id.toString(),
+    'Sample_No': Sample_No.toString(),
+    'Department_Id': Department_Id.toString(),
+    'IsValidateRequired': IsValidateRequired.toString(),
+    'IsAutoMail': IsAutoMail.toString(),
+    'ControlAmount': ControlAmount.toString(),
+  };
 
 //#endregion
 
   static Future<List<DepartmentModelOrder_QualityTestBLL>?>
-      Get_DepartmentModelOrder_QualityTest(
-          int QualityDept_ModelOrder_Id) async {
+  Get_DepartmentModelOrder_QualityTest(
+      int QualityDept_ModelOrder_Id) async {
     List<DepartmentModelOrder_QualityTestBLL>? ItemList;
     try {
       Map<String, String> qParams = {
@@ -221,6 +227,30 @@ class DepartmentModelOrder_QualityTestBLL {
     } catch (e) {}
     return false;
   }
+
+  Future<bool> UpdateEntity() async {
+    try {
+
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_DepartmentModelOrder_QualityTest));
+      var response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(toPost()));
+
+      if (response.statusCode == 200) {
+        // Item.LoadFromJson(json.decode(response.body));
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
+  void CalcCheckSample() {
+    this.ControlAmount = (sqrt(this.Sample_No!.toDouble()) * 2).round();
+  }
+
 //#endregion
 
 }
