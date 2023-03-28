@@ -6,13 +6,16 @@ AlertPopupDialog(BuildContext context, String title, String Message,
   showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-            title: LableTitle(title, color: ArgonColors.warning,FontSize: ArgonSize.Header4),
+            title: LableTitle(title,
+                color: ArgonColors.warning, FontSize: ArgonSize.Header4),
             content: Container(
               width: getScreenWidth() * 0.8,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[LableTitle(Message, FontSize: ArgonSize.Header5)],
+                children: <Widget>[
+                  LableTitle(Message, FontSize: ArgonSize.Header5)
+                ],
               ),
             ),
             actions: <Widget>[
@@ -27,14 +30,14 @@ AlertPopupDialog(BuildContext context, String title, String Message,
           ));
 }
 
- AlertPopupDialogWithAction(
-  {required BuildContext context,
+AlertPopupDialogWithAction({
+  required BuildContext context,
   required String title,
   required List<Widget> Children,
   required String FirstActionLable,
   required Function OnFirstAction,
   required String SecondActionLable,
-    Function? OnSecondAction,
+  Function? OnSecondAction,
   Color textButton1Color = ArgonColors.primary,
   Color textButton2Color = ArgonColors.primary,
   Color messageColor = ArgonColors.warning,
@@ -78,4 +81,50 @@ AlertPopupDialog(BuildContext context, String title, String Message,
               ],
             ),
           ));
+}
+
+Future<void> showConfirmationDialog(BuildContext context, String title,
+    String message, Function OkayAction) async {
+  final bool? confirmed = await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.error, color: Colors.red),
+            SizedBox(width: 10),
+            Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          ],
+        ),
+        content: Text(message),
+        actions: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.cancel),
+                color: ArgonColors.myRed2,
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.check),
+                color: ArgonColors.myBlue2,
+                onPressed: () async {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
+          ),
+        ],
+      );
+
+    },
+  );
+
+  if (confirmed == true && OkayAction != null) {
+    bool? result = await OkayAction();
+    // Do something with the result
+  }
 }

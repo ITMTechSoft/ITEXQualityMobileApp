@@ -7,6 +7,7 @@ enum ResourceKey{
   CreteriaDataIsMissing,
   PleaseEnterCreteriaDataIsMissing,
   ConfirmCloseDepartmentControl,
+  ConfirmNewRoundTest,
   EmployeeInformationMissed,
   OperationInformationMissed,
   OrderDataMissing,
@@ -1382,7 +1383,7 @@ enum ResourceKey{
   Yaxis_QualityItem,
   Recycle,
   Recycle_Amount,
-  EnterNumberOfItemsToRecycle
+  EnterNumberOfItemsToRecycle, RoundCopy, AttentionVal, ShowRounds, Round
 
 
 

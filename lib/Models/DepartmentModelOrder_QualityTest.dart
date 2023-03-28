@@ -26,6 +26,13 @@ class DepartmentModelOrder_QualityTestBLL {
   String? Depart_Name;
   int? ControlAmount;
 
+  int? RoundTest_Id;
+  int? RoundNo;
+  DateTime? StartTime;
+  DateTime? EndTime;
+  String? Note;
+
+
   //#endregion
 
   DepartmentModelOrder_QualityTestBLL(
@@ -52,6 +59,14 @@ class DepartmentModelOrder_QualityTestBLL {
     this.IsValidateRequired = json['IsValidateRequired'];
     this.IsAutoMail = json['IsAutoMail'];
     this.ControlAmount = json['ControlAmount'];
+
+    this.RoundTest_Id = json['RoundTest_Id'];
+    this.RoundNo = json['RoundNo'];
+    this.Note = json['Note'];
+    this.StartTime =
+    json['StartTime'] == null ? null : DateTime.parse(json['StartTime']);
+    this.EndDate =
+    json['EndTime'] == null ? null : DateTime.parse(json['EndTime']);
   }
 
   DepartmentModelOrder_QualityTestBLL.fromJson(Map<String, dynamic> json)
@@ -75,7 +90,12 @@ class DepartmentModelOrder_QualityTestBLL {
         Department_Id = json['Department_Id'],
         IsValidateRequired = json['IsValidateRequired'],
         ControlAmount = json['ControlAmount'],
-        IsAutoMail = json['IsAutoMail'];
+        IsAutoMail = json['IsAutoMail'],
+        RoundTest_Id = json['RoundTest_Id'],
+        RoundNo = json['RoundNo'],
+        Note = json['Note'],
+        StartTime =  json['StartTime'] == null ? null : DateTime.parse(json['StartTime']),
+        EndTime =  json['EndTime'] == null ? null : DateTime.parse(json['EndTime']);
 
   Map<String, dynamic> toJson() => {
     'Id': Id,
@@ -96,6 +116,12 @@ class DepartmentModelOrder_QualityTestBLL {
     'IsAutoMail': IsAutoMail,
     'Sample_No': Sample_No,
     'ControlAmount': ControlAmount,
+
+    'RoundTest_Id': RoundTest_Id,
+    'RoundNo': RoundNo,
+    'Note': Note,
+    'StartTime': StartTime,
+    'EndTime': EndTime,
   };
 
   Map<String, String> toPost() => {
@@ -117,6 +143,12 @@ class DepartmentModelOrder_QualityTestBLL {
     'IsValidateRequired': IsValidateRequired.toString(),
     'IsAutoMail': IsAutoMail.toString(),
     'ControlAmount': ControlAmount.toString(),
+
+    'RoundTest_Id': RoundTest_Id.toString(),
+    'RoundNo': RoundNo.toString(),
+    'Note': Note.toString(),
+    'StartTime': StartTime.toString(),
+    'EndTime': EndTime.toString(),
   };
 
 //#endregion
@@ -190,6 +222,26 @@ class DepartmentModelOrder_QualityTestBLL {
       }
     } catch (e) {
       print(e);
+    }
+    return false;
+  }
+
+  static Future<bool> CloseCheckListControl(int? DeptModelOrder_QualityTest_Id) async {
+    try {
+      Map<String, String> qParams = {
+        'DeptModelOrder_QualityTest_Id':
+        DeptModelOrder_QualityTest_Id.toString()
+      };
+
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.CloseCheckListControl,
+          Paramters: qParams));
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
     }
     return false;
   }

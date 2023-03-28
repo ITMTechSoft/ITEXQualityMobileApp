@@ -38,11 +38,13 @@ class _FinalControlState extends State<FinalControl> {
         await Quality_ItemsBLL.Get_Quality_Items(
             GroupType.FirstQuality);*/
 
-    var QualityList = await Quality_ItemsBLL.GetDeptModOrderQualityWithValue(GroupType.FirstQuality,
+    var QualityList = await Quality_ItemsBLL.GetDeptModOrderQualityWithValue(
+        GroupType.FirstQuality,
         PersonalCase.GetCurrentUser().Id,
         CaseProvider.ModelOrderMatrix!.Id,
         QualityTest_Id: PersonalCase.SelectedTest!.QualityTest_Id,
-        QualityDept_ModelOrder_Tracking_Id: CaseProvider.QualityTracking!.Id);
+        QualityDept_ModelOrder_Tracking_Id: CaseProvider.QualityTracking!.Id,
+        DeptModelOrder_QualityTest_Id : CaseProvider.QualityTracking!.DeptModelOrder_QualityTest_Id!);
 
     if (ModelOrder != null && QualityList != null) {
       IntiteStatus = 1;

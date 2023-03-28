@@ -11,6 +11,7 @@ class DeptModOrderQuality_ItemsBLL {
   int? DeptModelOrder_QualityTest_Id;
   int? Group_Id;
   String? Item_Name;
+  int? Quality_Items_Id;
 
   /// TODO: Quality_Items_Id THIS FIELD EXIST IN DATABSAE BUT NOT EXIT HERE
   int? Item_Level;
@@ -19,6 +20,7 @@ class DeptModOrderQuality_ItemsBLL {
   int? QualityDept_ModelOrder_Id;
   bool? IsMandatory;
   bool? IsTakeImage;
+  bool? IsStatusRequired;
   String? Group_Name;
   int? Amount;
   int? Correct_Amount;
@@ -28,6 +30,11 @@ class DeptModOrderQuality_ItemsBLL {
   int? QualityDept_ModelOrder_Tracking_Id;
   int? CheckStatus;
   String? Reject_Note;
+  int? Font_Color;
+  int? Item_Hex_Color;
+  int? Circle_Color;
+  int? Font_Size;
+  bool? IsChecked;
 
   //#endregion
 
@@ -45,6 +52,7 @@ class DeptModOrderQuality_ItemsBLL {
     this.QualityDept_ModelOrder_Id = json['QualityDept_ModelOrder_Id'];
     this.IsMandatory = json['IsMandatory'];
     this.IsTakeImage = json['IsTakeImage'];
+    this.IsStatusRequired = json['IsStatusRequired'];
     this.Group_Name = json['Group_Name'];
     this.Amount = json['Amount'];
     this.Correct_Amount = json['Correct_Amount'];
@@ -55,6 +63,11 @@ class DeptModOrderQuality_ItemsBLL {
         json['QualityDept_ModelOrder_Tracking_Id'];
     this.CheckStatus = json['CheckStatus'];
     this.Reject_Note = json['Reject_Note'];
+    this.Font_Color = json['Font_Color'];
+    this.Item_Hex_Color = json['Item_Hex_Color'];
+    this.Circle_Color = json['Circle_Color'];
+    this.IsChecked = json['IsChecked'];
+    this.Quality_Items_Id = json['Quality_Items_Id'];
   }
 
   DeptModOrderQuality_ItemsBLL.fromJson(Map<String, dynamic> json)
@@ -77,6 +90,12 @@ class DeptModOrderQuality_ItemsBLL {
         QualityDept_ModelOrder_Tracking_Id =
             json["QualityDept_ModelOrder_Tracking_Id"],
         CheckStatus = json['CheckStatus'],
+        IsStatusRequired = json['IsStatusRequired'],
+        Font_Color = json['Font_Color'],
+        Item_Hex_Color = json['Item_Hex_Color'],
+        Circle_Color = json['Circle_Color'],
+        IsChecked = json['IsChecked'],
+        Quality_Items_Id = json['Quality_Items_Id'],
         Reject_Note = json['Reject_Note'];
 
   Map<String, dynamic> toJson() => {
@@ -100,6 +119,12 @@ class DeptModOrderQuality_ItemsBLL {
             QualityDept_ModelOrder_Tracking_Id,
         'CheckStatus': CheckStatus,
         'Reject_Note': Reject_Note,
+        'Font_Color': Font_Color,
+        'Item_Hex_Color': Item_Hex_Color,
+        'Circle_Color': Circle_Color,
+        'IsChecked': IsChecked,
+        'Quality_Items_Id': Quality_Items_Id,
+        'IsStatusRequired': IsStatusRequired
       };
 
   Map<String, String> toPost() => {
@@ -114,6 +139,8 @@ class DeptModOrderQuality_ItemsBLL {
         'QualityDept_ModelOrder_Id': QualityDept_ModelOrder_Id.toString(),
         'IsMandatory': IsMandatory.toString(),
         'IsTakeImage': IsTakeImage.toString(),
+        'IsChecked': IsChecked.toString(),
+        'IsStatusRequired': IsStatusRequired.toString(),
         'Group_Name': Group_Name ?? '',
         'Amount': Amount.toString(),
         'Correct_Amount': Correct_Amount.toString(),
@@ -124,6 +151,10 @@ class DeptModOrderQuality_ItemsBLL {
             QualityDept_ModelOrder_Tracking_Id.toString(),
         'CheckStatus': CheckStatus.toString(),
         'Reject_Note': Reject_Note ?? '',
+        'Font_Color': Font_Color.toString(),
+        'Item_Hex_Color': Item_Hex_Color.toString(),
+        'Circle_Color': Circle_Color.toString(),
+        'Quality_Items_Id': Quality_Items_Id.toString()
       };
 
 //#endregion
@@ -268,14 +299,15 @@ class DeptModOrderQuality_ItemsBLL {
   }
 
   static Future<List<DeptModOrderQuality_ItemsBLL>?>
-  Get_SampleCheckQuality_Items(
-      int QualityDept_ModelOrder_Tracking_Id, int DeptModelOrder_QualityTest_Id) async {
+      Get_SampleCheckQuality_Items(int QualityDept_ModelOrder_Tracking_Id,
+          int DeptModelOrder_QualityTest_Id) async {
     List<DeptModOrderQuality_ItemsBLL>? ItemList;
     try {
       Map<String, String> qParams = {
-        'QualityDept_ModelOrder_Tracking_Id': QualityDept_ModelOrder_Tracking_Id.toString(),
+        'QualityDept_ModelOrder_Tracking_Id':
+            QualityDept_ModelOrder_Tracking_Id.toString(),
         'DeptModelOrder_QualityTest_Id':
-        DeptModelOrder_QualityTest_Id.toString()
+            DeptModelOrder_QualityTest_Id.toString()
       };
       var response = await http.get(SharedPref.GetWebApiUri(
           WebApiMethod.Get_SampleCheckQuality_Items,
@@ -294,6 +326,8 @@ class DeptModOrderQuality_ItemsBLL {
 
     return ItemList;
   }
+
+
 
   static Get_DikimInlineQuality_Items(int? DeptModelOrder_QualityTest_Id,
       int User_QualityTracking_Detail_Id) async {
@@ -349,7 +383,6 @@ class DeptModOrderQuality_ItemsBLL {
     return false;
   }
 //#endregion
-
 }
 
 class ItemLevel {

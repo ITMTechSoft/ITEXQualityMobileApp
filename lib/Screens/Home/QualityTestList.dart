@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Models/DepartmentModelOrder_QualityTest.dart';
+import 'package:itex_soft_qualityapp/Models/RoundTestBLL.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/QualityTest/AQLControl/AQL_Control.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 import 'package:itex_soft_qualityapp/QualityTestImports.dart';
+import 'QualityTest/CheckList/CheckList_Main.dart';
 import 'QualityTest/Cutting_Control/Cutting_Control.dart';
-import 'QualityTest/MeasurementControl/OrderSizeMatrix.dart';
 import 'QualityTest/SampleCheck/SampleCheckList.dart';
 import 'QualityTest/SizeControl/Size_Control.dart';
 
@@ -19,13 +20,26 @@ class _QualityTestListState extends State<QualityTestList> {
   int IntiteStatus = 0;
   bool? IsUserApproved;
 
+  List<RoundTestBLL>? Rounds;
+  int SelectedId = 0;
+
+  bool _filterEnabled = false;
+
   Future<List<DepartmentModelOrder_QualityTestBLL>?> LoadEmployeeOrders(
       PersonalProvider PersonalCase) async {
     try {
+      Rounds = await RoundTestBLL.Get_RoundTest(PersonalCase.SelectedOrder!.Id);
+
       List<DepartmentModelOrder_QualityTestBLL>? Items =
           await DepartmentModelOrder_QualityTestBLL
               .Get_DepartmentModelOrder_QualityTest(
                   PersonalCase.SelectedOrder!.Id);
+
+      if ((Rounds?.length ?? 0) > 0)
+        SelectedId = Rounds?.where((el) => el.EndTime == null)?.first?.Id ?? 0;
+
+      if (SelectedId != 0 && _filterEnabled != true)
+        Items = Items?.where((r) => r.RoundTest_Id == SelectedId).toList();
 
       if (Items != null)
         IntiteStatus = 1;
@@ -121,6 +135,10 @@ class _QualityTestListState extends State<QualityTestList> {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => AQL_Control()));
         break;
+      case "CheckList":
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Cutting_CheckList()));
+        break;
     }
   }
 
@@ -151,7 +169,7 @@ class _QualityTestListState extends State<QualityTestList> {
                         title: HeaderTitle(
                             PersonalCase.SelectedOrder!.Order_Number,
                             color: ArgonColors.header,
-                            FontSize: ArgonSize.Header1),
+                            FontSize: ArgonSize.Header3),
                         subtitle: Text(
                             PersonalCase.SelectedOrder!.Model_Name.toString(),
                             style: TextStyle(fontSize: ArgonSize.Header6)),
@@ -159,38 +177,84 @@ class _QualityTestListState extends State<QualityTestList> {
                         selected: true,
                         tileColor: ArgonColors.Title,
                       ),
-                      CustomButton(
-                        height: ArgonSize.WidthSmall1,
-                        width: getScreenWidth() / 2.5,
-                        textSize: ArgonSize.Header4,
-                        backGroundColor: ArgonColors.primary,
-                        value: PersonalCase.GetLable(ResourceKey.CloseControl),
-                        function: () async {
-                          AlertPopupDialogWithAction(
-                              context: context,
-                              title: PersonalCase.GetLable(
-                                  ResourceKey.WarrningMessage),
-                              Children: [
-                                LableTitle(
-                                    PersonalCase.GetLable(ResourceKey
-                                        .ConfirmCloseDepartmentControl),
-                                    FontSize: ArgonSize.Header5),
-                              ],
-                              FirstActionLable:
-                                  PersonalCase.GetLable(ResourceKey.Okay),
-                              SecondActionLable:
-                                  PersonalCase.GetLable(ResourceKey.Cancel),
-                              OnFirstAction: () async {
-                                bool check = await PersonalCase.SelectedOrder!
-                                    .CloseQualityDepartmentTest();
+                      Row(
+                        children: [
+                          CustomButton(
+                            height: ArgonSize.WidthSmall1,
+                            width: getScreenWidth() / 3,
+                            textSize: ArgonSize.Header4,
+                            backGroundColor: ArgonColors.myVinous,
+                            value: PersonalCase.GetLable(ResourceKey.RoundCopy),
+                            function: () async {
+                              showConfirmationDialog(
+                                  context,
+                                  PersonalCase.GetLable(
+                                      ResourceKey.AttentionVal),
+                                  PersonalCase.GetLable(
+                                      ResourceKey.ConfirmNewRoundTest),
+                                  () async {
+                                bool check =
+                                    await RoundTestBLL.GenerateRoundCopy(
+                                        PersonalCase.SelectedOrder!.Id);
+
                                 if (check) {
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
                                   PersonalCase.ReloadFunction();
                                 }
-                                ;
                               });
-                        },
+                            },
+                          ),
+                          Flexible(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(PersonalCase.GetLable(
+                                  ResourceKey.ShowRounds)),
+                              Switch(
+                                  value: _filterEnabled,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _filterEnabled = value;
+                                    });
+                                  })
+                            ],
+                          )),
+                          CustomButton(
+                            height: ArgonSize.WidthSmall1,
+                            width: getScreenWidth() / 3,
+                            textSize: ArgonSize.Header4,
+                            backGroundColor: ArgonColors.primary,
+                            value:
+                                PersonalCase.GetLable(ResourceKey.CloseControl),
+                            function: () async {
+                              AlertPopupDialogWithAction(
+                                  context: context,
+                                  title: PersonalCase.GetLable(
+                                      ResourceKey.WarrningMessage),
+                                  Children: [
+                                    LableTitle(
+                                        PersonalCase.GetLable(ResourceKey
+                                            .ConfirmCloseDepartmentControl),
+                                        FontSize: ArgonSize.Header5),
+                                  ],
+                                  FirstActionLable:
+                                      PersonalCase.GetLable(ResourceKey.Okay),
+                                  SecondActionLable:
+                                      PersonalCase.GetLable(ResourceKey.Cancel),
+                                  OnFirstAction: () async {
+                                    bool check = await PersonalCase
+                                        .SelectedOrder!
+                                        .CloseQualityDepartmentTest();
+                                    if (check) {
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                      PersonalCase.ReloadFunction();
+                                    }
+                                    ;
+                                  });
+                            },
+                          ),
+                        ],
                       ),
                       SizedBox(height: ArgonSize.Padding3),
                       ListView.builder(
@@ -199,11 +263,9 @@ class _QualityTestListState extends State<QualityTestList> {
                           primary: false,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, int i) {
-                            return OneItem(
-                                ItemName: snapshot.data![i].Test_Name!,
-                                ItemValue: snapshot.data![i].StartDate != null
-                                    ? snapshot.data![i].StartDate.toString()
-                                    : "Not Started Yet",
+                            return OrderTestList(
+                                Item: snapshot.data![i],
+                                lable: PersonalCase.GetLable(ResourceKey.Round),
                                 OnTap: () async {
                                   await MappingSelectedQualityTest(
                                       PersonalCase, snapshot.data, i);

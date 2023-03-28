@@ -35,11 +35,12 @@ class _QualityItemsListState extends State<QualityItemsList> {
   Future<List<Quality_ItemsBLL>?> LoadingOpenPage(
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
     List<Quality_ItemsBLL>? Critiera =
-        await Quality_ItemsBLL.Get_Quality_Items_WithValue(
+        await Quality_ItemsBLL.GetDeptModOrderQualityWithValue(
             widget.GroupType,
-            PersonalCase.GetCurrentUser().Id,
-            CaseProvider.ModelOrderMatrix!.Id,
-        QualityTest_Id: PersonalCase.SelectedTest!.QualityTest_Id);
+            PersonalCase.GetCurrentUser().Id, CaseProvider.ModelOrderMatrix!.Id,
+            QualityTest_Id: PersonalCase.SelectedTest!.QualityTest_Id,
+            QualityDept_ModelOrder_Tracking_Id: CaseProvider.QualityTracking!.Id,
+            DeptModelOrder_QualityTest_Id : CaseProvider.QualityTracking!.DeptModelOrder_QualityTest_Id!);
 
    // Critiera = Critiera!.where((element) => element.Item_Level == 0).toList();
 

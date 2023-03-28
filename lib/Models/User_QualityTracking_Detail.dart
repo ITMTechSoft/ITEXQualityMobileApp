@@ -549,6 +549,23 @@ class User_QualityTracking_DetailBLL {
     return false;
   }
 
+  Future<bool> Set_CheckList_Items() async {
+    try {
+      String val = jsonEncode(this.toPost());
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_CheckList_Items));
+      var response = await http.post(url, body: val, headers: headers);
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
   Future<bool> Set_Size_Measurement_Allowance() async {
     try {
       String val = jsonEncode(this.toPost());

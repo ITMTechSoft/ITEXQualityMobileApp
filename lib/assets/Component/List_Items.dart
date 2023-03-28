@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
+import 'package:itex_soft_qualityapp/Models/DepartmentModelOrder_QualityTest.dart';
 import 'package:itex_soft_qualityapp/Models/DeptModOrderQuality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/Employee_Department.dart';
 import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
@@ -38,6 +39,98 @@ Widget DepartmentCard(Employee_DepartmentBLL Item, Function() OnTap) {
       ),
     ),
   );
+}
+
+Widget OrderTestList(
+    {required DepartmentModelOrder_QualityTestBLL Item,
+      required String lable,
+    required Function() OnTap}) {
+
+  var WithOutRound = Container(
+    height: ArgonSize.HeightBig,
+    width: ArgonSize.WidthBig,
+    child: Card(
+        shadowColor: ArgonColors.black,
+        elevation: 10,
+        child: Center(
+          child: ListTile(
+            onTap: OnTap,
+            title: Text(
+              Item.Test_Name!,
+              style: TextStyle(
+                  fontSize: ArgonSize.Header3,
+                  color: ArgonColors.black.withOpacity(0.6)),
+            ),
+            subtitle: Text(
+              Item.StartDate != null
+                  ? Item.StartDate.toString()
+                  : "Not Started Yet",
+              style: TextStyle(
+                  fontSize: ArgonSize.Header5,
+                  color: ArgonColors.black.withOpacity(0.5)),
+            ),
+          ),
+        )),
+  );
+
+  var WIthRound = GestureDetector(
+    onTap: OnTap,
+    child: Container(
+      width: ArgonSize.WidthBig,
+      child: Card(
+        shadowColor: ArgonColors.black,
+        elevation: 10,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: ArgonSize.Header1,
+                width: 80,
+                decoration: BoxDecoration(
+                    color: ArgonColors.myLightGreen,
+                    borderRadius: BorderRadius.circular(24)),
+                child: Center(
+                  child: Text(
+                    "$lable :" + Item.RoundNo.toString(),
+                    style: TextStyle(
+                        fontSize: ArgonSize.Header4,
+                        color: ArgonColors.myBlue2,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    Item.Test_Name!,
+                    style: TextStyle(
+                        fontSize: ArgonSize.Header3,
+                        color: ArgonColors.black.withOpacity(0.6)),
+                  ),
+                  Text(
+                    'Started on: ${Item.StartTime.toString()}',
+                    style: TextStyle(
+                        fontSize: ArgonSize.Header7,
+                        color: ArgonColors.myVinous.withOpacity(0.5)),
+                  )
+                ],
+              ))
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+
+  if (Item.RoundTest_Id == null)
+    return WithOutRound;
+  else
+    return WIthRound;
 }
 
 Widget OneItem(
@@ -225,7 +318,8 @@ Widget CuttingPastalControl(
     mainAxisSize: MainAxisSize.max,
     children: [
       SizedBox(height: ArgonSize.Padding6),
-      LableTitle(Item.Item_Name ?? '',color: ArgonColors.text, FontSize: ArgonSize.Header4),
+      LableTitle(Item.Item_Name ?? '',
+          color: ArgonColors.text, FontSize: ArgonSize.Header4),
       SizedBox(height: ArgonSize.Padding3),
       ActionControl,
       SizedBox(height: ArgonSize.Padding6),

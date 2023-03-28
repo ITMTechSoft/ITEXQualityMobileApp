@@ -1,4 +1,5 @@
 enum WebApiMethod{
+  Set_QualityDepartment_ModelOrder,
   Set_UpdateQualityDept_ModelOrder_Tracking,
   Get_SampleCheckQuality_Items,
   Set_DepartmentModelOrder_QualityTest,
@@ -75,7 +76,8 @@ enum WebApiMethod{
   Delete_User_QualityTracking_Detail,
   Get_UserQualityTasnifControl ,
   Set_RecycleUserQualityTasnifControlRec,
-  Get_DikimInlineQuality_Items
+  Get_DikimInlineQuality_Items, Set_CheckList_Items, CloseCheckListControl,
+  Get_RoundTest
 }
 
 

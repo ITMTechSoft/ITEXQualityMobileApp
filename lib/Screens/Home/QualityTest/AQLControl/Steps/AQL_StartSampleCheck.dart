@@ -12,6 +12,8 @@ import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
 import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 
+import 'AQL_QuaulityItemControl.dart';
+
 class AQL_StartSampleCheck extends StatefulWidget {
   @override
   _AQL_StartSampleCheckState createState() => _AQL_StartSampleCheckState();
@@ -24,21 +26,60 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
   bool _IsDeletedVal = false;
   bool _IsMeasurTest = false;
 
+  bool _FilterMinor = false;
+  bool _FilterMajor = false;
+  String? _FilterName = null;
+
+
+  Widget FilterSwitch(String lable, bool FilterValue, Function Action) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Text(lable),
+        Switch(
+            value: FilterValue,
+            onChanged: (value) {
+              Action(value);
+            })
+      ],
+    );
+  }
+
+
   List<Size_Measurement_AllowanceBLL>? MeasurementItemList;
   List<Quality_ItemsBLL>? QualityItems;
 
   //#region Loading Data
-  Future<List<Quality_ItemsBLL>?> LoadingOpenPage(
-      PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
+  Future<List<Quality_ItemsBLL>?> LoadingOpenPage(PersonalProvider PersonalCase,
+      SubCaseProvider CaseProvider) async {
     if (QualityItems == null)
-      QualityItems = await Quality_ItemsBLL.GetDeptModOrderQualityWithValue("AQLT",
-          PersonalCase.GetCurrentUser().Id, CaseProvider.ModelOrderMatrix!.Id,
+      QualityItems = await Quality_ItemsBLL.GetDeptModOrderQualityWithValue(
+          "AQLT",
+          PersonalCase
+              .GetCurrentUser()
+              .Id,
+          CaseProvider.ModelOrderMatrix!.Id,
           QualityTest_Id: PersonalCase.SelectedTest!.QualityTest_Id,
           QualityDept_ModelOrder_Tracking_Id: CaseProvider.QualityTracking!.Id,
-          DeptModelOrder_QualityTest_Id : CaseProvider.QualityTracking!.DeptModelOrder_QualityTest_Id!);
+          DeptModelOrder_QualityTest_Id:
+          CaseProvider.QualityTracking!.DeptModelOrder_QualityTest_Id!);
 
     if (QualityItems != null) {
       IntiteStatus = 1;
+      if (_FilterMajor)
+        QualityItems =
+            QualityItems?.where((element) => element.Major == _FilterMajor)
+                .toList();
+      if (_FilterMinor)
+        QualityItems =
+            QualityItems?.where((element) => element.Minor == _FilterMinor)
+                .toList();
+
+      if (_FilterName != null)
+        QualityItems = QualityItems?.where((element) =>
+        element.Item_Name?.contains(_FilterName ?? "") ?? false).toList();
+
       return QualityItems;
     } else {
       IntiteStatus = -1;
@@ -50,10 +91,11 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
       PersonalProvider PersonalCase, SubCaseProvider CaseProvider) async {
     if (MeasurementItemList == null)
       MeasurementItemList =
-          await Size_Measurement_AllowanceBLL.Get_Size_Measurement_Allowance(
-              ModelOrderSize_Id: CaseProvider.ModelOrderMatrix!.Size_Id,
-              DeptModelOrder_QualityTest_Id: PersonalCase.SelectedTest!.Id,
-              QualityDept_ModelOrder_Tracking_Id: CaseProvider.QualityTracking!.Id);
+      await Size_Measurement_AllowanceBLL.Get_Size_Measurement_Allowance(
+          ModelOrderSize_Id: CaseProvider.ModelOrderMatrix!.Size_Id,
+          DeptModelOrder_QualityTest_Id: PersonalCase.SelectedTest!.Id,
+          QualityDept_ModelOrder_Tracking_Id:
+          CaseProvider.QualityTracking!.Id);
 
     if (MeasurementItemList != null) {
       IntiteStatus = 1;
@@ -92,10 +134,10 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
       if (QualityItems![i].Item_Level != 5)
         Major += (QualityItems![i].Amount ?? 0);
 
-      if (QualityItems![i].Item_Level == 5)
-        if (QualityItems![i].Minor! > 0)
-          Major += ((QualityItems![i].Amount ?? 0) /
-              (QualityItems![i].Minor ?? 1)).toInt();
+      if (QualityItems![i].Item_Level == 5) if (QualityItems![i].Minor! > 0)
+        Major +=
+            ((QualityItems![i].Amount ?? 0) / (QualityItems![i].Minor ?? 1))
+                .toInt();
     }
 
     return Major;
@@ -118,11 +160,31 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
           children: [
             _IsMeasurTest
                 ? MeasurementControl(PersonalCase, CaseProvider)
-                : QuaulityItemControl(PersonalCase, CaseProvider)
+                : Get_QuaulityItemControl(PersonalCase, CaseProvider)
+
           ],
         ));
   }
 
+  Widget Get_QuaulityItemControl(PersonalCase, CaseProvider) {
+    return FutureBuilder<List<Quality_ItemsBLL>?>(
+      future: LoadingOpenPage(PersonalCase, CaseProvider),
+      builder: (context, snapshot) {
+        if (snapshot.hasData)
+          return QuaulityItemControl(snapshot.data!);
+        else if (IntiteStatus == 0)
+          return Center(child: CircularProgressIndicator());
+        else
+          return ErrorPage(
+              ActionName: PersonalCase.GetLable(ResourceKey.Loading),
+              MessageError:
+              PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
+              DetailError:
+              PersonalCase.GetLable(ResourceKey.InvalidNetWorkConnection));
+      },);
+  }
+
+  /*
   Widget QuaulityItemControl(PersonalCase, CaseProvider) {
     return FutureBuilder(
       future: LoadingOpenPage(PersonalCase, CaseProvider),
@@ -153,7 +215,7 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
       },
     );
   }
-
+*/
   Widget MeasurementControl(PersonalCase, CaseProvider) {
     return FutureBuilder(
         future: LoadingMeasurement(PersonalCase, CaseProvider),
@@ -172,22 +234,21 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
                 )
               ],
             );
-          } else
-            if (IntiteStatus == 0)
+          } else if (IntiteStatus == 0)
             return Center(child: CircularProgressIndicator());
           else
             return ErrorPage(
                 ActionName: PersonalCase.GetLable(ResourceKey.Loading),
                 MessageError:
-                    PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
+                PersonalCase.GetLable(ResourceKey.ErrorWhileLoadingData),
                 DetailError: PersonalCase.GetLable(
                     ResourceKey.InvalidNetWorkConnection));
         });
   }
 
   //#region QuaulityItem
-  Widget MainInformationBox(
-      PersonalProvider PersonalCase, SubCaseProvider CaseProvider) {
+  Widget MainInformationBox(PersonalProvider PersonalCase,
+      SubCaseProvider CaseProvider) {
     return InformationBox(
       MainPage: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -226,12 +287,11 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
                       backGroundColor: ArgonColors.success,
                       function: () async {
                         Navigator.pop(context);
-
                       })),
               Expanded(
                   flex: 4,
                   child: CustomButton(
-                      width: getScreenWidth() / 2.5,
+                      width: getScreenWidth() / 3,
                       height: ArgonSize.HeightSmall1,
                       textSize: ArgonSize.Header3,
 
@@ -242,7 +302,6 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
                         IntiteStatus = 0;
                         setState(() {
                           _IsMeasurTest = true;
-
                         });
                       })),
               Expanded(
@@ -259,7 +318,24 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
                 ),
               )
             ],
-          )
+          ),
+          SizedBox(height: 8),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FilterSwitch("Minor", _FilterMinor, (value) {
+                setState(() {
+                  _FilterMinor = value;
+                });
+              }),
+              FilterSwitch("Major", _FilterMajor, (value) {
+                setState(() {
+                  _FilterMajor = value;
+                });
+              }),
+            ],
+          ),
         ],
       ),
       function: () {
@@ -268,15 +344,14 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
     );
   }
 
-  Widget SampleList(
-      context, PersonalCase, SubCaseProvider CaseProvider, snapshot) {
 
+  Widget SampleList(context, PersonalCase, SubCaseProvider CaseProvider,
+      snapshot) {
     Future OnTapQualityItem(Quality_ItemsBLL item, index) async {
       var UserQuality = new User_QualityTracking_DetailBLL();
       UserQuality.Quality_Items_Id = item.Id;
       UserQuality.QualityDept_ModelOrder_Tracking_Id =
           CaseProvider.QualityTracking!.Id;
-
 
       if (_IsDeletedVal)
         UserQuality.Amount = -1;
@@ -313,6 +388,7 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
     }
 
     return BoxMaterialCard(Childrens: <Widget>[
+
       GridView.count(
         crossAxisSpacing: 1,
         mainAxisSpacing: 1,
@@ -325,48 +401,50 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
               text: QualityItems![index].Item_Name!,
               buttonWidth: getScreenWidth() / 3,
               buttonHegiht: getScreenHeight() / 6,
-              textColor: Color(snapshot.data![index].Font_Color??2315255808),
-              btnBgColor: Color(snapshot.data![index].Item_Hex_Color?? -2519964),
-              textSize: (snapshot.data![index].Font_Size ?? ArgonSize.Header4).toDouble(),
+              textColor: Color(snapshot.data![index].Font_Color ?? 2315255808),
+              btnBgColor:
+              Color(snapshot.data![index].Item_Hex_Color ?? -2519964),
+              textSize: (snapshot.data![index].Font_Size ?? ArgonSize.Header4)
+                  .toDouble(),
               topRight: CircleShape(
                   text: GetMajorValue(QualityItems![index]).toString(),
                   width: ArgonSize.WidthSmall,
                   height: ArgonSize.WidthSmall,
-                  color : Color(snapshot.data![index].Circle_Color??4278204558),
+                  color:
+                  Color(snapshot.data![index].Circle_Color ?? 4278204558),
                   fontSize: ArgonSize.Header4),
               topLeft: QualityItems![index].Item_Level == 5
                   ? CircleShape(
-                      text: (QualityItems![index].Amount ?? 0).toString(),
-                      width: ArgonSize.WidthSmall,
-                      height: ArgonSize.WidthSmall,
-                      color: ArgonColors.myYellow,
-                      textColor: ArgonColors.myBlue,
-                      fontSize: ArgonSize.Header4)
+                  text: (QualityItems![index].Amount ?? 0).toString(),
+                  width: ArgonSize.WidthSmall,
+                  height: ArgonSize.WidthSmall,
+                  color: ArgonColors.myYellow,
+                  textColor: ArgonColors.myBlue,
+                  fontSize: ArgonSize.Header4)
                   : Container(width: 0, height: 0),
-
               bottomRight: _IsDeletedVal == true
                   ? IconInsideCircle(
-                      iconSize: getScreenWidth() > 1100
-                          ? ArgonSize.Header6
-                          : ArgonSize.Header6,
-                      size: getScreenWidth() > 1000
-                          ? ArgonSize.Padding6
-                          : ArgonSize.Padding6,
-                      icon: FontAwesomeIcons.minus,
-                      color: Colors.white,
-                      backGroundColor: Colors.red)
+                  iconSize: getScreenWidth() > 1100
+                      ? ArgonSize.Header6
+                      : ArgonSize.Header6,
+                  size: getScreenWidth() > 1000
+                      ? ArgonSize.Padding6
+                      : ArgonSize.Padding6,
+                  icon: FontAwesomeIcons.minus,
+                  color: Colors.white,
+                  backGroundColor: Colors.red)
                   : Container(width: 0, height: 0),
               bottomLeft: QualityItems![index].IsTakeImage == true
                   ? IconInsideCircle(
-                      iconSize: getScreenWidth() > 1100
-                          ? ArgonSize.Padding2
-                          : ArgonSize.Padding7,
-                      size: getScreenWidth() > 1000
-                          ? ArgonSize.Padding2
-                          : ArgonSize.Padding7,
-                      icon: FontAwesomeIcons.camera,
-                      color: Colors.white,
-                      backGroundColor: Colors.deepPurple)
+                  iconSize: getScreenWidth() > 1100
+                      ? ArgonSize.Padding2
+                      : ArgonSize.Padding7,
+                  size: getScreenWidth() > 1000
+                      ? ArgonSize.Padding2
+                      : ArgonSize.Padding7,
+                  icon: FontAwesomeIcons.camera,
+                  color: Colors.white,
+                  backGroundColor: Colors.deepPurple)
                   : Container(width: 0, height: 0),
               OnTap: () async {
                 await OnTapQualityItem(QualityItems![index], index);
@@ -379,8 +457,8 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
   //#endregion
 
   //#region Measurements
-  Widget MeasurementInfoBox(
-      PersonalProvider PersonalCase, SubCaseProvider CaseProvider) {
+  Widget MeasurementInfoBox(PersonalProvider PersonalCase,
+      SubCaseProvider CaseProvider) {
     return InformationBox(
       MainPage: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -443,8 +521,8 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
     );
   }
 
-  Widget MeasurementList(
-      context, PersonalCase, SubCaseProvider CaseProvider, snapshot) {
+  Widget MeasurementList(context, PersonalCase, SubCaseProvider CaseProvider,
+      snapshot) {
     return ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
@@ -457,10 +535,10 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
             child: Container(
               padding: EdgeInsets.all(10),
               child: MeasurementItem(PersonalCase, MeasurementItemList![index],
-                  () async {
-                await MeasurementPopUp(context, PersonalCase, CaseProvider,
-                    Index: index);
-              }),
+                      () async {
+                    await MeasurementPopUp(context, PersonalCase, CaseProvider,
+                        Index: index);
+                  }),
             ),
           );
         });
@@ -529,17 +607,17 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
                     child: Column(
                       children: [
                         LableTitle(PersonalCase.GetLable(ResourceKey.Status)),
-                        (Item.CheckStatus??0) == 0
+                        (Item.CheckStatus ?? 0) == 0
                             ? ClipOval(
-                                child: Icon(Icons.cancel_outlined,
-                                    color: ArgonColors.myRed,
-                                    size: ArgonSize.IconSizeMedium),
-                              )
+                          child: Icon(Icons.cancel_outlined,
+                              color: ArgonColors.myRed,
+                              size: ArgonSize.IconSizeMedium),
+                        )
                             : ClipOval(
-                                child: Icon(Icons.check_circle_rounded,
-                                    color: ArgonColors.success,
-                                    size: ArgonSize.IconSizeMedium),
-                              )
+                          child: Icon(Icons.check_circle_rounded,
+                              color: ArgonColors.success,
+                              size: ArgonSize.IconSizeMedium),
+                        )
                       ],
                     )),
               ],
@@ -555,8 +633,8 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
 
   //#region Popup
 
-  Future<bool> InsertMeasurement(
-      Size_Measurement_AllowanceBLL item, SubCaseProvider CaseProvider) async {
+  Future<bool> InsertMeasurement(Size_Measurement_AllowanceBLL item,
+      SubCaseProvider CaseProvider) async {
     var User = new User_QualityTracking_DetailBLL();
     User.QualityDept_ModelOrder_Tracking_Id = CaseProvider.QualityTracking!.Id;
     User.Size_Measurement_Allowance_Id = item.Id;
@@ -576,10 +654,10 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
     ValueChanged<double>? OnChangeSpain(value) {
       MeasurementItemList![Index].Real_Measure = value.toDouble();
       MeasurementItemList![Index].Pastal_Fark =
-          (MeasurementItemList![Index].Measure! -
-              MeasurementItemList![Index].Real_Measure!);
+      (MeasurementItemList![Index].Measure! -
+          MeasurementItemList![Index].Real_Measure!);
       if ((MeasurementItemList![Index].Tolerance! * -1) <=
-              MeasurementItemList![Index].Pastal_Fark! &&
+          MeasurementItemList![Index].Pastal_Fark! &&
           MeasurementItemList![Index].Pastal_Fark! <=
               MeasurementItemList![Index].Tolerance!) {
         MeasurementItemList![Index].CheckStatus = 1;
@@ -591,65 +669,69 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
       context: context,
       builder: (BuildContext context) =>
           StatefulBuilder(builder: (context, setState) {
-        return AlertDialog(
-            title: LableTitle(PersonalCase.GetLable(ResourceKey.Measurement),
-                FontSize: ArgonSize.Header1),
-            content: Container(
-              margin: EdgeInsets.all(ArgonSize.normal),
-              width: getScreenWidth() * 0.9,
-              height: getScreenHeight() * 0.6,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  LableTitle(MeasurementItemList![Index].Measurement ?? '',
-                      color: ArgonColors.text,
-                      FontSize: ArgonSize.Header2,
-                      IsCenter: false),
-                  SpinBox(
-                    max: 999999,
-                    decimals: 2,
-                    textStyle: TextStyle(fontSize: ArgonSize.Header2),
-                    value: MeasurementItemList![Index].Measure ?? 0,
-                    onChanged: (value) {
-                      IsChanged = true;
-                      OnChangeSpain(value);
-                    },
-                  )
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              CustomButton(
-                  width: getScreenWidth() / 2.5,
-                  height: ArgonSize.HeightSmall1,
-                  textSize: ArgonSize.Header3,
+            return AlertDialog(
+                title: LableTitle(
+                    PersonalCase.GetLable(ResourceKey.Measurement),
+                    FontSize: ArgonSize.Header1),
+                content: Container(
+                  margin: EdgeInsets.all(ArgonSize.normal),
+                  width: getScreenWidth() * 0.9,
+                  height: getScreenHeight() * 0.6,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      LableTitle(MeasurementItemList![Index].Measurement ?? '',
+                          color: ArgonColors.text,
+                          FontSize: ArgonSize.Header2,
+                          IsCenter: false),
+                      SpinBox(
+                        max: 999999,
+                        decimals: 2,
+                        textStyle: TextStyle(fontSize: ArgonSize.Header2),
+                        value: MeasurementItemList![Index].Measure ?? 0,
+                        onChanged: (value) {
+                          IsChanged = true;
+                          OnChangeSpain(value);
+                        },
+                      )
+                    ],
+                  ),
+                ),
+                actions: <Widget>[
+                  CustomButton(
+                      width: getScreenWidth() / 2.5,
+                      height: ArgonSize.HeightSmall1,
+                      textSize: ArgonSize.Header3,
 
-                  ///TODO : ADD Start Measuring to ResourceKey
-                  value: PersonalCase.GetLable(ResourceKey.Okay),
-                  backGroundColor: ArgonColors.success,
-                  function: () async {
-                    /// if user doesn't choose any data then system will write same measurement as default
-                    if (!IsChanged)
-                      OnChangeSpain(MeasurementItemList![Index].Measure);
+                      ///TODO : ADD Start Measuring to ResourceKey
+                      value: PersonalCase.GetLable(ResourceKey.Okay),
+                      backGroundColor: ArgonColors.success,
+                      function: () async {
+                        /// if user doesn't choose any data then system will write same measurement as default
+                        if (!IsChanged)
+                          OnChangeSpain(MeasurementItemList![Index].Measure);
 
-                    var check = await InsertMeasurement(
-                        MeasurementItemList![Index], CaseProvider);
+                        var check = await InsertMeasurement(
+                            MeasurementItemList![Index], CaseProvider);
 
-                    if (IsList && (Index + 1) < MeasurementItemList!.length) {
-                      setState(() {
-                        Index = Index + 1;
-                        IsChanged = false;
-                      });
-                    } else {
-                      Navigator.of(context).pop();
-                      CaseProvider.ReloadAction();
-                    }
-                  })
-            ]);
-      }),
+                        if (IsList &&
+                            (Index + 1) < MeasurementItemList!.length) {
+                          setState(() {
+                            Index = Index + 1;
+                            IsChanged = false;
+                          });
+                        } else {
+                          Navigator.of(context).pop();
+                          CaseProvider.ReloadAction();
+                        }
+                      })
+                ]);
+          }),
     );
   }
 
 //#endregion
 }
+
+
