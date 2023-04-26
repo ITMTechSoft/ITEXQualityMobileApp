@@ -8,13 +8,14 @@ import 'package:itex_soft_qualityapp/Utility/TakeImageCamera.dart';
 import 'package:itex_soft_qualityapp/Widgets/CardRow.dart';
 import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
 import 'package:itex_soft_qualityapp/Widgets/MyLabeledInput.dart';
+import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
 import 'package:itex_soft_qualityapp/Widgets/SwitchWidget.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 
 class QuaulityItemControl extends StatefulWidget {
   List<Quality_ItemsBLL> ListQualityItems;
-
-  QuaulityItemControl(this.ListQualityItems);
+  bool IsDeletedVal ;
+  QuaulityItemControl(this.ListQualityItems , {this.IsDeletedVal = false } );
 
   @override
   State<QuaulityItemControl> createState() => _QuaulityItemControlState();
@@ -26,7 +27,7 @@ class _QuaulityItemControlState extends State<QuaulityItemControl> {
   bool _FilterMinor = false;
   bool _FilterMajor = false;
   String? _FilterName = null;
-  bool _IsDeletedVal = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,13 +86,19 @@ class _QuaulityItemControlState extends State<QuaulityItemControl> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              FilterSwitch("Minor", _FilterMinor, (value) {
-                setState(() {
-                  _FilterMinor = value;
-                  _FilterMajor = false;
-                  _FilterName = null;
-                });
-              }),
+              RadioSwitch(
+                Lable: PersonalCase.GetLable(ResourceKey.Minor),
+                fontSize: ArgonSize.Header5,
+                SwitchValue: _FilterMinor,
+                OnTap: (value) {
+                  setState(() {
+                    _FilterMinor = value;
+                    _FilterMajor = false;
+                    _FilterName = null;
+                  });
+                },
+              ),
+
               MyLabeledInput(
                   labelText: "Filter",
                   initialValue: _FilterName,
@@ -101,15 +108,23 @@ class _QuaulityItemControlState extends State<QuaulityItemControl> {
                       _FilterName = value;
                     });
                   },),
-              FilterSwitch("Major", _FilterMajor, (value) {
-                setState(() {
-                  _FilterMajor = value;
-                  _FilterMinor = false;
-                  _FilterName = null;
-                });
-              }),
+              RadioSwitch(
+                Lable: PersonalCase.GetLable(ResourceKey.Major),
+                fontSize: ArgonSize.Header5,
+                SwitchValue: _FilterMajor,
+                OnTap: (value) {
+                  setState(() {
+                    _FilterMajor = value;
+                    _FilterMinor = false;
+                    _FilterName = null;
+                  });
+                },
+              ),
+
+
             ],
           ),
+
         ],
       ),
       function: () {
@@ -150,12 +165,12 @@ class _QuaulityItemControlState extends State<QuaulityItemControl> {
       UserQuality.QualityDept_ModelOrder_Tracking_Id =
           CaseProvider.QualityTracking!.Id;
 
-      if (_IsDeletedVal)
+      if (widget.IsDeletedVal)
         UserQuality.Amount = -1;
       else
         UserQuality.Amount = 1;
 
-      if (_IsDeletedVal == false && (item.IsTakeImage ?? false)) {
+      if (widget.IsDeletedVal == false && (item.IsTakeImage ?? false)) {
         UserQuality.Image64 = await TakeImageFromCamera();
       }
 
@@ -163,7 +178,7 @@ class _QuaulityItemControlState extends State<QuaulityItemControl> {
 
       if (CheckStatus)
         setState(() {
-          if (_IsDeletedVal) {
+          if (widget.IsDeletedVal) {
             if ((QualityItems![index].Amount ?? 0) > 0)
               QualityItems![index].Amount =
                   (QualityItems![index].Amount ?? 0) - 1;
@@ -217,7 +232,7 @@ class _QuaulityItemControlState extends State<QuaulityItemControl> {
                       textColor: ArgonColors.myBlue,
                       fontSize: ArgonSize.Header4)
                   : Container(width: 0, height: 0),
-              bottomRight: _IsDeletedVal == true
+              bottomRight: widget.IsDeletedVal == true
                   ? IconInsideCircle(
                       iconSize: getScreenWidth() > 1100
                           ? ArgonSize.Header6

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Models/DepartmentModelOrder_QualityTest.dart';
 import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
+import 'package:itex_soft_qualityapp/Models/Quality_NotesBLL.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
@@ -8,6 +9,7 @@ import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/Widgets/CardRow.dart';
 import 'package:itex_soft_qualityapp/Widgets/HeaderPage.dart';
 import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
+import 'package:itex_soft_qualityapp/Widgets/NoteButton.dart';
 import 'package:itex_soft_qualityapp/assets/SystemResuableList/OrderSizeColorMatrix.dart';
 
 import 'Steps/AQL_ModelOrderMatrix.dart';
@@ -30,8 +32,8 @@ class _AQL_ControlState extends State<AQL_Control> {
       PersonalProvider PersonalCase) async {
     AQLSizeColorList =
         await OrderSizeColorDetailsBLL.Get_AQLOrderSizeColorDetails(
-          Order_Id :  PersonalCase.SelectedOrder!.Order_Id,
-          DeptModelOrder_QualityTest_Id :PersonalCase.SelectedTest!.Id );
+            Order_Id: PersonalCase.SelectedOrder!.Order_Id,
+            DeptModelOrder_QualityTest_Id: PersonalCase.SelectedTest!.Id);
 
     if (AQLSizeColorList != null) {
       IntiteStatus = 1;
@@ -42,9 +44,9 @@ class _AQL_ControlState extends State<AQL_Control> {
     return null;
   }
 
-  int GetDetailTotal(String SumType ) {
+  int GetDetailTotal(String SumType) {
     int Sum = 0;
-    switch(SumType){
+    switch (SumType) {
       case "Minor":
         AQLSizeColorList!.forEach((e) => Sum += (e.AQL_Minor ?? 0));
         break;
@@ -94,37 +96,59 @@ class _AQL_ControlState extends State<AQL_Control> {
               (GetDetailTotal("Major")).toString(),
               LabelFex: 4),
           SizedBox(height: 8),
-          CustomButton(
-            height: ArgonSize.WidthSmall1,
-            width: getScreenWidth() / 2.5,
-            textSize: ArgonSize.Header4,
-            backGroundColor: ArgonColors.primary,
-            value: PersonalCase.GetLable(ResourceKey.CloseControl),
-            function: () async {
-
-              AlertPopupDialogWithAction(
-                  context:context,
-                  title: PersonalCase.GetLable(ResourceKey.WarrningMessage),
-                  Children: [
-                    LableTitle(PersonalCase.GetLable(ResourceKey.ConfirmCloseDepartmentControl),
-                        FontSize: ArgonSize.Header5),
-                  ],
-                  FirstActionLable: PersonalCase.GetLable(ResourceKey.Okay),
-
-                  SecondActionLable: PersonalCase.GetLable(ResourceKey.Cancel),
-                  OnFirstAction:() async{
-                    bool check = await PersonalCase.SelectedTest!.CloseQualityDepartmentTest();
-                    if(check)
-                    {
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                      PersonalCase.ReloadFunction();
-                    };
-                  }
-              );
-
-
-            },
+          Row(
+            children: [
+              Expanded(
+                  flex: 3,
+                  child: CustomButton(
+                    height: ArgonSize.WidthSmall1,
+                    width: getScreenWidth() / 2.5,
+                    textSize: ArgonSize.Header4,
+                    backGroundColor: ArgonColors.primary,
+                    value: PersonalCase.GetLable(ResourceKey.CloseControl),
+                    function: () async {
+                      AlertPopupDialogWithAction(
+                          context: context,
+                          title: PersonalCase.GetLable(
+                              ResourceKey.WarrningMessage),
+                          Children: [
+                            LableTitle(
+                                PersonalCase.GetLable(
+                                    ResourceKey.ConfirmCloseDepartmentControl),
+                                FontSize: ArgonSize.Header5),
+                          ],
+                          FirstActionLable:
+                              PersonalCase.GetLable(ResourceKey.Okay),
+                          SecondActionLable:
+                              PersonalCase.GetLable(ResourceKey.Cancel),
+                          OnFirstAction: () async {
+                            bool check = await PersonalCase.SelectedTest!
+                                .CloseQualityDepartmentTest();
+                            if (check) {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              PersonalCase.ReloadFunction();
+                            }
+                            ;
+                          });
+                    },
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: NoteButton(
+                    width: 40.0,
+                    height: 40.0,
+                    onNoteSaved: (noteText) async {
+                      var note = new Quality_NotesBLL(
+                          PersonalCase.GetCurrentUser().Id, noteText,
+                          QualityDepartment_ModelOrder_Id:
+                              PersonalCase.SelectedOrder?.Id,
+                           DepartmentModelOrder_QualityTest_Id: PersonalCase.SelectedTest?.Id);
+                      await note.SaveEntity();
+                      print('Note saved: $noteText');
+                    },
+                  ))
+            ],
           ),
           SizedBox(height: 8),
         ],
@@ -139,17 +163,14 @@ class _AQL_ControlState extends State<AQL_Control> {
         itemCount: snapshot.data.length,
         itemBuilder: (context, int i) {
           return AQL_OrderSizeColorMatrix(PersonalCase, snapshot.data[i],
-                  () async {
-                CaseProvider.ModelOrderMatrix = snapshot.data[i];
-                var value = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            AQL_SampleControl()));
-                setState(() {
-                  print(value);
-                });
-              });
+              () async {
+            CaseProvider.ModelOrderMatrix = snapshot.data[i];
+            var value = await Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AQL_SampleControl()));
+            setState(() {
+              print(value);
+            });
+          });
         });
   }
 
@@ -215,6 +236,7 @@ class _AQL_ControlState extends State<AQL_Control> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     final PersonalCase = Provider.of<PersonalProvider>(context);
@@ -261,6 +283,4 @@ class _AQL_ControlState extends State<AQL_Control> {
           ],
         ));
   }
-
-
 }

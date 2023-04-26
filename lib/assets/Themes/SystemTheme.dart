@@ -14,6 +14,7 @@ class ArgonColors {
   static const Color myBlue = Color.fromRGBO(2  , 8, 74, 1.0);
   static const Color myVinous = Color.fromRGBO(74  , 2, 2, 1.0);
   static const Color myOrange = Color.fromRGBO(	255, 199, 114, 1.0);
+  static const Color myNote = Color.fromRGBO(	134, 83, 4, 1.0);
   static const Color myLightBlue = Color.fromRGBO(	63, 81, 181,1.0);
   static const Color myLightRed = Color.fromRGBO(  212, 53, 58,1.0);
   static const Color myLightGreen = Color.fromRGBO(    0, 207, 108,0.5);
