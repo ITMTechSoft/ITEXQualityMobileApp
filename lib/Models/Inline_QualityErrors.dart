@@ -35,7 +35,9 @@ class Inline_QualityErrors {
       if (response.statusCode == 200) {
         return true;
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
     return false;
   }
 

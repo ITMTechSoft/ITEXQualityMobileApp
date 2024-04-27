@@ -182,7 +182,7 @@ class _LoginPagesState extends State<LoginPages> {
                         value: PersonalCase.GetLable(ResourceKey.btn_Logins),
                         textSize: ArgonSize.Header3,
                         function: () async {
-                          if (_formKey.currentState!.validate()) {
+                          if (true) {
                             await LoginFunction(PersonalCase);
                             print('working ');
                             setState(() {
