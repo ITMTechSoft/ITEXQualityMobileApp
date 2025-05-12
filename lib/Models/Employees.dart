@@ -120,8 +120,8 @@ class EmployeesBLL {
       LoginMessage = "time out ";
 
       // A timeout occurred.
-    } on SocketException catch (_) {
-      LoginMessage = _.message;
+    } on SocketException catch (e) {
+      LoginMessage = e.message;
 
       // Other exception
     }

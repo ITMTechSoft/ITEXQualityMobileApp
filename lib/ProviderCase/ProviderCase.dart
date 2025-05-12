@@ -52,9 +52,9 @@ class PersonalProvider with ChangeNotifier {
 
         if (Status) {
           await _CurrentUser!.login();
-
+          await GetGlobalization(SharedPref.SelLanguage!.Id);
           if (_CurrentUser!.ValidUser!) {
-            await GetGlobalization(SharedPref.SelLanguage!.Id);
+
             print('the language is ${SharedPref.SelLanguage!.Id}');
             notifyListeners();
           }

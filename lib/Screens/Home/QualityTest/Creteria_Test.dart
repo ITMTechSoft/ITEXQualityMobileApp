@@ -81,7 +81,7 @@ class _Criteria_TestState extends State<Criteria_Test> {
                     Html(
                       data: HtmlData ,
                       style: {
-                        'p': Style(margin: EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 8)),
+                        'p': Style(margin: Margins.only(left: 0, top: 0, right: 0, bottom: 8)),
                       },
                     ),
 

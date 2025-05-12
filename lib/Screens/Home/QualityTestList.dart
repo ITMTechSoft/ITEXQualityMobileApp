@@ -11,6 +11,7 @@ import 'package:itex_soft_qualityapp/QualityTestImports.dart';
 import 'QualityTest/CheckList/CheckList_Main.dart';
 import 'QualityTest/SampleCheck/SampleCheckList.dart';
 import 'QualityTest/SizeControl/Size_Control.dart';
+import 'QualityTest/WachingQualityTest/WachingQualityTest.dart';
 
 class QualityTestList extends StatefulWidget {
   @override
@@ -141,6 +142,9 @@ class _QualityTestListState extends State<QualityTestList> {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => Cutting_CheckList()));
         break;
+      case "WachingTest":
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => WachingQualityTest()));
     }
   }
 

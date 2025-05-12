@@ -116,13 +116,24 @@ Widget HeaderLable(String LableText, {double fontSize = 12, int Flex = 1,bool Is
       child: LableTitle(LableText, FontSize: ArgonSize.Header5, IsCenter: IsCenter));
 }
 
-Widget TableLable(String TableText, {int Flex = 1}) {
+Widget TableLable(
+    String TableText, {
+      int Flex = 1,
+      double? padding, // numeric value for padding
+      double? margin,  // numeric value for margin
+    }) {
   return Expanded(
-      flex: Flex,
+    flex: Flex,
+    child: Container(
+      margin: margin != null ? EdgeInsets.all(margin) : null,
+      padding: padding != null ? EdgeInsets.all(padding) : null,
       child: Center(
         child: LableTitle(TableText, color: ArgonColors.text),
-      ));
+      ),
+    ),
+  );
 }
+
 
 Widget ExpandedLableTitle(String? Title,
     {Color? color, double? FontSize, bool IsCenter = false}) {

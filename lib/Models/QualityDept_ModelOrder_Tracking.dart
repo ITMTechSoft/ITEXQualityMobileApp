@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
+import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
+import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/WebApi/WebServiceApi.dart';
 import 'User_QualityTracking_Detail.dart';
 
@@ -619,6 +621,17 @@ class QualityDept_ModelOrder_TrackingBLL {
       }
     } catch (e) {}
     return false;
+  }
+
+  static GenerateWachingSample(PersonalProvider personalCase, SubCaseProvider caseProvider, 
+      {required String sampleTicket, required String controlResult}) {
+    var Item = new QualityDept_ModelOrder_TrackingBLL();
+    Item.Employee_Id = personalCase.GetCurrentUser().Id;
+    Item.DeptModelOrder_QualityTest_Id = personalCase.SelectedTest?.Id;
+    Item.OrderSizeColorDetail_Id = caseProvider.ModelOrderMatrix?.Id;
+    Item.ModelOrderSizes_Id = caseProvider.ModelOrderMatrix?.Size_Id;
+
+    return Item.Generate_QualityModelOrder_Tracking();
   }
 
 
