@@ -1,6 +1,4 @@
-import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,7 +9,6 @@ import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Utility/OneItemDropList.dart';
 import 'package:itex_soft_qualityapp/Widgets/CardRow.dart';
 import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
-import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 import 'StartSampleCheck.dart';
 

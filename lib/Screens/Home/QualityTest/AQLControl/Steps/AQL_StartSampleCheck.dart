@@ -12,7 +12,6 @@ import 'package:itex_soft_qualityapp/Widgets/CardRow.dart';
 import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
 import 'package:itex_soft_qualityapp/Widgets/NoteButton.dart';
 import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
-import 'package:itex_soft_qualityapp/Widgets/TabbedPage.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 
 import 'AQL_QuaulityItemControl.dart';
@@ -659,6 +658,7 @@ class _AQL_StartSampleCheckState extends State<AQL_StartSampleCheck> {
         MeasurementItemList![Index].CheckStatus = 1;
       } else
         MeasurementItemList![Index].CheckStatus = 0;
+      return null;
     }
 
     return await showDialog(

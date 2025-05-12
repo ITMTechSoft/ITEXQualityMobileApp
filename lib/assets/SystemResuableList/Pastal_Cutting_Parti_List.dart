@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
 import 'package:itex_soft_qualityapp/Models/Pastal_Cutting_Parti.dart';
-import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
-import 'package:itex_soft_qualityapp/Utility/ResourceKeys.dart';
-import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
 import 'package:itex_soft_qualityapp/Widgets/ModelCard/Card_Pastal_Cutting_Parti.dart';
-import 'package:itex_soft_qualityapp/Widgets/button.dart';
-import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 
 class Pastal_Cutting_Parti_List extends StatefulWidget {
   List<Pastal_Cutting_PartiBLL>? Items;

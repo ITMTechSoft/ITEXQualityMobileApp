@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 const double defaultBorderRadius = 3.0;
@@ -16,11 +14,11 @@ Widget StandardButton(
         child: Text(Lable.toUpperCase(),
             style: TextStyle(fontSize: FontSize ?? ArgonSize.Header4)),
         style: ButtonStyle(
-            padding: MaterialStateProperty.all<EdgeInsets>(
+            padding: WidgetStateProperty.all<EdgeInsets>(
                 EdgeInsets.all(ArgonSize.Padding4)),
-            foregroundColor: MaterialStateProperty.all<Color>(ForColor),
-            backgroundColor: MaterialStateProperty.all<Color>(BakColor),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            foregroundColor: WidgetStateProperty.all<Color>(ForColor),
+            backgroundColor: WidgetStateProperty.all<Color>(BakColor),
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     side: BorderSide(color: ForColor)))),

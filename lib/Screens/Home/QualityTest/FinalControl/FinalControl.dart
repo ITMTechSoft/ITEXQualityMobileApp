@@ -1,21 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:itex_soft_qualityapp/Models/FinalControl/ModelOrder_Matrix.dart';
 import 'package:itex_soft_qualityapp/Models/FinalControl/Model_Order_Control.dart';
 import 'package:itex_soft_qualityapp/Models/FinalControl/Quality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
-import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/Widgets/ImageLoader.dart';
-import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
 import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
 import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
-import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 import 'QualityItemsList.dart';
 import 'SewingEmployeeControl.dart';
 
@@ -247,13 +242,9 @@ class _ProductFirstQualityState extends State<ProductFirstQuality> {
       List<Model_Order_ControlBLL>? ModelList =
           await widget.FirstQualityInfo.Get_Model_Order_Control();
 
-      if (widget.FirstQualityInfo != null) {
-        IntiteStatus = 1;
-        widget.FirstQualityInfo = ModelList![0];
-      } else {
-        IntiteStatus = -1;
-      }
-    } catch (e) {}
+      IntiteStatus = 1;
+      widget.FirstQualityInfo = ModelList![0];
+        } catch (e) {}
 
     return true;
   }
@@ -421,13 +412,9 @@ class _ProductSecondQualityState extends State<ProductSecondQuality> {
           GroupType: GroupType.SecondQuality,
           QualityTest_Id:PersonalCase.SelectedTest!.QualityTest_Id);
 
-      if (widget.SecondQualityInfo != null) {
-        IntiteStatus = 1;
-        widget.SecondQualityInfo = ModelList![0];
-      } else {
-        IntiteStatus = -1;
-      }
-    } catch (e) {}
+      IntiteStatus = 1;
+      widget.SecondQualityInfo = ModelList![0];
+        } catch (e) {}
 
     return true;
   }
@@ -549,13 +536,9 @@ class _ProductTamirQualityState extends State<ProductTamirQuality> {
           GroupType : GroupType.TamirQuality,
           QualityTest_Id:PersonalCase.SelectedTest!.QualityTest_Id);
 
-      if (widget.TamirQualityInfo != null) {
-        IntiteStatus = 1;
-        widget.TamirQualityInfo = ModelList![0];
-      } else {
-        IntiteStatus = -1;
-      }
-    } catch (e) {}
+      IntiteStatus = 1;
+      widget.TamirQualityInfo = ModelList![0];
+        } catch (e) {}
 
     return true;
   }

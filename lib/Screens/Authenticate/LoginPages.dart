@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:itex_soft_qualityapp/Preferences/SetupApplications.dart';
-import 'package:itex_soft_qualityapp/Utility/ResourceKeys.dart';
-import 'package:itex_soft_qualityapp/Widgets/Input.dart';
-import 'package:itex_soft_qualityapp/assets/images/ImgAssets.dart';
 
 import '../../SystemImports.dart';
 
@@ -197,26 +193,7 @@ class _LoginPagesState extends State<LoginPages> {
                         },
                       ),
                     ),
-                    // StretchableButton(
-                    //   buttonColor: ArgonColors.primary,
-                    //   children: [
-                    //     Text(
-                    //       PersonalCase.GetLable(ResourceKey.btn_Logins),
-                    //       style: TextStyle(color: Colors.white),
-                    //     )
-                    //   ],
-                    //   //  onPressed:
-                    //
-                    //   onPressed: () async {
-                    //     if (_formKey.currentState.validate()) {
-                    //       await LoginFunction(PersonalCase);
-                    //       print('working ');
-                    //
-                    //       //   Navigator.pop(context);
-                    //     } else
-                    //       print("Not Working");
-                    //   },
-                    // ),
+
                   ],
                 ),
               ),

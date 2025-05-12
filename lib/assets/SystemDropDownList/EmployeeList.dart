@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Models/Employees.dart';
-import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
-import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 class Employee_List extends StatefulWidget {
   List<EmployeesBLL> Items;

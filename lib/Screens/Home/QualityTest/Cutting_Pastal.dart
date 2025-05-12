@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Models/DeptModOrderQuality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
@@ -24,16 +23,12 @@ class _Cutting_PastalState extends State<Cutting_Pastal> {
 
     Criteria = Criteria!.where((r) => r.Item_Name!.isNotEmpty).toList();
 
-    if (Criteria != null) {
-      PersonalCase.SelectedTracking = await QualityDept_ModelOrder_TrackingBLL
-          .GetOrCreate_QualityDept_ModelOrder_Tracking(
-              PersonalCase.GetCurrentUser().Id, PersonalCase.SelectedTest!.Id);
-      IntiteStatus = 1;
-      return Criteria;
-    } else {
-      IntiteStatus = -1;
-    }
-    return null;
+    PersonalCase.SelectedTracking = await QualityDept_ModelOrder_TrackingBLL
+        .GetOrCreate_QualityDept_ModelOrder_Tracking(
+            PersonalCase.GetCurrentUser().Id, PersonalCase.SelectedTest!.Id);
+    IntiteStatus = 1;
+    return Criteria;
+      return null;
   }
 
   Widget GetCuttingPastalList(PersonalProvider PersonalCase, snapshot) {

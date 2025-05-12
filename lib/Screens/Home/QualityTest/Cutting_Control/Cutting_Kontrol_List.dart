@@ -11,7 +11,6 @@ import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
 import 'package:itex_soft_qualityapp/Widgets/TopBar.dart';
 import 'package:itex_soft_qualityapp/Widgets/Utils/Loadding.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
-import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 class Cutting_PastalControl extends StatefulWidget {
   @override

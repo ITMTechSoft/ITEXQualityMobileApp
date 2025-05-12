@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:itex_soft_qualityapp/Models/DepartmentModelOrder_QualityTest.dart';
@@ -9,7 +8,6 @@ import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/Models/DeptModOrderQuality_Items.dart';
 import 'package:itex_soft_qualityapp/Utility/TakeImageCamera.dart';
 import 'package:itex_soft_qualityapp/Widgets/Utils/Loadding.dart';
-import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 
 class Cutting_CheckList extends StatefulWidget {
   @override

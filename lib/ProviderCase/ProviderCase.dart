@@ -9,7 +9,6 @@ import 'package:itex_soft_qualityapp/Models/ModelOrderSizes.dart';
 import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDepartment_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
-import 'package:itex_soft_qualityapp/Preferences/SharedPref.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 
 class PersonalProvider with ChangeNotifier {

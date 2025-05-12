@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
-import 'package:itex_soft_qualityapp/Utility/constants.dart';
 
 import 'ApplicationBars.dart';
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Models/DepartmentModelOrder_QualityTest.dart';
 import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
-import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/CardRow.dart';

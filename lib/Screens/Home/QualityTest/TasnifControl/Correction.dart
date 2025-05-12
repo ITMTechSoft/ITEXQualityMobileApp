@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinbox/material.dart';
 import 'package:itex_soft_qualityapp/Models/DTO_RecycleSizeList.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
@@ -8,7 +6,6 @@ import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/Widgets/Utils/Loadding.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
-import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 
 class Tasnif_Correction extends StatefulWidget {
   @override

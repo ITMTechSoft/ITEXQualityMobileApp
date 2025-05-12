@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Models/Pastal_Cutting_Parti.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';

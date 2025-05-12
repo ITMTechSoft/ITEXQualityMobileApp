@@ -1,7 +1,4 @@
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:itex_soft_qualityapp/Models/DepartmentModelOrder_QualityTest.dart';
 import 'package:itex_soft_qualityapp/Models/DeptModOrderQuality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/Employee_Department.dart';
@@ -10,9 +7,7 @@ import 'package:itex_soft_qualityapp/Models/QualityDepartment_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
-import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/Widgets/ImageLoader.dart';
-import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 import 'package:intl/intl.dart';
 
 Widget DepartmentCard(Employee_DepartmentBLL Item, Function() OnTap) {
@@ -692,7 +687,7 @@ class _TableBodyGListState extends State<TableBodyGList> {
                   itemBuilder: (context, int i) {
                     return InkWell(
                       onTap: () {
-                        if (widget.OnClickItems != null) widget.OnClickItems(i);
+                        widget.OnClickItems(i);
                         setState(() {
                           SelectedIndex = i;
                         });
@@ -772,7 +767,7 @@ class _Tb_InlineDikimListState extends State<Tb_InlineDikimList> {
                   itemBuilder: (context, int i) {
                     return InkWell(
                       onTap: () {
-                        if (widget.OnClickItems != null) widget.OnClickItems(i);
+                        widget.OnClickItems(i);
                         setState(() {
                           SelectedIndex = i;
                         });
@@ -1047,7 +1042,7 @@ class _Tb_InlineRoundListState extends State<Tb_InlineRoundList> {
                         setState(() {
                           SelectedIndex = i;
                         });
-                        if (widget.OnClickItems != null) widget.OnClickItems(i);
+                        widget.OnClickItems(i);
                       },
                       child: TableColumn(children: [
                         RoundControl(widget.PersonalCase, widget.Items[i])

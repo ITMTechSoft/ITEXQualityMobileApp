@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:itex_soft_qualityapp/Models/DeptModOrderQuality_Items.dart';
@@ -292,8 +290,7 @@ class _Tasnsif_SampleControlState extends State<Tasnsif_SampleControl> {
         await ReasonVal.Get_CalcuatedTasnifControl();
 
         setState(() {
-          if(ReasonVal == null)
-            ReasonVal = new User_QualityTracking_DetailBLL();
+          
 
         });
 

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
-import 'package:itex_soft_qualityapp/Utility/ResourceKeys.dart';
-import 'package:itex_soft_qualityapp/Widgets/ErrorPage.dart';
-import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
-import 'package:provider/provider.dart';
 class LoadingContainer extends StatelessWidget {
   int IntiteStatus = 0;
 

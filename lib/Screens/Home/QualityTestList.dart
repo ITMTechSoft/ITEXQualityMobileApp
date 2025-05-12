@@ -9,7 +9,6 @@ import 'package:itex_soft_qualityapp/Widgets/NoteButton.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 import 'package:itex_soft_qualityapp/QualityTestImports.dart';
 import 'QualityTest/CheckList/CheckList_Main.dart';
-import 'QualityTest/Cutting_Control/Cutting_Control.dart';
 import 'QualityTest/SampleCheck/SampleCheckList.dart';
 import 'QualityTest/SizeControl/Size_Control.dart';
 
@@ -38,7 +37,7 @@ class _QualityTestListState extends State<QualityTestList> {
                   PersonalCase.SelectedOrder!.Id);
 
       if ((Rounds?.length ?? 0) > 0)
-        SelectedId = Rounds?.where((el) => el.EndTime == null)?.first?.Id ?? 0;
+        SelectedId = Rounds?.where((el) => el.EndTime == null).first.Id ?? 0;
 
       if (SelectedId != 0 && _filterEnabled != true)
         Items = Items?.where((r) => r.RoundTest_Id == SelectedId).toList();
@@ -49,6 +48,7 @@ class _QualityTestListState extends State<QualityTestList> {
         IntiteStatus = -1;
       return Items;
     } catch (Excption) {}
+    return null;
   }
 
   Future<void> MappingSelectedQualityTest(

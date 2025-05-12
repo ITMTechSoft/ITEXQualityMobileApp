@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDepartment_ModelOrder.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/QualityTestList.dart';
@@ -26,12 +25,10 @@ class _OrderListState extends State<OrderList> {
           MainItems.where((i) => i.Order_Number!.contains(SearchController.text))
               .toList();
 
-      if (Items != null)
-        IntiteStatus = 1;
-      else
-        IntiteStatus = -1;
+      IntiteStatus = 1;
       return Items;
     } catch (Excption) {}
+    return null;
   }
 
   Future FilterSearch(String FilterValue) async {

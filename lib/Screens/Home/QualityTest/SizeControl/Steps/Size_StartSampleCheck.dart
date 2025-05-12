@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:itex_soft_qualityapp/Models/FinalControl/Quality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/Size_Measurement_Allowance.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
-import 'package:itex_soft_qualityapp/Utility/TakeImageCamera.dart';
 import 'package:itex_soft_qualityapp/Widgets/CardRow.dart';
 import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
-import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
 import 'package:itex_soft_qualityapp/Widgets/Utils/Loadding.dart';
-import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 
 class Size_StartSampleCheck extends StatefulWidget {
   @override
@@ -311,6 +306,7 @@ class _Size_StartSampleCheckState extends State<Size_StartSampleCheck> {
         MeasurementItemList![Index].CheckStatus = 1;
       } else
         MeasurementItemList![Index].CheckStatus = 0;
+      return null;
     }
 
     return await showDialog(

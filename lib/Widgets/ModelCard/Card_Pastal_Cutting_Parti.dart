@@ -4,7 +4,6 @@ import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/assets/Component/DateTimeComponent.dart';
-import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 class Card_Pastal_Cutting_Parti extends StatefulWidget {
   Pastal_Cutting_PartiBLL Card_Item;
@@ -25,13 +24,9 @@ class _Card_Pastal_Cutting_PartiState extends State<Card_Pastal_Cutting_Parti> {
     bool Criteria = await widget.Card_Item.DeleteEntity();
 
     print(widget.Card_Item.Id);
-    if (Criteria != null) {
-      // IntiteStatus = 1;
-      return Criteria;
-    } else {
-      // IntiteStatus = -1;
-    }
-    return null;
+    // IntiteStatus = 1;
+    return Criteria;
+      return null;
   }
 
   @override

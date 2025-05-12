@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:itex_soft_qualityapp/Models/Languages.dart';
-import 'package:itex_soft_qualityapp/Utility/Globalization.dart';
-import 'package:itex_soft_qualityapp/Utility/ResourceKeys.dart';
-import 'package:itex_soft_qualityapp/Widgets/Input.dart';
 import 'package:itex_soft_qualityapp/assets/Resources/StaticLable.dart';
 import '../SystemImports.dart';
 

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Models/ModelOrderSizes.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
-import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
-import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
-import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 import 'Cutting_Kontrol_List.dart';
 
 class Size_Matrix_Control extends StatefulWidget {
@@ -176,8 +173,7 @@ class _Size_Matrix_ListState extends State<Size_Matrix_List> {
                     itemBuilder: (context, int i) {
                       return InkWell(
                         onTap: () {
-                          if (widget.OnClickItems != null)
-                            widget.OnClickItems(i);
+                          widget.OnClickItems(i);
                           setState(() {
                             SelectedIndex = i;
                           });

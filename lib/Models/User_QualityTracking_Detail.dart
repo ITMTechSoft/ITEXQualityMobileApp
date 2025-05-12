@@ -334,6 +334,7 @@ class User_QualityTracking_DetailBLL {
     } catch (Excpetion) {
       print(Excpetion);
     }
+    return null;
   }
 
 
@@ -353,6 +354,7 @@ class User_QualityTracking_DetailBLL {
     } catch (Excpetion) {
       print(Excpetion);
     }
+    return null;
   }
 
   Future<bool?> Set_User_QualityTracking_Dikim() async {
@@ -371,6 +373,7 @@ class User_QualityTracking_DetailBLL {
     } catch (Excpetion) {
       print(Excpetion);
     }
+    return null;
   }
 
   Future<User_QualityTracking_DetailBLL?>
@@ -530,6 +533,7 @@ class User_QualityTracking_DetailBLL {
     } catch (Excpetion) {
       print(Excpetion);
     }
+    return null;
   }
 
   Future<bool> Set_QualityAQLError() async {

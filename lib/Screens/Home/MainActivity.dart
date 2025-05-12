@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Models/Employee_Department.dart';
-import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/OrderList.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
-import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
-import 'package:provider/provider.dart';
-import 'dart:ui' as ui;
 
-import '../Wrapper.dart';
 
 class MainActivity extends StatefulWidget {
   @override

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
 
-import 'LableText.dart';
 
 
 Widget HeaderPage(PersonalCase) => ListTile(

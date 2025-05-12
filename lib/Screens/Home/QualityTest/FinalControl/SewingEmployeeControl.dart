@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Models/Employees.dart';
 import 'package:itex_soft_qualityapp/Models/FinalControl/Quality_Items.dart';
@@ -7,12 +6,10 @@ import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/Widgets/AlertMessage.dart';
 import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
-import 'package:itex_soft_qualityapp/Widgets/button.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 import 'package:itex_soft_qualityapp/assets/SystemDropDownList/EmployeeList.dart';
 import 'package:itex_soft_qualityapp/assets/SystemDropDownList/OperationList.dart';
 import 'package:itex_soft_qualityapp/assets/SystemResuableList/EmployeeOperationList.dart';
-import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 import '../../../../SystemImports.dart';
 

@@ -9,7 +9,6 @@ import 'package:itex_soft_qualityapp/Widgets/CardRow.dart';
 import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
 import 'package:itex_soft_qualityapp/Widgets/MyLabeledInput.dart';
 import 'package:itex_soft_qualityapp/Widgets/RadioSwitch.dart';
-import 'package:itex_soft_qualityapp/Widgets/SwitchWidget.dart';
 import 'package:itex_soft_qualityapp/assets/Component/BoxMainContainer.dart';
 
 class QuaulityItemControl extends StatefulWidget {
@@ -135,23 +134,23 @@ class _QuaulityItemControlState extends State<QuaulityItemControl> {
 
   int GetMinor() {
     int Minor = 0;
-    for (int i = 0; i < widget.ListQualityItems!.length; i++)
-      if (widget.ListQualityItems![i].Item_Level == 5)
-        Minor += (widget.ListQualityItems![i].Amount ?? 0);
+    for (int i = 0; i < widget.ListQualityItems.length; i++)
+      if (widget.ListQualityItems[i].Item_Level == 5)
+        Minor += (widget.ListQualityItems[i].Amount ?? 0);
 
     return Minor;
   }
 
   int GetMajor() {
     int Major = 0;
-    for (int i = 0; i < widget.ListQualityItems!.length; i++) {
-      if (widget.ListQualityItems![i].Item_Level != 5)
-        Major += (widget.ListQualityItems![i].Amount ?? 0);
+    for (int i = 0; i < widget.ListQualityItems.length; i++) {
+      if (widget.ListQualityItems[i].Item_Level != 5)
+        Major += (widget.ListQualityItems[i].Amount ?? 0);
 
-      if (widget.ListQualityItems![i].Item_Level ==
-          5) if (widget.ListQualityItems![i].Minor! > 0)
-        Major += ((widget.ListQualityItems![i].Amount ?? 0) /
-                (widget.ListQualityItems![i].Minor ?? 1))
+      if (widget.ListQualityItems[i].Item_Level ==
+          5) if (widget.ListQualityItems[i].Minor! > 0)
+        Major += ((widget.ListQualityItems[i].Amount ?? 0) /
+                (widget.ListQualityItems[i].Minor ?? 1))
             .toInt();
     }
 

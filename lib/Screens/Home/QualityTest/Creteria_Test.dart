@@ -31,7 +31,7 @@ class _Criteria_TestState extends State<Criteria_Test> {
     var Item = new QualityDept_ModelOrder_TrackingBLL();
     Item.Employee_Id = PersonalCase.GetCurrentUser().Id;
     Item.DeptModelOrder_QualityTest_Id = PersonalCase.SelectedTest!.Id;
-    bool IsReading = await Item.SetReadValidationAction();
+
 
     if (Critiera != null) {
       IntiteStatus = 1;

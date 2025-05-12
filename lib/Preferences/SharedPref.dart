@@ -14,10 +14,7 @@ class SharedPref {
 
   readFromJson(String key) async {
     final prefs = await SharedPreferences.getInstance();
-    if (prefs != null)
-      return json.decode(prefs.getString(key) ?? "");
-    else
-      return null;
+    return json.decode(prefs.getString(key) ?? "");
   }
 
   Future<String> ReadFromString(String Key) async {

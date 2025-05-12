@@ -140,6 +140,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
         widget.SelectedDate = DateTime.now();
 
       }
+    return null;
 
   }
 
@@ -161,6 +162,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
     else
       SelectedTime =  TimeOfDay(
           hour: DateTime.now().hour, minute: DateTime.now().minute);
+    return null;
 
   }
 

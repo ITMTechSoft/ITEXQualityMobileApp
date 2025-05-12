@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
-import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 class NoteButton extends StatefulWidget {
   final Function(String) onNoteSaved;

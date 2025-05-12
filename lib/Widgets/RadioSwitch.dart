@@ -36,8 +36,8 @@ class _RadioSwitchState extends State<RadioSwitch> {
           scale: ArgonSize.RadioSwitchValue,
           child: InkWell(
             child: CupertinoSwitch(
-              trackColor: Colors.black12, // **INACTIVE STATE COLOR**
-              activeColor: Colors.green, // **ACTIVE STATE COLOR**
+              inactiveTrackColor: Colors.black12, // **INACTIVE STATE COLOR**
+              activeTrackColor: Colors.green, // **ACTIVE STATE COLOR**
               value: widget.SwitchValue!,
               onChanged: (bool value) {
                 setState(() {

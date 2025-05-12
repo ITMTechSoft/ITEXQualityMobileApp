@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Models/DeptModOrderQuality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
-import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
-import 'package:itex_soft_qualityapp/Widgets/ApplicationBars.dart';
 import 'package:itex_soft_qualityapp/Widgets/LayoutTemplate.dart';
 
 class StartSampleCheck extends StatefulWidget {
@@ -32,13 +29,9 @@ class _StartSampleCheckState extends State<StartSampleCheck> {
 
     Criteria = Criteria!.where((r) => r.Item_Name!.isNotEmpty).toList();
 
-    if (Criteria != null) {
-      IntiteStatus = 1;
-      return Criteria;
-    } else {
-      IntiteStatus = -1;
-    }
-    return null;
+    IntiteStatus = 1;
+    return Criteria;
+      return null;
   }
 
   /// Check Objects

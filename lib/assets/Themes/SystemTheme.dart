@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 
@@ -137,22 +136,30 @@ class ArgonSize{
 }
 
 final BlueTheme = ThemeData(
-    primaryColor: Color(0xFF3F51B5),
-    accentColor: Color(0xFFFF9800),
-    backgroundColor: Color(0xFFFFFFFF),
-    hintColor: Colors.grey,
+  primaryColor: const Color(0xFF3F51B5),
+  hintColor: Colors.grey,
+  colorScheme: const ColorScheme.light(
+    surface: Color(0xFFFFFFFF), // Use background inside ColorScheme
+    secondary: Color(0xFFFF9800), // Replaces accentColor
+  ),
+);
 
-    );
 
 final DarkTheme = ThemeData(
-    primaryColor: Color(0xFF000000),
-    accentColor: Color(0xFFBB86FC),
-    backgroundColor: Color(0xFF4A4A4A));
+  primaryColor: const Color(0xFF000000),
+  colorScheme: const ColorScheme.dark(
+    surface: Color(0xFF4A4A4A), // Use background inside ColorScheme
+    secondary: Color(0xFFBB86FC), // Replaces accentColor
+  ),
+);
 
 final GreenTheme = ThemeData(
-    primaryColor: Color(0xFF4CAF50),
-    accentColor: Color(0xFF631739),
-    backgroundColor: Color(0xFFFFFFFF));
+  primaryColor: const Color(0xFF4CAF50),
+  colorScheme: const ColorScheme.light(
+    surface: Color(0xFFFFFFFF), // Use background inside ColorScheme
+    secondary: Color(0xFF631739), // Replaces accentColor
+  ),
+);
 
 class ThemeNotifier with ChangeNotifier {
   ThemeData _themeData = BlueTheme;

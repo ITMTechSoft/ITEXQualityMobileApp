@@ -107,10 +107,8 @@ class _TimerButtonState extends State<TimerButton> {
       });
       timeCounter = widget.timeOutInSeconds;
 
-      if (widget.onPressed != null) {
-        widget.onPressed();
-      }
-      // reset the timer when the button is pressed
+      widget.onPressed();
+          // reset the timer when the button is pressed
       if (widget.resetTimerOnPressed) {
         _timerUpdate();
       }

@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/ProviderCase/SubCaseProvider.dart';
-import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/Screens/Authenticate/LoginPages.dart';
 import 'package:itex_soft_qualityapp/Screens/Home/MainActivity.dart';
 import 'package:itex_soft_qualityapp/SystemImports.dart';
-import 'package:provider/provider.dart';
-import 'Preferences/SetupApplications.dart';
 import 'Screens/Wrapper.dart';
-import 'Utility/TakeImageCamera.dart';
-import 'assets/Themes/SystemTheme.dart';
 
 void main() => runApp(
       ChangeNotifierProvider<ThemeNotifier>(
@@ -30,7 +25,7 @@ class _ITMTechSoftQualityState extends State<ITMTechSoftQuality> {
   Future<bool> LoadingSharedPreference(PersonalProvider PersonalCase) async {
     bool value = await PersonalCase.loadSharedPrefs();
 
-    if (value != null) IsLoading = false;
+    IsLoading = false;
     return value;
   }
 

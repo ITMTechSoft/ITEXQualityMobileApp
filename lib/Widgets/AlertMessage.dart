@@ -64,7 +64,7 @@ AlertPopupDialogWithAction({
                           fontSize: ArgonSize.Header4,
                           color: textButton1Color)),
                   onPressed: () async {
-                    if (OnFirstAction != null) await OnFirstAction();
+                    await OnFirstAction();
                     //  Navigator.of(context).pop();
                   },
                 ),
@@ -123,7 +123,7 @@ Future<void> showConfirmationDialog(BuildContext context, String title,
     },
   );
 
-  if (confirmed == true && OkayAction != null) {
+  if (confirmed == true) {
     bool? result = await OkayAction();
     // Do something with the result
   }

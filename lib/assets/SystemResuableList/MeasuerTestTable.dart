@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:itex_soft_qualityapp/Models/ModelOrderSizes.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
-import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
-import 'package:itex_soft_qualityapp/Utility/ResourceKeys.dart';
-import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
-import 'package:itex_soft_qualityapp/Widgets/button.dart';
 import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
-import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 import '../../SystemImports.dart';
 class Tb_InlineDikimList2 extends StatefulWidget {

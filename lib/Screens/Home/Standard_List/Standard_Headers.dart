@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:itex_soft_qualityapp/ProviderCase/ProviderCase.dart';
 import 'package:itex_soft_qualityapp/Utility/ResourceKeys.dart';
 import 'package:itex_soft_qualityapp/Widgets/LableText.dart';
-import 'package:itex_soft_qualityapp/assets/Component/List_Items.dart';
 import 'package:itex_soft_qualityapp/assets/Themes/SystemTheme.dart';
 
 Widget ModelOrderMatrixHeader(PersonalCase) {

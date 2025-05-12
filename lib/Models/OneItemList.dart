@@ -16,7 +16,7 @@ class OneItemList {
       if (GroupList == null || GroupList.length == 0)
         ItemList.add(new OneItemList(0, "No Items Found", ""));
       else
-        for (var grp in GroupList!)
+        for (var grp in GroupList)
           ItemList.add(
               new OneItemList(grp.Groups_id, grp.Group_Name, grp.Group_Code));
 
