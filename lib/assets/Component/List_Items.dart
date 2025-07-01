@@ -24,11 +24,13 @@ Widget DepartmentCard(Employee_DepartmentBLL Item, Function() OnTap) {
           title: Text(
             Item.Depart_Name ?? '',
             style:
-                TextStyle(fontSize: ArgonSize.Header3, color: ArgonColors.text),
+                TextStyle(fontSize: ArgonSize.Header4, color: ArgonColors.text),
           ),
           subtitle: Text(
-            Item.Depart_Name ?? '',
-            style: TextStyle(fontSize: ArgonSize.Header4),
+            Item.Start_Date != null
+                ? DateFormat('HH:mm dd.MM.yyyy').format(Item.Start_Date)
+                : '',
+            style: TextStyle(fontSize: ArgonSize.Header6),
           ),
         ),
       ),

@@ -1383,7 +1383,8 @@ enum ResourceKey{
   Yaxis_QualityItem,
   Recycle,
   Recycle_Amount,
-  EnterNumberOfItemsToRecycle, RoundCopy, AttentionVal, ShowRounds, Round
+  EnterNumberOfItemsToRecycle, RoundCopy, AttentionVal, ShowRounds, Round,
+  RafNo, ControlResult, SampleTicket, TestPartName, IsFinish, QualityPartType, QualityItem, GelisDate, FabricTipi, WachingCount, BeforeWash_Measure, BeforeWash_Real_Measure, BeforeWash_Measure_Fark, BeforeWash_Status, AfterWash_Measure, AfterWash_Real_Measure, AfterWash_Measure_Fark, AfterWash_Status, NOTCHECK, FAIL, PASS, SampleClosed
 
 
 

@@ -4,6 +4,7 @@ import 'package:itex_soft_qualityapp/Models/FinalControl/Quality_Items.dart';
 import 'package:itex_soft_qualityapp/Models/OrderSizeColorDetails.dart';
 import 'package:itex_soft_qualityapp/Models/Pastal_Cutting_Parti.dart';
 import 'package:itex_soft_qualityapp/Models/QualityDept_ModelOrder_Tracking.dart';
+import 'package:itex_soft_qualityapp/Models/QualityTest_PartsBLL.dart';
 import 'package:itex_soft_qualityapp/Models/User_QualityTracking_Detail.dart';
 
 class SubCaseProvider with ChangeNotifier {
@@ -17,6 +18,10 @@ class SubCaseProvider with ChangeNotifier {
   Quality_ItemsBLL? FirstQuality;
 
   Pastal_Cutting_PartiBLL? SelectedPastal;
+
+  QualityTest_PartsBLL? QualityTestPart;
+
+  int? QualityPartType;
 
   SubCaseProvider() {}
 

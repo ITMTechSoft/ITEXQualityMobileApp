@@ -11,6 +11,7 @@ class Quality_NotesBLL {
   int? QualityDepartment_ModelOrder_Id;
   String? DescNote;
   int? Employee_Id;
+  int? QualityTestPartId;
 
   //#endregion
 
@@ -20,6 +21,7 @@ class Quality_NotesBLL {
     this.DepartmentModelOrder_QualityTest_Id = 0,
     this.QualityDept_ModelOrder_Tracking_Id = 0,
     this.QualityDepartment_ModelOrder_Id = 0,
+    this.QualityTestPartId = 0,
   });
 
   //#region Json Mapping
@@ -33,41 +35,42 @@ class Quality_NotesBLL {
         json['QualityDepartment_ModelOrder_Id'];
     this.DescNote = json['DescNote'];
     this.Employee_Id = json['Employee_Id'];
+    this.QualityTestPartId = json['QualityTestPartId'];
   }
 
   Quality_NotesBLL.fromJson(Map<String, dynamic> json)
-      : Id = json['Id'],
-        DepartmentModelOrder_QualityTest_Id =
-            json['DepartmentModelOrder_QualityTest_Id'],
-        QualityDept_ModelOrder_Tracking_Id =
-            json['QualityDept_ModelOrder_Tracking_Id'],
-        QualityDepartment_ModelOrder_Id =
-            json['QualityDepartment_ModelOrder_Id'],
-        DescNote = json['DescNote'],
-        Employee_Id = json['Employee_Id'];
+    : Id = json['Id'],
+      DepartmentModelOrder_QualityTest_Id =
+          json['DepartmentModelOrder_QualityTest_Id'],
+      QualityDept_ModelOrder_Tracking_Id =
+          json['QualityDept_ModelOrder_Tracking_Id'],
+      QualityDepartment_ModelOrder_Id = json['QualityDepartment_ModelOrder_Id'],
+      DescNote = json['DescNote'],
+      Employee_Id = json['Employee_Id'],
+      QualityTestPartId = json['QualityTestPartId'];
 
   Map<String, dynamic> toJson() => {
-        'Id': Id,
-        'DepartmentModelOrder_QualityTest_Id':
-            DepartmentModelOrder_QualityTest_Id,
-        'QualityDept_ModelOrder_Tracking_Id':
-            QualityDept_ModelOrder_Tracking_Id,
-        'QualityDepartment_ModelOrder_Id': QualityDepartment_ModelOrder_Id,
-        'DescNote': DescNote,
-        'Employee_Id': Employee_Id,
-      };
+    'Id': Id,
+    'DepartmentModelOrder_QualityTest_Id': DepartmentModelOrder_QualityTest_Id,
+    'QualityDept_ModelOrder_Tracking_Id': QualityDept_ModelOrder_Tracking_Id,
+    'QualityDepartment_ModelOrder_Id': QualityDepartment_ModelOrder_Id,
+    'DescNote': DescNote,
+    'Employee_Id': Employee_Id,
+    'QualityTestPartId': QualityTestPartId,
+  };
 
   Map<String, String> toPost() => {
-        'Id': Id.toString(),
-        'DepartmentModelOrder_QualityTest_Id':
-            DepartmentModelOrder_QualityTest_Id.toString(),
-        'QualityDept_ModelOrder_Tracking_Id':
-            QualityDept_ModelOrder_Tracking_Id.toString(),
-        'QualityDepartment_ModelOrder_Id':
-            QualityDepartment_ModelOrder_Id.toString(),
-        'DescNote': DescNote.toString(),
-        'Employee_Id': Employee_Id.toString(),
-      };
+    'Id': Id.toString(),
+    'DepartmentModelOrder_QualityTest_Id':
+        DepartmentModelOrder_QualityTest_Id.toString(),
+    'QualityDept_ModelOrder_Tracking_Id':
+        QualityDept_ModelOrder_Tracking_Id.toString(),
+    'QualityDepartment_ModelOrder_Id':
+        QualityDepartment_ModelOrder_Id.toString(),
+    'DescNote': DescNote.toString(),
+    'Employee_Id': Employee_Id.toString(),
+    'QualityTestPartId': QualityTestPartId.toString(),
+  };
 
   //#endregion
 
@@ -78,7 +81,8 @@ class Quality_NotesBLL {
         'Content-Type': 'application/json; charset=UTF-8',
       };
       var url = Uri.parse(
-          SharedPref.GetWebApiUrl(WebApiMethod.Set_CreateQuality_Notes));
+        SharedPref.GetWebApiUrl(WebApiMethod.Set_CreateQuality_Notes),
+      );
       var response = await http.post(url, body: val, headers: headers);
       if (response.statusCode == 200) {
         this.LoadFromJson(json.decode(response.body));
@@ -88,5 +92,5 @@ class Quality_NotesBLL {
     return false;
   }
 
-//#endregion
+  //#endregion
 }

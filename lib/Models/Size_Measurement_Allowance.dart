@@ -20,6 +20,11 @@ class Size_Measurement_AllowanceBLL {
   double? Real_Measure;
   double? Pastal_Fark;
   int? CheckStatus = 0;
+  String? Reject_Note;
+  String? StandardMeasure;
+  String? CikanMeasure;
+  int? Groups_id;
+  String? Group_Name;
 
   //#endregion
 
@@ -41,6 +46,11 @@ class Size_Measurement_AllowanceBLL {
     this.Real_Measure = json['Real_Measure'];
     this.Pastal_Fark = json['Pastal_Fark'];
     this.CheckStatus = json['CheckStatus'];
+    this.Reject_Note = json['Reject_Note'];
+    this.StandardMeasure = json['StandardMeasure'];
+    this.CikanMeasure = json['CikanMeasure'];
+    this.Groups_id = json['Groups_id'];
+    this.Group_Name = json['Group_Name'];
   }
 
   Size_Measurement_AllowanceBLL.fromJson(Map<String, dynamic> json)
@@ -57,6 +67,11 @@ class Size_Measurement_AllowanceBLL {
         Order_id = json['Order_id'],
         Real_Measure = json['Real_Measure'],
         Pastal_Fark = json['Pastal_Fark'],
+        Reject_Note = json['Reject_Note'],
+        StandardMeasure = json['StandardMeasure'],
+        CikanMeasure = json['CikanMeasure'],
+        Groups_id = json['Groups_id'],
+        Group_Name = json['Group_Name'],
         CheckStatus = json['CheckStatus'];
 
   Map<String, dynamic> toJson() => {
@@ -74,6 +89,11 @@ class Size_Measurement_AllowanceBLL {
         'Real_Measure': Real_Measure,
         'Pastal_Fark': Pastal_Fark,
         'CheckStatus': CheckStatus,
+        'Reject_Note': Reject_Note,
+        'StandardMeasure': StandardMeasure,
+        'CikanMeasure': CikanMeasure,
+        'Groups_id': Groups_id,
+        'Group_Name': Group_Name,
       };
 
   Map<String, String> toPost() => {
@@ -92,6 +112,11 @@ class Size_Measurement_AllowanceBLL {
         'Real_Measure': Real_Measure.toString(),
         'Pastal_Fark': Pastal_Fark.toString(),
         'CheckStatus': CheckStatus.toString(),
+        'Reject_Note': Reject_Note.toString(),
+        'StandardMeasure': StandardMeasure.toString(),
+        'CikanMeasure': CikanMeasure.toString(),
+        'Groups_id': Groups_id.toString(),
+        'Group_Name': Group_Name.toString(),
       };
 
   //#endregion
@@ -101,7 +126,8 @@ class Size_Measurement_AllowanceBLL {
       Get_Size_Measurement_Allowance(
           {int? ModelOrderSize_Id,
           int? DeptModelOrder_QualityTest_Id,
-          int? QualityDept_ModelOrder_Tracking_Id}) async {
+          int? QualityDept_ModelOrder_Tracking_Id,
+          int? QualityTestPartId = 0}) async {
     List<Size_Measurement_AllowanceBLL>? ItemList;
     try {
       Map<String, String> qParams = {
@@ -109,7 +135,8 @@ class Size_Measurement_AllowanceBLL {
         'DeptModelOrder_QualityTest_Id':
             DeptModelOrder_QualityTest_Id.toString(),
         'QualityDept_ModelOrder_Tracking_Id':
-            QualityDept_ModelOrder_Tracking_Id.toString()
+            QualityDept_ModelOrder_Tracking_Id.toString(),
+        'QualityTestPartId' : QualityTestPartId.toString()
       };
 
       var response = await http.get(SharedPref.GetWebApiUri(

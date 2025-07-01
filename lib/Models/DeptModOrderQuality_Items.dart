@@ -28,6 +28,7 @@ class DeptModOrderQuality_ItemsBLL {
   int? Employee_Id;
   int? ModelOrderSizes_Id;
   int? QualityDept_ModelOrder_Tracking_Id;
+  int? User_QualityTracking_Detail_Id;
   int? CheckStatus;
   String? Reject_Note;
   int? Font_Color;
@@ -68,6 +69,7 @@ class DeptModOrderQuality_ItemsBLL {
     this.Circle_Color = json['Circle_Color'];
     this.IsChecked = json['IsChecked'];
     this.Quality_Items_Id = json['Quality_Items_Id'];
+    this.User_QualityTracking_Detail_Id = json['User_QualityTracking_Detail_Id'];
   }
 
   DeptModOrderQuality_ItemsBLL.fromJson(Map<String, dynamic> json)
@@ -96,6 +98,7 @@ class DeptModOrderQuality_ItemsBLL {
         Circle_Color = json['Circle_Color'],
         IsChecked = json['IsChecked'],
         Quality_Items_Id = json['Quality_Items_Id'],
+        User_QualityTracking_Detail_Id = json['User_QualityTracking_Detail_Id'],
         Reject_Note = json['Reject_Note'];
 
   Map<String, dynamic> toJson() => {
@@ -124,6 +127,7 @@ class DeptModOrderQuality_ItemsBLL {
         'Circle_Color': Circle_Color,
         'IsChecked': IsChecked,
         'Quality_Items_Id': Quality_Items_Id,
+        'User_QualityTracking_Detail_Id': User_QualityTracking_Detail_Id,
         'IsStatusRequired': IsStatusRequired
       };
 
@@ -154,6 +158,7 @@ class DeptModOrderQuality_ItemsBLL {
         'Font_Color': Font_Color.toString(),
         'Item_Hex_Color': Item_Hex_Color.toString(),
         'Circle_Color': Circle_Color.toString(),
+        'User_QualityTracking_Detail_Id': User_QualityTracking_Detail_Id.toString(),
         'Quality_Items_Id': Quality_Items_Id.toString()
       };
 
@@ -177,6 +182,36 @@ class DeptModOrderQuality_ItemsBLL {
       };
       var response = await http.get(SharedPref.GetWebApiUri(
           WebApiMethod.Get_DeptModOrderQuality_Items,
+          Paramters: qParams));
+
+      //  print(response.request);
+
+      if (response.statusCode == 200) {
+        ItemList = (json.decode(response.body) as List)
+            .map((i) => DeptModOrderQuality_ItemsBLL.fromJson(i))
+            .toList();
+      }
+    } catch (Excpetion) {
+      print(Excpetion);
+    }
+
+    return ItemList;
+  }
+
+  static Future<List<DeptModOrderQuality_ItemsBLL>?>
+     Get_WachingDeptModOrderQualityTest_Items(
+      { int QualityDept_ModelOrder_Tracking_Id=0,
+        int QualityTestPartId =0,
+        int DeptModelOrder_QualityTest_Id=0}) async {
+    List<DeptModOrderQuality_ItemsBLL>? ItemList;
+    try {
+      Map<String, String> qParams = {
+        'QualityDept_ModelOrder_Tracking_Id': QualityDept_ModelOrder_Tracking_Id.toString(),
+        'QualityTestPartId': QualityTestPartId.toString(),
+        'DeptModelOrder_QualityTest_Id': DeptModelOrder_QualityTest_Id.toString()
+      };
+      var response = await http.get(SharedPref.GetWebApiUri(
+          WebApiMethod.Get_WachingDeptModOrderQualityTest_Items,
           Paramters: qParams));
 
       //  print(response.request);

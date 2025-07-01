@@ -77,7 +77,14 @@ enum WebApiMethod{
   Get_UserQualityTasnifControl ,
   Set_RecycleUserQualityTasnifControlRec,
   Get_DikimInlineQuality_Items, Set_CheckList_Items, CloseCheckListControl,
-  Get_RoundTest, Set_CreateQuality_Notes
+  Get_RoundTest, Set_CreateQuality_Notes,
+  Set_CreateQualityTest_Parts,
+  Get_QualityTest_Parts,
+  Set_UpdateQualityTest_Parts,
+  Get_WachingDeptModOrderQualityTest_Items,
+  Set_DeleteQualityTest_Parts,
+  Set_WachingImage_Items,
+  Set_SizePartMeasurement_Allowance, Get_ModelOrderColors,
 }
 
 

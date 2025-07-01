@@ -43,8 +43,10 @@ class User_QualityTracking_DetailBLL {
   bool? IsRecycle;
   int? Size_Measurement_Allowance_Id;
   double? Real_Measure;
+  double? Measure;
   double? Pastal_Fark;
-
+  String? StandardMeasure;
+  String? CikanMeasure;
   int? AssignAmount;
   String? ControlType;
   int? Order_Id;
@@ -114,7 +116,10 @@ class User_QualityTracking_DetailBLL {
     this.Operation_Name = json['Operation_Name'];
     this.Size_Measurement_Allowance_Id = json['Size_Measurement_Allowance_Id'];
     this.Real_Measure = json['Real_Measure'];
+    this.Measure = json['Measure'];
     this.Pastal_Fark = json['Pastal_Fark'];
+    this.StandardMeasure = json['StandardMeasure'];
+    this.CikanMeasure  = json['CikanMeasure '];
   }
 
   User_QualityTracking_DetailBLL.fromJson(Map<String, dynamic> json)
@@ -166,6 +171,9 @@ class User_QualityTracking_DetailBLL {
         Inline_Employee_Id = json['Inline_Employee_Id'],
         Operation_Name = json['Operation_Name'],
         Real_Measure = json['Real_Measure'],
+        Measure = json['Measure'],
+        StandardMeasure = json['StandardMeasure'],
+        CikanMeasure = json['CikanMeasure'],
         Pastal_Fark = json['Pastal_Fark'];
 
   Map<String, dynamic> toJson() => {
@@ -210,7 +218,10 @@ class User_QualityTracking_DetailBLL {
         'EndDate': EndDate,
         'Size_Measurement_Allowance_Id': Size_Measurement_Allowance_Id,
         'Real_Measure': Real_Measure,
+        'Measure': Measure,
         'Pastal_Fark': Pastal_Fark,
+        'StandardMeasure': StandardMeasure,
+        'CikanMeasure': CikanMeasure,
         'Size_Id': Size_Id,
         'Image64': Image64 ?? ''
       };
@@ -263,8 +274,11 @@ class User_QualityTracking_DetailBLL {
         'Order_Id': Order_Id.toString(),
         'IsRecycle': IsRecycle.toString(),
         'Real_Measure': Real_Measure.toString(),
+        'Measure': Measure.toString(),
         'Pastal_Fark': Pastal_Fark.toString(),
         'Size_Id': Size_Id.toString(),
+        'StandardMeasure': StandardMeasure.toString(),
+        'CikanMeasure': CikanMeasure.toString(),
         'Image64': Image64 ?? ''
       };
 
@@ -570,6 +584,24 @@ class User_QualityTracking_DetailBLL {
     return false;
   }
 
+
+  Future<bool> Set_WachingImage_Items() async {
+    try {
+      String val = jsonEncode(this.toPost());
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_WachingImage_Items));
+      var response = await http.post(url, body: val, headers: headers);
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
   Future<bool> Set_Size_Measurement_Allowance() async {
     try {
       String val = jsonEncode(this.toPost());
@@ -578,6 +610,23 @@ class User_QualityTracking_DetailBLL {
       };
       var url = Uri.parse(
           SharedPref.GetWebApiUrl(WebApiMethod.Set_Size_Measurement_Allowance));
+      var response = await http.post(url, body: val, headers: headers);
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+
+ Future<bool> Set_SizePartMeasurement_Allowance() async {
+    try {
+      String val = jsonEncode(this.toPost());
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      var url = Uri.parse(
+          SharedPref.GetWebApiUrl(WebApiMethod.Set_SizePartMeasurement_Allowance));
       var response = await http.post(url, body: val, headers: headers);
 
       if (response.statusCode == 200) {

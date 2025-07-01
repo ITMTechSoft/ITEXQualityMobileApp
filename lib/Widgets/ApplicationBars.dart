@@ -37,7 +37,7 @@ DetailBar(
       backgroundColor: ArgonColors.primary,
       leading: IconButton(
         icon: Icon(Icons.arrow_back,
-            color: Colors.white, size: ArgonSize.Header3),
+            color: Colors.blue, size: ArgonSize.Header3),
         onPressed: () => Navigator.of(context).pop(),
       ),
       title: Text(

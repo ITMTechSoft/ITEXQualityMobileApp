@@ -91,7 +91,7 @@ class ArgonSize{
   static double Height1 = getAdaptiveTextSize(40);
 
 
-  static double WidthVeryBig     = getAdaptiveTextSize(90);
+  static double WidthVeryBig     = getAdaptiveTextSize(190);
   static double HeightVeryBig    = getAdaptiveTextSize(90);
 
   static double ImageHeight    = getAdaptiveTextSize(160);

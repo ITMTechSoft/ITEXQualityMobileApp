@@ -59,7 +59,7 @@ class _OrderListState extends State<OrderList> {
                         title: HeaderTitle(
                             PersonalCase.SelectedDepartment!.Depart_Name??'',
                             color: ArgonColors.header,
-                            FontSize: ArgonSize.Header1),
+                            FontSize: ArgonSize.Header3),
                         subtitle: Text(PersonalCase
                             .SelectedDepartment!.Start_Date
                             .toString(),

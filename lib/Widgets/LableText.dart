@@ -122,14 +122,11 @@ Widget TableLable(
       double? padding, // numeric value for padding
       double? margin,  // numeric value for margin
     }) {
-  return Expanded(
-    flex: Flex,
-    child: Container(
-      margin: margin != null ? EdgeInsets.all(margin) : null,
-      padding: padding != null ? EdgeInsets.all(padding) : null,
-      child: Center(
-        child: LableTitle(TableText, color: ArgonColors.text),
-      ),
+  return  Container(
+    margin: margin != null ? EdgeInsets.all(margin) : null,
+    padding: padding != null ? EdgeInsets.all(padding) : null,
+    child: Center(
+      child: LableTitle(TableText, color: ArgonColors.text),
     ),
   );
 }

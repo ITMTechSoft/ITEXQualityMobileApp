@@ -38,6 +38,7 @@ class OrderSizeColorDetailsBLL {
   int? Sample_Amount;
 
   //#endregion
+  OrderSizeColorDetailsBLL({required this.Id}) {}
 
   //#region Json Mapping
   LoadFromJson(Map<String, dynamic> json) {
