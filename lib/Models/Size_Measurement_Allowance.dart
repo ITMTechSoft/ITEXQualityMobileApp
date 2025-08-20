@@ -154,6 +154,16 @@ class Size_Measurement_AllowanceBLL {
     return ItemList;
   }
 
+
+  String getPercentage() {
+    if (Measure != null && Real_Measure != null && Measure != 0) {
+      double percent = ((Real_Measure! - Measure!) / Measure!) * 100;
+      return "${percent.toStringAsFixed(2)} %";
+    }
+    return "";
+  }
+
+
 /*
   Future<bool> SaveEntity() async {
     try {

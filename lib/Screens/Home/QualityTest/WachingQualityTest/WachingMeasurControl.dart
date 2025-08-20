@@ -364,7 +364,9 @@ class _WachingMeasurControlState extends State<WachingMeasurControl> {
                   (Item.Real_Measure ?? 0).toString(),
                   flex: 2,
                 ),
-                RowItem(measureFarkLabel, (Item.Pastal_Fark ?? 0).toString()),
+                RowItem(measureFarkLabel, (Item.Pastal_Fark ?? 0).toStringAsFixed(2)),
+                RowItem(PersonalCase.GetLable( ResourceKey.Percetage)
+                    , Item.getPercentage(), flex: 2),
                 RowWidget(statusLabel, Item.CheckStatus, PersonalCase, flex: 2),
               ],
             ),
